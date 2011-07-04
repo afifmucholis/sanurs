@@ -39,10 +39,10 @@ class About_us extends CI_Controller {
             $data['struktur'] = $this->getStruktur('Contact Us');
         else if ($array['view']=='link_web')
             $data['struktur'] = $this->getStruktur('Santa Ursula Website');
-        $this->load->view($array['view']);
-//        $this->output
-//        ->set_content_type('application/json')
-//        ->set_output(json_encode(array('text' => $text)));
+        $text = $this->load->view($array['view'],"",true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
     function getStruktur($view) {
