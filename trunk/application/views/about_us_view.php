@@ -12,9 +12,14 @@
 <script type="text/javascript">
 $('a.ajax-links').click(function() {	
 	var link = 'about_us/view/'+$(this).attr("href");
+        var form_data = {
+		ajax: '1'		
+	};
+
 	$.ajax({
 		url: link,
 		type: 'GET',
+                data: form_data,
 		success: function(msg) {
                    $('#content').html(msg["text"]);
                    var his = $('#history').html().split('/');

@@ -13,6 +13,7 @@
 class testClass extends CI_Controller {
     function index() {
         $data['title'] = 'tes';
+        $data['main_content'] = 'home_view';
         $this->load->view('includes/template',$data);
     }
     
