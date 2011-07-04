@@ -15,6 +15,6 @@
         echo form_password('password', '', 'id="password"')."<br/>";
         echo form_submit('submit', 'Sign in', 'id="submit"');
     ?>
-    <h4>Sign up</h4>
+    <h4><?php echo anchor('sign_up','Sign up');?></h4>
     <p>… to start RSVP-ing in our events, shopping, and connecting.</p>
 </div>
