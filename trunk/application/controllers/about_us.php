@@ -45,6 +45,25 @@ class About_us extends CI_Controller {
         ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
+    function contact() {
+        $email = $this->input->post('email');
+        $subject = $this->input->post('subject');
+        $message = $this->input->post('message');
+        
+        $this->load->library('email');
+
+        $this->email->from($email, 'anonymous web sanur');
+        $this->email->to('the.end.4ever@gmail.com');
+        $this->email->subject($subject);
+        $this->email->message($message);	
+
+        $this->email->send();
+
+        echo $this->email->print_debugger();
+        
+        echo "Email dikirim.";
+    }
+    
     function getStruktur($view) {
         $struktur = array (
             array (
