@@ -10,15 +10,15 @@
 </div>
 
 <script type="text/javascript">
-$('a.ajax-links').click(function() {
-	
+$('a.ajax-links').click(function() {	
 	var link = 'about_us/view/'+$(this).attr("href");
 	$.ajax({
 		url: link,
 		type: 'GET',
 		success: function(msg) {
-                        $('#history').html(msg);
 			$('#content').html(msg);
+                        var history = $('#history').html();
+                        //alert(history);
 		}
 	});
 	
