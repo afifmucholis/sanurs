@@ -40,6 +40,9 @@ class About_us extends CI_Controller {
         else if ($array['view']=='link_web')
             $data['struktur'] = $this->getStruktur('Santa Ursula Website');
         $this->load->view($array['view']);
+//        $this->output
+//        ->set_content_type('application/json')
+//        ->set_output(json_encode(array('text' => $text)));
     }
     
     function getStruktur($view) {
