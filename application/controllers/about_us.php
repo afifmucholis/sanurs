@@ -26,6 +26,12 @@ class About_us extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
+    /**
+     * View
+     *
+     * mengatur isi yang ditampilkan, ex : history,misi visi, dll
+     * mengembalikan respon berdasarkan request dari ajax/url request
+     */
     function view() {
         $array = $this->uri->uri_to_assoc(2);
         $data['title'] = 'About Us';
@@ -39,10 +45,14 @@ class About_us extends CI_Controller {
             $data['struktur'] = $this->getStruktur('Contact Us');
         else if ($array['view']=='link_web')
             $data['struktur'] = $this->getStruktur('Santa Ursula Website');
-        $text = $this->load->view($array['view'],"",true);
-        $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+        if ($this->input->get('ajax')) {
+            $text = $this->load->view($array['view'],"",true);
+            $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+        } else {
+            $this->load->view('includes/template',$data);
+        }
     }
     
     function contact() {
