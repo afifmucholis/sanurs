@@ -38,7 +38,7 @@
 |
 */
 
-$route['default_controller'] = "buku_con/getBuku";
+$route['default_controller'] = "testClass";
 $route['404_override'] = '';
 
 
