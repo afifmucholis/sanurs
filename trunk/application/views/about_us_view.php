@@ -16,9 +16,15 @@ $('a.ajax-links').click(function() {
 		url: link,
 		type: 'GET',
 		success: function(msg) {
-			$('#content').html(msg);
-                        var history = $('#history').html();
-                        //alert(history);
+                   $('#content').html(msg["text"]);
+                   var his = $('#history').html().split('/');
+                   var his2 = "";
+                   var count=0;
+                   while (count<his.length-1) {
+                       his2+=his[count];count++;
+                       his2+="/";
+                   }
+                   $('#history').html(his2+msg["struktur"][2]["label"]);
 		}
 	});
 	
