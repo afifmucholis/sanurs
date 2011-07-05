@@ -1,0 +1,143 @@
+<?php
+
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+/**
+ * Description of event
+ *
+ * @author user
+ */
+/** * @property CI_Loader $load
+ * @property CI_Form_validation $form_validation
+ * @property CI_Input $input
+ * @property CI_Email $email
+ * @property CI_DB_active_record $db
+ * @property CI_DB_forge $dbforge
+ */
+class Event extends CI_Controller {
+    function index() {
+        $data['title'] = 'Event';
+        $data['main_content'] = 'main_event_view';
+        $data['struktur'] = $this->getStruktur();
+        $data['sortby'] = 'categories';
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * sortby
+     *
+     * mengurutkan kemunculan tampilan event pada slide show
+     *
+     * @param string sortby jenis pengurutan
+     */
+    function sortby() {
+        $array = $this->uri->uri_to_assoc(2);
+        $data['title'] = 'Event';
+        $data['main_content'] = 'main_event_view';
+        $data['struktur'] = $this->getStruktur();
+        $data['sortby'] = $array['sortby'];
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * show_event()
+     *
+     * Menampilkan salah satu event
+     *
+     * @param int show_event id event yang akan ditampilkan
+     */
+    function show_event() {
+        $array = $this->uri->uri_to_assoc(2);
+        // get data event
+        $title = 'tes sajah';
+        $where = 'Bandung';
+        $when = 'next month';
+        $description = 'event tes';
+        $cp = array('name'=>'Danang','telp'=>'08888xxxx');
+        $attending = 2000;
+        $list_attending = array (
+            array('user_id'=>1,'name'=>'Levana Laksmicitra'),
+            array('user_id'=>2,'name'=>'Andri Putri'),
+            array('user_id'=>3,'name'=>'Shika Paramastri'),
+            array('user_id'=>4,'name'=>'Danang Tri')
+        );
+        $url_image = 'ini url gambarnya';
+        $rsvp = 1;  // cek bisa rsvp atau tidak
+        if ($this->session->userdata('name')==null) // user belum sign in
+            $rsvp = 0;
+        if (false) // user sudah rsvp tidak bisa rsvp lagi
+            $rsvp = 2;
+        
+        
+        $data['title'] = 'Event - '.$title;
+        $data['main_content'] = 'show_event_view';
+        $data['struktur'] = $this->getStruktur2($title);
+        $data['data_event'] = array(
+                'event_id'=>$array['show_event'],
+                'title'=>$title,
+                'where'=>$where,
+                'when'=>$when,
+                'description'=>$description,
+                'cp'=>$cp,
+                'attending'=>$attending,
+                'list_attending'=>$list_attending,
+                'url_image'=>$url_image,
+                'rsvp'=>$rsvp
+        );
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * rsvp()
+     *
+     * user me-rsvp sebuah event
+     *
+     * @param int user_id id user
+     * @param int event_id id event
+     */
+    function rsvp() {
+        $user_id = $this->input->post('user_id');
+        $event_id = $this->input->post('event_id');
+        echo "Berhasil gan";
+    }
+    
+    function getStruktur() {
+        $struktur = array (
+            array (
+                'islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>'Event'
+            )
+        );
+        return $struktur;
+    }
+    
+    function getStruktur2($title) {
+        $struktur = array (
+            array (
+                'islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'
+            ),
+            array (
+                'islink'=>1,
+                'link'=>'event',
+                'label'=>'Event'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>$title
+            )
+        );
+        return $struktur;
+    }
+}
+
+?>

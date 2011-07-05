@@ -1,3 +1,4 @@
+<h3>Sign In</h3>
 <div id="signin_form">
     <?php
         echo form_open('sign_in/submit');

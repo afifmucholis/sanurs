@@ -43,7 +43,7 @@ class sign_up extends CI_Controller {
         $struktur = array (
             array (
                 'islink'=>1,
-                'link'=>'testClass',
+                'link'=>'home',
                 'label'=>'Home'
             ),
             array (

@@ -5,16 +5,10 @@
 <div id="news_feed" style="float:left;">
     Slide show news event here
 </div>
+<?php if ($this->session->userdata('name')==null) { ?>
 <div id="col_right" style="float: right;">
-    <h4>Sign in</h4>
-    <?php
-        echo form_open('sign_in/submit');
-        echo form_label('Enter your email address : ','email')."<br/>";
-        echo form_input('email', '', 'id="email"')."<br/>";
-        echo form_label('Password : ','password')."<br/>";
-        echo form_password('password', '', 'id="password"')."<br/>";
-        echo form_submit('submit', 'Sign in', 'id="submit"');
-    ?>
-    <h4><?php echo anchor('sign_up','Sign up');?></h4>
+    <?php $this->load->view('sign_in_view'); ?>
+    <h3><?php echo anchor('sign_up','Sign up');?></h3>
     <p>… to start RSVP-ing in our events, shopping, and connecting.</p>
 </div>
+<?php } ?>
