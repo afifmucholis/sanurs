@@ -120,6 +120,13 @@ class Event extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
+    /**
+     * upload_picture()
+     *
+     * fungsi untuk mengupload gambar event yang akan dibuat
+     * gambar sementara ditaruh di folder res/temp, 
+     * jika event telah disubmit maka gambar akan dipindahkan
+     */
     function upload_picture() {
         $upload_path = 'res/temp/';
         $config['upload_path'] = './'.$upload_path;
@@ -139,6 +146,10 @@ class Event extends CI_Controller {
                 $teks = base_url().$upload_path.$this->upload->file_name;
                 echo $teks;
         }
+    }
+    
+    function submit_event() {
+        
     }
     
     function getStruktur() {
