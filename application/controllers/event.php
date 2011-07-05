@@ -104,6 +104,43 @@ class Event extends CI_Controller {
         echo "Berhasil gan";
     }
     
+    /**
+     * host
+     *
+     * Membuat sebuah event
+     *
+     */
+    function host() {
+        if ($this->session->userdata('name')==null) {
+            redirect('/home', 'refresh');
+        }
+        $data['title'] = 'Host an Event';
+        $data['main_content'] = 'host_event_view';
+        $data['struktur'] = $this->getStruktur3();
+        $this->load->view('includes/template',$data);
+    }
+    
+    function upload_picture() {
+        $upload_path = 'res/temp/';
+        $config['upload_path'] = './'.$upload_path;
+        $config['allowed_types'] = 'gif|jpg|png';
+        $config['max_size']	= '1024';
+
+        $this->load->library('upload', $config);
+
+        if ( ! $this->upload->do_upload())
+        {
+                $error = array('error' => $this->upload->display_errors());
+                echo 0;
+        }
+        else
+        {
+                $data = array('upload_data' => $this->upload->data());
+                $teks = base_url().$upload_path.$this->upload->file_name;
+                echo $teks;
+        }
+    }
+    
     function getStruktur() {
         $struktur = array (
             array (
@@ -134,6 +171,25 @@ class Event extends CI_Controller {
             array (
                 'islink'=>0,
                 'label'=>$title
+            )
+        );
+        return $struktur;
+    }
+    function getStruktur3() {
+        $struktur = array (
+            array (
+                'islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'
+            ),
+            array (
+                'islink'=>1,
+                'link'=>'profile',
+                'label'=>'Your Profile'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>'Host an event'
             )
         );
         return $struktur;
