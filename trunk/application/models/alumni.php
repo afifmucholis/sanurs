@@ -52,7 +52,7 @@ class Alumni extends CI_Model{
     * birthdate        required
     * graduate_year    required
     * last_unit_id     required
-    * is_registered    required
+    * is_registered    required, default 0 (belum register)
     * 
     * @param array $options
     * @return type 
@@ -85,22 +85,23 @@ class Alumni extends CI_Model{
     }
     
     /**
-     * Method updateAlumni : update tabel Alumni yang memenuhi id tertentu
+     * Method updateAlumni : update tabel Alumni yang memenuhi id tertentu. Tested
      * 
      * option: values
      * --------------
      * id               field id buat kriteria where
      * name             field name dari record yang akan menggantikan
      * birthdate        field birthdate dari record alumni yang akan menggantikan
-     * graduate_year    field graduate_year dari record alumni yang akan di menggantikan
+     * graduate_year    field graduate_year dari record alumni yang akan menggantikan
      * last_unit_id     field last_unit_id dari record yang akan menggantikan
      * is_registered    field is_registered dari record yang akan menggantikan
      * 
-     * @param array $options 
+     * @param array $options
+     * @return bool/int  
      */
     function updateAlumni($options = array()) {
         // required (id harus ada) :
-        if (!$this->_required(array($this->id, $options)))
+        if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
@@ -120,7 +121,7 @@ class Alumni extends CI_Model{
     }
     
     /**
-     * Method getUsers, mengembalikan array of user
+     * Method getAlumnis, mengembalikan array of alumnis. Tested
      * 
      * option : values
      * ---------------
@@ -136,7 +137,7 @@ class Alumni extends CI_Model{
      * @param array $options
      * @return array result() 
      */
-    function getUsers($options = array()) {
+    function getAlumnis($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
@@ -161,26 +162,21 @@ class Alumni extends CI_Model{
         $query = $this->db->get($this->table);
         if ($query->num_rows()==0) {
             return false;
-        }
-        
-        if (isset ($options[$this->id])) {
-            //Karena id unik, maka kembalikan single record
-            return $query->row(0);
         } else {
             return $query->result();
         }
     }
 
     /**
-     * Method delete user berdasarkan id
+     * Method delete alumni berdasarkan id. Tested
      * 
      * @param array $options
      * @return type 
      */
-    function deleteUser($options = array()) {
+    function deleteAlumni($options = array()) {
         //required value :
-        if ($this->_required(array($this->id), $options)) {
-                return false;
+        if (!$this->_required(array($this->id), $options)) {
+            return false;
         }
         
         $this->db->where($this->id, $options[$this->id]);
