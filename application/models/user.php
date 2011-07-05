@@ -190,7 +190,7 @@ class User extends CI_Model{
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->name, $this->email,
+        $fieldArray = array($this->id, $this->name, $this->email,
                             $this->birthdate, $this->gender_id, 
                             $this->home_address, $this->home_telephone, 
                             $this->handphone, $this->graduate_year, 

@@ -19,14 +19,16 @@
 * @property CI_DB_forge $dbforge
 */
 
-class Friend_Request extends CI_Model{
+class Event extends CI_Model{
     //put your code here
-    var $table = 'friend_request';
+    var $table = 'event';
     var $id = 'id';
-    var $userid_requester = 'userid_requester';
-    var $userid_requested = 'userid_requested';
-    var $message = 'message';
-    
+    var $title = 'title';
+    var $description = 'description';
+    var $when = 'when';
+    var $where = 'where';
+    var $category_event_id = 'category_event_id';
+    var $image_url = 'image_url';
     /**
      * Konstruktor
      */
@@ -37,29 +39,37 @@ class Friend_Request extends CI_Model{
     /**
      * Konstruktor
      */
-    function Friend_Request() {
+    function Event() {
         parent::__construct();
     }
     
    /**
-    * Method addFriendRequest : tambah Friend Request
+    * Method addAlumni : tambah alumni, no null allowed. Ini udah tested
     * 
     * option: values
     * --------------
-    * userid_requester  required
-    * userid_requested  required
-    * message
+    * title                 required
+    * description           required
+    * when                  required
+    * where                 required
+    * category_event_id     required
+    * image_url 
+    * 
     * @param array $options
     * @return type 
     */
-    function addFriendRequest($options = array()) {
+    function addEvent($options = array()) {
         //Cek yang required :
-        if (!$this->_required(array($this->userid_requester, $this->userid_requested), $options)) {
+        if (!$this->_required(array($this->title, 
+                                    $this->description, 
+                                    $this->when, 
+                                    $this->where, 
+                                    $this->category_event_id), $options)) {
             return false;
         }
             
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->userid_requester, $this->userid_requested, $this->message);
+        $fieldArray = array($this->title, $this->description, $this->when, $this->where, $this->category_event_id, $this->image_url);
         foreach($fieldArray as $field) {
                 $this->db->set($field, $options[$field]);
         }
@@ -72,25 +82,28 @@ class Friend_Request extends CI_Model{
     }
     
     /**
-     * Method updateFriendRequest : update tabel Friend Request yang memenuhi id tertentu.
+     * Method updateCategoryEvent : update tabel CategoryEvent yang memenuhi id tertentu.
      * 
      * option: values
      * --------------
-     * id                required
-     * userid_requester  
-     * userid_requested  
-     * message
+     * id               field id buat kriteria where
+     * title                 required
+     * description           required
+     * when                  required
+     * where                 required
+     * category_event_id     required
+     * image_url 
      * 
      * @param array $options
      * @return bool/int  
      */
-    function updateFriendRequest($options = array()) {
+    function updateEvent($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
-        $fieldArray = array($this->userid_requester, $this->userid_requested, $this->message);
+        $fieldArray = array($this->title, $this->description, $this->when, $this->where, $this->category_event_id, $this->image_url);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -106,26 +119,35 @@ class Friend_Request extends CI_Model{
     }
     
     /**
-     * Method getFriendRequests, mengembalikan array of FriendRequest.
+     * Method getEvents, mengembalikan array of event.
      * 
      * option : values
      * ---------------
-     * id
-     * userid_requester  
-     * userid_requested  
-     * message
+     * id               field kriteria id untuk klause where
+     * title 
+     * description
+     * when       
+     * where      
+     * category_event_id
+     * image_url 
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
      * @param array $options
      * @return array result() 
      */
-    function getFriendRelationships($options = array()) {
+    function getEvents($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->id, $this->userid_requester, $this->userid_requested, $this->message);
+        $fieldArray = array($this->id,
+                            $this->title, 
+                            $this->description, 
+                            $this->when, 
+                            $this->where, 
+                            $this->category_event_id,
+                            $this->image_url);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
@@ -146,12 +168,12 @@ class Friend_Request extends CI_Model{
     }
 
     /**
-     * Method delete Friend Request berdasarkan id.
+     * Method delete event berdasarkan id.
      * 
      * @param array $options
      * @return type 
      */
-    function deleteFriendRequest($options = array()) {
+    function deleteEvent($options = array()) {
         //required value :
         if (!$this->_required(array($this->id), $options)) {
             return false;

@@ -122,7 +122,7 @@ class Friend_Relationship extends CI_Model{
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->userid_1, $this->userid_2);
+        $fieldArray = array($this->id, $this->userid_1, $this->userid_2);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
