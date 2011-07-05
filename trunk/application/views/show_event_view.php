@@ -17,7 +17,7 @@
             echo form_open('event/rsvp');
             echo form_hidden('user_id', $this->session->userdata('user_id'));
             echo form_hidden('event_id', $data_event['event_id']);
-            echo form_submit('submit', 'Submit', 'id="submit"');
+            echo form_submit('submit', 'RSVP', 'id="submit"');
         } else if ($data_event['rsvp']==2) {
             echo "RSVP-ed already";
         }
