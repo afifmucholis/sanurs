@@ -19,11 +19,18 @@
 * @property CI_DB_forge $dbforge
 */
 
-class Level extends CI_Model{
+class Education extends CI_Model{
     //put your code here
-    var $table = 'level';
-    var $id = 'id';
-    var $label = 'label';
+    var $table          = 'education';
+    var $id             = 'id';
+    var $user_id        = 'user_id';
+    var $level_id       = 'level_id';
+    var $graduate_year  = 'graduate_year';
+    var $school         = 'school';
+    var $major          = 'major';
+    var $minor          = 'minor';
+    
+    
     /**
      * Konstruktor
      */
@@ -34,28 +41,33 @@ class Level extends CI_Model{
     /**
      * Konstruktor
      */
-    function Level() {
+    function Education() {
         parent::__construct();
     }
     
    /**
-    * Method addLevel : tambah level, no null allowed.
+    * Method addEducation : tambah education, no null allowed.
     * 
     * option: values
     * --------------
-    * label required
-    * 
+    * user_id           required
+    * level_id          required
+    * graduate_year 
+    * school
+    * major
+    * minor
     * @param array $options
     * @return type 
     */
-    function addLevel($options = array()) {
+    function addEducation($options = array()) {
         //Cek yang required :
-        if (!$this->_required(array($this->label), $options)) {
+        if (!$this->_required(array($this->user_id, 
+                                    $this->level_id), $options)) {
             return false;
         }
             
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->label);
+        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major, $this->minor);
         foreach($fieldArray as $field) {
                 $this->db->set($field, $options[$field]);
         }
@@ -68,23 +80,28 @@ class Level extends CI_Model{
     }
     
     /**
-     * Method updateLevel : update tabel Level yang memenuhi id tertentu.
+     * Method updateEducation : update tabel Education yang memenuhi id tertentu.
      * 
      * option: values
      * --------------
-     * id       field id buat kriteria where
-     * label    
+     * id               field id buat kriteria where
+     * user_id          
+     * level_id         
+     * graduate_year 
+     * school
+     * major
+     * minor
      * 
      * @param array $options
      * @return bool/int  
      */
-    function updateLevel($options = array()) {
+    function updateEducation($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
-        $fieldArray = array($this->label);
+        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major, $this->minor);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -100,24 +117,35 @@ class Level extends CI_Model{
     }
     
     /**
-     * Method getLevels, mengembalikan array of level. Tested
+     * Method getEducations, mengembalikan array of education. Tested
      * 
      * option : values
      * ---------------
      * id               field kriteria id untuk klause where
-     * label  
+     * user_id          
+     * level_id         
+     * graduate_year 
+     * school
+     * major
+     * minor
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
      * @param array $options
      * @return array result() 
      */
-    function getLevels($options = array()) {
+    function getEducations($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->label);
+        $fieldArray = array($this->id,
+                            $this->user_id, 
+                            $this->level_id, 
+                            $this->graduate_year, 
+                            $this->school,
+                            $this->major,
+                            $this->minor);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
@@ -138,12 +166,12 @@ class Level extends CI_Model{
     }
 
     /**
-     * Method delete level berdasarkan id.
+     * Method delete education berdasarkan id.
      * 
      * @param array $options
      * @return type 
      */
-    function deleteLevel($options = array()) {
+    function deleteEducation($options = array()) {
         //required value :
         if (!$this->_required(array($this->id), $options)) {
             return false;
