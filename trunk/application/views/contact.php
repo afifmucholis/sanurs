@@ -12,6 +12,7 @@
             );
     echo form_textarea($data)."<br/>";
     echo form_submit('submit', 'Submit', 'id="submit"');
+    echo form_close();
 ?>
 
 <script type="text/javascript">

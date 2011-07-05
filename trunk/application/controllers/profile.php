@@ -47,7 +47,19 @@ class profile extends CI_Controller {
             'medicines',
             'fashion'
         );
-        $working_experience = array();
+        $working_experience = array(
+            array (
+                'company' => 'PT Sumarno Pabotingi',
+                'year' => 2011,
+                'position' => 'programmer',
+                'address' => 'Jln Cikini V no 12, Jakarta Pusat',
+                'telephone' => '02100292',
+                'fax' => '021929292',
+                'work_hp' => '082222',
+                'work_email' => 'danang@yaaahoo.com',
+                'is_current_work' => 1
+            )
+        );
         
         $data['user_data'] = array(
             'name' => $name,

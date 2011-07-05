@@ -7,6 +7,7 @@
         echo form_label('Password : ','password')."<br/>";
         echo form_password('password', '', 'id="password"')."<br/>";
         echo form_submit('submit', 'Submit', 'id="submit"');
+        echo form_close();
     ?>
 </div>
 
