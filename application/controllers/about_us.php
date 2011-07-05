@@ -55,6 +55,12 @@ class About_us extends CI_Controller {
         }
     }
     
+    /**
+     * function contact()
+     *
+     * mengirim email ke admin
+     * user anonymous, data dari form dengan method post
+     */
     function contact() {
         $email = $this->input->post('email');
         $subject = $this->input->post('subject');
@@ -78,7 +84,7 @@ class About_us extends CI_Controller {
         $struktur = array (
             array (
                 'islink'=>1,
-                'link'=>'testClass',
+                'link'=>'home',
                 'label'=>'Home'
             ),
             array (

@@ -9,10 +9,16 @@
 <body>
     <div id="top">
         <div id="link">
+            <label><?php echo anchor('home','Home');?></label>
             <label><?php echo anchor('about_us','About us');?></label>
-            <label><a href="">Events</a></label>
-            <label><?php echo anchor('sign_in','Sign in');?></label>
-            <label><?php echo anchor('sign_up','Sign up');?></label>
+            <label><?php echo anchor('event','Event');?></label>
+            <?php if ($this->session->userdata('name')==null) { ?>
+                <label><?php echo anchor('sign_in','Sign in');?></label>
+                <label><?php echo anchor('sign_up','Sign up');?></label>
+            <?php } else { ?>
+                <label><?php echo anchor('profile','My Profile');?></label>
+                <label><?php echo anchor('sign_in/sign_out','Sign out');?></label>
+            <?php } ?>
         </div>
         <div id="sanur_title">
             <h2>SMA St. Ursula Alumni Association</h2>
