@@ -1,7 +1,6 @@
 <div id ="upload_popup" class ="popup">
     <a href="#" class="popupContactClose">x</a>
     <h2>Upload an image from your computer</h2>
-    <!--<form action="" method="post" accept-charset="utf-8" enctype="multipart/form-data">-->
     <?php
         echo form_open_multipart('event/upload_picture','id="upload_form"');
         $data = array(

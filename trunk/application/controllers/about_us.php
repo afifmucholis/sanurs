@@ -41,9 +41,9 @@ class About_us extends CI_Controller {
             $data['struktur'] = $this->getStruktur('History');
         else if ($array['view']=='visimisi')
             $data['struktur'] = $this->getStruktur('Vision and Mission');
-        else if ($array['view']=='contact')
+        else if ($array['view']=='contact') {
             $data['struktur'] = $this->getStruktur('Contact Us');
-        else if ($array['view']=='link_web')
+        } else if ($array['view']=='link_web')
             $data['struktur'] = $this->getStruktur('Santa Ursula Website');
         if ($this->input->get('ajax')) {
             $text = $this->load->view($array['view'],"",true);
