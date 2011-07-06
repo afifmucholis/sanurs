@@ -5,7 +5,7 @@
  */
 
 /**
- * Description of alumni
+ * Description of category_event
  *
  * @author Akbar
  */
