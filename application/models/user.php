@@ -21,20 +21,20 @@
 
 class User extends CI_Model{
     //put your code here
-    var $table = 'user';
-    var $id = 'id';
-    var $name = 'name';
-    var $email = 'email';
-    var $password = 'password';
-    var $birthdate = 'birthdate';
-    var $gender_id = 'gender_id';
-    var $home_address = 'home_address';
-    var $home_telephone = 'home_telephone';
-    var $handphone = 'handphone';
-    var $graduate_year = 'graduate_year';
-    var $last_unit_id = 'last_unit_id';
-    var $profpict_url = 'profpict_url';
-    var $location_latitude = 'location_latitude';
+    var $table              = 'user';
+    var $id                 = 'id';
+    var $name               = 'name';
+    var $email              = 'email';
+    var $password           = 'password';
+    var $birthdate          = 'birthdate';
+    var $gender_id          = 'gender_id';
+    var $home_address       = 'home_address';
+    var $home_telephone     = 'home_telephone';
+    var $handphone          = 'handphone';
+    var $graduate_year      = 'graduate_year';
+    var $last_unit_id       = 'last_unit_id';
+    var $profpict_url       = 'profpict_url';
+    var $location_latitude  = 'location_latitude';
     var $location_longitude = 'location_longitude';
     
     /**

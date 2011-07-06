@@ -21,9 +21,9 @@
 
 class Gender extends CI_Model{
     //put your code here
-    var $table = 'gender';
-    var $id = 'id';
-    var $label = 'label';
+    var $table  = 'gender';
+    var $id     = 'id';
+    var $label  = 'label';
     /**
      * Konstruktor
      */

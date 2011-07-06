@@ -1,15 +1,15 @@
 <?php
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 /**
- * Description of category_event
+ * Description of rsvp_event
  *
  * @author Akbar
  */
-
 /**
 * @property CI_Loader $load
 * @property CI_Form_validation $form_validation
@@ -19,11 +19,13 @@
 * @property CI_DB_forge $dbforge
 */
 
-class Category_Event extends CI_Model{
+class RSVP_Event extends CI_Model{
     //put your code here
-    var $table          = 'category_event';
-    var $id             = 'id';
-    var $category_event = 'category_event';
+    var $table      = 'rsvp_event';
+    var $id         = 'id';
+    var $user_id    = 'user_id';
+    var $event_id   = 'event_id';
+    
     /**
      * Konstruktor
      */
@@ -34,28 +36,30 @@ class Category_Event extends CI_Model{
     /**
      * Konstruktor
      */
-    function Category_Event() {
+    function RSVP_Event() {
         parent::__construct();
     }
     
    /**
-    * Method addCategoryEvent : tambah Category Event, no null allowed.
+    * Method addRSVPEvent : tambah RSVPEvent, no null allowed.
     * 
     * option: values
     * --------------
-    * category_event required
+    * user_id        required
+    * event_id    required
     * 
     * @param array $options
     * @return type 
     */
-    function addCategoryEvent($options = array()) {
+    function addRSVPEvent($options = array()) {
         //Cek yang required :
-        if (!$this->_required(array($this->category_event), $options)) {
+        if (!$this->_required(array($this->user_id, 
+                                    $this->event_id), $options)) {
             return false;
         }
             
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->category_event);
+        $fieldArray = array($this->user_id, $this->event_id);
         foreach($fieldArray as $field) {
                 $this->db->set($field, $options[$field]);
         }
@@ -68,23 +72,24 @@ class Category_Event extends CI_Model{
     }
     
     /**
-     * Method updateCategoryEvent : update tabel Category Event yang memenuhi id tertentu.
+     * Method updateRSVPEvent : update tabel RSVP Event yang memenuhi id tertentu.
      * 
      * option: values
      * --------------
-     * id               field id buat kriteria where
-     * category_event    
+     * id           field id buat kriteria where
+     * user_id      
+     * event_id    
      * 
      * @param array $options
      * @return bool/int  
      */
-    function updateCategoryEvent($options = array()) {
+    function updateRSVPEvent($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
-        $fieldArray = array($this->category_event);
+        $fieldArray = array($this->user_id, $this->event_id);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -100,24 +105,27 @@ class Category_Event extends CI_Model{
     }
     
     /**
-     * Method getCategoryEvents, mengembalikan array of CategoryEvent. Tested
+     * Method getRSVPEvents, mengembalikan array of RSVPEvent.
      * 
      * option : values
      * ---------------
      * id               field kriteria id untuk klause where
-     * category_event  
+     * user_id      
+     * event_id     
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
      * @param array $options
      * @return array result() 
      */
-    function getCategoryEvents($options = array()) {
+    function getRSVPEvent($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->id, $this->category_event);
+        $fieldArray = array($this->id,
+                            $this->user_id, 
+                            $this->event_id);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
@@ -138,12 +146,12 @@ class Category_Event extends CI_Model{
     }
 
     /**
-     * Method delete Category Event berdasarkan id.
+     * Method delete RSVP Event berdasarkan id. Tested
      * 
      * @param array $options
      * @return type 
      */
-    function deleteCategoryEvent($options = array()) {
+    function deleteRSVPEvent($options = array()) {
         //required value :
         if (!$this->_required(array($this->id), $options)) {
             return false;
@@ -178,4 +186,5 @@ class Category_Event extends CI_Model{
         return array_merge($defaults, $options);
     }
 }
+
 ?>
