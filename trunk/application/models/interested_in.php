@@ -1,15 +1,15 @@
 <?php
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 /**
- * Description of event
+ * Description of interested_in
  *
  * @author Akbar
  */
-
 /**
 * @property CI_Loader $load
 * @property CI_Form_validation $form_validation
@@ -19,16 +19,13 @@
 * @property CI_DB_forge $dbforge
 */
 
-class Event extends CI_Model{
+class Interested_In extends CI_Model{
     //put your code here
-    var $table = 'event';
-    var $id = 'id';
-    var $title = 'title';
-    var $description = 'description';
-    var $when = 'when';
-    var $where = 'where';
-    var $category_event_id = 'category_event_id';
-    var $image_url = 'image_url';
+    var $table          = 'interested_in';
+    var $id             = 'id';
+    var $user_id        = 'user_id';
+    var $interest_id    = 'interest_id';
+    
     /**
      * Konstruktor
      */
@@ -39,37 +36,30 @@ class Event extends CI_Model{
     /**
      * Konstruktor
      */
-    function Event() {
+    function Interested_In() {
         parent::__construct();
     }
     
    /**
-    * Method addAlumni : tambah alumni, no null allowed. Ini udah tested
+    * Method addInterestedIn : tambah interested in, no null allowed.
     * 
     * option: values
     * --------------
-    * title                 required
-    * description           required
-    * when                  required
-    * where                 required
-    * category_event_id     required
-    * image_url 
+    * user_id           required
+    * interest_id       required
     * 
     * @param array $options
     * @return type 
     */
-    function addEvent($options = array()) {
+    function addInterestedIn($options = array()) {
         //Cek yang required :
-        if (!$this->_required(array($this->title, 
-                                    $this->description, 
-                                    $this->when, 
-                                    $this->where, 
-                                    $this->category_event_id), $options)) {
+        if (!$this->_required(array($this->user_id, 
+                                    $this->interest_id), $options)) {
             return false;
         }
             
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->title, $this->description, $this->when, $this->where, $this->category_event_id, $this->image_url);
+        $fieldArray = array($this->user_id, $this->interest_id);
         foreach($fieldArray as $field) {
                 $this->db->set($field, $options[$field]);
         }
@@ -82,28 +72,24 @@ class Event extends CI_Model{
     }
     
     /**
-     * Method updateCategoryEvent : update tabel CategoryEvent yang memenuhi id tertentu.
+     * Method updateInterestedIn : update tabel Interested In yang memenuhi id tertentu.
      * 
      * option: values
      * --------------
      * id               field id buat kriteria where
-     * title                 required
-     * description           required
-     * when                  required
-     * where                 required
-     * category_event_id     required
-     * image_url 
+     * user_id          required
+     * interest_id      required
      * 
      * @param array $options
      * @return bool/int  
      */
-    function updateEvent($options = array()) {
+    function updateInterestedIn($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
-        $fieldArray = array($this->title, $this->description, $this->when, $this->where, $this->category_event_id, $this->image_url);
+        $fieldArray = array($this->user_id, $this->interest_id);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -119,35 +105,27 @@ class Event extends CI_Model{
     }
     
     /**
-     * Method getEvents, mengembalikan array of event.
+     * Method getInterestedIn, mengembalikan array of interested in.
      * 
      * option : values
      * ---------------
      * id               field kriteria id untuk klause where
-     * title 
-     * description
-     * when       
-     * where      
-     * category_event_id
-     * image_url 
+     * user_id          required
+     * interest_id      required
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
      * @param array $options
      * @return array result() 
      */
-    function getEvents($options = array()) {
+    function getInterestedIn($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id,
-                            $this->title, 
-                            $this->description, 
-                            $this->when, 
-                            $this->where, 
-                            $this->category_event_id,
-                            $this->image_url);
+                            $this->user_id, 
+                            $this->interest_id);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
@@ -168,12 +146,12 @@ class Event extends CI_Model{
     }
 
     /**
-     * Method delete event berdasarkan id.
+     * Method delete InterestedIn berdasarkan id.
      * 
      * @param array $options
      * @return type 
      */
-    function deleteEvent($options = array()) {
+    function deleteInterestedIn($options = array()) {
         //required value :
         if (!$this->_required(array($this->id), $options)) {
             return false;
@@ -208,4 +186,5 @@ class Event extends CI_Model{
         return array_merge($defaults, $options);
     }
 }
+
 ?>

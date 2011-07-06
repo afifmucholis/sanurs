@@ -5,7 +5,7 @@
  */
 
 /**
- * Description of alumni
+ * Description of education
  *
  * @author Akbar
  */
