@@ -21,13 +21,13 @@
 
 class Alumni extends CI_Model{
     //put your code here
-    var $table = 'alumni';
-    var $id = 'id';
-    var $name = 'name';
-    var $birthdate = 'birthdate';
-    var $graduate_year = 'graduate_year';
-    var $last_unit_id = 'last_unit_id';
-    var $is_registered = 'is_registered';
+    var $table          = 'alumni';
+    var $id             = 'id';
+    var $name           = 'name';
+    var $birthdate      = 'birthdate';
+    var $graduate_year  = 'graduate_year';
+    var $last_unit_id   = 'last_unit_id';
+    var $is_registered  = 'is_registered';
     
     /**
      * Konstruktor

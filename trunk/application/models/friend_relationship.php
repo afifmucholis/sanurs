@@ -21,10 +21,10 @@
 
 class Friend_Relationship extends CI_Model{
     //put your code here
-    var $table = 'friend_relationship';
-    var $id = 'id';
-    var $userid_1 = 'userid_1';
-    var $userid_2 = 'userid_2';
+    var $table      = 'friend_relationship';
+    var $id         = 'id';
+    var $userid_1   = 'userid_1';
+    var $userid_2   = 'userid_2';
     
     /**
      * Konstruktor

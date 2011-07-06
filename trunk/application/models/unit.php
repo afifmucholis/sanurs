@@ -21,9 +21,9 @@
 
 class Unit extends CI_Model{
     //put your code here
-    var $table = 'unit';
-    var $id = 'id';
-    var $label = 'label';
+    var $table  = 'unit';
+    var $id     = 'id';
+    var $label  = 'label';
     /**
      * Konstruktor
      */

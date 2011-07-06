@@ -21,14 +21,14 @@
 
 class Event extends CI_Model{
     //put your code here
-    var $table = 'event';
-    var $id = 'id';
-    var $title = 'title';
-    var $description = 'description';
-    var $when = 'when';
-    var $where = 'where';
-    var $category_event_id = 'category_event_id';
-    var $image_url = 'image_url';
+    var $table              = 'event';
+    var $id                 = 'id';
+    var $title              = 'title';
+    var $description        = 'description';
+    var $when               = 'when';
+    var $where              = 'where';
+    var $category_event_id  = 'category_event_id';
+    var $image_url          = 'image_url';
     /**
      * Konstruktor
      */

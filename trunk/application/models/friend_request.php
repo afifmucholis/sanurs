@@ -21,11 +21,11 @@
 
 class Friend_Request extends CI_Model{
     //put your code here
-    var $table = 'friend_request';
-    var $id = 'id';
-    var $userid_requester = 'userid_requester';
-    var $userid_requested = 'userid_requested';
-    var $message = 'message';
+    var $table              = 'friend_request';
+    var $id                 = 'id';
+    var $userid_requester   = 'userid_requester';
+    var $userid_requested   = 'userid_requested';
+    var $message            = 'message';
     
     /**
      * Konstruktor

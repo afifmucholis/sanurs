@@ -21,9 +21,9 @@
 
 class Level extends CI_Model{
     //put your code here
-    var $table = 'level';
-    var $id = 'id';
-    var $label = 'label';
+    var $table  = 'level';
+    var $id     = 'id';
+    var $label  = 'label';
     /**
      * Konstruktor
      */

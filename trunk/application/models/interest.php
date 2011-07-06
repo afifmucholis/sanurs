@@ -21,9 +21,9 @@
 
 class Interest extends CI_Model{
     //put your code here
-    var $table = 'interest';
-    var $id = 'id';
-    var $interest = 'interest';
+    var $table      = 'interest';
+    var $id         = 'id';
+    var $interest   = 'interest';
     
     /**
      * Konstruktor

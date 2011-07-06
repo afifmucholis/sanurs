@@ -1,15 +1,15 @@
 <?php
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 
 /**
- * Description of category_event
+ * Description of work_experience
  *
  * @author Akbar
  */
-
 /**
 * @property CI_Loader $load
 * @property CI_Form_validation $form_validation
@@ -19,11 +19,21 @@
 * @property CI_DB_forge $dbforge
 */
 
-class Category_Event extends CI_Model{
+class Work_Experience extends CI_Model{
     //put your code here
-    var $table          = 'category_event';
-    var $id             = 'id';
-    var $category_event = 'category_event';
+    var $table              = 'work_experience';
+    var $id                 = 'id';
+    var $user_id            = 'user_id';
+    var $company            = 'company';
+    var $year               = 'year';
+    var $position           = 'position';
+    var $address            = 'address';
+    var $telephone          = 'telephone';
+    var $fax                = 'fax';
+    var $work_hp            = 'work_hp';
+    var $work_email         = 'work_email';
+    var $is_current_work    = 'is_current_work'; 
+    
     /**
      * Konstruktor
      */
@@ -34,28 +44,39 @@ class Category_Event extends CI_Model{
     /**
      * Konstruktor
      */
-    function Category_Event() {
+    function Work_Experience() {
         parent::__construct();
     }
     
    /**
-    * Method addCategoryEvent : tambah Category Event, no null allowed.
+    * Method addWorkExperience : tambah work experience, no null allowed.
     * 
     * option: values
     * --------------
-    * category_event required
+    * user_id       required
+    * company       
+    * year
+    * position
+    * address 
+    * telephone
+    * fax
+    * work_hp
+    * work_email
+    * is_current_work
     * 
     * @param array $options
     * @return type 
     */
-    function addCategoryEvent($options = array()) {
+    function addWorkExperience($options = array()) {
         //Cek yang required :
-        if (!$this->_required(array($this->category_event), $options)) {
+        if (!$this->_required(array($this->user_id), $options)) {
             return false;
         }
             
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->category_event);
+        $fieldArray = array($this->user_id, $this->company, $this->year, 
+                            $this->position, $this->address, $this->telephone,
+                            $this->fax, $this->work_hp, $this->work_email, $this->is_current_work);
         foreach($fieldArray as $field) {
                 $this->db->set($field, $options[$field]);
         }
@@ -68,23 +89,34 @@ class Category_Event extends CI_Model{
     }
     
     /**
-     * Method updateCategoryEvent : update tabel Category Event yang memenuhi id tertentu.
+     * Method updateWorkExperience : update tabel work experience yang memenuhi id tertentu.
      * 
      * option: values
      * --------------
      * id               field id buat kriteria where
-     * category_event    
+     * user_id
+     * company       
+     * year
+     * position
+     * address 
+     * telephone
+     * fax
+     * work_hp
+     * work_email
+     * is_current_work
      * 
      * @param array $options
      * @return bool/int  
      */
-    function updateCategoryEvent($options = array()) {
+    function updateWorkExperience($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
-        $fieldArray = array($this->category_event);
+        $fieldArray = array($this->user_id, $this->company, $this->year, 
+                            $this->position, $this->address, $this->telephone,
+                            $this->fax, $this->work_hp, $this->work_email, $this->is_current_work);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -100,24 +132,35 @@ class Category_Event extends CI_Model{
     }
     
     /**
-     * Method getCategoryEvents, mengembalikan array of CategoryEvent. Tested
+     * Method getWorkExperiences, mengembalikan array of experience.
      * 
      * option : values
      * ---------------
      * id               field kriteria id untuk klause where
-     * category_event  
+     * user_id
+     * company       
+     * year
+     * position
+     * address 
+     * telephone
+     * fax
+     * work_hp
+     * work_email
+     * is_current_work
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
      * @param array $options
      * @return array result() 
      */
-    function getCategoryEvents($options = array()) {
+    function getWorkExperiences($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->id, $this->category_event);
+        $fieldArray = array($this->id, $this->user_id, $this->company, $this->year, 
+                            $this->position, $this->address, $this->telephone,
+                            $this->fax, $this->work_hp, $this->work_email, $this->is_current_work);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
@@ -138,12 +181,12 @@ class Category_Event extends CI_Model{
     }
 
     /**
-     * Method delete Category Event berdasarkan id.
+     * Method delete work experience berdasarkan id.
      * 
      * @param array $options
      * @return type 
      */
-    function deleteCategoryEvent($options = array()) {
+    function deleteWorkExperience($options = array()) {
         //required value :
         if (!$this->_required(array($this->id), $options)) {
             return false;
@@ -178,4 +221,5 @@ class Category_Event extends CI_Model{
         return array_merge($defaults, $options);
     }
 }
+
 ?>
