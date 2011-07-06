@@ -24,7 +24,7 @@ class profile extends CI_Controller {
         }
         $data['title'] = 'Profile';
         $data['main_content'] = 'my_profile_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->getStruktur('Your Profile');
         // get user profile info
         $user_id = $this->session->userdata('user_id');
         $name = $this->session->userdata('name');
@@ -62,6 +62,7 @@ class profile extends CI_Controller {
         );
         
         $data['user_data'] = array(
+            'user_id'=>$user_id,
             'name' => $name,
             'email' => $email,
             'image' => $image,
@@ -76,7 +77,64 @@ class profile extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
-    function getStruktur() {
+    function user() {
+//        if ($this->session->userdata('name')==null) {
+//            redirect('/home', 'refresh');
+//        }
+        $array = $this->uri->uri_to_assoc(2);
+        $user_id = $array['user'];
+        
+        // get user profile info yang bisa ditampilkan saja
+        $name = 'Levana Laksmicitra Sani';
+        $email = 'aaaa';
+        $image = 'Ini image';
+        $calendar= 'Ini calendar';
+        $kelulusan= 'SMA St. Ursula';
+        $tahun_kelulusan= '2010';
+        $pendidikan = array (
+            array (
+                'degree' => 'Bachelor',
+                'where' => 'University of Southern California',
+                'major' => 'Chemical Biology',
+                'minor' => 'none',
+                'current' => 1
+            )
+        );
+        $interest = array (
+            'movies',
+            'medicines',
+            'fashion'
+        );
+        $working_experience = array();
+        
+        $data['user_data'] = array(
+            'user_id'=>$user_id,
+            'name' => $name,
+            'email' => $email,
+            'image' => $image,
+            'calendar' => $calendar,
+            'kelulusan' => $kelulusan,
+            'tahun_kelulusan' => $tahun_kelulusan,
+            'pendidikan' => $pendidikan,
+            'interest' => $interest,
+            'working_experience' => $working_experience
+        );
+        $data['title'] = 'Profile - '.$name;
+        $data['main_content'] = 'show_profile_view';
+        $data['struktur'] = $this->getStruktur($name);
+        // cek apakah bisa add friend
+        if ($this->session->userdata('name')==null) {   // belum sign in
+            $data['add_as_friend'] = 0;
+        } else if (false) {     // cek apakah sudah friend atau belum
+            $data['add_as_friend'] = 0;
+        } else {
+            $data['add_as_friend'] = 1;
+        }
+        $this->load->view('includes/template',$data);
+        
+    }
+    
+    function getStruktur($name) {
         $struktur = array (
             array (
                 'islink'=>1,
@@ -85,7 +143,7 @@ class profile extends CI_Controller {
             ),
             array (
                 'islink'=>0,
-                'label'=>'Your Profile'
+                'label'=>$name
             )
         );
         return $struktur;

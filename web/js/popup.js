@@ -73,7 +73,7 @@ $(document).ready(function(){
         
 	//Click out event!
 	$("#backgroundPopup").click(function(){
-		disablePopup();
+		//disablePopup();
 	});
         
         //Click out event! submit clicked

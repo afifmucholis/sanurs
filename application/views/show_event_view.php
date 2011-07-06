@@ -10,7 +10,7 @@
         echo "Please contact ".$data_event['cp']['name']." to purchase tickets<br/>";
         echo "Number of people attending so far: ".$data_event['attending'].".<br/>";
         foreach ($data_event['list_attending'] as $people) :
-            echo anchor('profile/'.$people['user_id'],$people['name']);
+            echo anchor('profile/user/'.$people['user_id'],$people['name']);
             echo "<br/>";
         endforeach;
         if ($data_event['rsvp']==1) {

@@ -152,6 +152,7 @@ class Event extends CI_Controller {
         
     }
     
+    
     function getStruktur() {
         $struktur = array (
             array (
