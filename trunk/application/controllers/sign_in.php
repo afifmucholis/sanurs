@@ -34,13 +34,36 @@ class Sign_in extends CI_Controller {
      * @param string post->password password user
      */
     function submit() {
-        $session_data = array (
-            'email' => $this->input->post('email'),
-            'name' => 'Danang Tri Massandy',
-            'user_id' => 777
-        );
-        $this->session->set_userdata($session_data);
-        redirect('/home', 'refresh');
+        //Get data from view :
+        $email  =  $this->input->post('email');
+        $password  =  $this->input->post('password');
+        
+        //Load model
+        $this->load->model('user', 'userModel');
+        
+        //Authenticate User:
+        $options = array('email' => $email, 'password' => $password);
+        $getReturn = $this->userModel->getUsers($options);
+        if (is_bool($getReturn) && !$getReturn) {
+            //Authenticate fail
+        } else {
+            //Authenticate success
+            //Cek, kali aja ada yang 1 imel buat banyak akun:
+            if (count($getReturn)==1) {
+                //Sign In OK
+                $session_data = array (
+                    'email' => $getReturn[0]->email,
+                    'name'  => $getReturn[0]->name,
+                    'user_id' => $getReturn[0]->id
+                );
+                $this->session->set_userdata($session_data);
+                redirect('/home', 'refresh
+            } else {
+                //Sign In Not OK
+            }
+            
+        }
+        ');
     }
     
     function sign_out() {

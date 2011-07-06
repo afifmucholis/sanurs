@@ -129,7 +129,7 @@ class User extends CI_Model{
      * @param array $options
      * @return bool/int  
      */
-    function updateAlumni($options = array()) {
+    function updateUser($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
