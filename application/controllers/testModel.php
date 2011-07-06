@@ -70,8 +70,10 @@ class TestModel extends CI_Controller {
         $getReturn = $this->tes->deleteAlumni($alum);
         if (is_bool($getReturn)) {
             echo "delete gagal";
+            echo md5("password");
         } else {
             echo "delete berhasil";
+            echo md5("password");
         }
         
     }
