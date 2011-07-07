@@ -7,7 +7,7 @@
     <div id="calendar">
         No upcoming event<br/>
         <?php echo $user_data['calendar'];?><br/>
-        Go to your calendar
+        <?php echo anchor('event/mycalendar','Go to your calendar');?>
     </div>
 </div>
 
