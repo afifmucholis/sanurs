@@ -1,4 +1,4 @@
-<div id="col_left" style="float: left">
+<div id="col_left">
     <div id="img">
         <a href="#" class="popup_link">Click to change Picture</a>
         <?php 
@@ -25,7 +25,7 @@
         You can check attendance to your event in your <?php echo anchor('profile','profile page');?>.
     </p>
 </div>
-<div id="col_right" style="float: right">
+<div id="col_right">
     <?php
         echo form_open('event/submit_event');
         echo form_hidden('url_img', base_url().'res/NoPhotoAvailable.jpg');

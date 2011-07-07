@@ -1,5 +1,5 @@
 <h3>Events</h3>
-<div id="col_left" style="float: left;">
+<div id="col_left">
     <?php
         echo "Name of event : ".$data_event['title']."<br/>";
         echo "Where : ".$data_event['where']."<br/>";
@@ -23,6 +23,6 @@
         }
     ?>
 </div>
-<div id="col_right" style="float: right;">
+<div id="col_right">
     <?php echo $data_event['url_image'];?>
 </div>

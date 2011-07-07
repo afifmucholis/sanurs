@@ -15,6 +15,84 @@ root {
     display: block;
 }
 
+/* Classes */
+.left-menu {
+    float:left;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    width: 697px;
+}
+
+.right-menu {
+    float:left;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    width: 285px;
+}
+
+.work-menu{
+    float:left;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+    width: 491px;
+}
+
+
+/* Ids */
+
+
+#content {
+    width: 1000px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#main_content {
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+}
+
+#header {
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+}
+
+
+#navigation{
+    width: 250px;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+#history{
+    width: 200px;
+    display: block; 
+    margin-left: auto; 
+    margin-right: auto;
+}
+
+#footer {
+    border-right-style: solid;
+    border-left-style: solid;
+    border-bottom-style: solid;
+    border-top-style: solid;
+}
+
+
 #search_site_box {
     float: right;
     margin-right: 100px;
