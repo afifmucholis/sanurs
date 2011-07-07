@@ -10,7 +10,8 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
 </head>
 <body>
-    <div id="top">
+  <div id="content">
+    <div id="header">
         <div id="search_site_box">
             <input></input>
         </div>
