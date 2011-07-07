@@ -1,5 +1,5 @@
 <div id="col_left" style="float: left">
-    Edit your profile
+    <?php echo anchor('profile/editProfile','Edit your profile');?>
     <div id="profpic">
         <?php echo $user_data['image'];?>
     </div>

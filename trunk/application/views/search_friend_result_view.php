@@ -12,10 +12,11 @@
     foreach ($search_result as $result) {
         ?>
     <div id="result">
-        <div id="profpic" style="float: left">
+        <div id="profpic">
             <?php echo $result['user_data']['image'];?>
         </div>
-        <div id="info" style="float: right">
+        <?php echo br(1);?>
+        <div id="info">
             <?php $this->load->view('user_info',$result); ?>
         </div>
         <?php echo br(1);?>

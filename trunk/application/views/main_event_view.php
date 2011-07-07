@@ -14,5 +14,7 @@
     <?php if ($this->session->userdata('name')==null) { ?>
         <p>Sign in first to view your personal calendar</p>
         <?php $this->load->view('sign_in_view'); ?>
-    <?php } ?>
+    <?php } else {
+        echo anchor('event/mycalendar','Click here to view my calendar');
+    } ?>
 </div>

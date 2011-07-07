@@ -38,6 +38,7 @@
             var data = ret; //Parse JSON 
             if (data!=0) {
                 $('#upload_image').attr('src', data);
+                $('input[name=url_img]').attr('value', data);
             } else {alert('Upload error');}
     }
 </script>
