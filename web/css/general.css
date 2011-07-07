@@ -1,0 +1,35 @@
+/* 
+    Document   : general
+    Created on : 07 Jul 11, 15:58:30
+    Author     : Akbar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+root { 
+    display: block;
+}
+
+#search_site_box {
+    float: right;
+    margin-right: 100px;
+}
+
+#sanur_title {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size:18px;
+}
+
+#sanur_title_description {
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 10px;
+}
+
+#clearboth {
+    clear: both;
+}
