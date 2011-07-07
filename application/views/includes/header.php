@@ -23,7 +23,7 @@
             <h2>Association of Students from St Ursula School</h2>
         </div>
         
-        <div id="link">
+        <div id="navigation">
             <label><?php echo anchor('home','Home');?></label>
             <label><?php echo anchor('about_us','About us');?></label>
             <label><?php echo anchor('event','Event');?></label>

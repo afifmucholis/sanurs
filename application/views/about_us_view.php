@@ -5,7 +5,7 @@
     <label><a href="contact" class="ajax-links">Contact Us</a></label>
     <label><a href="link_web" class="ajax-links">Santa Ursula Website</a></label>
 </div>
-<div id="content">
+<div id="content_about">
     <?php $this->load->view($view); ?>
 </div>
 
@@ -21,7 +21,7 @@ $('a.ajax-links').click(function() {
 		type: 'GET',
                 data: form_data,
 		success: function(msg) {
-                   $('#content').html(msg["text"]);
+                   $('#content_about').html(msg["text"]);
                    var his = $('#history').html().split('/');
                    var his2 = "";
                    var count=0;

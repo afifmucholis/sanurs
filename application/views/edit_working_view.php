@@ -1,4 +1,5 @@
-<div id="col_left" style="float: left">
+
+    <div class="work-menu">
     <h3>Work experience</h3>
     <?php 
         echo form_open('profile/submitWorking');
@@ -9,7 +10,8 @@
     <a href="#" id="add_links">Add field</a>   
     <a href="#" id="remove_links" style="display: none;">Remove field</a>
 </div>
-<div id="col_right" style="float: right">
+
+    <div class="work-menu">
     <h3>Current Work</h3>
     <?php
         $data = array(
@@ -24,6 +26,9 @@
         echo form_submit('next','Next');
         echo form_close();
     ?>
+</div>
+
+<div id="clearboth">
 </div>
 
 <script type="text/javascript">
