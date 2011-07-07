@@ -1,0 +1,568 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+	<title>Using MovieClipLoader to Load JPGs or SWFs</title>
+<meta name="description" content="Using MovieClipLoader to Load JPGs">	
+<meta name="keywords" content="load jpg, loadMovie, moviecliploader, handler, asynchronous">
+<link rel="stylesheet" href="dynamic_loadjpg.php_files/summer.css" type="text/css" media="screen">
+<link rel="stylesheet" type="text/css" href="dynamic_loadjpg.php_files/summerprint.css" media="print"> 
+<link rel="stylesheet" href="dynamic_loadjpg.php_files/basicbut.css" type="text/css" media="screen">
+<script type="text/javascript" src="dynamic_loadjpg.php_files/p7.js"></script><style type="text/css">
+#p7TMnav div div {display:none;}
+#p7TMnav div div div {display:none;}
+#p7TMnav div div div div {display:none;}
+#p7TMnav div div div div div {display:none;}
+#p7TMnav div div div div div div {display:none;}
+#p7TMnav div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div div div div div div {display:none;}
+#p7TMnav div div div div div div div div div div div div div div div div div div div div {display:none;}
+</style>
+<script type="text/javascript" src="dynamic_loadjpg.php_files/creations.js"></script>
+</head>
+
+<body onload="P7_TMopen();">
+<div id="header">
+	<div id="section"><table border="0" cellpadding="0" cellspacing="0"><tbody><tr><td width="150"><a href="http://flash-creations.com/notes/"><img src="dynamic_loadjpg.php_files/hdr_notes2.gif" border="0" height="70" width="150"></a></td><td style="padding: 5px 5px 5px 15px;"><object classid="clsid:D27CDB6E-AE6D-11cf-96B8-444553540000" codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0" id="holder" align="" height="60" width="468"><param name="movie" value="../adholder.swf?adname=../ads/ad_zincbanner.swf&amp;acctname=multid&amp;link=http://www.multidmedia.com/track.php?ref=astbZ&amp;redirect=/software/zinc&amp;page=/notes/dynamic_loadjpg.php&amp;s=111.94.194.171&amp;path=../"><param name="quality" value="high"> <param flashvars="adname=../adsad_zincbanner.swf&amp;acctname=multid&amp;link=http://www.multidmedia.com/track.php?ref=astbZ&amp;redirect=/software/zinc&amp;page=/notes/dynamic_loadjpg.php&amp;s=111.94.194.171&amp;path=../"><param name="bgcolor" value="#0"> <embed src="dynamic_loadjpg.php_files/adholder.swf" quality="high" bgcolor="#0" name="holder" flashvars="adname=../ads/ad_zincbanner.swf&amp;acctname=multid&amp;link=http://www.multidmedia.com/track.php?ref=astbZ&amp;redirect=/software/zinc&amp;page=/notes/dynamic_loadjpg.php&amp;s=111.94.194.171&amp;path=../" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" align="" height="60" width="468"></object></td></tr></tbody></table></div>
+	<div id="site"><a href="http://flash-creations.com/"><img src="dynamic_loadjpg.php_files/hdr_fc.gif" border="0" height="70" width="210"></a></div>
+</div>
+<div class="content" style="text-align:right;padding-bottom:0"><div id="rightheader"><a href="http://flash-creations.com/notes/actionscript_reference.php">AS Reference</a> &nbsp;:&nbsp; <a href="http://flash-creations.com/notes/">Notes Index</a> &nbsp;:&nbsp; <a href="http://flash-creations.com/resources/" title="Resources">Resources</a> &nbsp;:&nbsp; <a href="http://flash-creations.com/about/" title="About/Contact">About/Contact</a> &nbsp;:&nbsp; <a href="javascript:NewWindow=window.open('../downloads.php','newWin','width=620,height=530,left=0,top=0,toolbar=yes,location=yes,scrollbars=yes,status=No,resizable=yes,fullscreen=No');NewWindow.focus();void(0);">Downloads</a></div></div>
+<div class="content"> 
+  <h2>Including external JPGs (or SWFs) in a Flash movie</h2>
+  <br>
+  <p align="center"> 
+    <object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=7,0,0,0" id="photoviewer1" align="middle" height="290" width="420">
+      <param name="allowScriptAccess" value="sameDomain">
+      <param name="movie" value="swf/photoviewer1.swf">
+      <param name="quality" value="high">
+      <param name="bgcolor" value="#000000">
+      <embed src="dynamic_loadjpg.php_files/photoviewer1.swf" quality="high" bgcolor="#000000" name="notes/swf/photoviewer1" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" align="middle" height="290" width="420"> 
+    </object>
+    <br>
+    <br>
+    <a href="#code">Movie generated completely from code, displayed below</a></p>
+  <p>To keep your published Flash movie size down, or because you have graphic 
+    content that will vary, it's often desirable to use picture files that are 
+    external to the Flash file. Instead of putting them in movieclips in the library 
+    and having to wait for them all to load before the movie can begin, you can 
+    load them at runtime, either all upfront as in the example above, or individually 
+    whenever they are needed. As of Flash MX 2004, Flash can read only non-progressive 
+    jpg's, not gifs or pngs or any other format, from an external directory. To 
+    include other files dynamically, you'd need to publish a swf with the graphic 
+    you want and then load that swf, using the same method that will be described 
+    below for loading jpgs.</p>
+  <h3>Option 1: loadMovie</h3>
+  <p>The simplest way to load a jpg or an external swf is with the loadMovie command, 
+    in which you specify the movieclip you want to load into, and the path and 
+    name of the file to be loaded. Eg 
+  </p><pre>holder_mc.loadMovie("../summer/camping.jpg");</pre>
+  which would load camping.jpg from the summer directory, a directory at the same 
+  level as the one with the html page that has the Flash movie, into holder_mc.<p></p> 
+  <p class="note"><strong>Directory path to jpg</strong><br>
+    Note that the path to the picture to be loaded is relative to the <strong>html 
+    page</strong> holding the swf that's doing the loading, not relative to the 
+    swf itself. This is only relevant if the html page and swf embedded in it 
+    are in different directories.</p>
+  <p>Because the jpg is being loaded from a directory on a web server down to 
+    a viewer's pc, it takes some time for the loading to complete. No positioning 
+    or scaling of holder_mc (ie, its new content) may be done until the loading 
+    is complete. The main drawback of the loadMovie command is that there is no 
+    built-in way to tell when loading is complete, so some sort of loop must be 
+    set up to check for loading complete if anything is to be done to the jpg 
+    or swf after it is loaded.</p>
+	<p>Another pitfall of loadMovie is that it causes any properties of the
+ movieclip being loaded into to be wiped out when the new content has 
+been loaded, including any event handlers or other functions that may 
+have been assigned to the movieclip.</p>
+  <h3>Option 2: MovieClipLoader plus Listener</h3>
+  <p>The MovieClipLoader class, introduced in Flash MX 2004, provides a neat way 
+    around these problems. To use this method to load a jpg, a swf, or series of jpgs or swfs, you do the following</p><ol>
+	<li>create an instance of the MovieClipLoader class,</li> 
+	<li>(create if necessary and) designate a Listener which will listen 
+for and respond to events issued by the MovieClipLoader instance, and</li> 
+	<li>create functions that will do the things you want to do while the jpg is loading and when it has been completely loaded.</li>
+	<li>start the download</li></ol><p></p>
+	<p>The combination of Listener and functions you set up take the place 
+of the wait loop that would otherwise be required (if you used the old 
+way, loadMovie).  The use of a MovieClipLoader eliminates the need for a
+ holder movieclip within the movieclip you load into.</p>
+	<p>Here is a little demo of the steps that needs to be done, and how 
+each element is used in the movie after the request to load the movie is
+ done.  Below that is a more detailed explanation.</p>
+	<p><object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000" codebase="http://fpdownload.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=8,0,0,0" id="loader_and_listener" align="middle" height="350" width="500">
+<param name="allowScriptAccess" value="sameDomain">
+<param name="movie" value="swf/loader_and_listener.swf"><param name="quality" value="high"><param name="bgcolor" value="#ffffff"><embed src="dynamic_loadjpg.php_files/loader_and_listener.swf" quality="high" bgcolor="#ffffff" name="loader_and_listener" allowscriptaccess="sameDomain" type="application/x-shockwave-flash" pluginspage="http://www.macromedia.com/go/getflashplayer" align="middle" height="350" width="500">
+</object></p>
+	<h3>loadClip (MovieClipLoader method)</h3>
+	<p>The MovieClipLoader class has a method, <strong>loadClip</strong>, 
+    which is used to initiate the loading. This method takes two 
+parameters, one that specifies the path (relative to the html page in 
+which your main swf is embedded) and filename of the jpg or swf to be 
+loaded, and a second which is a reference to the movieclip to be loaded 
+into. </p>
+	<h3>onLoadProgress (Listener function)</h3>
+	<p>Once that loadClip command has been issued, Flash starts downloading
+ the jpg or swf from the web server.  While that download is happening, 
+the MovieClipLoader instance broadcasts messages (automatically; you 
+don't have to do anything to make that happen) that the Listener can 
+listen for and respond to with its onLoadProgress function.  This 
+onLoadProgress function, therefore, needs to be defined <strong>before</strong> the download is initiated.</p>
+	<p>onLoadProgress is a method which accepts 3 parameters, in this 
+order: a reference to the movieclip into which the jpg or swf is being 
+loaded, the number of bytes that have downloaded so far, and the total 
+number of bytes in the file being downloaded.  This information can be 
+used to set up a loading progress indicator while the download is 
+happening (eg, the text percent indicator in the example above).  The 
+parameters can be given whatever names you want, as long as you use the 
+same names throughout the onLoadProgress routine; they will always refer
+ to the movieclip, bytes loaded and bytes total, respectively.</p>
+	<h3>onLoadInit (Listener function)</h3>
+	<p>Once the download is complete, the MovieClipLoader instance 
+broadcasts a message saying that the jpg or swf has been received and is
+ ready to be executed (eg, for a swf with a stop action in frame 1), 
+resized, repositioned, made invisible or visible, or anything else that 
+needs to be done once the file has been completely downloaded.  The 
+function that the Listener uses to respond to that broadcast message is 
+onLoadInit.</p>
+	<h3>The Listener</h3>
+	<p>We mentioned above that you need to have a Listener which listens 
+for events broadcast by the MovieClipLoader instance and responds to 
+them.  You can either create a separate object to act as a Listener, as 
+is done in the Flash Help documentation examples, or you can use the 
+main timeline or some other already-existing object to act as your 
+Listener.  On this page, I have chosen to do the latter, because the 
+code is then more easily extensible for use in a custom class.</p>
+	<h3>Putting it all together</h3>
+  <p>Here's an outline of the (commented) code needed to load a picture 
+or swf using MovieClipLoader with the main timeline as the Listener: <br><br>
+	<strong>MovieClipLoader + Listener framework</strong><br>For cut and paste when setting up code to load a jpg or swf
+</p><pre>// set up loader, an instance of MovieClipLoader, and use the main timeline ("this")
+// to listen to and respond to its broadcast events
+var loader:MovieClipLoader = new MovieClipLoader();
+loader.addListener(this);
+
+// define what should happen when the jpg/swf is completely loaded
+// use _mc to refer to the loaded jpg/swf
+function onLoadInit(_mc:MovieClip) {
+   // code here
+};
+
+// define what should happen while the jpg/swf is loading
+// use _mc to refer to the jpg/swf and loaded &amp; total to refer to the number of bytes
+// currently loaded and to be loaded, respectively
+function onLoadProgress(_mc:MovieClip, loaded:Number, total:Number) {
+   // code here
+};
+
+// start loading specified jpg/swf into blank movieclip holder_mc on stage
+loader.loadClip("somepic.jpg", holder_mc);
+</pre>
+<p></p>
+  <p>And here's the framework expanded into an actual example. This code loads 
+    a jpg into holder_mc (a movieclip on stage), displaying the percent loaded 
+    in pct_txt inside pct_mc (put inside a movieclip so that it can be hidden 
+    when done), and showing the jpg at half size when loaded: 
+	<br><br>
+	<strong>MovieClipLoader + Listener example</strong><br>Show load progress, resize when loaded
+</p><pre>// set up loader, an instance of MovieClipLoader, and use the main timeline ("this")
+// to listen to and respond to its broadcast events
+var loader:MovieClipLoader = new MovieClipLoader();
+loader.addListener(this);
+
+// define what happens when the jpg is completely loaded
+function onLoadInit(_mc:MovieClip) {
+   _mc._xscale = 50;
+   _mc._yscale = 50;
+   pct_mc._visible = false;
+};
+
+// make pct_txt show cumulative loading progress
+function onLoadProgress(_mc:MovieClip, loaded:Number, total:Number) {
+   pct_mc.pct_txt.text = Math.floor(loaded / total * 100) + "%";
+};
+
+loader.loadClip("oahupics/hanauma.jpg", holder_mc);
+</pre>
+<p></p>
+  <p>Notice that we used onLoadInit's one parameter (a reference to the 
+movieclip 
+    being loaded into), to access the movieclip being loaded into (that 
+is, to access the newly-loaded jpg or swf itself).  You can use any name
+ you like for that parameter (I used _mc) but it will always refer to 
+the movieclip being loaded into.  Likewise, we used the 3 parameters 
+that onLoadProgress has built into it to access the movieclip being 
+loaded into, the number of bytes loaded and the total number of bytes.  
+You don't <strong>have</strong> to have an onLoadProgress function -- 
+you only need it if you want to be able to do something while your file 
+is downloading from the web server.  (If you're running the Flash movie 
+locally and accessing local jpgs or swfs, the onLoadProgress function 
+will never be called, since the files are not being downloaded from a 
+web server.)  Likewise, you don't <strong>have</strong> to set up an onLoadInit function -- only if you need to <strong>do</strong> something to the jpg or swf (or anything else in the movie, like hiding the preloader as we did above) once it has loaded.</p>
+  <p>Both of the listener's handler functions should be set up (defined) <strong>before</strong> 
+    the loadClip command is issued, so that they will be ready to handle any events 
+    issued by by loader.</p>
+	<p class="note"><strong>Testing within the Flash IDE</strong>:<br>To 
+test and see whether your onLoadProgress function is working before you 
+upload the files to your server, you need to simulate a web server 
+download (because when run locally, Flash will grab the files from your 
+hard drive and onLoadProgress will never be called).  To do that in 
+Flash 8 (it doesn't work in Flash MX 2004), choose Control, Test Movie. 
+ Then choose View, Download Settings and check one of the settings 
+shown.  Then choose View, Simulate Download and your movie will display 
+as though it is being served from a web server at that connection speed.</p>
+  <h2>Loading multiple jpg's, sequentially</h2>
+  <p>That was pretty straightforward (well, as straightforward as you 
+can get with asynchronous file transfers happening while your movie is 
+running). If you want to preload a number of jpgs, 
+    things get a bit more complicated. Because you should only have one 
+jpg (or 
+    swf) loading at a time, your onLoadInit routine has to be set up to 
+start 
+    the next jpg loading when one is complete. The easiest way to do 
+that is to 
+    use an array with the names of all the jpgs you want to load, and a 
+variable 
+    on the main timeline (ipic in the code below) that keeps track of 
+which element 
+    of the array is currently being loaded. Below is the code to 
+generate the 
+    whole movie shown above from scratch (nothing on stage, nothing in 
+the library 
+    -- just start with a 420 x 290 movie with a black background, 20fps,
+ and jpgs 
+    in the specified folder (relative to the html) of the specified 
+names, put 
+    the code below in frame 1 and you've got a ready-made photo viewer.</p>
+  <p>Other things to note about the code below are the use of createEmptyMovieClip 
+    to create a holder for the main pictures (which will be loaded with loadMovie 
+    since no further positioning or sizing of them needs to be done after load), 
+    and for a thumbs movieclip that will hold the thumbnails. Another method of 
+    the MovieClip class, createTextField (which creates an instance of the TextField 
+    class in the specified movieclip), is used to create a percent loaded indicator, 
+    and then removed when all the loading is done. <a name="code"> </a> 
+  </p><pre>/*********  DECLARE AND INITIALIZE VARIABLES  **************************/
+// names of folder and pictures, in the order to put them into the thumbnails holder
+var picnames:Array = [
+	"flower_orange", 
+	"flower_yellow", 
+	"flower_pink", 
+	"flower_red", 
+	"flower_purple"];
+
+// constants
+var PICPATH:String = "flowers/";	// folder with jpgs
+var NPICS:Number = picnames.length;	// number of pictures to load
+var PICX:Number = 10;               // x loc of big picture
+var PICY:Number = 10;               // y loc
+var THUMBHOLDERX:Number = 0;        // x location of thumbnail holder movieclip
+var THUMBHOLDERY:Number = 230;      // y location
+var THUMBW:Number = 72;             // width of each thumbnail
+var THUMBH:Number = 40;             // height
+var MARGIN:Number = 10;             // margin between thumbnails
+var TOTALBYTES:Number = 106000;     // approx sum of bytes in all jpgs 
+
+var totalloaded:Number = 0;         // running tally of bytes loaded from all pics
+
+// index into pictures array, used for loading
+var ipic:Number;
+
+// set up loader, an instance of MovieClipLoader
+var loader:MovieClipLoader = new MovieClipLoader();
+
+// use the main timeline to listen to and respond to loader's broadcast events
+loader.addListener(this);
+
+/*********  DEFINE FUNCTIONS, INCLUDING INIT FOR MOVIE SETUP  **********/
+// thumbnail rollover handler
+
+function grow() {
+   this.onEnterFrame = function() {
+      if (this._width &lt; THUMBW * 1.2) {
+         this._x -= this._width * .025;
+         this._y -= this._height * .025;
+         this._width *= 1.05;
+         this._height *= 1.05;
+      } else delete this.onEnterFrame;
+   };
+}
+
+// thumbnail rollout handler
+
+function shrink() {
+   this.onEnterFrame = function() {
+      if (this._width &gt; THUMBW) {
+         this._width /= 1.05;
+         this._height /= 1.05;
+         this._x += this._width * .025;
+         this._y += this._height * .025;
+      } else delete this.onEnterFrame;
+   };
+}
+
+// thumbnail click (onrelease) handler
+
+function openPic() {
+   pic_mc.loadMovie(PICPATH + picnames[this.i] + ".jpg");
+}
+
+// assign event handlers (called when all jpgs are loaded)
+
+function setupHandlers() {
+   pct_txt.removeTextField();		// don't need loading indicator any more
+   for (var i:Number = 0; i &lt; NPICS; i++) {
+      thumbs_mc["mc"+i].onRollOver = grow;
+      thumbs_mc["mc"+i].onRollOut = shrink;
+      thumbs_mc["mc"+i].onRelease = openPic;
+   }
+}
+
+// listener function for broadcast 'done' message (for each pic)
+// onLoadInit gets executed when the movieclip has been loaded into _mc AND 
+//   its width and height data are available.
+//   (_mc = the movieclip being loaded into)
+// this routine sets the size and position of each thumbnail clip as its jpg
+//   is loaded and starts the next one loading.  When all have been loaded, 
+//   a random picture is loaded into pic_mc and setupHandlers is called to 
+//   assign handlers to each thumbnail movieclip
+
+function onLoadInit(_mc:MovieClip) {
+   // this gets done when the jpg is completely loaded:
+   _mc._width = THUMBW;
+   _mc._height = THUMBH;
+   // give the movieclip a property to remind it who it is
+   // (used by openPic to know which big picture to open)
+   _mc.i = ipic;
+	
+   // add picture size to totalloaded variable
+   totalloaded += loader.getProgress(_mc).bytesTotal;
+
+   // now load the next one (if there are more) or set up handlers if done
+   ipic++;
+   if (ipic == NPICS) {
+      // start with a random photo displayed
+      pic_mc.loadMovie(PICPATH + picnames[Math.floor(Math.random()*5)] + ".jpg");
+      setupHandlers();
+   } else {
+      loader.loadClip(PICPATH + picnames[ipic] + ".jpg",  thumbs_mc["mc"+ipic]);
+   }
+};
+
+// listener function to handle broadcast progress messages
+// make pct_txt show cumulative loading progress
+
+function onLoadProgress(_mc:MovieClip, loaded:Number) {
+   var loadedsofar:Number = totalloaded + loaded;	
+   pct_txt.text = Math.floor(loadedsofar / TOTALBYTES * 100) + "%";
+};
+
+// things to do to set up the stage and start the movie:
+// create holders for the pictures and thumbnails
+// create and format progress-indicating textfield
+// create individual holder movieclips for each thumbnail within the thumbnail holder
+// start the pictures loading with loadClip
+
+function init() {
+   // create holder for pictures
+   createEmptyMovieClip("pic_mc", 1);
+   pic_mc._x = PICX;
+   pic_mc._y = PICY;
+
+   // create (and draw) holder for thumbnails
+   createEmptyMovieClip("thumbs_mc", 2);
+   thumbs_mc.beginFill(0, 100);
+   thumbs_mc.moveTo(0, 0);
+   thumbs_mc.lineTo((MARGIN + THUMBW) * NPICS, 0);
+   thumbs_mc.lineTo((MARGIN + THUMBW) * NPICS, THUMBH + 2 * MARGIN);
+   thumbs_mc.lineTo(0, THUMBH + 2 * MARGIN);
+   thumbs_mc.endFill();
+   thumbs_mc._x = THUMBHOLDERX;
+   thumbs_mc._y = THUMBHOLDERY;
+
+   // create loading textfield indicator
+   createTextField("pct_txt", 3, 200, 100, 40, 100);
+   var tf:TextFormat = new TextFormat();
+   tf.align = "center";
+   tf.size = 12;
+   tf.font = "Verdana";
+   tf.color = 0xFFFF00;
+   pct_txt.setNewTextFormat(tf);
+
+   // make empty movieclips in thumbs_mc for each pic to go into
+   for (var i:Number = 0; i &lt; NPICS; i++) {
+      var mc:MovieClip = thumbs_mc.createEmptyMovieClip("mc"+i, i+1);
+      mc._x = MARGIN + i*(MARGIN + THUMBW);
+      mc._y = MARGIN;
+   }
+
+   // set the pointer to the first jpg in the array picnames
+   ipic = 0;
+   // start loading jpgs 
+   loader.loadClip(PICPATH + picnames[ipic] + ".jpg", thumbs_mc["mc"+ipic]);
+}
+
+/*********  CALL THE INIT FUNCTION TO START THE MOVIE  *****************/
+init();
+</pre><p></p>
+  <p>The <a href="http://flash-creations.com/notes/dynamic_slidingviewer.php">next page</a> expands on this sample 
+    to make a thumbnail slider which can accommodate any number of photos in a 
+    folder.</p>
+</div>
+
+<div id="p7TMnav">
+<div id="m1"><a href="javascript:void();" onclick="P7_TMenu(this);return false">Intro</a>
+  <div><a href="http://flash-creations.com/notes/intro_whatisflash.php" title="Flash: What/How/Why">Flash: What &amp; How</a></div>
+  <div><a href="http://flash-creations.com/notes/intro_flashexamples.php" title="Example Sites">Example Sites</a></div>
+</div>
+<div id="m2"><a href="javascript:void();" onclick="P7_TMenu(this);return false">Create</a>
+  <div><a href="http://flash-creations.com/notes/create_drawinginflash.php" title="Draw and Edit Shapes in Flash" id="draw_createshapesnav">Draw, Edit Shapes</a></div>
+  <div><a href="http://flash-creations.com/notes/create_gradient.php" title="Gradients">Gradients</a></div>
+  <div><a href="http://flash-creations.com/notes/create_moredrawtips.php" title="More Drawing Tips">More Drawing Tips</a></div>
+  <div><a href="http://flash-creations.com/notes/create_import.php" title="Import Graphics and Sound">Import</a></div>
+  <div><a href="http://flash-creations.com/notes/create_sample.php" title="Make a Sample Scene">A Sample</a></div>
+</div>
+<div id="m3"><a href="javascript:void();" onclick="P7_TMenu(this);return false">Animate</a>
+  <div><a href="http://flash-creations.com/notes/animate_keyframes.php" title="Frames and Keyframes">Frames, Keyframes</a></div>
+  <div><a href="http://flash-creations.com/notes/animate_tweens.php" title="Motion Tweens">Motion Tweens</a></div>
+  <div><a href="http://flash-creations.com/notes/animate_moretweens.php" title="More Motion Tweens">More Motion Tweens</a></div>
+  <div><a href="http://flash-creations.com/notes/animate_shapetweens.php" title="Shape Tweens">Shape Tweens</a></div>
+  <div><a href="http://flash-creations.com/notes/animate_masks.php" title="Masks">Masks</a></div>
+</div>
+<div id="m4"><a href="javascript:void();" onclick="P7_TMenu(this);return false">Control</a>
+  <div><a href="http://flash-creations.com/notes/control_maintimeline.php" title="Stop/Start Movie">Stop/Replay</a></div>
+  <div><a href="http://flash-creations.com/notes/control_movieclips.php" title="Control Movieclips">Movieclips Intro</a></div>
+  <div><a href="http://flash-creations.com/notes/control_aboutmovieclips.php" title="Movieclip Reference Page">Movieclip Reference</a></div>
+  <div><a href="http://flash-creations.com/notes/control_sitestructure1.php" title="One Way to Structure a Website">Site Structure 1</a></div>
+  <div><a href="http://flash-creations.com/notes/control_addmovieclip.php" title="Slideshow Movieclip">Slideshow Movieclip</a></div>
+  <div><a href="http://flash-creations.com/notes/control_contactform.php" title="Contact Form">Contact Form</a></div>
+  <div><a href="http://flash-creations.com/notes/control_buttonscroll.php" title="Resume Scroll with buttons">Scroll Resume</a></div>
+  <div><a href="http://flash-creations.com/notes/control_preloader.php" title="Preloader">Preloader</a></div>
+  <div><a href="http://flash-creations.com/notes/control_sitestructure2.php" title="Website Structure with External Swfs">Site Structure 2</a></div>
+</div>
+<div id="m5"><a href="javascript:void();" onclick="P7_TMenu(this);return false">Publish</a>	
+  <div><a href="http://flash-creations.com/notes/publish_display.php" title="Browser Display Options">Display Options</a></div>
+  <div><a href="http://flash-creations.com/notes/publish_detect.php" title="Flash Player Detection">Player Detection</a></div>
+  <div><a href="http://flash-creations.com/notes/publish_optimize.php" title="Image/Sound Optimizing">Optimize</a></div>
+</div>
+<div id="m6"><a href="javascript:void();" title="ActionScript Basics" onclick="P7_TMenu(this);return false">AS 2.0 Basics</a>	
+  <div><a href="http://flash-creations.com/notes/actionscript_syntax.php" title="Intro to Actionscript Syntax">Intro to Syntax</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_playheadcommands.php" title="Playhead Commands">Playhead Commands</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_playheadcommands2.php" title="Playhead Commands 2">Playhead Cmds 2</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_codedmotion.php" title="Tween Class">Coded Tween</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_onenterframe.php" title="onEnterFrame">onEnterFrame</a></div>
+    <div><a href="http://flash-creations.com/notes/actionscript_aboutclasses.php" title="Actionscript Classes">Intro to Classes</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_assignment.php" title="Declaration and Assignment Statements">Declare/Assign</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_commenttrace.php" title="Comments, Trace">Comments, Trace</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_simpledata.php" title="Simple Data Types">Simple Data Types</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_complexdata.php" title="Complex Data Types">Arrays &amp; Objects</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_codeblocks.php" title="Code Blocks, Functions">Code Blocks</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_operators.php" title="Actionscript Operators">Operators</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_eventhandlers.php" title="Event Handlers">Beyond Buttons</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_codestructure.php" title="Event Handlers">Code Structure</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_togglebutton.php" title="Toggle Button">Toggle Controls</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_groupofbuttons.php" title="Groups of Buttons">Group of Buttons</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_dragandhit.php" title="Dragging and Collision Detection">Drag and Hit</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_distortingmagnifier.php" title="Distorting Magnifier">Distort Magnifier</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_scrolltext.php" title="Scrolling and Formatting Text">Scroll Text</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_examplegame.php" title="An Example Game">Bee Game</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_dartshooter.php" title="Dart Shooter">Dart Shooter</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_controlsound.php" title="Controlling Sound">Sound Control</a></div>  
+  <div><a href="http://flash-creations.com/notes/actionscript_easingslider.php" title="Easing Photo Slider">Easing Slider</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_easingslider2.php" title="Photo Slider w/Captions">Easing Slider 2</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_componentsintro.php" title="Intro to v2 Components">Components Intro</a></div>
+  <div><a href="http://flash-creations.com/notes/actionscript_timersanddelays.php" title="Timers, Intervals, Delays">Timers &amp; Delays</a></div>
+</div>
+<div id="m7"><a href="javascript:void();" title="Dynamic Content in Flash" onclick="P7_TMenu(this);return false">Dynamic Content</a>	
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_intro.php" title="Intro to using dynamic content">Intro</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_drawingapi.php" title="Flash Drawing API">Drawing API</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_createtext.php" title="Create Dynamic Textfield">Create Text</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_attachmovie.php" title="Use attachMovie">Attach Movieclips</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_easingslider3.php" title="Slider with attached movieclips">Easing Slider 3</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_easingslider4.php" title="Slider with dynamic text">Easing Slider 4</a></div>
+  <div style="display: block;"><a class="p7currentmark" href="http://flash-creations.com/notes/dynamic_loadjpg.php" title="MovieClipLoader to Load Jpgs">Load jpg/swf</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_slidingviewer.php" title="Sliding Photo Viewer">Sliding Viewer</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_preloadswf.php" title="MovieClipLoader to Load/resize swf">Preload swf</a></div>
+  <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_xml.php" title="Using XML with Flash">XML</a></div>
+    <div style="display: block;"><a href="http://flash-creations.com/notes/dynamic_easingslider5.php" title="Slider with XML source">Easing Slider 5</a></div>
+</div>
+<div id="m8"><a href="javascript:void();" title="Flash-Server Communications" onclick="P7_TMenu(this);return false">Server Comm</a>	
+  <div><a href="http://flash-creations.com/notes/servercomm_loadvars.php" title="LoadVars">LoadVars (w/ PHP)</a></div>
+  <div><a href="http://flash-creations.com/notes/servercomm_asphptable.php" title="LoadVars">AS - PHP Lookup</a></div>
+  <div><a href="http://flash-creations.com/notes/servercomm_textfile.php" title="Text File">Text File</a></div>
+  <div><a href="http://flash-creations.com/notes/servercomm_database.php" title="Database">Database 1:LoadVars</a></div>
+  <div><a href="http://flash-creations.com/notes/servercomm_remoting_amfphp.php" title="Remoting">Database 2:Remoting</a></div>
+  <div><a href="http://flash-creations.com/notes/servercomm_readfromdir.php" title="Display From Directory">Read from directory</a></div>
+</div>
+<div id="m9"><a href="javascript:void();" title="ActionScript Classes" onclick="P7_TMenu(this);return false">AS 2.0 Classes</a>	
+  <div><a href="http://flash-creations.com/notes/asclass_intro.php" title="Intro to AS Classes">Intro</a></div>
+  <div><a href="http://flash-creations.com/notes/asclass_math.php" title="Math Class">Math</a></div>  
+  <div><a href="http://flash-creations.com/notes/asclass_key.php" title="Key Class">Key</a></div>  
+  <div><a href="http://flash-creations.com/notes/asclass_date.php" title="Date Class">Date</a></div>  
+  <div><a href="http://flash-creations.com/notes/asclass_color.php" title="Color Class">Color</a></div>  
+  <div><a href="http://flash-creations.com/notes/asclass_eventdispatcher.php" title="Event Dispatcher">EventDispatcher</a></div>    
+</div>
+<div id="m10"><a href="javascript:void();" onclick="P7_TMenu(this);return false">New Samples</a>
+  <div><a href="http://flash-creations.com/notes/sample_piechart.php" title="Dynamic pie chart">Pie Chart</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_emailer.php" title="EventDispatcher and Delegates">Event-model Emailer</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_tweensequence.php" title="Tween Sequence">Tween Sequence</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_fusesequence.php" title="Fuse Sequence">Fuse Sequence</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_svgtoflash.php" title="Using SVG in Flash">SVG in Flash</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_bitmaptopo.php" title="BitmapData class for map">Bitmap Topo</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_swfasdataholder.php" title="SWF as data holder">SWF as Data Holder</a></div>
+  <div><a href="http://flash-creations.com/notes/sample_twolevelmenu.php" title="Two-level Menu">Two-level Menu</a></div>  
+  <div><a href="http://flash-creations.com/notes/sample_yahoomap.php" title="Yahoo Flash Maps">Yahoo! Flash Maps</a></div>  
+  <div><a href="http://flash-creations.com/notes/sample_classbasedgame.php" title="Class-based Dart Shooter Game">Class-based Game</a></div>    
+</div>
+<div id="m11"><a href="javascript:void();" onclick="P7_TMenu(this);return false">ASTB Samples</a>
+  <div><a href="http://flash-creations.com/notes/astb_disclaimer.php" title="Samples from ASTB">Disclaimer</a></div>
+  <div><a href="http://flash-creations.com/notes/astb_outline3d.php" title="3D Outlines">3D Outlines</a></div>
+  <div><a href="http://flash-creations.com/notes/astb_bounceCollide.php" title="Collision Detection">Bounce Collide</a></div>
+  <div><a href="http://flash-creations.com/notes/astb_addressbook.php" title="Flash/PHP Addressbook">Address Book</a></div>
+  <div><a href="http://flash-creations.com/notes/astb_saveshapes.php" title="Draw and save shapes">Save Drawings</a></div>
+</div>
+</div>
+<div id="rightSidebar"> 
+<form action="../search/index.php" method="GET"><input name="phrase" style="font-size: 11px;" size="12" type="text">&nbsp;<input style="font-size: 11px;" value="Search" type="Submit">&nbsp;</form><br><p align="center"><strong>last update: 1 Apr 2006</strong></p>
+<p style="background:#ADD6E4;padding:2px 2px 2px 4px"><strong>Discussed on this page:</strong></p>
+<p>use external jpg, load external swf, MovieClipLoader, onLoadInit, 
+onLoadProgress, loadClip, load jpgs sequentially, path to jpg, 
+MovieClipLoader framework to cut and paste, simulate download</p>
+<p style="background:#ADD6E4;padding:2px 2px 2px 4px"><strong>Files:</strong></p>
+<p>The cartoon movie in the middle of this page is available for 
+download, for those who wish to see an example of simple forward/back 
+navigation through a sequence of frames:<br><br><strong>loader_and_listener.fla</strong><br><br>
+In <a href="http://flash-creations.com/classfiles/loadercartoon.zip">loadercartoon.zip</a>, password required</p>
+<p style="background:#ADD6E4;padding:2px 2px 2px 4px"><strong>Subscription:</strong></p>
+<p>A password may be obtained by subscription</p>
+<div align="center">
+<form action="https://www.paypal.com/cgi-bin/webscr" method="post" style="font:11px/13px verdana, arial, helvetica, sans-serif">
+<strong>One-month access </strong><br>(to all files at site)<br><strong>$20.00<br><br></strong>
+<input name="cmd" value="_xclick" type="hidden">
+<input name="business" value="info@i-technica.com" type="hidden">
+<input name="item_name" value="One month subscription to flash-creations.com files" type="hidden">
+<input name="item_number" value="FCF201" type="hidden">
+<input name="amount" value="20.00" type="hidden">
+<input name="no_note" value="1" type="hidden">
+<input name="currency_code" value="USD" type="hidden">
+<input name="bn" value="PP-BuyNowBF" type="hidden">
+<input src="dynamic_loadjpg.php_files/paypal_buynow.gif" name="submit" alt="Make payments with PayPal - it's fast, free and secure!" border="0" type="image">
+</form>
+</div>
+<p>An access password will be emailed to the address you specify within 
+24 hours of receipt of payment, and will remain active for 30 days 
+thereafter.  A list of all files currently available at the site may be 
+viewed <a href="javascript:NewWindow=window.open('../downloads.php','newWin','width=620,height=530,left=0,top=0,toolbar=yes,location=yes,scrollbars=yes,status=No,resizable=yes,fullscreen=No');NewWindow.focus();void(0);">here</a>.</p>
+</div>
+<div class="content" style="text-align:center;padding:0"><a href="http://flash-creations.com/">Home</a> &nbsp;:&nbsp; <a href="http://flash-creations.com/notes/">Notes Index</a> &nbsp;:&nbsp; <a href="http://flash-creations.com/resources/" title="Resources">Resources</a> &nbsp;:&nbsp; <a href="http://flash-creations.com/about/" title="About/Contact">About/Contact</a> &nbsp;:&nbsp; <a href="javascript:NewWindow=window.open('../downloads.php','newWin','width=620,height=530,left=0,top=0,toolbar=yes,location=yes,scrollbars=yes,status=No,resizable=yes,fullscreen=No');NewWindow.focus();void(0);">Downloads</a></div>
+<div id="footer"><img src="dynamic_loadjpg.php_files/footer.gif" border="0" height="24" width="500"></div>
+
+</body></html>

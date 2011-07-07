@@ -1,0 +1,124 @@
+/*font family for page. If you have another style sheet that sets font family, you can delete this rule*/
+div, td, p {
+/*	font-family: Times New Roman, serif;*/
+}
+
+/*Control DIV for expand all and collapse all links*/
+#p7TMctrl {
+	margin: 0 0 12px 0; 
+	font-size: 12px;
+	font-family: Times New Roman, serif;
+	display: none;
+	/*/*/display: block; /* Hide from NN4 */
+}
+#p7TMctrl a:link {
+	color: #333399;
+}
+#p7TMctrl a:visited {
+	color: #333399;
+}
+#p7TMctrl a:hover {
+	color: #0000aa;
+}
+
+/*Sets line-height of all menuitems*/
+#p7TMnav {
+/*	padding: 0 10px 0 0;*/
+	/*/*/line-height: 1.90; /* */
+		font-weight:bold;
+		font-family:Georgia, Times New Roman, serif;
+		font-size:12pt;
+		
+	position:absolute;
+	text-align:right;
+	width:170px;
+	top:70px;
+	left:0px;
+	padding:0px 0px 2px 0px;
+	z-index:2;
+
+/* Here is the ugly brilliant hack that protects IE5/Win from its own stupidity. 
+Thanks to Tantek Celik for the hack and to Eric Costello for publicizing it. 
+IE5/Win incorrectly parses the "\"}"" value, prematurely closing the style 
+declaration. The incorrect IE5/Win value is above, while the correct value is 
+below. See http://glish.com/css/hacks.asp for details. */
+	voice-family: "\"}\"";
+	voice-family:inherit;
+	width:128px;		
+}
+
+/*second level menuitem divs on - Cascades to lower levels*/
+/*Sets left margin to 16px establishing a cascading indent*/
+/* turned off since all are right aligned */
+#p7TMnav div div {
+	font-family:Verdana, sans-serif;
+	font-weight:normal;
+	font-size:11px;
+	margin: 0 0 0 0;
+}
+
+/*The Link style for top-level menuitems and is read by all browsers*/
+#p7TMnav div a {
+	color: #000;
+	background-color:#ccc;
+	font-weight:bold;
+	font-size: 11px;
+	display: block;
+/*	padding-right:2px; */
+	padding:2px 2px 2px 0px;
+	text-decoration: none; /* */
+	border-right:1px solid #B7B6B6;
+	border-bottom:1px solid #B7B6B6;
+	border-left:1px solid #DFDFDF;
+	border-top:1px solid #DFDFDF;
+}
+
+#p7TMnav div a:visited {
+	display: block;
+	text-decoration: none; /* */
+}
+#p7TMnav div a:hover {
+	background-color:#fff;
+	}
+
+/*The Link style for second-level menuitems
+#p7TMnav div div a {
+	font-size: 11px;
+	color: #663300;
+	background-color: transparent;
+	border: 0;
+}*/
+
+/*The Link and visited styles combined for second-level menuitems*/
+#p7TMnav div div a, #p7TMnav div div a:visited {
+	color: #07a;
+	font-size: 11px;
+	padding:2px 3px 2px 0px;
+	font-weight:normal;
+/*	line-height: 1.9; */
+/*	padding-right:6px;*/
+	background-color: #f5f5f5;
+	border: 0;
+}
+#p7TMnav div div a:hover {
+	background-color: #fff;
+}
+
+/*The Link style for third-level menuitems and lower*/
+/*To set a specific style for the fourth level, add a div to the selector*/
+/*Fourth-level example syntax: p7TMnav div div div div a {declaration}*/
+#p7TMnav div div div a {
+	font-size: 11px;
+}
+
+.p7defmark {
+	background-image:  none;
+	padding: 1px 3px 2px 0px !important;
+}
+.p7currentmark {
+	font-weight: bold;
+	color: #333 !important;
+	background-color: #85DDFB !important;
+	padding: 1px 3px 2px 0px !important;
+
+}
