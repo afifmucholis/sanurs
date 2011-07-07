@@ -28,7 +28,8 @@
 <div id="col_right" style="float: right">
     <?php
         echo form_open('event/submit_event');
-        echo form_label('When : ','email')."<br/>";
+        echo form_hidden('url_img', base_url().'res/NoPhotoAvailable.jpg');
+        echo form_label('When : ','when')."<br/>";
         echo form_input('when', '', 'id="when"')."<br/>";
         echo form_label('Where : ','where')."<br/>";
         echo form_input('where', '', 'id="where"')."<br/>";

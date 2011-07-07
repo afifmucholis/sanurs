@@ -77,6 +77,13 @@ class profile extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
+    /**
+     * user()
+     *
+     * Menampilkan profile seorang user
+     *
+     * @param int user User_id passing melalui url uri
+     */
     function user() {
 //        if ($this->session->userdata('name')==null) {
 //            redirect('/home', 'refresh');
@@ -134,6 +141,188 @@ class profile extends CI_Controller {
         
     }
     
+    /**
+     * editProfile()
+     *
+     * menampilkan halaman edit user profile
+     *
+     */
+    function editProfile() {
+        $data['title'] = 'Edit your profile ';
+        $data['main_content'] = 'edit_profile_view';
+        $data['struktur'] = $this->getStruktur('Edit your profile');
+        
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * submitProfile()
+     *
+     * mengganti data profile user
+     *
+     * @param string post->gender gender dari user
+     * @param string post->ttl ttl dari user
+     * @param string post->alamat alamat dari user
+     * @param string post->telfon telfon dari user
+     * @param string post->hp hp dari user
+     * @param string post->email email dari user
+     * @param string post->url_img url_img profpic
+     */
+    function submitProfile() {
+        $gender = $this->input->post('gender');
+        $ttl = $this->input->post('ttl');
+        $alamat = $this->input->post('alamat');
+        $telfon = $this->input->post('telfon');
+        $hp = $this->input->post('hp');
+        $email = $this->input->post('email');
+        $url_img = $this->input->post('url_img');
+        // proses data disini
+        
+        // redirect ke editLocation
+        redirect('profile/editLocation', 'refresh');
+    }
+    
+    /**
+     * editLocation()
+     *
+     * menampilkan halaman edit Location
+     *
+     */
+    function editLocation() {
+        $data['title'] = 'Edit your profile';
+        $data['main_content'] = 'edit_location_view';
+        $data['struktur'] = $this->getStruktur('Edit your profile');
+        
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * submitLocation()
+     *
+     * mengirimkan lokasi dari user
+     *
+     * @param string post->location lokasi_user
+     */
+    function submitLocation() {
+       $location = $this->input->post('location');
+       // proses data
+       
+       // redirect ke editPendidikan
+       redirect('profile/editPendidikan', 'refresh');
+    }
+    
+    /**
+     * editPendidikan()
+     *
+     * menampilkan halaman edit pendidikan
+     *
+     */
+    function editPendidikan() {
+        $data['title'] = 'Edit your profile';
+        $data['main_content'] = 'edit_education_view';
+        $data['struktur'] = $this->getStruktur('Edit your profile');
+        
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * submitPendidikan
+     *
+     * mengubah history pendidikan user
+     *
+     * @param string post->s1 college/university
+     * @param string post->s1_major major s1
+     * @param string post->s1_minor minor s1
+     * @param string post->s1_year graduation year
+     */
+    function submitPendidikan() {
+        $highest_edu = $this->input->post('highest_edu');
+        if ($highest_edu=='sma') {
+            
+        } else if ($highest_edu=='d3') {
+            
+        } else if ($highest_edu=='s1') {
+            
+        } else if ($highest_edu=='s2') {
+            
+        } else if ($highest_edu=='s3') {
+            
+        }
+        // redirect ke editPendidikan
+       redirect('profile/editWorking', 'refresh');
+    }
+    
+    /**
+     * editWorking()
+     *
+     * menampilkan halaman edit working
+     *
+     */
+    function editWorking() {
+        $data['title'] = 'Edit your profile';
+        $data['main_content'] = 'edit_working_view';
+        $data['struktur'] = $this->getStruktur('Edit your profile');
+        
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * add_working_field()
+     *
+     * menambahkan field form working experience
+     *
+     */
+    function add_working_field() {
+        $data = array(
+            'counter' => ($this->input->post('counter')+1)
+        );
+        $text = $this->load->view('work_form',$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'counter'=>$data['counter'])));
+    }
+    
+    /**
+     * submitWorking()
+     *
+     * memasukkan data working experience/current working
+     *
+     * @param int post->counter jumlah field yang diisi
+     */
+    function submitWorking() {
+        $counter = $this->input->post('counter');
+        
+        // redirect ke editVisibility
+       redirect('profile/editVisibility', 'refresh');
+    }
+    
+    /**
+     * editVisibility()
+     *
+     * menampilkan halaman edit visibility keterangan2 yang bisa dilihat orang
+     *
+     */
+    function editVisibility() {
+        $data['title'] = 'Edit your profile';
+        $data['main_content'] = 'edit_visibility_view';
+        $data['struktur'] = $this->getStruktur('Edit your profile');
+        
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * submitVisibility
+     *
+     * mengganti status visibility setiap info user yang dapat dilihat
+     *
+     */
+    function submitVisibility() {
+        
+        // redirect ke editVisibility
+       redirect('profile', 'refresh');
+    }
+
+
     function getStruktur($name) {
         $struktur = array (
             array (

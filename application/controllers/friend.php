@@ -108,21 +108,23 @@ class friend extends CI_Controller {
                         'interest' => $interest,
                         'working_experience' => $working_experience
                     )
+                ),
+            array (
+                'user_data' => array (
+                        'user_id'=>$user_id,
+                        'name' => $name,
+                        'email' => $email,
+                        'image' => $image,
+                        'calendar' => $calendar,
+                        'kelulusan' => $kelulusan,
+                        'tahun_kelulusan' => $tahun_kelulusan,
+                        'pendidikan' => $pendidikan,
+                        'interest' => $interest,
+                        'working_experience' => $working_experience
+                    )
                 )
         );
-        
-//        $data['user_data'] = array(
-//            'user_id'=>$user_id,
-//            'name' => $name,
-//            'email' => $email,
-//            'image' => $image,
-//            'calendar' => $calendar,
-//            'kelulusan' => $kelulusan,
-//            'tahun_kelulusan' => $tahun_kelulusan,
-//            'pendidikan' => $pendidikan,
-//            'interest' => $interest,
-//            'working_experience' => $working_experience
-//        );
+
         
         $this->load->view('includes/template',$data);
         

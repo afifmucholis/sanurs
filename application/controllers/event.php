@@ -148,10 +148,41 @@ class Event extends CI_Controller {
         }
     }
     
+    /**
+     * submit_event()
+     *
+     * membuat event baru, data dikirim dengan method post
+     * 
+     * @param string url_img image yang diupload
+     * @param string when waktu event
+     * @param string where tempat event
+     * @param string description deskripsi event
+     * @param string invite_grup grup yang akan diinvite
+     * 
+     */
     function submit_event() {
-        
+        echo $this->input->post('url_img');
     }
     
+    /**
+     * mycalendar()
+     *
+     * menampilkan event calendar user
+     * parameter : all_events/rsvp_ed
+     * 
+     */
+    function mycalendar() {
+        $array = $this->uri->uri_to_assoc(2);
+        if ($array['mycalendar'] != "") {
+            $data['sortby'] = $array['mycalendar'];
+        } else {
+            $data['sortby'] = 'all_events';
+        }
+        $data['title'] = 'Your event calendar';
+        $data['main_content'] = 'my_calendar_view';
+        $data['struktur'] = $this->getStruktur2('Your event calendar');
+        $this->load->view('includes/template',$data);
+    }
     
     function getStruktur() {
         $struktur = array (
