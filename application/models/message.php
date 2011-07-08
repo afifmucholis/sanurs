@@ -6,7 +6,7 @@
  */
 
 /**
- * Description of rsvp_event
+ * Description of message
  *
  * @author Akbar
  */
@@ -19,13 +19,14 @@
 * @property CI_DB_forge $dbforge
 */
 
-class RSVP_Event extends CI_Model{
+class Message extends CI_Model{
     //put your code here
-    var $table          = 'rsvp_event';
+    var $table          = 'message';
     var $id             = 'id';
-    var $user_id        = 'user_id';
-    var $event_id       = 'event_id';
-    var $status_rsvp_id = 'status_rsvp_id';
+    var $subject        = 'subject';
+    var $userid_from    = 'userid_from';
+    var $userid_to      = 'userid_to';
+    var $message        = 'message';
     
     /**
      * Konstruktor
@@ -37,32 +38,32 @@ class RSVP_Event extends CI_Model{
     /**
      * Konstruktor
      */
-    function RSVP_Event() {
+    function Message() {
         parent::__construct();
     }
     
    /**
-    * Method addRSVPEvent : tambah RSVPEvent, no null allowed.
+    * Method addMessage : tambah message, no null allowed.
     * 
     * option: values
     * --------------
-    * user_id           required
-    * event_id          required
-    * status_rsvp_id    required
+    * subject           
+    * userid_from       required
+    * userid_to         required
+    * message           
     * 
     * @param array $options
     * @return type 
     */
-    function addRSVPEvent($options = array()) {
+    function addMessage($options = array()) {
         //Cek yang required :
-        if (!$this->_required(array($this->user_id, 
-                                    $this->event_id,
-                                    $this->status_rsvp_id), $options)) {
+        if (!$this->_required(array($this->userid_from, 
+                                    $this->userid_to), $options)) {
             return false;
         }
             
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->user_id, $this->event_id);
+        $fieldArray = array($this->subject, $this->userid_from, $this->userid_to, $this->message);
         foreach($fieldArray as $field) {
                 $this->db->set($field, $options[$field]);
         }
@@ -75,25 +76,26 @@ class RSVP_Event extends CI_Model{
     }
     
     /**
-     * Method updateRSVPEvent : update tabel RSVP Event yang memenuhi id tertentu.
+     * Method updateMessage : update tabel Message yang memenuhi id tertentu.
      * 
      * option: values
      * --------------
-     * id           field id buat kriteria where
-     * user_id      
-     * event_id
-     * status_rsvp_id     
+     * id               field id buat kriteria where
+     * subject           
+     * userid_from       
+     * userid_to         
+     * message 
      * 
      * @param array $options
      * @return bool/int  
      */
-    function updateRSVPEvent($options = array()) {
+    function updateMessage($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
                 return false;
         
         //Set dari field :
-        $fieldArray = array($this->user_id, $this->event_id, $this->status_rsvp_id);
+        $fieldArray = array($this->subject, $this->userid_from, $this->userid_to, $this->message);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -109,29 +111,31 @@ class RSVP_Event extends CI_Model{
     }
     
     /**
-     * Method getRSVPEvents, mengembalikan array of RSVPEvent.
+     * Method getMessages, mengembalikan array of message.
      * 
      * option : values
      * ---------------
      * id               field kriteria id untuk klause where
-     * user_id      
-     * event_id
-     * status_rsvp_id 
+     * subject           
+     * userid_from       
+     * userid_to         
+     * message 
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
      * @param array $options
      * @return array result() 
      */
-    function getRSVPEvent($options = array()) {
+    function getMessages($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
 
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id,
-                            $this->user_id, 
-                            $this->event_id,
-                            $this->status_rsvp_id);
+                            $this->subject, 
+                            $this->userid_from, 
+                            $this->userid_to, 
+                            $this->message);
         foreach ($fieldArray as $field) {
             if (isset ($options[$field])) {
                 $this->db->where($field, $options[$field]);  
@@ -152,12 +156,12 @@ class RSVP_Event extends CI_Model{
     }
 
     /**
-     * Method delete RSVP Event berdasarkan id. Tested
+     * Method delete message berdasarkan id.
      * 
      * @param array $options
      * @return type 
      */
-    function deleteRSVPEvent($options = array()) {
+    function deleteMessage($options = array()) {
         //required value :
         if (!$this->_required(array($this->id), $options)) {
             return false;
