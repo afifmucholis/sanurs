@@ -117,6 +117,10 @@ class Event extends CI_Controller {
         $data['title'] = 'Host an Event';
         $data['main_content'] = 'event/host_event_view';
         $data['struktur'] = $this->getStruktur3();
+        $data['category_event'] = array ();
+        //load model category_event
+        
+        
         $this->load->view('includes/template',$data);
     }
     
@@ -157,11 +161,15 @@ class Event extends CI_Controller {
      * @param string when waktu event
      * @param string where tempat event
      * @param string description deskripsi event
-     * @param string invite_grup grup yang akan diinvite
      * 
      */
     function submit_event() {
-        echo $this->input->post('url_img');
+        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+        $when = $this->input->post('when');
+        $where = $this->input->post('where');
+        $description = $this->input->post('description');
+        // load model event
+        
     }
     
     /**
