@@ -1,9 +1,20 @@
 <div class="left-menu">
     <div id="col_left">
         <div id="profpic">
-            <?php echo $user_data['image']; ?>
+            <?php
+                $image_properties = array(
+                          'src' => $user_data['image'],
+                          'alt' => 'No Photo Available',
+                          'class' => 'event_images',
+                          'id' => 'upload_image',
+                          'width' => '250',
+                          'height' => '400',
+                          'title' => 'No Photo Available',
+                          'rel' => 'lightbox',
+                    );
+                    echo img($image_properties);
+              ?>
         </div>
-        <br/><br/><br/><br/><br/><br/><br/><br/>
         <div id="news">
             Levana is hosting “A Night of Neglect” this Saturday, 8 October 2011. Check it out
         </div>

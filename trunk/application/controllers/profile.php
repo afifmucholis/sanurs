@@ -26,102 +26,8 @@ class profile extends CI_Controller {
         $data['struktur'] = $this->getStruktur('Your Profile');
         // get user profile info
         $user_id = $this->session->userdata('user_id');
-        $name = $this->session->userdata('name');
-        $email = $this->session->userdata('email');
-        //Load model
-        $this->load->model('user', 'userModel');
-        $options = array('id'=>$user_id);
-        $getUser = $this->userModel->getUsers($options);
-        if (count($getUser)!=1) { // error
-            redirect('/home', 'refresh');
-        }
         
-        $image = $getUser[0]->profpict_url;
-        $tahun_kelulusan= $getUser[0]->graduate_year;
-        // load model unit
-        $this->load->model('unit', 'unitModel');
-        $options = array('id'=>$getUser[0]->last_unit_id);
-        $getUnitLabel = $this->unitModel->getUnits($options);
-        $kelulusan= $getUnitLabel[0]->label.' St. Ursula';
-        // load model pendidikan
-        $this->load->model('education', 'eduModel');
-        $options = array('user_id'=>$user_id,'sortBy'=>'graduate_year','sortDirection'=>'desc');
-        $getPendidikan = $this->eduModel->getEducations($options);
-        $pendidikan = array();
-        if (count($getPendidikan)>0) {
-            // load model level
-            $this->load->model('level', 'levelModel');
-            $count = 0;
-            $year = date('Y');
-            foreach ($getPendidikan as $edu) :
-                if ($edu->graduate_year>$year) $current=1; else $current=0;
-                $options = array('id'=>$edu->level_id);
-                $degree = $this->levelModel->getLevels($options);
-                $pendidikan[$count] = array (
-                    'degree' => $degree[0]->label,
-                    'where' => $edu->school,
-                    'major' => $edu->major,
-                    'minor' => $edu->minor,
-                    'current' => $current
-                );
-                $count++;
-            endforeach;
-        }
-        
-        // load model interest_in
-        $this->load->model('interested_in', 'interestInModel');
-        $options = array('user_id'=>$user_id);
-        $getInterestIn = $this->interestInModel->getInterestedIn($options);
-        $interest = array ();
-        // load model interest_in
-        $this->load->model('interest', 'interestModel');
-        if (count($getInterestIn)>0) {
-            $count=0;
-            foreach ($getInterestIn as $itr) :
-                $options = array('id' => $itr->interest_id);
-                $getInterest = $this->interestModel->getInterests($options);
-                $interest[$count] = $getInterest[0]->interest;
-                $count++;
-            endforeach;
-        }
-        
-        // load model work_experience
-        $this->load->model('work_experience', 'workModel');
-        $options = array('user_id'=>$user_id);
-        $getWork = $this->workModel->getWorkExperiences($options);
-        $working_experience = array();
-        if (count($getWork)>0) {
-            $count=0;
-            foreach ($getWork as $work):
-                $working_experience[$count] = array (
-                    'company' => $work->company,
-                    'year' => $work->year,
-                    'position' => $work->position,
-                    'address' => $work->address,
-                    'telephone' => $work->telephone,
-                    'fax' => $work->fax,
-                    'work_hp' => $work->work_hp,
-                    'work_email' => $work->work_email,
-                    'is_current_work' => $work->is_current_work
-                );
-                $count++;
-            endforeach;
-        }
-        
-        $calendar= 'Ini calendar';
-        
-        $data['user_data'] = array(
-            'user_id'=>$user_id,
-            'name' => $name,
-            'email' => $email,
-            'image' => $image,
-            'calendar' => $calendar,
-            'kelulusan' => $kelulusan,
-            'tahun_kelulusan' => $tahun_kelulusan,
-            'pendidikan' => $pendidikan,
-            'interest' => $interest,
-            'working_experience' => $working_experience
-        );
+        $data['user_data'] = $this->setUserData($user_id);
         
         $this->load->view('includes/template',$data);
     }
@@ -140,44 +46,10 @@ class profile extends CI_Controller {
         $array = $this->uri->uri_to_assoc(2);
         $user_id = $array['user'];
         
-        // get user profile info yang bisa ditampilkan saja
-        $name = 'Levana Laksmicitra Sani';
-        $email = 'aaaa';
-        $image = 'Ini image';
-        $calendar= 'Ini calendar';
-        $kelulusan= 'SMA St. Ursula';
-        $tahun_kelulusan= '2010';
-        $pendidikan = array (
-            array (
-                'degree' => 'Bachelor',
-                'where' => 'University of Southern California',
-                'major' => 'Chemical Biology',
-                'minor' => 'none',
-                'current' => 1
-            )
-        );
-        $interest = array (
-            'movies',
-            'medicines',
-            'fashion'
-        );
-        $working_experience = array();
-        
-        $data['user_data'] = array(
-            'user_id'=>$user_id,
-            'name' => $name,
-            'email' => $email,
-            'image' => $image,
-            'calendar' => $calendar,
-            'kelulusan' => $kelulusan,
-            'tahun_kelulusan' => $tahun_kelulusan,
-            'pendidikan' => $pendidikan,
-            'interest' => $interest,
-            'working_experience' => $working_experience
-        );
-        $data['title'] = 'Profile - '.$name;
+        $data['user_data'] = $this->setUserData($user_id);
+        $data['title'] = 'Profile - '.$data['user_data']['name'];
         $data['main_content'] = 'profile/show_profile_view';
-        $data['struktur'] = $this->getStruktur($name);
+        $data['struktur'] = $this->getStruktur($data['user_data']['name']);
         // cek apakah bisa add friend
         if ($this->session->userdata('name')==null) {   // belum sign in
             $data['add_as_friend'] = 0;
@@ -369,6 +241,113 @@ class profile extends CI_Controller {
         
         // redirect ke editVisibility
        redirect('profile', 'refresh');
+    }
+    
+    /**
+     * setUserData($user_id)
+     *
+     * mengembalikan data2 user yang akan ditampilkan pada profile user
+     *
+     * @param int $user_id user_id dari user
+     */
+    function setUserData($user_id) {
+        //Load model
+        $this->load->model('user', 'userModel');
+        $options = array('id'=>$user_id);
+        $getUser = $this->userModel->getUsers($options);
+        if (count($getUser)!=1) { // error
+            redirect('/home', 'refresh');
+        }
+        
+        $name = $getUser[0]->name;
+        $email = $getUser[0]->email;
+        $image = $getUser[0]->profpict_url;
+        $tahun_kelulusan= $getUser[0]->graduate_year;
+        // load model unit
+        $this->load->model('unit', 'unitModel');
+        $options = array('id'=>$getUser[0]->last_unit_id);
+        $getUnitLabel = $this->unitModel->getUnits($options);
+        $kelulusan= $getUnitLabel[0]->label.' St. Ursula';
+        // load model pendidikan
+        $this->load->model('education', 'eduModel');
+        $options = array('user_id'=>$user_id,'sortBy'=>'graduate_year','sortDirection'=>'desc');
+        $getPendidikan = $this->eduModel->getEducations($options);
+        $pendidikan = array();
+        if (count($getPendidikan)>0) {
+            // load model level
+            $this->load->model('level', 'levelModel');
+            $count = 0;
+            $year = date('Y');
+            foreach ($getPendidikan as $edu) :
+                if ($edu->graduate_year>$year) $current=1; else $current=0;
+                $options = array('id'=>$edu->level_id);
+                $degree = $this->levelModel->getLevels($options);
+                $pendidikan[$count] = array (
+                    'degree' => $degree[0]->label,
+                    'where' => $edu->school,
+                    'major' => $edu->major,
+                    'minor' => $edu->minor,
+                    'current' => $current
+                );
+                $count++;
+            endforeach;
+        }
+        
+        // load model interest_in
+        $this->load->model('interested_in', 'interestInModel');
+        $options = array('user_id'=>$user_id);
+        $getInterestIn = $this->interestInModel->getInterestedIn($options);
+        $interest = array ();
+        // load model interest_in
+        $this->load->model('interest', 'interestModel');
+        if (count($getInterestIn)>0) {
+            $count=0;
+            foreach ($getInterestIn as $itr) :
+                $options = array('id' => $itr->interest_id);
+                $getInterest = $this->interestModel->getInterests($options);
+                $interest[$count] = $getInterest[0]->interest;
+                $count++;
+            endforeach;
+        }
+        
+        // load model work_experience
+        $this->load->model('work_experience', 'workModel');
+        $options = array('user_id'=>$user_id);
+        $getWork = $this->workModel->getWorkExperiences($options);
+        $working_experience = array();
+        if (count($getWork)>0) {
+            $count=0;
+            foreach ($getWork as $work):
+                $working_experience[$count] = array (
+                    'company' => $work->company,
+                    'year' => $work->year,
+                    'position' => $work->position,
+                    'address' => $work->address,
+                    'telephone' => $work->telephone,
+                    'fax' => $work->fax,
+                    'work_hp' => $work->work_hp,
+                    'work_email' => $work->work_email,
+                    'is_current_work' => $work->is_current_work
+                );
+                $count++;
+            endforeach;
+        }
+        
+        $calendar= 'Ini calendar';
+        
+        $user_data = array(
+            'user_id'=>$user_id,
+            'name' => $name,
+            'email' => $email,
+            'image' => $image,
+            'calendar' => $calendar,
+            'kelulusan' => $kelulusan,
+            'tahun_kelulusan' => $tahun_kelulusan,
+            'pendidikan' => $pendidikan,
+            'interest' => $interest,
+            'working_experience' => $working_experience
+        );
+        return $user_data;
     }
 
 
