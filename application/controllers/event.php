@@ -18,6 +18,17 @@
  * @property CI_DB_forge $dbforge
  */
 class Event extends CI_Controller {
+    
+    function __construct() {
+        parent::__construct();
+        //load model category_event
+         $this->load->model('category_event', 'categoryModel');
+         // load model event
+         $this->load->model('event_Model', 'eventModel');
+         // load model host_event
+         $this->load->model('host_event', 'hosteventModel');
+    }
+    
     function index() {
         $data['title'] = 'Event';
         $data['main_content'] = 'event/main_event_view';
@@ -117,9 +128,15 @@ class Event extends CI_Controller {
         $data['title'] = 'Host an Event';
         $data['main_content'] = 'event/host_event_view';
         $data['struktur'] = $this->getStruktur3();
-        $data['category_event'] = array ();
-        //load model category_event
+        $data['category_list'] = array ();
         
+        //get all category
+        $getCategory = $this->categoryModel->getCategoryEvents();
+        $count = 0;
+        foreach ($getCategory as $category) :
+            $data['category_list'][$category->id] = $category->category_event;
+            $count++;
+        endforeach;
         
         $this->load->view('includes/template',$data);
     }
@@ -165,11 +182,32 @@ class Event extends CI_Controller {
      */
     function submit_event() {
         $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+        $title = $this->input->post('title');
         $when = $this->input->post('when');
         $where = $this->input->post('where');
         $description = $this->input->post('description');
-        // load model event
+        $category_event = $this->input->post('category_event');
         
+         $options = array (
+             'title' => $title,
+             'description' => $description,
+             'when' => $when,
+             'where' => $where, 
+             'category_event_id' => $category_event,
+             'image_url' => $image_url
+         );
+         $event_id = $this->eventModel->addEvent($options);
+         
+         $options = array (
+             'user_id' => $this->session->userdata('user_id'),
+             'event_id' => $event_id
+         );
+         $host_event_id = $this->hosteventModel->addHostEvent($options);
+         if ($host_event_id=="") { // error
+             
+         } else {
+             echo "success";
+         }
     }
     
     /**

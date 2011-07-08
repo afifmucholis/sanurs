@@ -19,7 +19,7 @@
 * @property CI_DB_forge $dbforge
 */
 
-class Event extends CI_Model{
+class Event_Model extends CI_Model{
     //put your code here
     var $table              = 'event';
     var $id                 = 'id';
@@ -39,7 +39,7 @@ class Event extends CI_Model{
     /**
      * Konstruktor
      */
-    function Event() {
+    function Event_Model() {
         parent::__construct();
     }
     

@@ -37,15 +37,8 @@
         echo form_input('where', '', 'id="where"')."<br/>";
         echo form_label('Description : ','description')."<br/>";
         echo form_input('description', '', 'id="description"')."<br/>";
-//        $options = array(
-//                  'everybody'  => 'Everybody',
-//                  'interest'    => 'Areas of interest',
-//                  'loacation'   => 'Location',
-//                  'school' => 'Same association/school',
-//                  'year' => 'Same year',
-//                );
-//        echo "Select a group to invite<br/>";
-//        echo form_dropdown('invite_grup', $options, 'everybody');
+        echo "Select category for this event<br/>";
+        echo form_dropdown('category_event', $category_list, '1');
         echo "<br/>";
         echo form_submit('submit', 'Submit', 'id="submit"');
         echo form_close();
