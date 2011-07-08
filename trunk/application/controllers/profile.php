@@ -1,5 +1,4 @@
-<?php
-
+<?php 
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -23,43 +22,93 @@ class profile extends CI_Controller {
             redirect('/home', 'refresh');
         }
         $data['title'] = 'Profile';
-        $data['main_content'] = 'my_profile_view';
+        $data['main_content'] = 'profile/my_profile_view';
         $data['struktur'] = $this->getStruktur('Your Profile');
         // get user profile info
         $user_id = $this->session->userdata('user_id');
         $name = $this->session->userdata('name');
         $email = $this->session->userdata('email');
-        $image = 'Ini image';
+        //Load model
+        $this->load->model('user', 'userModel');
+        $options = array('id'=>$user_id);
+        $getUser = $this->userModel->getUsers($options);
+        if (count($getUser)!=1) { // error
+            redirect('/home', 'refresh');
+        }
+        
+        $image = $getUser[0]->profpict_url;
+        $tahun_kelulusan= $getUser[0]->graduate_year;
+        // load model unit
+        $this->load->model('unit', 'unitModel');
+        $options = array('id'=>$getUser[0]->last_unit_id);
+        $getUnitLabel = $this->unitModel->getUnits($options);
+        $kelulusan= $getUnitLabel[0]->label.' St. Ursula';
+        // load model pendidikan
+        $this->load->model('education', 'eduModel');
+        $options = array('user_id'=>$user_id,'sortBy'=>'graduate_year','sortDirection'=>'desc');
+        $getPendidikan = $this->eduModel->getEducations($options);
+        $pendidikan = array();
+        if (count($getPendidikan)>0) {
+            // load model level
+            $this->load->model('level', 'levelModel');
+            $count = 0;
+            $year = date('Y');
+            foreach ($getPendidikan as $edu) :
+                if ($edu->graduate_year>$year) $current=1; else $current=0;
+                $options = array('id'=>$edu->level_id);
+                $degree = $this->levelModel->getLevels($options);
+                $pendidikan[$count] = array (
+                    'degree' => $degree[0]->label,
+                    'where' => $edu->school,
+                    'major' => $edu->major,
+                    'minor' => $edu->minor,
+                    'current' => $current
+                );
+                $count++;
+            endforeach;
+        }
+        
+        // load model interest_in
+        $this->load->model('interested_in', 'interestInModel');
+        $options = array('user_id'=>$user_id);
+        $getInterestIn = $this->interestInModel->getInterestedIn($options);
+        $interest = array ();
+        // load model interest_in
+        $this->load->model('interest', 'interestModel');
+        if (count($getInterestIn)>0) {
+            $count=0;
+            foreach ($getInterestIn as $itr) :
+                $options = array('id' => $itr->interest_id);
+                $getInterest = $this->interestModel->getInterests($options);
+                $interest[$count] = $getInterest[0]->interest;
+                $count++;
+            endforeach;
+        }
+        
+        // load model work_experience
+        $this->load->model('work_experience', 'workModel');
+        $options = array('user_id'=>$user_id);
+        $getWork = $this->workModel->getWorkExperiences($options);
+        $working_experience = array();
+        if (count($getWork)>0) {
+            $count=0;
+            foreach ($getWork as $work):
+                $working_experience[$count] = array (
+                    'company' => $work->company,
+                    'year' => $work->year,
+                    'position' => $work->position,
+                    'address' => $work->address,
+                    'telephone' => $work->telephone,
+                    'fax' => $work->fax,
+                    'work_hp' => $work->work_hp,
+                    'work_email' => $work->work_email,
+                    'is_current_work' => $work->is_current_work
+                );
+                $count++;
+            endforeach;
+        }
+        
         $calendar= 'Ini calendar';
-        $kelulusan= 'SMA St. Ursula';
-        $tahun_kelulusan= '2010';
-        $pendidikan = array (
-            array (
-                'degree' => 'Bachelor',
-                'where' => 'University of Southern California',
-                'major' => 'Chemical Biology',
-                'minor' => 'none',
-                'current' => 1
-            )
-        );
-        $interest = array (
-            'movies',
-            'medicines',
-            'fashion'
-        );
-        $working_experience = array(
-            array (
-                'company' => 'PT Sumarno Pabotingi',
-                'year' => 2011,
-                'position' => 'programmer',
-                'address' => 'Jln Cikini V no 12, Jakarta Pusat',
-                'telephone' => '02100292',
-                'fax' => '021929292',
-                'work_hp' => '082222',
-                'work_email' => 'danang@yaaahoo.com',
-                'is_current_work' => 1
-            )
-        );
         
         $data['user_data'] = array(
             'user_id'=>$user_id,
@@ -127,7 +176,7 @@ class profile extends CI_Controller {
             'working_experience' => $working_experience
         );
         $data['title'] = 'Profile - '.$name;
-        $data['main_content'] = 'show_profile_view';
+        $data['main_content'] = 'profile/show_profile_view';
         $data['struktur'] = $this->getStruktur($name);
         // cek apakah bisa add friend
         if ($this->session->userdata('name')==null) {   // belum sign in
@@ -149,7 +198,7 @@ class profile extends CI_Controller {
      */
     function editProfile() {
         $data['title'] = 'Edit your profile ';
-        $data['main_content'] = 'edit_profile_view';
+        $data['main_content'] = 'edit_profile/edit_profile_view';
         $data['struktur'] = $this->getStruktur('Edit your profile');
         
         $this->load->view('includes/template',$data);
@@ -190,7 +239,7 @@ class profile extends CI_Controller {
      */
     function editLocation() {
         $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_location_view';
+        $data['main_content'] = 'edit_profile/edit_location_view';
         $data['struktur'] = $this->getStruktur('Edit your profile');
         
         $this->load->view('includes/template',$data);
@@ -219,7 +268,7 @@ class profile extends CI_Controller {
      */
     function editPendidikan() {
         $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_education_view';
+        $data['main_content'] = 'edit_profile/edit_education_view';
         $data['struktur'] = $this->getStruktur('Edit your profile');
         
         $this->load->view('includes/template',$data);
@@ -260,7 +309,7 @@ class profile extends CI_Controller {
      */
     function editWorking() {
         $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_working_view';
+        $data['main_content'] = 'edit_profile/edit_working_view';
         $data['struktur'] = $this->getStruktur('Edit your profile');
         
         $this->load->view('includes/template',$data);
@@ -276,7 +325,7 @@ class profile extends CI_Controller {
         $data = array(
             'counter' => ($this->input->post('counter')+1)
         );
-        $text = $this->load->view('work_form',$data,true);
+        $text = $this->load->view('edit_profile/work_form',$data,true);
         $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode(array('text' => $text, 'counter'=>$data['counter'])));
@@ -304,7 +353,7 @@ class profile extends CI_Controller {
      */
     function editVisibility() {
         $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_visibility_view';
+        $data['main_content'] = 'edit_profile/edit_visibility_view';
         $data['struktur'] = $this->getStruktur('Edit your profile');
         
         $this->load->view('includes/template',$data);

@@ -17,7 +17,7 @@
         $data = array(
             'counter' => 0
         );
-        $this->load->view('work_form',$data);
+        $this->load->view('edit_profile/work_form',$data);
     ?>
     <br/><br/>
     <?php

@@ -20,7 +20,7 @@
 class Event extends CI_Controller {
     function index() {
         $data['title'] = 'Event';
-        $data['main_content'] = 'main_event_view';
+        $data['main_content'] = 'event/main_event_view';
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = 'categories';
         $this->load->view('includes/template',$data);
@@ -36,7 +36,7 @@ class Event extends CI_Controller {
     function sortby() {
         $array = $this->uri->uri_to_assoc(2);
         $data['title'] = 'Event';
-        $data['main_content'] = 'main_event_view';
+        $data['main_content'] = 'event/main_event_view';
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = $array['sortby'];
         $this->load->view('includes/template',$data);
@@ -73,7 +73,7 @@ class Event extends CI_Controller {
         
         
         $data['title'] = 'Event - '.$title;
-        $data['main_content'] = 'show_event_view';
+        $data['main_content'] = 'event/show_event_view';
         $data['struktur'] = $this->getStruktur2($title);
         $data['data_event'] = array(
                 'event_id'=>$array['show_event'],
@@ -115,7 +115,7 @@ class Event extends CI_Controller {
             redirect('/home', 'refresh');
         }
         $data['title'] = 'Host an Event';
-        $data['main_content'] = 'host_event_view';
+        $data['main_content'] = 'event/host_event_view';
         $data['struktur'] = $this->getStruktur3();
         $this->load->view('includes/template',$data);
     }
@@ -179,7 +179,7 @@ class Event extends CI_Controller {
             $data['sortby'] = 'all_events';
         }
         $data['title'] = 'Your event calendar';
-        $data['main_content'] = 'my_calendar_view';
+        $data['main_content'] = 'event/my_calendar_view';
         $data['struktur'] = $this->getStruktur2('Your event calendar');
         $this->load->view('includes/template',$data);
     }

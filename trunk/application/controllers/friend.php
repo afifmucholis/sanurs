@@ -27,7 +27,7 @@ class friend extends CI_Controller {
      */
     function index() {
         $data['title'] = 'Find a friend';
-        $data['main_content'] = 'find_a_friend_view';
+        $data['main_content'] = 'friend/find_a_friend_view';
         $data['struktur'] = $this->getStruktur();
         $this->load->view('includes/template',$data);
     }
@@ -53,7 +53,7 @@ class friend extends CI_Controller {
         $interest = $this->input->post('interest');
         
         $data['title'] = 'Profile';
-        $data['main_content'] = 'search_friend_result_view';
+        $data['main_content'] = 'friend/search_friend_result_view';
         $data['struktur'] = $this->getStruktur2('Your Profile');
         $data['search_name'] = $search_name;
         $data['search_year'] = $search_year;

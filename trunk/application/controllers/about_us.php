@@ -20,9 +20,9 @@
 class About_us extends CI_Controller {
     function index() {
         $data['title'] = 'About Us';
-        $data['main_content'] = 'about_us_view';
+        $data['main_content'] = 'about_us/about_us_view';
         $data['struktur'] = $this->getStruktur('History');
-        $data['view'] = 'history';
+        $data['view'] = 'about_us/history';
         $this->load->view('includes/template',$data);
     }
     
@@ -35,8 +35,8 @@ class About_us extends CI_Controller {
     function view() {
         $array = $this->uri->uri_to_assoc(2);
         $data['title'] = 'About Us';
-        $data['main_content'] = 'about_us_view';
-        $data['view'] = $array['view'];
+        $data['main_content'] = 'about_us/about_us_view';
+        $data['view'] = 'about_us/'.$array['view'];
         if ($array['view']=='history')
             $data['struktur'] = $this->getStruktur('History');
         else if ($array['view']=='visimisi')
@@ -46,7 +46,7 @@ class About_us extends CI_Controller {
         } else if ($array['view']=='link_web')
             $data['struktur'] = $this->getStruktur('Santa Ursula Website');
         if ($this->input->get('ajax')) {
-            $text = $this->load->view($array['view'],"",true);
+            $text = $this->load->view($data['view'],"",true);
             $this->output
             ->set_content_type('application/json')
             ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
