@@ -5,10 +5,10 @@
     <?php
     $jenjang = array(
         '-' => '-',
-        'tk' => 'TK',
-        'sd' => 'SD',
-        'smp' => 'SMP',
-        'sma' => 'SMA',
+        'TK' => 'TK',
+        'SD' => 'SD',
+        'SMP' => 'SMP',
+        'SMA' => 'SMA',
     );
     echo form_label('Select last level education : ', 'jenjang');
     $js = 'id="jenjang" onChange="showTahun();"';
@@ -68,9 +68,9 @@
             jenjang:$("#jenjang").val(),
             tahun:$("#tahun").val(),
             ajax: '1'		
-	};
+        };
         
-	$.ajax({
+        $.ajax({
             url: link,
             type: 'GET',
             data: form_data,
