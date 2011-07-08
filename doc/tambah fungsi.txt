@@ -1,8 +1,8 @@
-1. message user ke user
+1. message user ke user. Database OK
 2. submenu edit profile
-3. RSVP : attending atau ga
+3. RSVP : attending atau ga. Database OK
 4. moderator : approve events
 5. kota sekarang->koordinat map
-6. nama panggilan
+6. nama panggilan. Database OK
 7. search by : location (map/town), name, year, areas of interest
 8. news : dari admin
