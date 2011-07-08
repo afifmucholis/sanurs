@@ -29,21 +29,23 @@
     <?php
         echo form_open('event/submit_event');
         echo form_hidden('url_img', base_url().'res/NoPhotoAvailable.jpg');
+        echo form_label('Title : ','title')."<br/>";
+        echo form_input('title', '', 'id="title"')."<br/>";
         echo form_label('When : ','when')."<br/>";
         echo form_input('when', '', 'id="when"')."<br/>";
         echo form_label('Where : ','where')."<br/>";
         echo form_input('where', '', 'id="where"')."<br/>";
         echo form_label('Description : ','description')."<br/>";
         echo form_input('description', '', 'id="description"')."<br/>";
-        $options = array(
-                  'everybody'  => 'Everybody',
-                  'interest'    => 'Areas of interest',
-                  'loacation'   => 'Location',
-                  'school' => 'Same association/school',
-                  'year' => 'Same year',
-                );
-        echo "Select a group to invite<br/>";
-        echo form_dropdown('invite_grup', $options, 'everybody');
+//        $options = array(
+//                  'everybody'  => 'Everybody',
+//                  'interest'    => 'Areas of interest',
+//                  'loacation'   => 'Location',
+//                  'school' => 'Same association/school',
+//                  'year' => 'Same year',
+//                );
+//        echo "Select a group to invite<br/>";
+//        echo form_dropdown('invite_grup', $options, 'everybody');
         echo "<br/>";
         echo form_submit('submit', 'Submit', 'id="submit"');
         echo form_close();
