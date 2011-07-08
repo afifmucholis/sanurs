@@ -49,4 +49,4 @@
         echo form_close();
     ?>
 </div>
-<?php $this->load->view('upload_image');?>
+<?php $this->load->view('popup/upload_image');?>

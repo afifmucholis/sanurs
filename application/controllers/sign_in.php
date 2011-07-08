@@ -70,7 +70,8 @@ class Sign_in extends CI_Controller {
     function sign_out() {
         $session_data = array (
             'email' => '',
-            'name' => ''
+            'name' => '',
+            'user_id' => ''
         );
         $this->session->unset_userdata($session_data);
         redirect('/home', 'refresh');

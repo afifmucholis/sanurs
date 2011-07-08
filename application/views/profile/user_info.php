@@ -21,15 +21,10 @@
         if (count($user_data['interest'])==0) {
             echo "none";
         } else {
-            $i=0;
-            foreach($user_data['interest'] as $interest) :
-                echo $interest;
-                if ($i==count($user_data['interest'])-2) {
-                    echo " and ";
-                } else if ($i!=count($user_data['interest'])-1)
-                    echo ", ";
-                $i++;
-            endforeach;
+            $attributes = array(
+                'id'    => 'interestlist'
+            );
+            echo ul($user_data['interest'], $attributes);
         }
     ?>
     <br/>

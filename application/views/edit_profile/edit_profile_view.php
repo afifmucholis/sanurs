@@ -52,4 +52,4 @@
 </div>
 <div id="clearboth">
 </div>
-<?php $this->load->view('upload_image'); ?>
+<?php $this->load->view('popup/upload_image'); ?>

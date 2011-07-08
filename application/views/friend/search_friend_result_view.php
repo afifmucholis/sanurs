@@ -17,7 +17,7 @@
         </div>
         <?php echo br(1);?>
         <div id="info">
-            <?php $this->load->view('user_info',$result); ?>
+            <?php $this->load->view('profile/user_info',$result); ?>
         </div>
         <?php echo br(1);?>
     </div>
