@@ -144,10 +144,16 @@ class Alumni extends CI_Model{
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
         
-        
+        //Select distinct kalo keset :
+        if (isset($options['distinct'])) {
+            if ($options['distinct'] == true) {
+                $this->db->distinct();
+            }
+        }
+
         //Column Select :
         if (isset($options['columnSelect'])) {
-            $this->db->select($options['columnSelect']);
+            $this->db->select($options['columnSelect']);        
         }
         
         //Tambah kondisi where ke query :
@@ -168,12 +174,6 @@ class Alumni extends CI_Model{
             $this->db->order_by($options['sortBy'], $options['sortDirection']);
         }
         
-        //Select distinct kalo keset :
-        if (isset($options['distinct'])) {
-            if ($options['distinct']=='true') {
-                $this->db->distinct();
-            }
-        }
         
         $query = $this->db->get($this->table);
         if ($query->num_rows()==0) {

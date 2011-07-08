@@ -53,28 +53,45 @@ class sign_up extends CI_Controller {
         $idUnit = $getReturnLevel[0]->id;
 
         //Get Distinct 
-        $optionsTahun = array('last_unit_id' => $idUnit, 'selectColumn' => 'graduate_year', 'distinct' => 'true', 'sortDirection' => 'desc');
+        $optionsTahun = array('last_unit_id' => $idUnit, 'columnSelect' => 'graduate_year', 'distinct' => true, 'sortDirection' => 'desc');
         $getReturnTahun = $this->alumniModel->getAlumnis($optionsTahun);
 
         $Arraytahun = array();
-        $Arraytahun[0]='-';
-        for ($i = 0; $i < count($getReturnTahun); ++$i) {
-            $Arraytahun[$i] = $getReturnTahun[$i]->graduate_year;
+        $Arraytahun[0] = '-';
+        if (!is_bool($getReturnTahun)) {
+            for ($i = 0; $i < count($getReturnTahun); ++$i) {
+                $Arraytahun[$i + 1] = $getReturnTahun[$i]->graduate_year;
+            }
         }
-        print_r($Arraytahun);
-//
-//        $this->output
-//                ->set_content_type('application/json')
-//                ->set_output(json_encode(array('tahun' => $Arraytahun, 'size' => count($Arraytahun))));
+
+
+        $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('tahun' => $Arraytahun, 'size' => count($Arraytahun))));
     }
 
     function daftar_nama() {
         $jenjang = $this->input->get('jenjang');
         $tahun = $this->input->get('tahun');
-        $data['alumni'] = array(
-            array('id' => 1, 'name' => 'Danang Tri Massandy'),
-            array('id' => 2, 'name' => 'Levana Laksmicitra Sani')
-        );
+
+        //Load model : 
+        $this->load->model('unit', 'unitModel');
+        $this->load->model('alumni', 'alumniModel');
+
+        //Get Id dari unit
+        $optionsUnit = array('label' => $jenjang);
+        $getReturnLevel = $this->unitModel->getUnits($optionsUnit);
+        $idUnit = $getReturnLevel[0]->id;
+
+        //Get daftar nama dengan last_unit_id=$idUnit dan graduate_year=$tahun
+        $optionsNama = array('last_unit_id' => $idUnit, 'graduate_year' => $tahun, 'sortBy' => 'name');
+        $getReturnNama = $this->alumniModel->getAlumnis($optionsNama);
+
+        $tempAlumni = array();
+        for ($i = 0; $i < count($getReturnNama); ++$i) {
+            $tempAlumni[$i] = array('id' => $getReturnNama[$i]->id, 'name' => $getReturnNama[$i]->name);
+        }
+        $data['alumni'] = $tempAlumni;
         $this->load->view('sign_up/list_alumni', $data);
     }
 
