@@ -7,13 +7,44 @@ var infowindow = new google.maps.InfoWindow();
  * initialize map
  */
 function initialize() {
+    page = "editlocation";
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
         zoom: 1,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
-    map = new google.maps.Map(document.getElementById("map"), myOptions);  
+    map = new google.maps.Map(document.getElementById("map"), myOptions);
+    initMarkersArray(page);
+    clearOverlays();
+    showOverlay();
+    if (page == "editlocation") {
+        // bisa create pin
+        google.maps.event.addListener(map, 'click', function(event) {
+            if (markersArray.length < 2) {
+                // pin cuma bisa 1 lokasi
+                deleteOverlays();
+                addMarker('my location', event.latLng);
+            } else {
+                // pin gak mungkin lebih dari 1 lokasi
+            }
+        });
+    } else if (page == "searchfriend") {
+        // gak bisa create pin
+    }
+}
+
+/*
+ *  initialisasi marker-marker yang disimpan dalam markersArray
+ *  untuk page searchfriend, marker diperoleh dari data location(latitude-longitude) pada tabel user
+ */
+function initMarkersArray(page) {
+    deleteOverlays();
+    if (page == "editlocation") {
+        // markersArray dibiarkan kosong
+    } else if (page == "searchfriend") {
+        // markersArray diisi dengan data lokasi dari database
+    }
 }
 
 /*
@@ -24,6 +55,7 @@ function addMarker(title, location) {
     marker = new google.maps.Marker({
         position : location,
         title : title,
+        draggable : true,
         map : map
     });
     markersArray.push(marker);
@@ -44,23 +76,23 @@ function showOverlay() {
  * Removes the overlays from the map, but keeps them in the array
  */
 function clearOverlays() {
-  if (markersArray) {
-    for (i in markersArray) {
-      markersArray[i].setMap(null);
+    if (markersArray) {
+        for (i in markersArray) {
+            markersArray[i].setMap(null);
+        }
     }
-  }
 }
 
 /*
  * Deletes all markers in the array by removing references to them
  */
 function deleteOverlays() {
-  if (markersArray) {
-    for (i in markersArray) {
-      markersArray[i].setMap(null);
+    if (markersArray) {
+        for (i in markersArray) {
+            markersArray[i].setMap(null);
+        }
+        markersArray.length = 0;
     }
-    markersArray.length = 0;
-  }
 }
 
 /*
@@ -71,14 +103,16 @@ function codeAddress(address) {
     var latlng;
     
     geocoder.geocode(
-        {'address' : address},
-        function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                latlng = results[0].geometry.location;
-            } else {
-                latlng = new google.maps.LatLng(0, 0);
-            }
+    {
+        'address' : address
+    },
+    function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            latlng = results[0].geometry.location;
+        } else {
+            latlng = new google.maps.LatLng(0, 0);
         }
+    }
     );
     return latlng;
 }
@@ -86,16 +120,18 @@ function codeAddress(address) {
 function codeLatLng(latlng) {
     var address;
     geocoder.geocode(
-        { 'latlng' : latlng },
-        function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[1]) {
-                    address = results[1].formatted_address;
-                }
-            } else {
-                address = "location not found";
+    {
+        'latlng' : latlng
+    },
+    function(results, status) {
+        if (status == google.maps.GeocoderStatus.OK) {
+            if (results[1]) {
+                address = results[1].formatted_address;
             }
+        } else {
+            address = "location not found";
         }
+    }
     );
     return address;
 }
