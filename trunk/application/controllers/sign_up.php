@@ -109,6 +109,69 @@ class sign_up extends CI_Controller {
         );
         return $struktur;
     }
+    
+    function verification() {
+        $array = $this->uri->uri_to_assoc(2);
+        $idAlumni = $array['verification'];
+        
+        //Load model : 
+        $this->load->model('alumni', 'alumniModel');
+
+        //Get nama dengan id=$idAlumni :
+        $optionsAlumni = array('id' => $idAlumni);
+        $getReturn = $this->alumniModel->getAlumnis($optionsAlumni);
+        $name = $getReturn[0]->name;
+        
+        $alumni=array('id'=>$idAlumni, 'name'=>$name);
+        $data['alumni'] = $alumni;
+        $this->load->view('sign_up/verification',$data);
+    }
+    
+    function verify() {
+        $this->load->helper();
+        $this->load->library('form_validation');
+        
+        //Dapet id ma nama :
+        $id = $this->input->post('id');
+        $name = $this->input->post('name');
+        
+        //Set Rule dari email dan password :
+        $this->form_validation->set_rules('email','Email', 'required|valid_email');
+        $this->form_validation->set_rules('password','Password', 'required');
+        $this->form_validation->set_rules('repassword','Retype Password', 'required|matches[password]');
+        
+        $alumni = array(
+            'id'=>$id,
+            'name'=>$name
+        );
+        
+        if ($this->form_validation->run()== false) {
+            $data['alumni']=$alumni;
+            $data['falseref']=true;
+            $this->load->view('sign_up/verification', $data);
+        } else {
+            $email = $this->input->post('email');
+            $password = $this->input->post('password');
+            
+            //Load model :
+            $this->load->model('alumni', 'alumniModel');
+            $this->load->model('user', 'userModel');
+            
+            //Update tabel alumni (status register)
+            $optionsUpdate = array('id'=>$alumni['id'], 'is_registered'=>1);
+            $getReturnUpdate = $this->alumniModel->updateAlumni($optionsUpdate);
+            
+            //Insert ke tabel user
+            $optionsInsert = array(
+                                    'name'=>$alumni['name'], 'email'=>$email,
+                                    'password'=>$password, 'birthdate'=>a
+
+                                     );
+            $getReturnInsert = $this->userModel->addUser($optionsInsert);
+            
+            $this->load->view('sign_up/signup_success');
+        }
+    }
 
 }
 
