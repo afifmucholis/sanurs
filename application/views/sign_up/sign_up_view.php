@@ -54,6 +54,7 @@
                         str +="<option value='"+msg.tahun[i]+"'>"+msg.tahun[i]+"</option>";
                     }
                     $('#tahun').append(str);
+                    $('#name').html("");
                 }
             });
         } else {
