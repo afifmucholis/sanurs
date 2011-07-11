@@ -71,9 +71,28 @@ class profile extends CI_Controller {
     function editProfile() {
         $data['title'] = 'Edit your profile ';
         $data['main_content'] = 'edit_profile/edit_profile_view';
-        $data['struktur'] = $this->getStruktur('Edit your profile');
+        $data['struktur'] = $this->getStruktur2('Basic Info');
+        $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
+        $data['content_edit'] = array();
         
         $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * edit_basic_info()
+     *
+     * menampilkan halaman edit basic info user dengan method ajax
+     *
+     */
+    function edit_basic_info() {
+        $data['struktur'] = $this->getStruktur2('Basic Info');
+        $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
+        $data['content_edit'] = array();
+        
+        $text = $this->load->view($data['content_edit_view'],$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
     /**
@@ -106,15 +125,18 @@ class profile extends CI_Controller {
     /**
      * editLocation()
      *
-     * menampilkan halaman edit Location
+     * menampilkan halaman edit Location dengan method ajax
      *
      */
-    function editLocation() {
-        $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_profile/edit_location_view';
-        $data['struktur'] = $this->getStruktur('Edit your profile');
+    function edit_location() {
+        $data['struktur'] = $this->getStruktur2('Location');
+        $data['content_edit_view'] = 'edit_profile/edit_location_view';
+        $data['content_edit'] = array();
         
-        $this->load->view('includes/template',$data);
+        $text = $this->load->view($data['content_edit_view'],$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
     /**
@@ -133,17 +155,20 @@ class profile extends CI_Controller {
     }
     
     /**
-     * editPendidikan()
+     * edit_education()
      *
-     * menampilkan halaman edit pendidikan
+     * menampilkan halaman edit pendidikan dengan method ajax
      *
      */
-    function editPendidikan() {
-        $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_profile/edit_education_view';
-        $data['struktur'] = $this->getStruktur('Edit your profile');
+    function edit_education() {
+        $data['struktur'] = $this->getStruktur2('Pendidikan');
+        $data['content_edit_view'] = 'edit_profile/edit_education_view';
+        $data['content_edit'] = array();
         
-        $this->load->view('includes/template',$data);
+        $text = $this->load->view($data['content_edit_view'],$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
     /**
@@ -176,15 +201,18 @@ class profile extends CI_Controller {
     /**
      * editWorking()
      *
-     * menampilkan halaman edit working
+     * menampilkan halaman edit working dengan method ajax
      *
      */
-    function editWorking() {
-        $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_profile/edit_working_view';
-        $data['struktur'] = $this->getStruktur('Edit your profile');
+    function edit_working() {
+        $data['struktur'] = $this->getStruktur2('Working');
+        $data['content_edit_view'] = 'edit_profile/edit_working_view';
+        $data['content_edit'] = array();
         
-        $this->load->view('includes/template',$data);
+        $text = $this->load->view($data['content_edit_view'],$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
     /**
@@ -223,12 +251,15 @@ class profile extends CI_Controller {
      * menampilkan halaman edit visibility keterangan2 yang bisa dilihat orang
      *
      */
-    function editVisibility() {
-        $data['title'] = 'Edit your profile';
-        $data['main_content'] = 'edit_profile/edit_visibility_view';
-        $data['struktur'] = $this->getStruktur('Edit your profile');
+    function edit_visibility() {
+        $data['struktur'] = $this->getStruktur2('Visibility');
+        $data['content_edit_view'] = 'edit_profile/edit_visibility_view';
+        $data['content_edit'] = array();
         
-        $this->load->view('includes/template',$data);
+        $text = $this->load->view($data['content_edit_view'],$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
     }
     
     /**
@@ -386,6 +417,25 @@ class profile extends CI_Controller {
                 'islink'=>1,
                 'link'=>'home',
                 'label'=>'Home'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>$name
+            )
+        );
+        return $struktur;
+    }
+    
+    function getStruktur2($name) {
+        $struktur = array (
+            array (
+                'islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>'Edit Your Profile'
             ),
             array (
                 'islink'=>0,
