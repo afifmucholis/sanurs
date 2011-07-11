@@ -114,22 +114,31 @@ class sign_up extends CI_Controller {
     function verify_birthdate() {
         $birthdate = $this->input->post('birthdate');
         $id = $this->input->post('id');
+        $name = $this->input->post('name');
         
         //Cek bener gak ini birthdatenya dari tabel alumni :
         $this->load->model('alumni', 'alumniModel');
-        $options = array('id'=>id, 'columnSelect'=>'birthdate');
+        $options = array('id'=>$id, 'columnSelect'=>'birthdate');
         $getReturn =  $this->alumniModel->getAlumnis($options);
-        if (is_bool($getReturn)&&!getReturn) {
+        if (is_bool($getReturn)&& !$getReturn) {
             //Gagal :
-            
-            
+            $text = 'error';
+            $success=0;
         } else {
-            //Berhasil : redirect ke verify email ma password
-            redirect('sign_up/verification', 'refresh');
+            if ($birthdate==$getReturn[0]->birthdate) {
+                //Berhasil : redirect ke verify email ma password
+                $alumni=array('id'=>$id, 'name'=>$name);
+                $data['alumni'] = $alumni;
+                $text = $this->load->view('sign_up/verification',$data,true);
+                $success = 1;
+            } else {
+                $text = 'Coba Lagi';
+                $success=0;
+            }
         }
-       
-        
-        
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text, 'success'=>$success)));
     }
     
     function verification() {

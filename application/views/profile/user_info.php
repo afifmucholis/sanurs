@@ -39,6 +39,7 @@
         endforeach;
     ?>
 </div>
+<?php if ($user_data['visibility']->interest) { ?>
 <div id="interest">
     <?php
         if (count($user_data['interest'])==0) {
@@ -53,6 +54,7 @@
         }
     ?>
 </div>
+<?php } ?>
 <div id="working_experience">
     <?php
         if (count($user_data['working_experience'])==0) {

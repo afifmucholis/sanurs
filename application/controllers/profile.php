@@ -262,6 +262,20 @@ class profile extends CI_Controller {
         $this->load->model('visibility_status', 'visModel');
         $visibility_res = $this->visModel->getVisibilityStatuses(array('user_id'=>$user_id));
         $visibility = $visibility_res[0];
+        // cek apakah dia melihat profilnya sendiri
+        if ($this->session->userdata('user_id')==$user_id) { 
+            // set semua visibility menjadi 1
+            $visibility->home_address=1;
+            $visibility->home_telephone=1;
+            $visibility->handphone=1;
+            $visibility->email=1;
+            $visibility->interest=1;
+            $visibility->S1=1;
+            $visibility->S2=1;
+            $visibility->S3=1;
+            $visibility->work_experience=1;
+            $visibility->current_experience=1;
+        }
         
         $name = $getUser[0]->name;
         $surname = $getUser[0]->surname;
