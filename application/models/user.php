@@ -62,7 +62,7 @@ class User extends CI_Model{
     * email            required
     * password         required
     * birthdate        required
-    * gender_id        required
+    * gender_id        
     * home_address     
     * home_telephone   
     * handphone        
@@ -81,7 +81,6 @@ class User extends CI_Model{
                                     $this->email,
                                     $this->password,
                                     $this->birthdate,
-                                    $this->gender_id,
                                     $this->graduate_year, 
                                     $this->last_unit_id), $options)) {
             return false;
