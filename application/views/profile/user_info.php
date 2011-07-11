@@ -26,15 +26,27 @@
 <?php } ?>
 <div id="pendidikan">
     <?php
+        $tampil = true;
         foreach($user_data['pendidikan'] as $pendidikan) :
-            if ($pendidikan['current']) {
-                echo "Pursuing a ".$pendidikan['degree']." degree in ".$pendidikan['where']."<br/>";
-                echo "Majoring in ".$pendidikan['major']."<br/>";
-                echo "Minoring in ".$pendidikan['minor']."<br/>";
-            } else {
-                echo "Graduated a ".$pendidikan['degree']." degree in ".$pendidikan['where']."<br/>";
-                echo "Majoring in ".$pendidikan['major']."<br/>";
-                echo "Minoring in ".$pendidikan['minor']."<br/>";
+            if ($pendidikan['degree']=='Bachelor Degree (S1)' && !$user_data['visibility']->S1)
+               $tampil = false;
+            else if ($pendidikan['degree']=='Master Degree (S2)' && !$user_data['visibility']->S2)
+               $tampil = false;
+            else if ($pendidikan['degree']=='Doctorate Degree (S3)' && !$user_data['visibility']->S3)
+               $tampil = false;
+            else
+               $tampil = true;
+            
+            if ($tampil) {
+                if ($pendidikan['current']) {
+                    echo "Pursuing a ".$pendidikan['degree']." degree in ".$pendidikan['where']."<br/>";
+                    echo "Majoring in ".$pendidikan['major']."<br/>";
+                    echo "Minoring in ".$pendidikan['minor']."<br/>";
+                } else {
+                    echo "Graduated a ".$pendidikan['degree']." degree in ".$pendidikan['where']."<br/>";
+                    echo "Majoring in ".$pendidikan['major']."<br/>";
+                    echo "Minoring in ".$pendidikan['minor']."<br/>";
+                }
             }
         endforeach;
     ?>
@@ -62,29 +74,46 @@
             echo "None";
         } else {
             echo "Working Experience : ";
-            echo br(1);
+            $tampil = true;
+            $count_tampil = 0;
             foreach($user_data['working_experience'] as $working) :
-                if ($working['is_current_work']) {
-                    echo "Company : ".$working['company']." (Current)";
+                echo br(1);
+                if ($working['is_current_work'] && $user_data['visibility']->current_experience) {
+                    $tampil = true;
+                    $count_tampil++;
+                } else if (!$working['is_current_work'] && $user_data['visibility']->working_experience) {
+                    $tampil = true;
+                    $count_tampil++;
                 } else {
-                    echo "Company : ".$working['company'];
+                    $tampil = false;
                 }
-                echo "<br/>";
-                echo "Year : ".$working['year'];
-                echo "<br/>";
-                echo "Position : ".$working['position'];
-                echo "<br/>";
-                echo "Address : ".$working['address'];
-                echo "<br/>";
-                echo "Telephone : ".$working['telephone'];
-                echo "<br/>";
-                echo "Fax : ".$working['fax'];
-                echo "<br/>";
-                echo "HP : ".$working['work_hp'];
-                echo "<br/>";
-                echo "Email : ".$working['work_email'];
-                echo "<br/><br/>";
+                
+                if ($tampil) {
+                    if ($working['is_current_work']) {
+                        echo "Company : ".$working['company']." (Current)";
+                    } else {
+                        echo "Company : ".$working['company'];
+                    }
+                    echo "<br/>";
+                    echo "Year : ".$working['year'];
+                    echo "<br/>";
+                    echo "Position : ".$working['position'];
+                    echo "<br/>";
+                    echo "Address : ".$working['address'];
+                    echo "<br/>";
+                    echo "Telephone : ".$working['telephone'];
+                    echo "<br/>";
+                    echo "Fax : ".$working['fax'];
+                    echo "<br/>";
+                    echo "HP : ".$working['work_hp'];
+                    echo "<br/>";
+                    echo "Email : ".$working['work_email'];
+                    echo "<br/>";
+                }
             endforeach;
+            if ($count_tampil==0) {
+                echo "None";
+            }
         }
     ?>
 </div>
