@@ -6,6 +6,20 @@
 	<title><?php echo $title;?></title>
         <script type="text/javascript" src="<?php echo base_url();?>js/jquery/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>js/popup.js"></script>
+        <?php 
+            if ($show_calendar) {
+        ?>
+            <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
+            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+            <script> 
+            $(function() {
+                    //getter
+                    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+            });
+            </script> 
+        <?php 
+            }
+        ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
 </head>
