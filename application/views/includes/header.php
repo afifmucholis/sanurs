@@ -22,6 +22,9 @@
         ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
+        <?php
+        echo $map['js'];    //include library googlemaps
+        ?>
 </head>
 <body>
   <div id="content">
