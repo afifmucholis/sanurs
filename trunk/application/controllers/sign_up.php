@@ -172,6 +172,15 @@ class sign_up extends CI_Controller {
             $this->load->view('sign_up/signup_success');
         }
     }
+    
+    function form_birthdate() {
+        $data['alumni_id'] = $this->input->post('alum_id');
+        $data['name'] = $this->input->post('name');
+        $text = $this->load->view('popup/verify_birthdate',$data,true);
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('text' => $text)));
+    }
 
 }
 

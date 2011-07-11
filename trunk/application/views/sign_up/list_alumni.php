@@ -1,8 +1,50 @@
 <?php
     foreach ($alumni as $people) :
-        echo anchor('sign_up/verification/'.$people['id'], $people['name']);
+        //echo anchor('sign_up/verification/'.$people['id'], $people['name']);
+    ?>
+    <a href="#" id="id_<?php echo $people['id']; ?>" class="people_links" ><?php echo $people['name']; ?></a>
+    <?php
         echo br(1);
     endforeach;
 ?>
 
-<?php $this->load->view('popup/verify_birthdate', $user_data); ?>
+<div id="upload_popup" class ="popup">
+    <a href="#" class="popupContactClose">x</a>
+    <div id="form_birthdate">
+    </div>
+</div>
+<div id="backgroundPopup"></div>
+
+<script type="text/javascript">
+       var id_click="";
+       $(".people_links").click(function(){
+           var array = this.id.split('_');
+        var id_people = array[1];
+
+        var link = '<?php echo site_url('sign_up/form_birthdate');?>';
+        var form_data = {
+            alum_id : id_people,
+            name : $('#id_'+id_people).html(),
+            ajax: '1'		
+        };
+        
+        $.ajax({
+            url: link,
+            type: 'POST',
+            data: form_data,
+            success: function(msg) {
+                $("#form_birthdate").html(msg.text);
+                id_click =  "#upload_popup";
+                //centering with css
+		centerPopup();
+		//load popup
+		loadPopup();
+            }
+        });	
+        
+        return false;
+	});
+        $(".popupContactClose").click(function(){
+            disablePopup();
+        });
+</script>

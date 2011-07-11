@@ -40,11 +40,11 @@ class profile extends CI_Controller {
      * @param int user User_id passing melalui url uri
      */
     function user() {
-//        if ($this->session->userdata('name')==null) {
-//            redirect('/home', 'refresh');
-//        }
         $array = $this->uri->uri_to_assoc(2);
         $user_id = $array['user'];
+        if ($this->session->userdata('user_id')==$user_id) { // cek apakah dia melihat profilnya sendiri
+            redirect('/profile', 'refresh');
+        }
         
         $data['user_data'] = $this->setUserData($user_id);
         $data['title'] = 'Profile - '.$data['user_data']['name'];
@@ -251,17 +251,27 @@ class profile extends CI_Controller {
      * @param int $user_id user_id dari user
      */
     function setUserData($user_id) {
-        //Load model
+        //Load model user
         $this->load->model('user', 'userModel');
         $options = array('id'=>$user_id);
         $getUser = $this->userModel->getUsers($options);
-        if (count($getUser)!=1) { // error
+        if (!$getUser) { // error
             redirect('/home', 'refresh');
         }
+        // load visibility status
+        $this->load->model('visibility_status', 'visModel');
+        $visibility_res = $this->visModel->getVisibilityStatuses(array('user_id'=>$user_id));
+        $visibility = $visibility_res[0];
         
         $name = $getUser[0]->name;
+        $surname = $getUser[0]->surname;
+        $home_address = $getUser[0]->home_address;
+        $home_telephone = $getUser[0]->home_telephone;
+        $handphone = $getUser[0]->handphone;
         $email = $getUser[0]->email;
         $image = $getUser[0]->profpict_url;
+        if ($image=="")
+            $image = './res/default.jpg';
         $tahun_kelulusan= $getUser[0]->graduate_year;
         // load model unit
         $this->load->model('unit', 'unitModel');
@@ -273,7 +283,7 @@ class profile extends CI_Controller {
         $options = array('user_id'=>$user_id,'sortBy'=>'graduate_year','sortDirection'=>'desc');
         $getPendidikan = $this->eduModel->getEducations($options);
         $pendidikan = array();
-        if (count($getPendidikan)>0) {
+        if ($getPendidikan) {
             // load model level
             $this->load->model('level', 'levelModel');
             $count = 0;
@@ -300,7 +310,7 @@ class profile extends CI_Controller {
         $interest = array ();
         // load model interest_in
         $this->load->model('interest', 'interestModel');
-        if (count($getInterestIn)>0) {
+        if ($getInterestIn) {
             $count=0;
             foreach ($getInterestIn as $itr) :
                 $options = array('id' => $itr->interest_id);
@@ -315,7 +325,7 @@ class profile extends CI_Controller {
         $options = array('user_id'=>$user_id);
         $getWork = $this->workModel->getWorkExperiences($options);
         $working_experience = array();
-        if (count($getWork)>0) {
+        if ($getWork) {
             $count=0;
             foreach ($getWork as $work):
                 $working_experience[$count] = array (
@@ -338,6 +348,10 @@ class profile extends CI_Controller {
         $user_data = array(
             'user_id'=>$user_id,
             'name' => $name,
+            'surname' => $surname,
+            'home_address' => $home_address,
+            'home_telephone' => $home_telephone,
+            'handphone' => $handphone,
             'email' => $email,
             'image' => $image,
             'calendar' => $calendar,
@@ -345,7 +359,8 @@ class profile extends CI_Controller {
             'tahun_kelulusan' => $tahun_kelulusan,
             'pendidikan' => $pendidikan,
             'interest' => $interest,
-            'working_experience' => $working_experience
+            'working_experience' => $working_experience,
+            'visibility'=>$visibility
         );
         return $user_data;
     }
