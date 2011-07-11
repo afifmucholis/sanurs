@@ -24,6 +24,7 @@ class sign_up extends CI_Controller {
         $data['title'] = 'Sign Up';
         $data['main_content'] = 'sign_up/sign_up_view';
         $data['struktur'] = $this->getStruktur();
+        $data['show_calendar'] = 1;
         $this->load->view('includes/template', $data);
     }
 
@@ -110,6 +111,27 @@ class sign_up extends CI_Controller {
         return $struktur;
     }
     
+    function verify_birthdate() {
+        $birthdate = $this->input->post('birthdate');
+        $id = $this->input->post('id');
+        
+        //Cek bener gak ini birthdatenya dari tabel alumni :
+        $this->load->model('alumni', 'alumniModel');
+        $options = array('id'=>id, 'columnSelect'=>'birthdate');
+        $getReturn =  $this->alumniModel->getAlumnis($options);
+        if (is_bool($getReturn)&&!getReturn) {
+            //Gagal :
+            
+            
+        } else {
+            //Berhasil : redirect ke verify email ma password
+            redirect('sign_up/verification', 'refresh');
+        }
+       
+        
+        
+    }
+    
     function verification() {
         $array = $this->uri->uri_to_assoc(2);
         $idAlumni = $array['verification'];
@@ -164,7 +186,8 @@ class sign_up extends CI_Controller {
             //Insert ke tabel user
             $optionsInsert = array(
                                     'name'=>$alumni['name'], 'email'=>$email,
-                                    'password'=>$password, 'birthdate'=>a
+                                    'password'=>$password, 'birthdate'=>a,
+                                    ''
 
                                      );
             $getReturnInsert = $this->userModel->addUser($optionsInsert);
