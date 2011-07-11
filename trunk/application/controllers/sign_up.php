@@ -90,7 +90,7 @@ class sign_up extends CI_Controller {
 
         $tempAlumni = array();
         for ($i = 0; $i < count($getReturnNama); ++$i) {
-            $tempAlumni[$i] = array('id' => $getReturnNama[$i]->id, 'name' => $getReturnNama[$i]->name);
+            $tempAlumni[$i] = array('id' => $getReturnNama[$i]->id, 'name' => $getReturnNama[$i]->name, 'is_registered'=>$getReturnNama[$i]->is_registered);
         }
         $data['alumni'] = $tempAlumni;
         $this->load->view('sign_up/list_alumni', $data);
@@ -192,13 +192,15 @@ class sign_up extends CI_Controller {
             $optionsUpdate = array('id'=>$alumni['id'], 'is_registered'=>1);
             $getReturnUpdate = $this->alumniModel->updateAlumni($optionsUpdate);
             
+            //Ambil semua data dari tabel alumni ke tabel user :
+            $optionsGetUser = array('id'=>$alumni['id']);
+            $getUser = $this->alumniModel->getAlumnis($optionsGetUser);
+            
             //Insert ke tabel user
             $optionsInsert = array(
-                                    'name'=>$alumni['name'], 'email'=>$email,
-                                    'password'=>$password, 'birthdate'=>a,
-                                    ''
-
-                                     );
+                                    'name'=>$getUser[0]->name, 'email'=>$email,
+                                    'password'=>$password, 'birthdate'=>$getUser[0]->birthdate,
+                                    'graduate_year' =>$getUser[0]->graduate_year, 'last_unit_id'=>$getUser[0]->last_unit_id);
             $getReturnInsert = $this->userModel->addUser($optionsInsert);
             
             $this->load->view('sign_up/signup_success');
@@ -208,6 +210,7 @@ class sign_up extends CI_Controller {
     function form_birthdate() {
         $data['alumni_id'] = $this->input->post('alum_id');
         $data['name'] = $this->input->post('name');
+        
         $text = $this->load->view('popup/verify_birthdate',$data,true);
         $this->output
         ->set_content_type('application/json')
