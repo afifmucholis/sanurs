@@ -106,6 +106,9 @@ class RSVP_Status extends CI_Model{
      * ---------------
      * id               field kriteria id untuk klause where
      * label
+     * 
+     * columnSelect     kolom yang mau diselect
+     * distinct         true jika Select distinct, false ato kosong kalo engga
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
      * 
@@ -115,6 +118,18 @@ class RSVP_Status extends CI_Model{
     function getRSVPStatuses($options = array()) {
         //nilai default :
         $options = $this->_default(array('sortDirection' =>'asc'), $options);
+        
+        //Select distinct kalo keset :
+        if (isset($options['distinct'])) {
+            if ($options['distinct'] == true) {
+                $this->db->distinct();
+            }
+        }
+
+        //Column Select :
+        if (isset($options['columnSelect'])) {
+            $this->db->select($options['columnSelect']);        
+        }
 
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id,
