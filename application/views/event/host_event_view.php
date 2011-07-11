@@ -32,7 +32,7 @@
         echo form_label('Title : ','title')."<br/>";
         echo form_input('title', '', 'id="title"')."<br/>";
         echo form_label('When : ','when')."<br/>";
-        echo form_input('when', '', 'id="when"')."<br/>";
+        echo form_input('when', '', 'id="datepicker"')."<br/>";
         echo form_label('Where : ','where')."<br/>";
         echo form_input('where', '', 'id="where"')."<br/>";
         echo form_label('Description : ','description')."<br/>";
@@ -43,5 +43,6 @@
         echo form_submit('submit', 'Submit', 'id="submit"');
         echo form_close();
     ?>
+    
 </div>
 <?php $this->load->view('popup/upload_image');?>
