@@ -6,6 +6,9 @@
 	<title><?php echo $title;?></title>
         <script type="text/javascript" src="<?php echo base_url();?>js/jquery/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>js/popup.js"></script>
+        <script type="text/javascript" src="<?php echo base_url();?>js/map.js"></script>
+        <link href="http://maps.google.com/maps/api/js?sensor=false" rel="stylesheet" type="text/javascript"/>
+        <script src="http://maps.google.com/maps/api/js?sensor=false"></script>
         <?php 
             if ($show_calendar) {
         ?>
@@ -22,11 +25,8 @@
         ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
-        <?php
-        echo $map['js'];    //include library googlemaps
-        ?>
 </head>
-<body>
+<body onload="initialize()">
   <div id="content">
     <div id="header">
         <div id="search_site_box">
