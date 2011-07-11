@@ -1,4 +1,4 @@
-var map;    //variabel penyimpan peta
+var map;
 var geocoder;
 var markersArray = [];  //menyimpan marker dari overlay (objek) yang ada pada peta
 var infowindow = new google.maps.InfoWindow();
@@ -7,31 +7,23 @@ var infowindow = new google.maps.InfoWindow();
  * initialize map
  */
 function initialize() {
-    geocoder = new google.maps.Geocoder();
-    //var latlng = new google.maps.LatLng(-34.397, 150.644);
-    //var latlng = new google.maps.LatLng(-6.20336, 106.8437);
-    //var latlng = new google.maps.LatLng(37.339085, -121.8914807);
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
         zoom: 1,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
-    //mapTypeId: google.maps.MapTypeId.HYBRID
-    //mapTypeId: google.maps.MapTypeId.TERRAIN
-    //mapTypeId: google.maps.MapTypeId.SATELLITE
-    //mapTypeId: 'satellite'
     };
-    map = new google.maps.Map(document.getElementById("map"), myOptions);
-    //map.setTilt(45);
+    map = new google.maps.Map(document.getElementById("map"), myOptions);  
 }
 
 /*
  * untuk menambah marker overlay (objek) yang ada pada peta
  * marker posisi lokasi objek disimpan dalam markerArray
  */
-function addMarker(location) {
+function addMarker(title, location) {
     marker = new google.maps.Marker({
         position : location,
+        title : title,
         map : map
     });
     markersArray.push(marker);
@@ -79,40 +71,31 @@ function codeAddress(address) {
     var latlng;
     
     geocoder.geocode(
-        { 'address' : address },
+        {'address' : address},
         function(results, status) {
             if (status == google.maps.GeocoderStatus.OK) {
                 latlng = results[0].geometry.location;
             } else {
-                latlng = (0,0);
+                latlng = new google.maps.LatLng(0, 0);
             }
         }
     );
     return latlng;
 }
             
-function codeLatLng() {
-    var input = document.getElementById("latlng").value;
-    var latlngStr = input.split(",", 2);
-    var lat = parseFloat(latlngStr[0]);
-    var lng = parseFloat(latlngStr[1]);
-    geocoder.geocode({
-        'latlng' : latlng
-    },
-    function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            if (results[1]) {
-                map.setZoom(11);
-                marker = new google.maps.Marker({
-                    position : latlng,
-                    map : map
-                });
-                infowindow.setContent(results[1].formatted_address);
-                infowindow.open(map, marker);
+function codeLatLng(latlng) {
+    var address;
+    geocoder.geocode(
+        { 'latlng' : latlng },
+        function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    address = results[1].formatted_address;
+                }
+            } else {
+                address = "location not found";
             }
-        } else {
-            alert ("Geocoder failed due to : " + status);
         }
-    }
     );
+    return address;
 }
