@@ -46,7 +46,7 @@ class Sign_in extends CI_Controller {
         $getReturn = $this->userModel->getUsers($options);
         if (is_bool($getReturn) && !$getReturn) {
             //Login gagal, gak ada user yang memenuhi
-            redirect('/home', 'refresh'); 
+            redirect('/home', 'refresh');
         } else {
             //Authenticate success
             //Cek, kali aja ada yang 1 imel buat banyak akun:

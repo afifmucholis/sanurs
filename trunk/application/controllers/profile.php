@@ -110,9 +110,13 @@ class profile extends CI_Controller {
      *
      */
     function editLocation() {
+        $this->load->library('googlemaps');
+        $this->googlemaps->initialize();
+        
         $data['title'] = 'Edit your profile';
         $data['main_content'] = 'edit_profile/edit_location_view';
         $data['struktur'] = $this->getStruktur('Edit your profile');
+        $data['map'] = $this->googlemaps->create_map();
         
         $this->load->view('includes/template',$data);
     }

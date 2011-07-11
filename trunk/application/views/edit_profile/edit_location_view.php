@@ -7,6 +7,9 @@
 <?php echo br(4); ?>
 <div id="map">
     Map disini
+    <?php
+    echo $map['html'];
+    ?>
 </div>
 <?php
     $js = 'onClick="prev()"';
@@ -19,5 +22,5 @@
     function prev() {
        window.location.href = '<?php echo site_url('profile/editProfile');?>';
     }
-
+    
 </script>
