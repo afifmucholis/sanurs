@@ -2,13 +2,10 @@
 <?php
 echo form_open('profile/submitLocation');
 echo form_input('location', '', 'id="location"');
+echo form_button('searchlocation', 'Search');
 ?>
 <p>Or select your location on the map</p>
 <?php echo br(4); ?>
-<div>
-    <input id="address" type="textbox" value="Tembagapura Papua"/>
-    <input type="button" value="Encode" onclick="codeAddress()"/>
-</div><br/>
 <div id="map">
     Map disini
 </div>
