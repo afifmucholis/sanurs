@@ -4,12 +4,10 @@
             <?php
                 $image_properties = array(
                           'src' => $user_data['image'],
-                          'alt' => 'No Photo Available',
                           'class' => 'event_images',
                           'id' => 'upload_image',
                           'width' => '250',
                           'height' => '400',
-                          'title' => 'No Photo Available',
                           'rel' => 'lightbox',
                     );
                     echo img($image_properties);
@@ -39,7 +37,7 @@
                 'name' => 'isi',
                 'id' => 'isi',
                 'rows' => '10',
-                'cols' => '40'
+                'cols' => '30'
             );
             echo form_textarea($data) . "<br/>";
             echo form_submit('submit', 'Submit', 'id="submit"');

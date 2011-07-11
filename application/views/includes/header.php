@@ -9,7 +9,7 @@
         <script type="text/javascript" src="<?php echo base_url();?>js/map.js"></script>
         <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
         <?php 
-            if ($show_calendar) {
+            if (isset($show_calendar) && $show_calendar) {
         ?>
             <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
             <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>

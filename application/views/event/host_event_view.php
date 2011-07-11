@@ -5,7 +5,7 @@
             //echo anchor('#','Click to change Picture','class="popup_link"');
             echo br(1);
             $image_properties = array(
-                  'src' => 'res/NoPhotoAvailable.jpg',
+                  'src' => 'res/default.jpg',
                   'alt' => 'No Photo Available',
                   'class' => 'event_images',
                   'id' => 'upload_image',
