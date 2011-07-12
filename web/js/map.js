@@ -6,8 +6,7 @@ var infowindow = new google.maps.InfoWindow();
 /*
  * initialize map
  */
-function initmap() {
-    page = "editlocation";
+function initmap(page) {
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
         zoom: 1,

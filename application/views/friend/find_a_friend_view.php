@@ -37,7 +37,7 @@
 <?php echo br(10); ?>
 <div id="map">
     <script type="text/javascript">
-        initmap();
+        initmap("searchfriend");
     </script>
     tampilin map disini
 </div>
