@@ -40,9 +40,9 @@ function initmap(page) {
 function initMarkersArray(page) {
     deleteOverlays();
     if (page == "editlocation") {
-        // markersArray dibiarkan kosong
+        // markersArray diisi dengan data lokasi user yang bersangkutan
     } else if (page == "searchfriend") {
-        // markersArray diisi dengan data lokasi dari database
+        // markersArray diisi dengan data lokasi semua user di database kecuali user yang bersangkutan
     }
 }
 
