@@ -26,11 +26,6 @@
 
 <script type="text/javascript">
     $(document).ready(function() {
-        var date = new Date();
-        var d = date.getDate();
-        var m = date.getMonth();
-        var y = date.getFullYear();
-
         // page is now ready, initialize the calendar...
 
         $('#calendar').fullCalendar({
@@ -59,9 +54,9 @@
             
             eventRender: function(calEvent, element) {
                 var tipContent = "<strong>" + calEvent.title+"<br/>"+
-                    $.fullCalendar.formatDate(calEvent.start,"MMMM dS, yyyy");
-                if (typeof calEvent.location != 'undefined') {
-                    tipContent +=  '<br/>' + calEvent.location;
+                    $.fullCalendar.formatDate(calEvent.when,"MMMM dS, yyyy");
+                if (typeof calEvent.where != 'undefined') {
+                    tipContent +=  '<br/>' + calEvent.where;
                 }
                 if (typeof calEvent.description != 'undefined') {
                     tipContent +=  '<br/>' + calEvent.description;

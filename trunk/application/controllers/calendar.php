@@ -10,6 +10,7 @@
  *
  * @author user
  */
+
 /** * @property CI_Loader $load
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
@@ -20,32 +21,26 @@
 class Calendar extends CI_Controller {
 
     function index() {
-        $year = date('Y');
-        $month = date('m');
+        $this->load->model('Event_Model', 'eventModel');
+        $options = array();
+        $getAllEvents = $this->eventModel->getEvents($options);
 
-        echo json_encode(array(
-            array(
-                'id' => 111,
-                'title' => "Jalan-jalan ke Trans Studio",
-                'start' => "$year-$month-10",
-                'url' => "http://yahoo.com/",
-                'location' => "Bandung"
-            ),
-            array(
-                'id' => 222,
-                'title' => "Jalan-jalan ke Dufan",
-                'start' => "$year-$month-20",
-                'url' => "http://yahoo.com/",
-                'location' => "Jakarta"
-            ),
-            array(
-                'id' => 22,
-                'title' => "Jalan-jalan ke Duf",
-                'start' => "$year-$month-20",
-                'url' => "http://yahoo.com/",
-                'location' => "Jakarta"
-            )
-        ));
+        $result = array();
+        for ($i = 0; $i < count($getAllEvents); ++$i) {
+            $event = array();
+            $event['id'] = $getAllEvents[$i]->id;
+            $event['title'] = $getAllEvents[$i]->title;
+            $event['description'] = $getAllEvents[$i]->description;
+            $event['start'] = $getAllEvents[$i]->when;
+            $event['where'] = $getAllEvents[$i]->where;
+            $event['category_event_id'] = $getAllEvents[$i]->category_event_id;
+            $event['image_url'] = $getAllEvents[$i]->image_url;
+            $result[$i] = $event;
+        }
+
+        echo json_encode($result);
     }
+
 }
+
 ?>
