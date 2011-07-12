@@ -78,7 +78,9 @@ class Work_Experience extends CI_Model{
                             $this->position, $this->address, $this->telephone,
                             $this->fax, $this->work_hp, $this->work_email, $this->is_current_work);
         foreach($fieldArray as $field) {
+                if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
+            }
         }
         
         //Jalankan query :

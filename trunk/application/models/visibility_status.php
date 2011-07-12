@@ -92,7 +92,9 @@ class Visibility_Status extends CI_Model{
         $fieldArray = array($this->user_id, $this->home_address, $this->home_telephone, $this->handphone, $this->email, 
                             $this->interest, $this->S1, $this->S2, $this->S3, $this->work_experience, $this->current_experience);
         foreach($fieldArray as $field) {
+                if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
+            }
         }
         
         //Jalankan query :

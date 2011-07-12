@@ -1,10 +1,10 @@
 <h3>Events</h3>
 <br/>
 <br/>
-<div id="col_left" style="float: left">
+<div id="col_left">
     Calendar here
 </div>
-<div id="col_right" style="float: right">
+<div id="col_right">
     <?php if ($sortby=='all_events') { ?>
         <b><?php echo anchor('event/mycalendar/all_events','View all events'); ?></b>
     <?php } else { ?>

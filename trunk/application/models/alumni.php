@@ -74,7 +74,9 @@ class Alumni extends CI_Model{
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
         $fieldArray = array($this->name, $this->birthdate, $this->graduate_year, $this->last_unit_id, $this->is_registered);
         foreach($fieldArray as $field) {
+                if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
+            }
         }
         
         //Jalankan query :

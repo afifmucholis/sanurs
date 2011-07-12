@@ -57,7 +57,9 @@ class RSVP_Status extends CI_Model{
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
         $fieldArray = array($this->label);
         foreach($fieldArray as $field) {
+                if (isset ($options[$field])) {
                 $this->db->set($field, $options[$field]);
+            }
         }
         
         //Jalankan query :
