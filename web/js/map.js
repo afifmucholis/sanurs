@@ -41,8 +41,6 @@ function initMarkersArray(page) {
     deleteOverlays();
     if (page == 'editlocation') {
         // markersArray diisi dengan data lokasi user yang bersangkutan
-        //var lat;
-        //var lng;
         var link = "http://localhost/sanurs/web/index.php/profile/get_user_location";
         
         $.ajax({
