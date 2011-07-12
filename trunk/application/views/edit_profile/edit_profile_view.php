@@ -51,7 +51,7 @@ $('a.ajax-links').click(function() {
                        }
                        $('#history').html(his2+msg.struktur[2]["label"]);
                        if (link_click=='location')
-                           initmap();
+                           initmap("editlocation");
                     }
             });
         }
