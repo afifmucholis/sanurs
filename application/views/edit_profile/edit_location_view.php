@@ -10,15 +10,34 @@ echo form_button('searchlocation', 'Search');
     Map disini
 </div>
 <?php
-$js = 'onClick="prev()"';
-echo form_button('previous', 'Previous', $js);
-echo form_submit('next', 'Next');
+echo form_submit('save', 'Save Changes');
 echo form_close();
 ?>
 
 <script type="text/javascript">
-    function prev() {
-        window.location.href = '<?php echo site_url('profile/editProfile'); ?>';
-    }
-    
+    // pengecekan form yang diubah
+    $("input[type='text']").change(function(){
+        _isDirty = true;
+    });
+    $("input[type='password']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='textarea']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='hidden']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='checkbox']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='radio']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='select-one']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='select-multiple']").change(function(){
+      _isDirty = true;
+    });
 </script>

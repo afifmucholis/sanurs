@@ -14,17 +14,18 @@
 </div>
 
 <script type="text/javascript">
-var edited_count = 0;
-//$('#content_edit').click(function() {
-//    edited_count++;
-//    return false;
-//});
+var _isDirty = false;
+
+window.onbeforeunload = function() {
+    if (_isDirty)
+        return 'You have unsaved changes!';
+}
 
 $('a.ajax-links').click(function() {
         var ganti=true;
-        if (edited_count!=0) {
-            if (confirm("Save changes dulu ya gan!^ ^")) {
-                edited_count=0;
+        if (_isDirty) {
+            if (confirm("Are you sure you want to leave this page? You have unsaved changes to your profile.")) {
+                _isDirty=false;
             } else {
                 ganti = false;
             }
