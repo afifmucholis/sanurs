@@ -14,32 +14,51 @@
 </div>
 
 <script type="text/javascript">
-$('a.ajax-links').click(function() {	
-	var link = '<?php echo site_url('profile/edit_');?>'+$(this).attr("href");
-        var form_data = {
-		ajax: '1'		
-	};
+var edited_count = 0;
+//$('#content_edit').click(function() {
+//    edited_count++;
+//    return false;
+//});
 
-	$.ajax({
-		url: link,
-		type: 'GET',
-                data: form_data,
-		success: function(msg) {
-                   $('#content_edit').html(msg.text);
-                   var his = $('#history').html().split('/');
-                   var his2 = "";
-                   var count=0;
-                   while (count<his.length-1) {
-                       his2+=his[count];count++;
-                       his2+="/";
-                   }
-                   $('#history').html(his2+msg.struktur[2]["label"]);
-		}
-	});
+$('a.ajax-links').click(function() {
+        var ganti=true;
+        if (edited_count!=0) {
+            if (confirm("Save changes dulu ya gan!^ ^")) {
+                edited_count=0;
+            } else {
+                ganti = false;
+            }
+        }
+        if (ganti) {
+            var link_click = $(this).attr("href");
+            var link = '<?php echo site_url('profile/edit_');?>'+link_click;
+            var form_data = {
+                    ajax: '1'		
+            };
+
+            $.ajax({
+                    url: link,
+                    type: 'GET',
+                    data: form_data,
+                    success: function(msg) {
+                       $('#content_edit').html(msg.text);
+                       var his = $('#history').html().split('/');
+                       var his2 = "";
+                       var count=0;
+                       while (count<his.length-1) {
+                           his2+=his[count];count++;
+                           his2+="/";
+                       }
+                       $('#history').html(his2+msg.struktur[2]["label"]);
+                       if (link_click=='location')
+                           initialize();
+                    }
+            });
+        }
 	
 	return false;
 });
-	
+
 	
 </script>
 

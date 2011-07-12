@@ -25,6 +25,22 @@
 <div id="backgroundPopup"></div>
 
 <script type="text/javascript">
+    //CLOSING POPUP
+    //Click the x event!
+    $(".popupContactClose").click(function(){
+            disablePopup();
+    });
+
+    //Click out event!
+    $("#backgroundPopup").click(function(){
+            disablePopup();
+    });
+
+    //Click out event! submit clicked
+    $("#submit_image").click(function(){
+            disablePopup();
+            sendData();
+    });
     function sendData() {
        document.getElementById('upload_form').onsubmit=function() {
 		document.getElementById('upload_form').target = 'upload_target'; //'upload_target' is the name of the iframe

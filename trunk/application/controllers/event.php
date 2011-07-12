@@ -210,8 +210,8 @@ class Event extends CI_Controller {
          if (is_bool($host_event_id) || is_bool($event_id)) { // error
              echo 'error on database';
          } else {
-             $new_imgurl = './res/event/event_'.$event_id.'.'.$ext[count($ext)-1];
-             if (rename('./'.$image_url, $new_imgurl)) {
+             $new_imgurl = 'res/event/event_'.$event_id.'.'.$ext[count($ext)-1];
+             if (rename('./'.$image_url, './'.$new_imgurl)) {
                  // update new image url yang telah direname
                  $options = array('id'=>$event_id,'image_url'=>$new_imgurl);
                  $this->eventModel->updateEvent($options);
