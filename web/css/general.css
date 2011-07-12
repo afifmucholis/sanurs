@@ -117,3 +117,11 @@ root {
     height: 500px;
     margin: auto;
 }
+
+#calendar {
+    margin:auto;
+    margin-right: 30px;
+    margin-left: 30px;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
