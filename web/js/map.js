@@ -6,7 +6,7 @@ var infowindow = new google.maps.InfoWindow();
 /*
  * initialize map
  */
-function initialize() {
+function initmap() {
     page = "editlocation";
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
