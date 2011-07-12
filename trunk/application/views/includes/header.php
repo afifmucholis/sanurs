@@ -7,6 +7,14 @@
         <script type="text/javascript" src="<?php echo base_url();?>js/jquery/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>js/popup.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>js/map.js"></script>
+        
+        <!--Kalender Akbar ini"!-->
+        <link rel='stylesheet' type='text/css' href="<?php echo base_url();?>css/fullcalendar.css" />
+        <link rel='stylesheet' type='text/css' href="<?php echo base_url();?>css/cupertino-calendar-theme/theme.css" />
+        <script type='text/javascript' src="<?php echo base_url();?>js/jquery.qtip-1.0.0-rc3.min.js"></script>
+        <script type='text/javascript' src="<?php echo base_url();?>js/fullcalendar.js"></script>
+        <!-- Akhir Kalender Akbar ini"!-->
+        
         <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
         <?php 
             if (isset($show_calendar) && $show_calendar) {
