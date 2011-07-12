@@ -55,6 +55,7 @@
             if (data!=0) {
                 $('#upload_image').attr('src', data);
                 $('input[name=url_img]').attr('value', data);
+                $('input[name=url_img]').change();
             } else {alert('Upload error');}
     }
 </script>

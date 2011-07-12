@@ -61,9 +61,7 @@ echo form_open('profile/submitVisibility');
         Work HP:<br/>
         Work Email:<br/>
         <?php
-        $js = 'onClick="prev()"';
-        echo form_button('previous', 'Previous', $js);
-        echo form_submit('finisih', 'Finisih');
+        echo form_submit('save', 'Save Changes');
         echo form_close();
         ?>
     </div>
@@ -72,7 +70,29 @@ echo form_open('profile/submitVisibility');
 <div id ="clearboth">
 </div>
 <script type="text/javascript">
-    function prev() {
-        window.location.href = '<?php echo site_url('profile/editWorking'); ?>';
-    }
+    // pengecekan form yang diubah
+    $("input[type='text']").change(function(){
+        _isDirty = true;
+    });
+    $("input[type='password']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='textarea']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='hidden']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='checkbox']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='radio']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='select-one']").change(function(){
+      _isDirty = true;
+    });
+    $("input[type='select-multiple']").change(function(){
+      _isDirty = true;
+    });
 </script>
