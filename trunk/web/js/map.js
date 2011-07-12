@@ -17,7 +17,7 @@ function initmap(page) {
     initMarkersArray(page);
     clearOverlays();
     showOverlay();
-    if (page == "editlocation") {
+    if (page == 'editlocation') {
         // bisa create pin
         google.maps.event.addListener(map, 'click', function(event) {
             if (markersArray.length < 2) {
@@ -28,7 +28,7 @@ function initmap(page) {
                 // pin gak mungkin lebih dari 1 lokasi
             }
         });
-    } else if (page == "searchfriend") {
+    } else if (page == 'searchfriend') {
         // gak bisa create pin
     }
 }
@@ -39,9 +39,29 @@ function initmap(page) {
  */
 function initMarkersArray(page) {
     deleteOverlays();
-    if (page == "editlocation") {
+    if (page == 'editlocation') {
         // markersArray diisi dengan data lokasi user yang bersangkutan
-    } else if (page == "searchfriend") {
+        /*var lat;
+        var lng;
+        var link = 'localhost/sanurs/web/index.php/profile/get_user_location/';
+        var form_data = {
+                		
+	};
+
+	$.ajax({
+		url: link,
+		type: 'POST',
+                data: form_data,
+		success: function(msg) {
+                   lat = msg.lat;
+                   lng = msg.lng;
+		}
+	});	
+        
+        latlng = new google.maps.latLng(lat,lng);
+        addMarker('my location', latlng);*/
+        
+    } else if (page == 'searchfriend') {
         // markersArray diisi dengan data lokasi semua user di database kecuali user yang bersangkutan
     }
 }
