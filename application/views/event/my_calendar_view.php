@@ -53,8 +53,8 @@
             },
             
             eventRender: function(calEvent, element) {
-                var tipContent = "<strong>" + calEvent.title+"<br/>"+
-                    $.fullCalendar.formatDate(calEvent.when,"MMMM dS, yyyy");
+                var tipContent = "<strong>" + calEvent.title+"<br/><br/></strong>"+
+                    $.fullCalendar.formatDate(calEvent.start,"MMMM dS, yyyy");
                 if (typeof calEvent.where != 'undefined') {
                     tipContent +=  '<br/>' + calEvent.where;
                 }
