@@ -1,6 +1,7 @@
 var map;
 var geocoder;
 var markersArray = [];  //menyimpan marker dari overlay (objek) yang ada pada peta
+var locationArray = [];
 var infowindow = new google.maps.InfoWindow();
 
 /*
@@ -24,6 +25,8 @@ function initmap(page) {
                 // pin cuma bisa 1 lokasi
                 deleteOverlays();
                 addMarker('my location', event.latLng);
+//                alert(event.latLng.lat);
+                setLocation(event.latLng.lat, event.latLng.lng);
             } else {
                 // pin gak mungkin lebih dari 1 lokasi
             }
@@ -47,12 +50,11 @@ function initMarkersArray(page) {
             url: link,
             type: 'POST',
             success: function(msg) {
-                name = msg['name'];
                 lat = msg['lat'];
                 lng = msg['lng'];
                 if (lat!=null && lng!=null) {
                     latlng = new google.maps.LatLng(lat,lng);
-                    addMarker(name, latlng);
+                    addMarker('my location', latlng);
                 }
             }
         });
@@ -148,4 +150,53 @@ function codeLatLng(latlng) {
     }
     );
     return address;
+}
+
+function addLocation(data) {
+    location.push(data);
+}
+
+function deleteLocation() {
+    if (location) {
+        for (i in location) {
+            location[i].setMap(null);
+        }
+        location.length = 0;
+    }
+}
+
+function setLocation(lat, lng) {
+    deleteLocation();
+    addLocation(lat);
+    addLocation(lng);
+}
+
+/*
+ * mengirim isi markersArray melalui json
+ * untuk dimanfaatkan pada edit location
+ */
+function send_location() {
+    //alert(markersArray[0]);
+    /*var link = "http://localhost/sanurs/web/index.php/profile/get_user_location";
+    
+    var form_data = {
+        
+        message : $('#pesan').val(),
+        ajax: '1'		
+    };
+        
+    $.ajax({
+        url: link,
+        type: 'POST',
+        data: form_data,
+        success: function(msg) {
+            name = msg['name'];
+            lat = msg['lat'];
+            lng = msg['lng'];
+            if (lat!=null && lng!=null) {
+                latlng = new google.maps.LatLng(lat,lng);
+                addMarker(name, latlng);
+            }
+        }
+    });*/
 }

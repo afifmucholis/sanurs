@@ -249,12 +249,11 @@ class profile extends CI_Controller {
         $getUser = $this->userModel->getUsers($option);
         
         // get location
-        $name = $getUser[0]->name;
         $lat = $getUser[0]->location_latitude;
         $lng = $getUser[0]->location_longitude;
         $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode(array('name'=>$name, 'lat'=>$lat, 'lng'=>$lng)));
+                ->set_output(json_encode(array('lat'=>$lat, 'lng'=>$lng)));
     }
     
     /**
@@ -265,11 +264,12 @@ class profile extends CI_Controller {
      * @param string post->location lokasi_user
      */
     function submitLocation() {
-       $location = $this->input->post('location');
+       $location = $_GET['markersArray'];
+       //$location = $this->input->post('location');
        // proses data
        
        // redirect ke editPendidikan
-       redirect('profile/editPendidikan', 'refresh');
+       //redirect('profile/editPendidikan', 'refresh');
     }
     
     /**
