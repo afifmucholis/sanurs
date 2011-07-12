@@ -25,7 +25,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
 </head>
-<body">
+<body>
   <div id="content">
     <div id="header">
         <div id="search_site_box">
