@@ -37,7 +37,7 @@
 		success: function(msg) {
                    if (msg==1) {
                       $('#add_as_friend').html('Request has been sent.');
-                      //alert('Request has been sent');
+                      //alert('Rqequest has been sent');
                    } else {
                       //alert('Error');
                    }

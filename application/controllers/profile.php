@@ -192,15 +192,20 @@ class profile extends CI_Controller {
      * 
      * @param type $user_id 
      */
-    function get_user_location($user_id) {
+    function get_user_location() {
         // load model user
         $this->load->model('user', 'userModel');
-        $option = array('id' => $user_id);
+        $option = array('id' => $this->session->userdata('user_id'));
         $getUser = $this->userModel->getUsers($options);
         
         // get location
-        $lat = $getUser[0]->location_latitude;
-        $lng = $getUser[0]->location_longitude;
+        if (isset($getUser[0]->location_latitude) && isset($getUser[0]->location_latitude)) {
+            $lat = $getUser[0]->location_latitude;
+            $lng = $getUser[0]->location_longitude;
+        }
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(array('lat' => $lat, 'lng'=>$lng)));
     }
     
     /**
