@@ -39,5 +39,4 @@
     <script type="text/javascript">
         initmap("searchfriend");
     </script>
-    tampilin map disini
 </div>
