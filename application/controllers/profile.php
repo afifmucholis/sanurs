@@ -188,6 +188,22 @@ class profile extends CI_Controller {
     }
     
     /**
+     * untuk mendapatkan lokasi (latitude-longitude) dari user berdasarkan id
+     * 
+     * @param type $user_id 
+     */
+    function get_user_location($user_id) {
+        // load model user
+        $this->load->model('user', 'userModel');
+        $option = array('id' => $user_id);
+        $getUser = $this->userModel->getUsers($options);
+        
+        // get location
+        $lat = $getUser[0]->location_latitude;
+        $lng = $getUser[0]->location_longitude;
+    }
+    
+    /**
      * submitLocation()
      *
      * mengirimkan lokasi dari user
