@@ -19,12 +19,14 @@
         <?php 
             if (isset($show_calendar) && $show_calendar) {
         ?>
-            <link href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/themes/base/jquery-ui.css" rel="stylesheet" type="text/css"/>
-            <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8/jquery-ui.min.js"></script>
+            <link href="<?php echo base_url();?>css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+            <link href="<?php echo base_url();?>css/timepicker.css" rel="stylesheet" type="text/css"/>
+            <script src="<?php echo base_url();?>js/jquery/jquery-ui.min.js"></script>
+            <script src="<?php echo base_url();?>js/jquery/jquery-ui-timepicker-addon.js"></script>
             <script> 
             $(function() {
                     //getter
-                    $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+                    $( "#datepicker" ).datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'hh:mm:ss'});
             });
             </script> 
         <?php 

@@ -21,8 +21,8 @@
 </div>
 
 <div class="right-menu">
+
     <?php
-    $js = 'onkeydown=count_formchange();';
     echo form_open('profile/submitProfile');
     echo form_hidden('url_img', base_url().$content_edit['img_url']);
     echo br(1);
@@ -84,5 +84,8 @@ $("input[type='select-one']").change(function(){
 });
 $("input[type='select-multiple']").change(function(){
   _isDirty = true;
+});
+$("input[type='submit']").click(function(){
+  _isDirty = false;
 });
 </script>

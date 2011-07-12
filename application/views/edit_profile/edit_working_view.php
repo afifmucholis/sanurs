@@ -1,17 +1,19 @@
-
-    <div class="work-menu">
+<div class="work-menu">
     <h3>Work experience</h3>
     <?php 
         echo form_open('profile/submitWorking');
-        echo form_hidden('counter',0); 
+        echo form_hidden('counter',count($working_experience)+count($working_current)); 
     ?>
     <div id="work_field">
+        <?php
+            
+        ?>
     </div>
     <a href="#" id="add_links">Add field</a>   
     <a href="#" id="remove_links" style="display: none;">Remove field</a>
 </div>
 
-    <div class="work-menu">
+<div class="work-menu">
     <h3>Current Work</h3>
     <?php
         $data = array(
@@ -54,6 +56,9 @@
     });
     $("input[type='select-multiple']").change(function(){
       _isDirty = true;
+    });
+    $("input[type='submit']").click(function(){
+      _isDirty = false;
     });
     $(document).ready(function() {
         $("#add_links").click(function() {

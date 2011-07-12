@@ -158,16 +158,66 @@ class profile extends CI_Controller {
      * @param string post->url_img url_img profpic
      */
     function submitProfile() {
+        $this->load->model('user','userModel');
+        $user_id = $this->session->userdata('user_id');
         $nick_name = $this->input->post('nick_name');
         $gender = $this->input->post('gender');
+        // get gender
+        $this->load->model('gender','genderModel');
+        $options = array('label' => $gender);
+        $getGender_id = $this->genderModel->getGenders($options);
+        
         $home_address = $this->input->post('home_address');
         $home_telephone = $this->input->post('home_telephone');
         $handphone = $this->input->post('handphone');
-        $url_img = $this->input->post('url_img');
         // proses data disini
+        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
         
-        // redirect ke editLocation
-        redirect('profile/editLocation', 'refresh');
+        $options = array(
+            'id'=>$user_id,
+            'surname'=>$nick_name,
+            'gender'=>$getGender_id[0]->id,
+            'home_address'=>$home_address,
+            'home_telephone'=>$home_telephone,
+            'handphone'=>$handphone
+        );
+        
+        $dir = explode("/",$image_url);
+        $ext = explode(".",$image_url);
+        if (count($dir)==2) {
+            // $image_url still null
+            
+        } else {
+            // cek apakah $default image atau image upload baru
+            if ($dir[1]=="temp") {
+                // cek file lama kalau ada
+                $options2 = array('id'=>$user_id);
+                $getReturn = $this->userModel->getUsers($options2);
+                $img_lama = $getReturn[0]->profpict_url;
+                if ($img_lama!="") {
+                    // delete file yang lama
+                    unlink('./'.$img_lama);
+                }
+                // image baru ada di folder temp
+                $new_imgurl = 'res/user/user_'.$user_id.'.'.$ext[count($ext)-1];
+                 if (rename('./'.$image_url, './'.$new_imgurl)) {
+                     $options['profpict_url'] = $new_imgurl;
+                 } else {
+                     echo 'error moving file';
+                 }
+            } else {
+                // image lama tidak perlu diupdate
+            }
+        }
+        // update database dengan opsi $options
+        $cek_bol = $this->userModel->updateUser($options);
+        if (is_bool($cek_bol) || count($cek_bol)!=1) {
+            // update gagal
+            echo 'update gagal';
+        } else {
+            // update berhasil
+            echo 'success update';
+        }
     }
     
     /**
@@ -273,9 +323,31 @@ class profile extends CI_Controller {
      *
      */
     function edit_working() {
+        $user_id = $this->session->userdata('user_id');
         $data['struktur'] = $this->getStruktur2('Working');
         $data['content_edit_view'] = 'edit_profile/edit_working_view';
         $data['content_edit'] = array();
+        // load model work_experience
+        $this->load->model('work_experience', 'workModel');
+        $options = array('user_id'=>$user_id);
+        $getWork = $this->workModel->getWorkExperiences($options);
+        $working_experience = array();
+        $working_current = array();
+        if ($getWork) {
+            $count=0;
+            foreach ($getWork as $work):
+                if (!$work->is_current_work) {
+                    $working_experience[$count] = $work;
+                    $count++;
+                } else {
+                    // current working
+                    $working_current = $work;
+                }
+            endforeach;
+        }
+        
+        $data['working_experience'] = $working_experience;
+        $data['working_current'] = $working_current;
         
         $text = $this->load->view($data['content_edit_view'],$data,true);
         $this->output
