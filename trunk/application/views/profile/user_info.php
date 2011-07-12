@@ -81,7 +81,7 @@
                 if ($working['is_current_work'] && $user_data['visibility']->current_experience) {
                     $tampil = true;
                     $count_tampil++;
-                } else if (!$working['is_current_work'] && $user_data['visibility']->working_experience) {
+                } else if (!$working['is_current_work'] && $user_data['visibility']->work_experience) {
                     $tampil = true;
                     $count_tampil++;
                 } else {

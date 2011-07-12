@@ -34,6 +34,7 @@ class Event extends CI_Controller {
         $data['main_content'] = 'event/main_event_view';
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = 'categories';
+        
         $this->load->view('includes/template',$data);
     }
     
@@ -184,42 +185,70 @@ class Event extends CI_Controller {
      * 
      */
     function submit_event() {
-        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
-        $ext = explode(".",$image_url);
-        $title = $this->input->post('title');
-        $when = $this->input->post('when');
-        $where = $this->input->post('where');
-        $description = $this->input->post('description');
-        $category_event = $this->input->post('category_event');
-        
-         $options = array (
-             'title' => $title,
-             'description' => $description,
-             'when' => $when,
-             'where' => $where, 
-             'category_event_id' => $category_event,
-             'image_url' => $image_url
-         );
-         $event_id = $this->eventModel->addEvent($options); // masukkan data ke tabel event
-         
-         $options = array (
-             'user_id' => $this->session->userdata('user_id'),
-             'event_id' => $event_id
-         );
-         $host_event_id = $this->hosteventModel->addHostEvent($options); // masukkan data ke tabel host_event
-         if (is_bool($host_event_id) || is_bool($event_id)) { // error
-             echo 'error on database';
-         } else {
-             $new_imgurl = 'res/event/event_'.$event_id.'.'.$ext[count($ext)-1];
-             if (rename('./'.$image_url, './'.$new_imgurl)) {
-                 // update new image url yang telah direname
-                 $options = array('id'=>$event_id,'image_url'=>$new_imgurl);
-                 $this->eventModel->updateEvent($options);
-                 echo 'success';
+        // set rules form
+        $this->load->library('form_validation');
+        $this->form_validation->set_rules('title', 'Title', 'required');
+        $this->form_validation->set_rules('when', 'Date and Time', 'required');
+        $this->form_validation->set_rules('where', 'Place', 'required');
+        $this->form_validation->set_rules('description', 'Description', 'required');
+        $this->form_validation->set_rules('category_event', 'Event Category', 'required');
+        if ($this->form_validation->run() == FALSE)
+        {
+              $this->host();
+        }
+        else
+        {
+            $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+            $ext = explode(".",$image_url);
+            $title = $this->input->post('title');
+            $when = $this->input->post('when');
+            $where = $this->input->post('where');
+            $description = $this->input->post('description');
+            $category_event = $this->input->post('category_event');
+
+            if ($image_url!='res/NoPhotoAvailable.jpg') {
+                 $options = array (
+                     'title' => $title,
+                     'description' => $description,
+                     'when' => $when,
+                     'where' => $where, 
+                     'category_event_id' => $category_event,
+                     'image_url' => $image_url
+                 );
+            } else {
+                $options = array (
+                     'title' => $title,
+                     'description' => $description,
+                     'when' => $when,
+                     'where' => $where, 
+                     'category_event_id' => $category_event
+                 );
+            }
+             $event_id = $this->eventModel->addEvent($options); // masukkan data ke tabel event
+
+             $options = array (
+                 'user_id' => $this->session->userdata('user_id'),
+                 'event_id' => $event_id
+             );
+             $host_event_id = $this->hosteventModel->addHostEvent($options); // masukkan data ke tabel host_event
+             if (is_bool($host_event_id) || is_bool($event_id)) { // error
+                 echo 'error on database';
              } else {
-                 echo 'error moving file';
+                if ($image_url!='res/NoPhotoAvailable.jpg') {
+                     $new_imgurl = 'res/event/event_'.$event_id.'.'.$ext[count($ext)-1];
+                     if (rename('./'.$image_url, './'.$new_imgurl)) {
+                         // update new image url yang telah direname
+                         $options = array('id'=>$event_id,'image_url'=>$new_imgurl);
+                         $this->eventModel->updateEvent($options);
+                         echo 'success';
+                     } else {
+                         echo 'error moving file';
+                     }
+                } else {
+                    echo 'success';
+                }
              }
-         }
+        }
     }
         
     /**
