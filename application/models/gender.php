@@ -1,4 +1,5 @@
 <?php
+
 /*
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
@@ -11,62 +12,65 @@
  */
 
 /**
-* @property CI_Loader $load
-* @property CI_Form_validation $form_validation
-* @property CI_Input $input
-* @property CI_Email $email
-* @property CI_DB_active_record $db
-* @property CI_DB_forge $dbforge
-*/
+ * @property CI_Loader $load
+ * @property CI_Form_validation $form_validation
+ * @property CI_Input $input
+ * @property CI_Email $email
+ * @property CI_DB_active_record $db
+ * @property CI_DB_forge $dbforge
+ */
+class Gender extends CI_Model {
 
-class Gender extends CI_Model{
     //put your code here
-    var $table  = 'gender';
-    var $id     = 'id';
-    var $label  = 'label';
+    var $table = 'gender';
+    var $id = 'id';
+    var $label = 'label';
+
     /**
      * Konstruktor
      */
     function __construct() {
         parent::__construct();
     }
-    
+
     /**
      * Konstruktor
      */
     function Gender() {
         parent::__construct();
     }
-    
-   /**
-    * Method addGender : tambah gender, no null allowed.
-    * 
-    * option: values
-    * --------------
-    * label required
-    * 
-    * @param array $options
-    * @return type 
-    */
+
+    /**
+     * Method addGender : tambah gender, no null allowed.
+     * 
+     * option: values
+     * --------------
+     * label required
+     * 
+     * @param array $options
+     * @return type 
+     */
     function addGender($options = array()) {
         //Cek yang required :
         if (!$this->_required(array($this->label), $options)) {
             return false;
         }
-            
+
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
         $fieldArray = array($this->label);
-        foreach($fieldArray as $field) {
+        foreach ($fieldArray as $field) {
+            if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
+            }
         }
-        
+
         //Jalankan query :
         $this->db->insert($this->table);
-        
+
         //Kembaliin id dari row yang diinsert :
         return $this->db->insert_id();
     }
-    
+
     /**
      * Method updateGender : update tabel Gender yang memenuhi id tertentu.
      * 
@@ -81,24 +85,24 @@ class Gender extends CI_Model{
     function updateAlumni($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
-                return false;
-        
+            return false;
+
         //Set dari field :
         $fieldArray = array($this->label);
         foreach ($fieldArray as $field) {
-            if (isset ($options[$field])) {
+            if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
             }
         }
-        $this->db->where($this->id,$options[$this->id]);
-        
+        $this->db->where($this->id, $options[$this->id]);
+
         //Jalankan query :
         $this->db->update($this->table);
-        
+
         //Kembalikan jumlah row yang terupdate, atau false jika row tdak terupdate
         return $this->db->affected_rows();
     }
-    
+
     /**
      * Method getGender, mengembalikan array of gender. Tested
      * 
@@ -117,9 +121,9 @@ class Gender extends CI_Model{
      */
     function getGenders($options = array()) {
         //nilai default :
-        $options = $this->_default(array('sortDirection' =>'asc'), $options);
-        
-         //Select distinct kalo keset :
+        $options = $this->_default(array('sortDirection' => 'asc'), $options);
+
+        //Select distinct kalo keset :
         if (isset($options['distinct'])) {
             if ($options['distinct'] == true) {
                 $this->db->distinct();
@@ -128,24 +132,24 @@ class Gender extends CI_Model{
 
         //Column Select :
         if (isset($options['columnSelect'])) {
-            $this->db->select($options['columnSelect']);        
+            $this->db->select($options['columnSelect']);
         }
 
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id, $this->label);
         foreach ($fieldArray as $field) {
-            if (isset ($options[$field])) {
-                $this->db->where($field, $options[$field]);  
+            if (isset($options[$field])) {
+                $this->db->where($field, $options[$field]);
             }
         }
-        
+
         //Sorting : 
         if (isset($options['sortBy'])) {
             $this->db->order_by($options['sortBy'], $options['sortDirection']);
         }
-        
+
         $query = $this->db->get($this->table);
-        if ($query->num_rows()==0) {
+        if ($query->num_rows() == 0) {
             return false;
         } else {
             return $query->result();
@@ -163,11 +167,11 @@ class Gender extends CI_Model{
         if (!$this->_required(array($this->id), $options)) {
             return false;
         }
-        
+
         $this->db->where($this->id, $options[$this->id]);
         $this->db->delete($this->table);
     }
-    
+
     /**
      * Mengembalikan false jika array $data tidak berisi semua field key (kolom) $required
      * Untuk setiap anggota array $required ini, $data[angggota $required] wajib ada
@@ -177,12 +181,12 @@ class Gender extends CI_Model{
      */
     function _required($required, $data) {
         foreach ($required as $field) {
-            if (!isset ($data[$field]))
+            if (!isset($data[$field]))
                 return false;
         }
         return true;
     }
-    
+
     /**
      * Merging array $options, sehingga terisi nilai dari $defaults
      * @param array $defaults, array yang berisi nilai default
@@ -192,5 +196,7 @@ class Gender extends CI_Model{
     function _default($defaults, $options) {
         return array_merge($defaults, $options);
     }
+
 }
+
 ?>
