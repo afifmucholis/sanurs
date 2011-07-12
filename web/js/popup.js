@@ -73,14 +73,9 @@ $(document).ready(function(){
         
 	//Click out event!
 	$("#backgroundPopup").click(function(){
-		//disablePopup();
+		disablePopup();
 	});
         
-        //Click out event! submit clicked
-	$("#submit_image").click(function(){
-		disablePopup();
-                sendData();
-	});
  
 	//Press Escape event!
 	$(document).keypress(function(e){

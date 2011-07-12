@@ -73,9 +73,33 @@ class profile extends CI_Controller {
         $data['main_content'] = 'edit_profile/edit_profile_view';
         $data['struktur'] = $this->getStruktur2('Basic Info');
         $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
-        $data['content_edit'] = array();
-        
-        $this->load->view('includes/template',$data);
+        // load basic user info
+        $this->load->model('user','userModel');
+        $options = array('id' => $this->session->userdata('user_id'));
+        $getReturn = $this->userModel->getUsers($options);
+        if (is_bool($getReturn) && !$getReturn) {
+            //gak ada user yang memenuhi
+            redirect('/home', 'refresh');
+        } else {
+            // get gender
+            $this->load->model('gender','genderModel');
+            $options = array('id' => $getReturn[0]->gender_id);
+            $genderLabel = $this->genderModel->getGenders($options);
+            if ($getReturn[0]->profpict_url=="")
+                $img_url='res/NoPhotoAvailable.jpg';
+            else
+                $img_url=$getReturn[0]->profpict_url;
+            $data['content_edit'] = array(
+                'name' => $getReturn[0]->name,
+                'img_url' => $img_url,
+                'nick_name' => $getReturn[0]->surname,
+                'gender' => $genderLabel[0]->label,
+                'home_address' => $getReturn[0]->home_address,
+                'home_telephone' => $getReturn[0]->home_telephone,
+                'handphone' => $getReturn[0]->handphone
+            );
+            $this->load->view('includes/template',$data);
+        }
     }
     
     /**
@@ -87,12 +111,37 @@ class profile extends CI_Controller {
     function edit_basic_info() {
         $data['struktur'] = $this->getStruktur2('Basic Info');
         $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
-        $data['content_edit'] = array();
+        // load basic user info
+        $this->load->model('user','userModel');
+        $options = array('id' => $this->session->userdata('user_id'));
+        $getReturn = $this->userModel->getUsers($options);
+        if (is_bool($getReturn) && !$getReturn) {
+            //gak ada user yang memenuhi
+            redirect('/home', 'refresh');
+        } else {
+            // get gender
+            $this->load->model('gender','genderModel');
+            $options = array('id' => $getReturn[0]->gender_id);
+            $genderLabel = $this->genderModel->getGenders($options);
+            if ($getReturn[0]->profpict_url=="")
+                $img_url='res/NoPhotoAvailable.jpg';
+            else
+                $img_url=$getReturn[0]->profpict_url;
+            $data['content_edit'] = array(
+                'name' => $getReturn[0]->name,
+                'img_url' => $img_url,
+                'nick_name' => $getReturn[0]->surname,
+                'gender' => $genderLabel[0]->label,
+                'home_address' => $getReturn[0]->home_address,
+                'home_telephone' => $getReturn[0]->home_telephone,
+                'handphone' => $getReturn[0]->handphone
+            );
         
-        $text = $this->load->view($data['content_edit_view'],$data,true);
-        $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+            $text = $this->load->view($data['content_edit_view'],$data,true);
+            $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+        }
     }
     
     /**
@@ -109,12 +158,11 @@ class profile extends CI_Controller {
      * @param string post->url_img url_img profpic
      */
     function submitProfile() {
+        $nick_name = $this->input->post('nick_name');
         $gender = $this->input->post('gender');
-        $ttl = $this->input->post('ttl');
-        $alamat = $this->input->post('alamat');
-        $telfon = $this->input->post('telfon');
-        $hp = $this->input->post('hp');
-        $email = $this->input->post('email');
+        $home_address = $this->input->post('home_address');
+        $home_telephone = $this->input->post('home_telephone');
+        $handphone = $this->input->post('handphone');
         $url_img = $this->input->post('url_img');
         // proses data disini
         
@@ -161,7 +209,7 @@ class profile extends CI_Controller {
      *
      */
     function edit_education() {
-        $data['struktur'] = $this->getStruktur2('Pendidikan');
+        $data['struktur'] = $this->getStruktur2('Education');
         $data['content_edit_view'] = 'edit_profile/edit_education_view';
         $data['content_edit'] = array();
         
