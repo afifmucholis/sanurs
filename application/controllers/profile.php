@@ -196,7 +196,7 @@ class profile extends CI_Controller {
         // load model user
         $this->load->model('user', 'userModel');
         $option = array('id' => $this->session->userdata('user_id'));
-        $getUser = $this->userModel->getUsers($options);
+        $getUser = $this->userModel->getUsers($option);
         
         // get location
         //if (isset($getUser[0]->location_latitude) && isset($getUser[0]->location_latitude)) {

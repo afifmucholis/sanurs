@@ -15,7 +15,6 @@ function initmap(page) {
     };
     map = new google.maps.Map(document.getElementById("map"), myOptions);
     initMarkersArray(page);
-    deleteOverlays();
     clearOverlays();
     showOverlay();
     if (page == 'editlocation') {
@@ -44,24 +43,30 @@ function initMarkersArray(page) {
         // markersArray diisi dengan data lokasi user yang bersangkutan
         var lat;
         var lng;
-        var link = 'http://localhost/sanurs/web/index.php/profile/get_user_location';
+        var link = "http://localhost/sanurs/web/index.php/profile/get_user_location";
         var form_data = {
-                		
-	};
+            
+        };
 
 	$.ajax({
 		url: link,
 		type: 'POST',
                 data: form_data,
 		success: function(msg) {
-                   lat = msg.lat;
-                   lng = msg.lng;
+                   lat = msg['lat'];
+                   lng = msg['lng'];
+                   //alert(lat);
+                   latlng = new google.maps.LatLng(lat,lng);
+                   addMarker('my location', latlng);
 		}
 	});	
         
-        latlng = new google.maps.latLng(lat,lng);
-        addMarker('my location', latlng);
-        
+        //latlng = new google.maps.LatLng(lat,lng);
+        //alert(link);
+        //alert(lat);
+        //addMarker('my location', latlng);
+        //addMarker('mylocation', new google.maps.LatLng(-6, 101));
+                
     } else if (page == 'searchfriend') {
         // markersArray diisi dengan data lokasi semua user di database kecuali user yang bersangkutan
     }
