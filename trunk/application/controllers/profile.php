@@ -199,13 +199,12 @@ class profile extends CI_Controller {
         $getUser = $this->userModel->getUsers($option);
         
         // get location
-        //if (isset($getUser[0]->location_latitude) && isset($getUser[0]->location_latitude)) {
-            $lat = $getUser[0]->location_latitude;
-            $lng = $getUser[0]->location_longitude;
-        //}
+        $name = $getUser[0]->name;
+        $lat = $getUser[0]->location_latitude;
+        $lng = $getUser[0]->location_longitude;
         $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode(array('lat'=>$lat, 'lng'=>$lng)));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('name'=>$name, 'lat'=>$lat, 'lng'=>$lng)));
     }
     
     /**
