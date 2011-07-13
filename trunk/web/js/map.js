@@ -134,7 +134,6 @@ function codeAddress(address) {
 function tesGeocode() {
     if ($('input[name=location]').attr('value') != null) {
         var address = $('input[name=location]').attr('value');
-        alert(address);
         geocoder.geocode(
             { 'address' : address },
             function(results, status) {
