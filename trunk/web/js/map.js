@@ -45,7 +45,6 @@ function initMarkersArray(page) {
     if (page == 'editlocation') {
         // markersArray diisi dengan data lokasi user yang bersangkutan
         var link = "http://localhost/sanurs/web/index.php/profile/get_user_location";
-        
         $.ajax({
             url: link,
             type: 'POST',
@@ -60,6 +59,21 @@ function initMarkersArray(page) {
         });
     } else if (page == 'searchfriend') {
         // markersArray diisi dengan data lokasi semua user di database kecuali user yang bersangkutan
+        var link = "http://localhost/sanurs/web/index.php/profile/get_all_location";
+        $.ajax({
+            url: link,
+            type: 'POST',
+            success: function(msg) {
+                if (msg.length > 0) {
+                    for (i=0; i<msg.length; i++) {
+                        lat = msg[i]['lat'];
+                        lng = msg[i]['lng'];
+                        latlng = new google.maps.LatLng(lat,lng);
+                        addMarker('user'+i, latlng);
+                    }
+                }
+            }
+        });
     }
 }
 
@@ -135,7 +149,7 @@ function tesGeocode() {
     if ($('input[name=location]').attr('value') != null) {
         var address = $('input[name=location]').attr('value');
         geocoder.geocode(
-            { 'address' : address },
+            {'address' : address},
             function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
