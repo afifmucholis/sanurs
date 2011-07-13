@@ -1,4 +1,4 @@
-<div id="div_work_form_<?php echo $counter;?>">
+<div id="div_work_form">
     <br/>
     Company/ Association : <?php echo form_input('company', '', 'id="company"');?>
     <br/>
@@ -16,4 +16,7 @@
     <br/>
     Work Email : <?php echo form_input('work_email', '', 'id="work_email"');?>
     <br/>
+    <?php if ($counter!=0) { ?>
+    <a href="#" class="remove_links">Remove field</a>
+    <?php } ?>
 </div>
