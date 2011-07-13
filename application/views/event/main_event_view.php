@@ -54,8 +54,11 @@
                 Galleria.loadTheme('<?php echo base_url(); ?>galleria-theme/classic/galleria.classic.min.js');
                 $("#gallery-event").galleria({
                     //width: 600,
+                    autoplay : 4000,
+                    //lightbox : true,
                     height: 500,
-                    dataSource : msg
+                    dataSource : msg,
+                    transition : 'fadeslide'
                 });
             }
         });
