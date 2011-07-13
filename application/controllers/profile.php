@@ -201,9 +201,7 @@ class profile extends CI_Controller {
     }
     
     /**
-     * untuk mendapatkan lokasi (latitude-longitude) dari user berdasarkan id
-     * 
-     * @param type $user_id 
+     * untuk mendapatkan lokasi (latitude-longitude) dari user yang sedang aktif
      */
     function get_user_location() {
         // load model user
@@ -219,6 +217,33 @@ class profile extends CI_Controller {
                 ->set_output(json_encode(array('lat'=>$lat, 'lng'=>$lng)));
     }
     
+    function get_all_location() {
+        // load model user
+        $this->load->model('user', 'userModel');
+        //$option = array('id' => $user_id);
+        $option = array();
+        $getUser = $this->userModel->getUsers($option); //ini berisi semua data user yang ada di database
+        
+        // get location
+        if ($getUser) {
+            $count = 0;
+            $userArray = array();
+            foreach ($getUser as $user) {
+                if ($user->location_latitude != NULL) {
+                    $userArray[$count] = array(
+                        'lat' => $user->location_latitude,
+                        'lng' => $user->location_longitude
+                    );
+                    $count++;
+                }
+            }
+        }
+
+        $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($userArray));
+    }
+
     /**
      * submitLocation()
      *
@@ -238,6 +263,8 @@ class profile extends CI_Controller {
         
         $this->load->model('user', 'userModel');
         $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
+        
+        redirect('profile/editProfile', 'refresh');
     }
     
     /**
