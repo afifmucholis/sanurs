@@ -76,7 +76,6 @@ function initmap(page) {
                     
                     /*** set content infowindow ***/
                     var contentString = '<a href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +'</a>';
-                    alert(contentString);
                     /*** selesai set content infowindow ***/
                     
                     setInfoWindow(markersArray[i], contentString);
