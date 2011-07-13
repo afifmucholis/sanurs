@@ -8,6 +8,7 @@ var infowindow = new google.maps.InfoWindow();
  * initialize map
  */
 function initmap(page) {
+    geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
         zoom: 1,
@@ -118,18 +119,40 @@ function codeAddress(address) {
     var latlng;
     
     geocoder.geocode(
-    {
-        'address' : address
-    },
-    function(results, status) {
-        if (status == google.maps.GeocoderStatus.OK) {
-            latlng = results[0].geometry.location;
-        } else {
-            latlng = new google.maps.LatLng(0, 0);
+        {'address' : address},
+        function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                latlng = results[0].geometry.location;
+            } else {
+                latlng = new google.maps.LatLng(0, 0);
+            }
         }
-    }
     );
     return latlng;
+}
+
+function tesGeocode() {
+    if ($('input[name=location]').attr('value') != null) {
+        var address = $('input[name=location]').attr('value');
+        alert(address);
+        geocoder.geocode(
+            { 'address' : address },
+            function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    map.setCenter(results[0].geometry.location);
+                    deleteOverlays();
+                    addMarker('my location', results[0].geometry.location);
+                    clearOverlays();
+                    showOverlay();
+                    setLocation();
+                } else {
+                    alert("Geocode was not successfull for the following reason : " + status);
+                }
+            }
+        );
+    } else {
+        // do nothing, masukan salah
+    }
 }
             
 function codeLatLng(latlng) {
