@@ -231,6 +231,7 @@ class profile extends CI_Controller {
             foreach ($getUser as $user) {
                 if ($user->location_latitude != NULL) {
                     $userArray[$count] = array(
+                        'id' => $user->id,
                         'name' => $user->name,
                         'lat' => $user->location_latitude,
                         'lng' => $user->location_longitude
