@@ -1,14 +1,4 @@
 <?php 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of profile
- *
- * @author user
- */
 /** * @property CI_Loader $load
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
@@ -264,7 +254,6 @@ class profile extends CI_Controller {
      * @param string post->location lokasi_user
      */
     function submitLocation() {
-       $location = $_GET['markersArray'];
        //$location = $this->input->post('location');
        // proses data
        
