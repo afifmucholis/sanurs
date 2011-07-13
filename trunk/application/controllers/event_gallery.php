@@ -29,15 +29,15 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/1.jpg',
                                 'image' => base_url() . 'res/event/1.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
-                                'description' => 'My description'
-                            //link: 'http://my.destination.com'
+                                'description' => 'My description',
+                                'link' => 'http://my.destination.com'
                             ),
                             array(
                                 'thumb' => base_url() . 'res/event/2.jpg',
                                 'image' => base_url() . 'res/event/2.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
@@ -45,7 +45,7 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/3.jpg',
                                 'image' => base_url() . 'res/event/3.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
@@ -53,7 +53,7 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/4.jpg',
                                 'image' => base_url() . 'res/event/4.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
@@ -61,7 +61,7 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/5.jpg',
                                 'image' => base_url() . 'res/event/5.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
@@ -69,7 +69,7 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/6.jpg',
                                 'image' => base_url() . 'res/event/6.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
@@ -77,7 +77,7 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/7.jpg',
                                 'image' => base_url() . 'res/event/7.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
@@ -85,7 +85,7 @@ class Event_Gallery extends CI_Controller {
                             array(
                                 'thumb' => base_url() . 'res/event/8.jpg',
                                 'image' => base_url() . 'res/event/8.jpg',
-                                'big' => 'big.jpg',
+                                'big' => base_url() . 'res/event/1.jpg',
                                 'title' => 'My title',
                                 'description' => 'My description'
                             //link: 'http://my.destination.com'
