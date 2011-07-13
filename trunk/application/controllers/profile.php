@@ -314,6 +314,7 @@ class profile extends CI_Controller {
             endforeach;
         }
         
+        $data['counter'] = count($working_experience)+count($working_current);
         $data['working_experience'] = $working_experience;
         $data['working_current'] = $working_current;
         
@@ -331,7 +332,8 @@ class profile extends CI_Controller {
      */
     function add_working_field() {
         $data = array(
-            'counter' => ($this->input->post('counter')+1)
+            'counter' => ($this->input->post('counter')+1),
+            'status' => 'new'
         );
         $text = $this->load->view('edit_profile/work_form',$data,true);
         $this->output
@@ -347,10 +349,90 @@ class profile extends CI_Controller {
      * @param int post->counter jumlah field yang diisi
      */
     function submitWorking() {
-        $counter = $this->input->post('counter');
+        $user_id = $this->session->userdata('user_id');
+        // load model work_experience
+        $this->load->model('work_experience', 'workModel');
+        $options = array('user_id'=>$user_id);
+        $getWork = $this->workModel->getWorkExperiences($options);
+        $id_array = array();
+        foreach($getWork as $work) :
+            array_push($id_array, $work->id);
+        endforeach;
         
-        // redirect ke editVisibility
-       redirect('profile/editVisibility', 'refresh');
+        $old_array = array();
+        $old = '_old_';
+        $new = '_new_';
+        $i=0;
+        $counter = $this->input->post('counter');
+        for($i=0;$i<=$counter;$i++) {
+            $status = '';
+            if ($this->input->post('id'.$old.$i)) { // out work id
+                $work_id = $this->input->post('id'.$old.$i);
+                $status = $old;
+                // push to array for checkin deleted array
+                array_push($old_array, $work_id);
+            }
+            if ($this->input->post('id'.$new.$i)) { // out counter
+                $status = $new;
+            }
+            $company = $this->input->post('company'.$status.$i);
+            $year = $this->input->post('year'.$status.$i);
+            $position = $this->input->post('position'.$status.$i);
+            $address = $this->input->post('address'.$status.$i);
+            $telephone = $this->input->post('telephone'.$status.$i);
+            $fax = $this->input->post('fax'.$status.$i);
+            $work_hp = $this->input->post('work_hp'.$status.$i);
+            $work_email = $this->input->post('work_email'.$status.$i);
+            $options = array();
+            
+            $options['user_id']=$user_id;
+            $options['company']=$company;
+            $options['year']=$year;
+            $options['position']=$position;
+            $options['address']=$address;
+            $options['telephone']=$telephone;
+            $options['fax']=$fax;
+            $options['work_hp']=$work_hp;
+            $options['work_email']=$work_email;
+            
+            // cek dulu yang harus ada apa *required
+            if ($status==$old) {
+                // update isinya
+                if ($i==0 && $company=="" && $year=="" && $position=="" && $address=="" && $telephone=="" && $fax=="" && $work_hp=="" && $work_email=="") {
+                    // erase from deleted array
+                    $old_array = array_diff($old_array, array($work_id));
+                    $add_update_Work=2;
+                } else {
+                    $options['id'] = $work_id;
+                    $add_update_Work = $this->workModel->updateWorkExperience($options);
+                }
+            } else {
+                // insert baru
+                if ($i==0)
+                    $options['is_current_work'] = 1;
+                $add_update_Work = $this->workModel->addWorkExperience($options);
+            }
+            if (is_bool($add_update_Work)) {
+                echo 'error update/insert';
+            } else {
+                echo 'success update/insert';
+            }
+        }
+        $options = array();
+        // delete work_experience
+        foreach($id_array as $old_id) :
+            if (in_array($old_id, $old_array)) {
+                
+            } else {
+                // delete here
+                $options['id'] = $old_id;
+                $delete_Work = $this->workModel->deleteWorkExperience($options);
+                if (is_bool($delete_Work)) {
+                    echo 'error on delete : id '.$old_id;
+                }
+            }
+        endforeach;
+        
     }
     
     /**
