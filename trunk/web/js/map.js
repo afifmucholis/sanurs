@@ -25,7 +25,9 @@ function initmap(page) {
             if (markersArray.length < 2) {
                 // pin cuma bisa 1 lokasi
                 deleteOverlays();
-                addMarker('my location', event.latLng);
+                addMarker('my location', event.latLng, true);
+                clearOverlays();
+                showOverlay();
                 setLocation();
             } else {
                 // pin gak mungkin lebih dari 1 lokasi
@@ -53,7 +55,7 @@ function initMarkersArray(page) {
                 lng = msg['lng'];
                 if (lat!=null && lng!=null) {
                     latlng = new google.maps.LatLng(lat,lng);
-                    addMarker('my location', latlng);
+                    addMarker('my location', latlng, true);
                 }
             }
         });
@@ -66,10 +68,11 @@ function initMarkersArray(page) {
             success: function(msg) {
                 if (msg.length > 0) {
                     for (i=0; i<msg.length; i++) {
+                        name = msg[i]['name'];
                         lat = msg[i]['lat'];
                         lng = msg[i]['lng'];
                         latlng = new google.maps.LatLng(lat,lng);
-                        addMarker('user'+i, latlng);
+                        addMarker(name, latlng, false);
                     }
                 }
             }
@@ -81,11 +84,11 @@ function initMarkersArray(page) {
  * untuk menambah marker overlay (objek) yang ada pada peta
  * marker posisi lokasi objek disimpan dalam markerArray
  */
-function addMarker(title, location) {
+function addMarker(title, location, draggable) {
     marker = new google.maps.Marker({
         position : location,
         title : title,
-        draggable : true,
+        draggable : draggable,
         map : map
     });
     markersArray.push(marker);
@@ -154,7 +157,7 @@ function tesGeocode() {
                 if (status == google.maps.GeocoderStatus.OK) {
                     map.setCenter(results[0].geometry.location);
                     deleteOverlays();
-                    addMarker('my location', results[0].geometry.location);
+                    addMarker('my location', results[0].geometry.location, true);
                     clearOverlays();
                     showOverlay();
                     setLocation();
