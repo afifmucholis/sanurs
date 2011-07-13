@@ -45,77 +45,21 @@
 </div>
 
 <script>
-    var data = [
-        {
-            thumb: '<?php echo base_url();?>res/event/1.jpg',
-            image: '<?php echo base_url();?>res/event/1.jpg',
-            big: 'big.jpg',
-            title: 'My title',
-            description: 'My description'
-            //link: 'http://my.destination.com'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/2.jpg',
-            image: '<?php echo base_url();?>res/event/2.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/3.jpg',
-            image: '<?php echo base_url();?>res/event/3.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/4.jpg',
-            image: '<?php echo base_url();?>res/event/4.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/5.jpg',
-            image: '<?php echo base_url();?>res/event/5.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/6.jpg',
-            image: '<?php echo base_url();?>res/event/6.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/7.jpg',
-            image: '<?php echo base_url();?>res/event/7.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        },
-        {
-            thumb: '<?php echo base_url();?>res/event/1.jpg',
-            image: '<?php echo base_url();?>res/event/8.jpg',
-            big: 'big2.jpg',
-            title: 'My second title',
-            description: 'My second description'
-            //link: '/product.html'
-        }
-    ];
-    Galleria.loadTheme('<?php echo base_url();?>galleria-theme/classic/galleria.classic.min.js');
-    $("#gallery-event").galleria({
-        //width: 600,
-        height: 500,
-        dataSource : data
+    $(document).ready(function() {
+        $.ajax({
+            url : '<?php echo site_url(); ?>/event_gallery',
+            type : 'POST',
+            data : {},
+            success : function(msg) {
+                Galleria.loadTheme('<?php echo base_url(); ?>galleria-theme/classic/galleria.classic.min.js');
+                $("#gallery-event").galleria({
+                    //width: 600,
+                    height: 500,
+                    dataSource : msg
+                });
+            }
+        });
+        
     });
          
 </script>
