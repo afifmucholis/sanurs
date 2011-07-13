@@ -26,7 +26,6 @@ function initmap(page) {
                 deleteOverlays();
                 addMarker('my location', event.latLng);
                 setLocation();
-                alert(locationArray[0]);
             } else {
                 // pin gak mungkin lebih dari 1 lokasi
             }
@@ -152,10 +151,16 @@ function codeLatLng(latlng) {
     return address;
 }
 
+/*
+ * memasukkan data baru ke dalam locationArray
+ */
 function addLocation(data) {
     locationArray.push(data);
 }
 
+/*
+ * menghapus semua isi locationArray
+ */
 function deleteLocation() {
     if (locationArray) {
         for (i in locationArray) {
@@ -165,6 +170,10 @@ function deleteLocation() {
     }
 }
 
+/*
+ * mengisi locationArray dengan lokasi user,
+ * lalu mengirim nilai baru ke form di view (untuk edit location)
+ */
 function setLocation() {
     deleteLocation();
     latlngStr = markersArray[0].position.toString();
@@ -174,32 +183,14 @@ function setLocation() {
     lng = parseFloat(latlngStr[1]);
     addLocation(lat);
     addLocation(lng);
+    sendLocation();
 }
 
 /*
- * mengirim isi markersArray melalui json
+ * mengirim isi locationArray dengan method POST
  * untuk dimanfaatkan pada edit location
  */
-function send_location() {
-    var link = "http://localhost/sanurs/web/index.php/profile/submitLocation";
-    
-    var form_data = {
-        
-        message : $('#pesan').val(),
-        ajax: '1'		
-    };
-        
-    $.ajax({
-        url: link,
-        type: 'POST',
-        data: form_data,
-        success: function(msg) {
-            lat = msg['lat'];
-            lng = msg['lng'];
-            if (lat!=null && lng!=null) {
-                latlng = new google.maps.LatLng(lat,lng);
-                addMarker(name, latlng);
-            }
-        }
-    });
+function sendLocation() {
+    $('input[name=save_lat]').attr('value', locationArray[0]);
+    $('input[name=save_lng]').attr('value', locationArray[1]);
 }
