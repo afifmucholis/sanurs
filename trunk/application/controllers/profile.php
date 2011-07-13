@@ -382,9 +382,11 @@ class profile extends CI_Controller {
         $options = array('user_id'=>$user_id);
         $getWork = $this->workModel->getWorkExperiences($options);
         $id_array = array();
-        foreach($getWork as $work) :
-            array_push($id_array, $work->id);
-        endforeach;
+        if (!is_bool($getWork)) {
+            foreach($getWork as $work) :
+                array_push($id_array, $work->id);
+            endforeach;
+        }
         
         $old_array = array();
         $old = '_old_';
@@ -437,11 +439,13 @@ class profile extends CI_Controller {
                 // insert baru
                 if ($i==0)
                     $options['is_current_work'] = 1;
-                $add_update_Work = $this->workModel->addWorkExperience($options);
+                if ($company!="" && $year!="" && $position!="" && $address!="" && $telephone!="" && $fax!="" && $work_hp!="" && $work_email!="") {
+                    $add_update_Work = $this->workModel->addWorkExperience($options);
+                }
             }
-            if (is_bool($add_update_Work)) {
+            if (isset($add_update_Work) && is_bool($add_update_Work)) {
                 echo 'error update/insert';
-            } else {
+            } else if (isset($add_update_Work)) {
                 echo 'success update/insert';
             }
         }
