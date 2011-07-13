@@ -254,11 +254,17 @@ class profile extends CI_Controller {
      * @param string post->location lokasi_user
      */
     function submitLocation() {
-       //$location = $this->input->post('location');
-       // proses data
-       
-       // redirect ke editPendidikan
-       //redirect('profile/editPendidikan', 'refresh');
+        $lat = $this->input->post('save_lat');
+        $lng = $this->input->post('save_lng');
+        
+        $options = array(
+            'id' => $this->session->userdata('user_id'),
+            'location_latitude' => $lat,
+            'location_longitude' => $lng
+        );
+        
+        $this->load->model('user', 'userModel');
+        $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
     }
     
     /**

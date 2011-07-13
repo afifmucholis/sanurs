@@ -11,6 +11,8 @@ echo form_button('searchlocation', 'Search');
 </div>
 <?php
 echo form_submit('save', 'Save Changes');
+echo form_hidden('save_lat', 0);
+echo form_hidden('save_lng', 0);
 echo form_close();
 ?>
 
