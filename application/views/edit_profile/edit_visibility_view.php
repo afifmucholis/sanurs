@@ -69,30 +69,3 @@ echo form_open('profile/submitVisibility');
 
 <div id ="clearboth">
 </div>
-<script type="text/javascript">
-    // pengecekan form yang diubah
-    $("input[type='text']").change(function(){
-        _isDirty = true;
-    });
-    $("input[type='password']").change(function(){
-      _isDirty = true;
-    });
-    $("input[type='textarea']").change(function(){
-      _isDirty = true;
-    });
-    $("input[type='hidden']").change(function(){
-      _isDirty = true;
-    });
-    $("input[type='checkbox']").change(function(){
-      _isDirty = true;
-    });
-    $("input[type='radio']").change(function(){
-      _isDirty = true;
-    });
-    $("input[type='select-one']").change(function(){
-      _isDirty = true;
-    });
-    $("input[type='select-multiple']").change(function(){
-      _isDirty = true;
-    });
-</script>
