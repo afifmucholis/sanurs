@@ -14,6 +14,7 @@
 
 <script type="text/javascript">
 var _isDirty = false;   // cek form input sudah diubah2 atau belum
+var _isSubmitClick = false; // cek apakah tombol submit diklik
 
 // pengecekan form yang diubah
 function cekIsDirtyForm() {
@@ -21,6 +22,15 @@ function cekIsDirtyForm() {
         .unbind('change.dirty')
         .bind('change.dirty', function(){
             _isDirty = true;
+        });
+}
+
+// pengecekan form di submit
+function isFormSubmit() {
+    $(':input')
+        .unbind('click.submit')
+        .bind('click.submit', function(){
+            _isSubmitClick = true;
         });
 }
 
@@ -32,7 +42,7 @@ function editProfileReady() {
             return subNavEditProfileClick($(this).attr("href"));
       });
     // load menu awal basic_info
-    subNavEditProfileClick('basic_info');
+    subNavEditProfileClick('working');
 }
 
 // function sub-navigation edit_profile
@@ -66,12 +76,15 @@ function subNavEditProfileClick(link_click) {
                    $('#history').html(his2+msg.struktur[2]["label"]);
                    // bind all input change event
                    cekIsDirtyForm();
+                   isFormSubmit();
                    if (link_click=='basic_info')
                        basicAjaxReady();
                    if (link_click=='location')
                        initmap("editlocation");
-                   if (link_click=='working')
+                   if (link_click=='working') {
                        workAjaxReady();
+                       _WorkFieldBinding();
+                   }
                    if (link_click=='education')
                        educationAjaxReady();
                 }
@@ -107,6 +120,12 @@ function workAjaxReady() {
         .unbind('click.add_work')
         .bind('click.add_work', function(){
            addWorkField(); 
+        })
+        .end()
+        .find('input[name=save]')
+        .unbind('click.submit_form')
+        .bind('click.submit_form', function(){
+          // $('#form_work').submit();
         });
 }
 
@@ -136,6 +155,7 @@ function _WorkFieldBinding() {
         .unbind('click.removeit')
         .bind('click.removeit', function(){
             $(this).parent().remove();
+            $('input[name=counter]').val($('input[name=counter]').val()-1);
         });
     cekIsDirtyForm();
 }
@@ -182,14 +202,11 @@ function changeEduField(val) {
 }
 
 window.onbeforeunload = function() {
-    if (_isDirty)
+    if (_isDirty && !_isSubmitClick)
         return 'You have unsaved changes!';
 }
 
 $(document).ready(function() {
     editProfileReady();
 });
-
-	
 </script>
-
