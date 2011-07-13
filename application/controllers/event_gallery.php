@@ -93,5 +93,4 @@ class Event_Gallery extends CI_Controller {
                         )));
     }
 }
-
 ?>
