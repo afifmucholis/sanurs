@@ -2,7 +2,7 @@ var map;
 var geocoder;
 var markersArray = [];  //menyimpan marker dari overlay (objek) yang ada pada peta
 var locationArray = [];
-var infowindow = new google.maps.InfoWindow();
+//var infowindow = new google.maps.InfoWindow();
 
 /*
  * initialize map
@@ -19,6 +19,16 @@ function initmap(page) {
     initMarkersArray(page);
     clearOverlays();
     showOverlay();
+    alert(markersArray.length);
+    for (i=0; i<markersArray.length; i++) {
+        alert("halo");
+        var infowindow = new google.maps.InfoWindow({
+            content: markersArray[i]['title']
+        });
+        google.maps.event.addListener(markersArray[i], 'click', function() {
+            infowindow.open(map,markersArray[i]);
+        });
+    }
     if (page == 'editlocation') {
         // bisa create pin
         google.maps.event.addListener(map, 'click', function(event) {
@@ -90,7 +100,7 @@ function addMarker(title, location, draggable) {
         title : title,
         draggable : draggable,
         map : map
-    });
+    });    
     markersArray.push(marker);
 }
 
