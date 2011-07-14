@@ -46,23 +46,24 @@
 
 <script>
     $(document).ready(function() {
+        data = [];
         $.ajax({
             url : '<?php echo site_url(); ?>/event_gallery',
             type : 'POST',
-            data : {},
+            data : {sortby:'<?php echo $sortby ?>'},
             success : function(msg) {
+                data=msg;
                 Galleria.loadTheme('<?php echo base_url(); ?>galleria-theme/classic/galleria.classic.min.js');
                 $("#gallery-event").galleria({
                     //width: 600,
                     autoplay : 4000,
                     //lightbox : true,
                     height: 500,
-                    dataSource : msg,
+                    dataSource : data,
                     transition : 'fadeslide'
                 });
             }
         });
-        
     });
          
 </script>
