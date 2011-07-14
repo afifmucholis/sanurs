@@ -42,7 +42,8 @@ function editProfileReady() {
             return subNavEditProfileClick($(this).attr("href"));
       });
     // load menu awal basic_info
-    subNavEditProfileClick('education');
+    //subNavEditProfileClick('education');
+    subNavEditProfileClick('basic_info');
 }
 
 // function sub-navigation edit_profile
