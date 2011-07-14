@@ -191,7 +191,12 @@ class sign_up extends CI_Controller {
                                     'graduate_year' =>$getUser[0]->graduate_year, 'last_unit_id'=>$getUser[0]->last_unit_id);
             $getReturnInsert = $this->userModel->addUser($optionsInsert);
             
-            $this->load->view('sign_up/signup_success');
+            /******/
+            //redirect ke halaman login
+            redirect('/sign_in', 'refresh');
+            /******/
+            
+            //$this->load->view('sign_up/signup_success');
         }
     }
     
