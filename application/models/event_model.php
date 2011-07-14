@@ -26,8 +26,8 @@ class Event_Model extends CI_Model {
     var $id = 'id';
     var $title = 'title';
     var $description = 'description';
-    var $when = 'when';
-    var $where = 'where';
+    var $start_time = 'start_time';
+    var $venue = 'venue';
     var $category_event_id = 'category_event_id';
     var $image_url = 'image_url';
 
@@ -52,8 +52,8 @@ class Event_Model extends CI_Model {
      * --------------
      * title                 required
      * description           required
-     * when                  required
-     * where                 required
+     * start_time                  required
+     * venue              required
      * category_event_id     required
      * image_url 
      * 
@@ -64,14 +64,14 @@ class Event_Model extends CI_Model {
         //Cek yang required :
         if (!$this->_required(array($this->title,
                     $this->description,
-                    $this->when,
-                    $this->where,
+                    $this->start_time,
+                    $this->venue,
                     $this->category_event_id), $options)) {
             return false;
         }
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->title, $this->description, $this->when, $this->where, $this->category_event_id, $this->image_url);
+        $fieldArray = array($this->title, $this->description, $this->start_time, $this->venue, $this->category_event_id, $this->image_url);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -90,11 +90,11 @@ class Event_Model extends CI_Model {
      * 
      * option: values
      * --------------
-     * id               field id buat kriteria where
+     * id               field id buat kriteria venue
      * title                 required
      * description           required
-     * when                  required
-     * where                 required
+     * start_time                   required
+     * venue                 required
      * category_event_id     required
      * image_url 
      * 
@@ -107,13 +107,13 @@ class Event_Model extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->title, $this->description, $this->when, $this->where, $this->category_event_id, $this->image_url);
+        $fieldArray = array($this->title, $this->description, $this->start_time , $this->venue, $this->category_event_id, $this->image_url);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
             }
         }
-        $this->db->where($this->id, $options[$this->id]);
+        $this->db->venue($this->id, $options[$this->id]);
 
         //Jalankan query :
         $this->db->update($this->table);
@@ -127,11 +127,11 @@ class Event_Model extends CI_Model {
      * 
      * option : values
      * ---------------
-     * id               field kriteria id untuk klause where
+     * id               field kriteria id untuk klause venue
      * title 
      * description
-     * when       
-     * where      
+     * start_time        
+     * venue      
      * category_event_id
      * image_url 
      *
@@ -160,12 +160,12 @@ class Event_Model extends CI_Model {
             $this->db->select($options['columnSelect']);
         }
 
-        //Tambah kondisi where ke query :
+        //Tambah kondisi venue ke query :
         $fieldArray = array($this->id,
             $this->title,
             $this->description,
-            $this->when,
-            $this->where,
+            $this->start_time ,
+            $this->venue,
             $this->category_event_id,
             $this->image_url);
         foreach ($fieldArray as $field) {
@@ -186,7 +186,7 @@ class Event_Model extends CI_Model {
             }
         }
 
-        //Tambah kondisi where dari fieldOperatorArray
+        //Tambah kondisi venue dari fieldOperatorArray
         foreach ($fieldOperatorArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);
@@ -223,7 +223,7 @@ class Event_Model extends CI_Model {
             return false;
         }
 
-        $this->db->where($this->id, $options[$this->id]);
+        $this->db->venue($this->id, $options[$this->id]);
         $this->db->delete($this->table);
     }
 
