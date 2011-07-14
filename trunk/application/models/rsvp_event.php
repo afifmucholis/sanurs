@@ -161,6 +161,25 @@ class RSVP_Event extends CI_Model {
         if (isset($options['sortBy'])) {
             $this->db->order_by($options['sortBy'], $options['sortDirection']);
         }
+        
+        //Buat penanganan query dengan penambahan operator
+        $fieldOperatorArray = array();
+        $operators = array('<', '>', '<=', '>=', '!=');
+        $iterator = 0;
+        //Concat fieldArray dengan tiap operator :
+        foreach ($fieldArray as $startString) {
+            foreach ($operators as $operator) {
+                $fieldOperatorArray[$iterator] = $startString . ' ' . $operator;
+                ++$iterator;
+            }
+        }
+
+        //Tambah kondisi where dari fieldOperatorArray
+        foreach ($fieldOperatorArray as $field) {
+            if (isset($options[$field])) {
+                $this->db->where($field, $options[$field]);
+            }
+        }
 
         //Group by :
         if (isset($options['groupBy'])) {

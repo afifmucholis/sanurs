@@ -39,9 +39,9 @@ class TestModel extends CI_Controller {
         }
          */
         
-        /* //Tes getAlumnis
+        //Tes getAlumnis
         $alum = array(
-            //'id' => 1,
+            'id !=' => 2,
             //'name' => 'Danang Dodol',
             //'birthdate' => date("Y-m-d"),
             //'last_unit_id' => 3,
@@ -63,9 +63,8 @@ class TestModel extends CI_Controller {
                 echo "<hr>";
             }
         }
-         * */
         
-        //Tes Delete
+        /* //Tes Delete
         $alum = array('id'=>4);
         $getReturn = $this->tes->deleteAlumni($alum);
         if (is_bool($getReturn)) {
@@ -75,7 +74,7 @@ class TestModel extends CI_Controller {
             echo "delete berhasil";
             echo md5("password");
         }
-        
+        */
     }
     
 }

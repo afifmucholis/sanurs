@@ -150,6 +150,25 @@ class Interested_In extends CI_Model {
                 $this->db->where($field, $options[$field]);
             }
         }
+        
+        //Buat penanganan query dengan penambahan operator
+        $fieldOperatorArray = array();
+        $operators = array('<', '>', '<=', '>=', '!=');
+        $iterator = 0;
+        //Concat fieldArray dengan tiap operator :
+        foreach ($fieldArray as $startString) {
+            foreach ($operators as $operator) {
+                $fieldOperatorArray[$iterator] = $startString . ' ' . $operator;
+                ++$iterator;
+            }
+        }
+
+        //Tambah kondisi where dari fieldOperatorArray
+        foreach ($fieldOperatorArray as $field) {
+            if (isset($options[$field])) {
+                $this->db->where($field, $options[$field]);
+            }
+        }
 
         //Sorting : 
         if (isset($options['sortBy'])) {
