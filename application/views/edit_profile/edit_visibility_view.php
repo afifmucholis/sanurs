@@ -7,43 +7,43 @@ echo form_open('profile/submitVisibility');
         Basic Information<br/>
         <?php
         echo form_checkbox('interest', 'interest');
-        echo 'Area of Interest';
+        echo form_label('Area of Interest');
         echo br(1);
         
         echo form_checkbox('birthdate', 'birthdate');
-        echo 'Birthdate';
+        echo form_label('Birthdate');
         echo br(2);
         ?>
         Contact Information<br/>
         <?php
         echo form_checkbox('email', 'email');
-        echo 'Email Address';
+        echo form_label('Email Address');
         echo br(1);
         
         echo form_checkbox('home_address', 'home_address');
-        echo 'Home Address';
+        echo form_label('Home Address');
         echo br(1);
         
         echo form_checkbox('home_telephone', 'home_telephone');
-        echo 'Home Telephone';
+        echo form_label('Home Telephone');
         echo br(1);
         
         echo form_checkbox('handphone', 'handphone');
-        echo 'Handphone';
+        echo form_label('Handphone');
         echo br(2);
         ?>
         Education<br/>
         <?php
         echo form_checkbox('s1', 's1');
-        echo 'Bacelor Degree Information';
+        echo form_label('Bacelor Degree Information');
         echo br(1);
         
         echo form_checkbox('s2', 's2');
-        echo 'Master Degree Information';
+        echo form_label('Master Degree Information');
         echo br(1);
         
         echo form_checkbox('s3', 's3');
-        echo 'Doctorate Degree Information';
+        echo form_label('Doctorate Degree Information');
         echo br(1);
         ?>
         <!--E-mail address:<br/>
@@ -84,11 +84,11 @@ echo form_open('profile/submitVisibility');
         Work<br/>
         <?php
         echo form_checkbox('work_experience', 'work_experience');
-        echo 'Work Experience';
+        echo form_label('Work Experience');
         echo br(1);
         
         echo form_checkbox('current_experience', 'current_experience');
-        echo 'Current Work';
+        echo form_label('Current Work');
         echo br(2);
         ?>
         <!--Work experience:<br/>
