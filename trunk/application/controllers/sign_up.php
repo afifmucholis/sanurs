@@ -191,8 +191,15 @@ class sign_up extends CI_Controller {
                                     'graduate_year' =>$getUser[0]->graduate_year, 'last_unit_id'=>$getUser[0]->last_unit_id);
             $getReturnInsert = $this->userModel->addUser($optionsInsert);
             
+            /*** Insert inisialisasi ke tabel visibility ***/
+            $this->load->model('visibility_status', 'visibilityModel');
+            $option = array(
+                'user_id' => $getReturnInsert
+            );
+            $getVisibilityInsert = $this->visibilityModel->addAlumni($option);
             /******/
-            //redirect ke halaman login
+            
+            /*** redirect ke halaman login ***/
             redirect('/sign_in', 'refresh');
             /******/
             

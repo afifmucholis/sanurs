@@ -554,9 +554,105 @@ class profile extends CI_Controller {
      *
      */
     function submitVisibility() {
+        $user_id = $this->session->userdata('user_id');
+        
+        if ($this->input->post('home_address')) {
+            $home_address = true;
+        } else {
+            $home_address = false;
+        }
+        
+        if ($this->input->post('home_telephone')) {
+            $home_telephone = true;
+        } else {
+            $home_telephone = false;
+        }
+        
+        if ($this->input->post('handphone')) {
+            $handphone = true;
+        } else {
+            $handphone = false;
+        }
+        
+        if ($this->input->post('email')) {
+            $email = true;
+        } else {
+            $email = false;
+        }
+        
+        if ($this->input->post('interest')) {
+            $interest = true;
+        } else {
+            $interest = false;
+        }
+        
+        if ($this->input->post('s1')) {
+            $s1 = true;
+        } else {
+            $s1 = false;
+        }
+        
+        if ($this->input->post('s2')) {
+            $s2 = true;
+        } else {
+            $s2 = false;
+        }
+        
+        if ($this->input->post('s3')) {
+            $s3 = true;
+        } else {
+            $s3 = false;
+        }
+        
+        if ($this->input->post('work_experience')) {
+            $work_experience = true;
+        } else {
+            $work_experience = false;
+        }
+        
+        if ($this->input->post('current_experience')) {
+            $current_experience = true;
+        } else {
+            $current_experience = false;
+        }
+        
+        //load visibilityModel
+        $this->load->model('visibility_status', 'visibilityModel');
+        
+        //bikin array option untuk update
+        $options = array(
+            'user_id' => $user_id,
+            'home_address' => $home_address,
+            'home_telephone' => $home_telephone,
+            'handphone' => $handphone,
+            'email' => $email,
+            'interest' => $interest,
+            'S1' => $s1,
+            'S2' => $s2,
+            'S3' => $s3,
+            'work_experience' => $work_experience,
+            'current_experience' => $current_experience
+        );
+        
+        //update visibility table
+        $getReturnUpdate = $this->visibilityModel->updateVisibilityStatus($options);
+        if (!$getReturnUpdate) {
+            echo "failed";
+        }
+        /*echo $home_address;
+        echo $home_telephone;
+        echo $handphone;
+        echo $email;
+        echo $interest;
+        echo $s1;
+        echo $s2;
+        echo $s3;
+        echo $work_experience;
+        echo $current_experience;
+        echo $user_id;*/
         
         // redirect ke editVisibility
-       redirect('profile', 'refresh');
+        //redirect('profile', 'refresh');
     }
     
     /**
