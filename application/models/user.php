@@ -227,6 +227,25 @@ class User extends CI_Model {
         if (isset($options[$this->password])) {
             $this->db->where($this->password, md5($options[$this->password]));
         }
+        
+        //Buat penanganan query dengan penambahan operator
+        $fieldOperatorArray = array();
+        $operators = array('<', '>', '<=', '>=', '!=');
+        $iterator = 0;
+        //Concat fieldArray dengan tiap operator :
+        foreach ($fieldArray as $startString) {
+            foreach ($operators as $operator) {
+                $fieldOperatorArray[$iterator] = $startString . ' ' . $operator;
+                ++$iterator;
+            }
+        }
+
+        //Tambah kondisi where dari fieldOperatorArray
+        foreach ($fieldOperatorArray as $field) {
+            if (isset($options[$field])) {
+                $this->db->where($field, $options[$field]);
+            }
+        }
 
         //Sorting : 
         if (isset($options['sortBy'])) {
