@@ -1,0 +1,10 @@
+- surname -> nickname
+- email bisa diedit
+- wajib : email, password, nickname
+- Major minor dropdown, kalo lain2 tambah manual
+- education semua grade wajib isi
+- minor gak wajib isi
+- highest degree / current education (tambah taun masuk kuliah)
+- find a friend tambah filter berdasarkan major education
+- Sebelum isi, terdapat pilihan udah gak sekolah atau masih kuliah
+- sorting categories -> pilih categori dari list category yang ada
