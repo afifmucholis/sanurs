@@ -42,7 +42,7 @@ class sign_up extends CI_Controller {
         $idUnit = $getReturnLevel[0]->id;
 
         //Get Distinct 
-        $optionsTahun = array('last_unit_id' => $idUnit, 'columnSelect' => 'graduate_year', 'distinct' => true, 'sortDirection' => 'desc');
+        $optionsTahun = array('last_unit_id' => $idUnit, 'columnSelect' => 'graduate_year', 'distinct' => true, 'sortBy' => 'graduate_year', 'sortDirection' => 'desc');
         $getReturnTahun = $this->alumniModel->getAlumnis($optionsTahun);
 
         $Arraytahun = array();
