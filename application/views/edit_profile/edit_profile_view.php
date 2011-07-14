@@ -81,7 +81,6 @@ function subNavEditProfileClick(link_click) {
                    if (link_click=='basic_info')
                        basicAjaxReady();
                    if (link_click=='location') {
-                       alert('editLocation');
                        initmap("editlocation");
                    }
                    if (link_click=='working') {
