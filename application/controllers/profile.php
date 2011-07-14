@@ -276,6 +276,23 @@ class profile extends CI_Controller {
      *
      */
     function edit_education() {
+        $user_id = $this->session->userdata('user_id');
+        // load education model
+        $this->load->model('education', 'eduModel');
+        $options = array('user_id'=>$user_id);
+        $getEducation = $this->eduModel->getEducations($options);
+        $data['education'] = array();
+        $data['max_level'] = 1;
+        if (!is_bool($getEducation)) {
+            $max_level=0;
+            foreach($getEducation as $edu) :
+                array_push($data['education'], $edu);
+                if ($edu->level_id>$max_level)
+                   $max_level = $edu->level_id;
+            endforeach;
+            $data['max_level'] = $max_level;
+        }
+        
         $data['struktur'] = $this->getStruktur2('Education');
         $data['content_edit_view'] = 'edit_profile/edit_education_view';
         $data['content_edit'] = array();
@@ -298,19 +315,64 @@ class profile extends CI_Controller {
      */
     function submitPendidikan() {
         $highest_edu = $this->input->post('highest_edu');
-        if ($highest_edu=='sma') {
-            
-        } else if ($highest_edu=='d3') {
-            
-        } else if ($highest_edu=='s1') {
-            
-        } else if ($highest_edu=='s2') {
-            
-        } else if ($highest_edu=='s3') {
-            
+        $edu = array();
+        $edu['sma']['college'] = $this->input->post('sma');
+        $edu['sma']['grad'] = $this->input->post('year');
+        $edu['d3']['college'] = $this->input->post('d3');
+        $edu['d3']['major'] = $this->input->post('d3_major');
+        $edu['d3']['minor'] = $this->input->post('d3_minor');
+        $edu['d3']['grad'] = $this->input->post('year');
+        $edu['s1']['college'] = $this->input->post('s1');
+        $edu['s1']['major'] = $this->input->post('s1_major');
+        $edu['s1']['minor'] = $this->input->post('s1_minor');
+        $edu['s1']['grad'] = $this->input->post('year');
+        $edu['s2']['college'] = $this->input->post('s2');
+        $edu['s2']['major'] = $this->input->post('s2_major');
+        $edu['s2']['minor'] = $this->input->post('s2_minor');
+        $edu['s2']['grad'] = $this->input->post('s2_year');
+        $edu['s3']['college'] = $this->input->post('s3');
+        $edu['s3']['major'] = $this->input->post('s3_major');
+        $edu['s3']['minor'] = $this->input->post('s3_minor');
+        $edu['s3']['grad'] = $this->input->post('s3_year');
+        
+        $user_id = $this->session->userdata('user_id');
+        // load education model
+        $this->load->model('education', 'eduModel');
+        $options = array('user_id'=>$user_id);
+        $getEducation = $this->eduModel->getEducations($options);
+        $max_level=0;   // get highest education from database
+        if (!is_bool($getEducation)) {
+            foreach($getEducation as $edu) :
+                array_push($data['education'], $edu);
+                if ($edu->level_id>$max_level)
+                   $max_level = $edu->level_id;
+            endforeach;
         }
-        // redirect ke editPendidikan
-       redirect('profile/editWorking', 'refresh');
+        
+        if ($max_level==0) {
+            // insert semua data
+            
+        } else if ($max_level==$highest_edu) {
+            // update semua
+            $insert = array(true,true,true,true,true);
+        }
+        
+        //insert
+        //update
+        //remove
+    }
+    
+    /**
+     * function cekInputEducationKosong($array)
+     *
+     * Mengecek array['college', 'major', 'minor', 'grad'] apakah semua kosong atau tidak
+     *
+     * @param array $array array['college', 'major', 'minor', 'grad']
+     */
+    function cekInputEducationKosong($array) {
+        if ($array['college']=="" && $array['major']=="" && $array['minor']=="" && $array['grad']=="")
+            return true;
+        return false;
     }
     
     /**
@@ -330,7 +392,7 @@ class profile extends CI_Controller {
         $getWork = $this->workModel->getWorkExperiences($options);
         $working_experience = array();
         $working_current = array();
-        if ($getWork) {
+        if (!is_bool($getWork)) {
             $count=0;
             foreach ($getWork as $work):
                 if (!$work->is_current_work) {

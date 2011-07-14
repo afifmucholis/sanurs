@@ -42,7 +42,7 @@ function editProfileReady() {
             return subNavEditProfileClick($(this).attr("href"));
       });
     // load menu awal basic_info
-    subNavEditProfileClick('working');
+    subNavEditProfileClick('education');
 }
 
 // function sub-navigation edit_profile
@@ -79,8 +79,10 @@ function subNavEditProfileClick(link_click) {
                    isFormSubmit();
                    if (link_click=='basic_info')
                        basicAjaxReady();
-                   if (link_click=='location')
+                   if (link_click=='location') {
+                       alert('editLocation');
                        initmap("editlocation");
+                   }
                    if (link_click=='working') {
                        workAjaxReady();
                        _WorkFieldBinding();
@@ -173,27 +175,27 @@ function educationAjaxReady() {
 
 // fungsi untuk mengganti education field
 function changeEduField(val) {
-    if (val=='sma') {
+    if (val=='1') {
         $("#edu_d3").attr('style', 'display: none');
         $("#edu_s1").attr('style', 'display: none');
         $("#edu_s2").attr('style', 'display: none');
         $("#edu_s3").attr('style', 'display: none');
-    } else if (val=='d3') {
+    } else if (val=='2') {
         $("#edu_d3").attr('style', 'display: inherit');
         $("#edu_s1").attr('style', 'display: none');
         $("#edu_s2").attr('style', 'display: none');
         $("#edu_s3").attr('style', 'display: none');
-    } else if (val=='s1') {
+    } else if (val=='3') {
         $("#edu_d3").attr('style', 'display: none');
         $("#edu_s1").attr('style', 'display: inherit');
         $("#edu_s2").attr('style', 'display: none');
         $("#edu_s3").attr('style', 'display: none');
-    } else if (val=='s2') {
+    } else if (val=='4') {
         $("#edu_d3").attr('style', 'display: none');
         $("#edu_s1").attr('style', 'display: inherit');
         $("#edu_s2").attr('style', 'display: inherit');
         $("#edu_s3").attr('style', 'display: none');
-    } else if (val=='s3') {
+    } else if (val=='5') {
         $("#edu_d3").attr('style', 'display: none');
         $("#edu_s1").attr('style', 'display: inherit');
         $("#edu_s2").attr('style', 'display: inherit');
