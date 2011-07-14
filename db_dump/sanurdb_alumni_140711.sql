@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jul 14, 2011 at 06:12 PM
+-- Generation Time: Jul 14, 2011 at 06:35 PM
 -- Server version: 5.1.41
 -- PHP Version: 5.3.1
 
@@ -42,7 +42,7 @@ CREATE TABLE IF NOT EXISTS `alumni` (
 INSERT INTO `alumni` (`id`, `name`, `birthdate`, `graduate_year`, `last_unit_id`, `is_registered`) VALUES
 (1, 'Akbar Gumbira', '1990-10-09', 2008, 4, 0),
 (2, 'Danang Tri Massandy', '1990-03-20', 2008, 4, 0),
-(3, 'Pudy Prima', '1989-11-30', 2007, 4, 1),
+(3, 'Pudy Prima', '1989-11-30', 2007, 4, 0),
 (4, 'William Eka Putra', '1990-06-21', 2007, 4, 0),
 (5, 'Darwin Soesanto', '1990-06-18', 2009, 4, 0),
 (6, 'Nikolaus Indra', '1989-03-18', 2009, 4, 0),
