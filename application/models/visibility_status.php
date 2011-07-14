@@ -170,6 +170,7 @@ class Visibility_Status extends CI_Model {
      * distinct         true jika Select distinct, false ato kosong kalo engga
      * sortBy           field kriteria kolom mana yang akan disort
      * sortDirection    (asc, desc) sorting ascending atau descending
+     * groupBy          grouping query
      * 
      * @param array $options
      * @return array result() 
@@ -204,6 +205,11 @@ class Visibility_Status extends CI_Model {
         //Sorting : 
         if (isset($options['sortBy'])) {
             $this->db->order_by($options['sortBy'], $options['sortDirection']);
+        }
+        
+        //Group by :
+        if (isset($options['groupBy'])) {
+            $this->db->group_by($options['groupBy']);
         }
 
         $query = $this->db->get($this->table);
