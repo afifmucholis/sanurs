@@ -31,8 +31,8 @@ class Calendar extends CI_Controller {
             $event['id'] = $getAllEvents[$i]->id;
             $event['title'] = $getAllEvents[$i]->title;
             $event['description'] = $getAllEvents[$i]->description;
-            $event['start'] = $getAllEvents[$i]->when;
-            $event['where'] = $getAllEvents[$i]->where;
+            $event['start'] = $getAllEvents[$i]->start_time;
+            $event['where'] = $getAllEvents[$i]->venue;
             $event['category_event_id'] = $getAllEvents[$i]->category_event_id;
             $event['image_url'] = $getAllEvents[$i]->image_url;
             $result[$i] = $event;
