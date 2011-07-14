@@ -10,7 +10,7 @@
     <?php
     //echo "Welcome ".$alumni_id;
     echo "Welcome, " . $name;
-    br(1);
+    echo br(1);
     echo "Please enter your birth date to verify.";
     //echo form_open('sign_up/verify_birthdate');
     ?>
