@@ -48,10 +48,16 @@ class friend extends CI_Controller {
     }
     
     function search() {
+        // get data from form
         $search_name = $this->input->post('name');
         $search_year = $this->input->post('year');
         $interest = $this->input->post('interest');
         $major = $this->input->post('education');
+        
+        /*** cari user yang namanya mengandung $search_name ***/
+        $this->load->model('user', 'userModel');
+        
+        /*** selesai cari user ***/
         
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
