@@ -51,6 +51,7 @@ class friend extends CI_Controller {
         $search_name = $this->input->post('name');
         $search_year = $this->input->post('year');
         $interest = $this->input->post('interest');
+        $major = $this->input->post('education');
         
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
@@ -58,6 +59,7 @@ class friend extends CI_Controller {
         $data['search_name'] = $search_name;
         $data['search_year'] = $search_year;
         $data['interest'] = $interest;
+        $data['education'] = $major;
         // get user profile info
         $user_id = $this->session->userdata('user_id');
         $name = $this->session->userdata('name');
