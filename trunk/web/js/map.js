@@ -155,6 +155,25 @@ function geocodeLocation() {
     }
 }
 
+function codeLatLng(lat, lng) {
+    var latlng = new google.maps.LatLng(lat, lng);
+    var address;
+    geocoder.geocode({
+        'latLng' : latlng},
+        function(results, status) {
+            if (status == google.maps.GeocoderStatus.OK) {
+                if (results[1]) {
+                    nyam = results[1].formatted_address;
+                    address = results[0].formatted_address;
+                } else {
+                    address = 'failed';
+                }
+            }
+        }
+    );
+    return address;
+}
+
 /*
  * memasukkan data baru ke dalam locationArray
  */
