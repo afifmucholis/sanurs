@@ -25,7 +25,7 @@ class User extends CI_Model {
     var $table = 'user';
     var $id = 'id';
     var $name = 'name';
-    var $surname = 'surname';
+    var $nickname = 'nickname';
     var $email = 'email';
     var $password = 'password';
     var $birthdate = 'birthdate';
@@ -59,7 +59,7 @@ class User extends CI_Model {
      * option: values
      * --------------
      * name             required
-     * surname
+     * nickname
      * email            required
      * password         required
      * birthdate        required
@@ -88,7 +88,7 @@ class User extends CI_Model {
         }
 
         //Isi ke database :
-        $fieldArray = array($this->name, $this->surname, $this->email,
+        $fieldArray = array($this->name, $this->nickname, $this->email,
             $this->birthdate, $this->gender_id,
             $this->home_address, $this->home_telephone,
             $this->handphone, $this->graduate_year,
@@ -116,7 +116,7 @@ class User extends CI_Model {
      * --------------
      * id               field id buat kriteria where
      * name             
-     * surname
+     * nickname
      * email            
      * password         
      * birthdate        
@@ -140,7 +140,7 @@ class User extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->name, $this->surname, $this->email,
+        $fieldArray = array($this->name, $this->nickname, $this->email,
             $this->birthdate, $this->gender_id,
             $this->home_address, $this->home_telephone,
             $this->handphone, $this->graduate_year,
@@ -172,7 +172,7 @@ class User extends CI_Model {
      * ---------------
      * id               field id buat kriteria where
      * name
-     * surname             
+     * nickname             
      * email            
      * password         
      * birthdate        
@@ -212,7 +212,7 @@ class User extends CI_Model {
         }
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->id, $this->name, $this->surname, $this->email,
+        $fieldArray = array($this->id, $this->name, $this->nickname, $this->email,
             $this->birthdate, $this->gender_id,
             $this->home_address, $this->home_telephone,
             $this->handphone, $this->graduate_year,
