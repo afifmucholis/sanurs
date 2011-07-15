@@ -50,15 +50,26 @@ class friend extends CI_Controller {
     function search() {
         // get data from form
         $search_name = $this->input->post('name');
-        $search_year = $this->input->post('year');
+        /*$search_year = $this->input->post('year');
         $interest = $this->input->post('interest');
-        $major = $this->input->post('education');
+        $major = $this->input->post('education');*/
         
         /*** cari user yang namanya mengandung $search_name ***/
         $this->load->model('user', 'userModel');
-        
+        // asumsi nama ditulis lengkap dan benar sesuai database
+        $option = array(
+            'name' => $search_name
+        );
+        $getUserByName = $this->userModel->getUsers($option);
         /*** selesai cari user ***/
         
+        $data['title'] = 'Profile';
+        $data['main_content'] = 'friend/search_friend_result_view';
+        $data['struktur'] = $this->getStruktur2('Your Profile');
+        $data['search_name'] = $search_name;
+        $data['search_results'] = $getUserByName;
+        
+        /*
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
         $data['struktur'] = $this->getStruktur2('Your Profile');
@@ -131,7 +142,7 @@ class friend extends CI_Controller {
                         'working_experience' => $working_experience
                     )
                 )
-        );
+        );*/
 
         
         $this->load->view('includes/template',$data);
