@@ -5,5 +5,4 @@
  * and open the template in the editor.
  */
 ?>
-
-hai ini message
+ini new message
