@@ -15,13 +15,10 @@
         'name' => 'year',
     );
     echo form_input($data);
-    echo form_submit('search', 'Search');
-    echo form_close();
     ?>
 </div>
 <div id="col_right" style="float: right">
     <?php
-    echo form_open();
     echo form_label('Areas of interest : ', 'interest');
     echo br(1);
     $options = array(
