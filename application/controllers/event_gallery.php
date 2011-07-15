@@ -29,75 +29,29 @@ class Event_Gallery extends CI_Controller {
         $this->load->model('event_model', 'eventModel');
 
         if ($sortby == 'categories') {
-            //Ini nanti ngelempar link2 dari image event  
-            $this->output
-                    ->set_content_type('application/json')
-                    ->set_output(json_encode(array(
-                                array(
-                                    'thumb' => base_url() . 'res/event/1.jpg',
-                                    'image' => base_url() . 'res/event/1.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description',
-                                    'link' => 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/2.jpg',
-                                    'image' => base_url() . 'res/event/2.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/3.jpg',
-                                    'image' => base_url() . 'res/event/3.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/4.jpg',
-                                    'image' => base_url() . 'res/event/4.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/5.jpg',
-                                    'image' => base_url() . 'res/event/5.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/6.jpg',
-                                    'image' => base_url() . 'res/event/6.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/7.jpg',
-                                    'image' => base_url() . 'res/event/7.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                ),
-                                array(
-                                    'thumb' => base_url() . 'res/event/8.jpg',
-                                    'image' => base_url() . 'res/event/8.jpg',
-                                    'big' => base_url() . 'res/event/1.jpg',
-                                    'title' => 'My title',
-                                    'description' => 'My description'
-                                //link: 'http://my.destination.com'
-                                )
-                            )));
+            //dari eventModel ambil yang whennya belom :
+            $category = $this->input->post('category');
+
+            $optionCategory = array('category_event_id' => $category);
+            $getEventCategory = $this->eventModel->getEvents($optionCategory);
+
+            //Iterasi hasil query :
+            for ($i = 0; $i < count($getEventCategory); ++$i) {
+                ///Isi ke array hasil
+                $event = array();
+                $event['thumb'] = base_url() . $getEventUpcoming[0]->image_url;
+                $event['image'] = base_url() . $getEventUpcoming[0]->image_url;
+                $event['big'] = base_url() . $getEventUpcoming[0]->image_url;
+                $event['title'] = $getEventUpcoming[0]->title;
+                $event['description'] = $getEventUpcoming[0]->description;
+
+                //Isi $event ini ke array $result
+                $result[$i] = $event;
+                //Kirim result
+                $this->output
+                        ->set_content_type('application/json')
+                        ->set_output(json_encode($result));
+            }
         } else if ($sortby == 'number') {
             $this->load->model('rsvp_event', 'rsvpModel');
             $this->load->model('rsvp_status', 'rsvpStatusModel');
@@ -166,7 +120,6 @@ class Event_Gallery extends CI_Controller {
             //Do nothing
         }
     }
-
 }
 
 ?>
