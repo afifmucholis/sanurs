@@ -93,7 +93,7 @@ class profile extends CI_Controller {
             $data['content_edit'] = array(
                 'name' => $getReturn[0]->name,
                 'img_url' => $img_url,
-                'nick_name' => $getReturn[0]->surname,
+                'nickname' => $getReturn[0]->nickname,
                 'gender' => $genderLabel[0]->label,
                 'home_address' => $getReturn[0]->home_address,
                 'home_telephone' => $getReturn[0]->home_telephone,
@@ -123,7 +123,7 @@ class profile extends CI_Controller {
     function submitProfile() {
         $this->load->model('user','userModel');
         $user_id = $this->session->userdata('user_id');
-        $nick_name = $this->input->post('nick_name');
+        $nickname = $this->input->post('nickname');
         $gender = $this->input->post('gender');
         // get gender
         $this->load->model('gender','genderModel');
@@ -138,7 +138,7 @@ class profile extends CI_Controller {
         
         $options = array(
             'id'=>$user_id,
-            'surname'=>$nick_name,
+            'nickname'=>$nickname,
             'gender'=>$getGender_id[0]->id,
             'home_address'=>$home_address,
             'home_telephone'=>$home_telephone,
@@ -690,7 +690,7 @@ class profile extends CI_Controller {
         }
         
         $name = $getUser[0]->name;
-        $surname = $getUser[0]->surname;
+        $nickname = $getUser[0]->nickname;
         $home_address = $getUser[0]->home_address;
         $home_telephone = $getUser[0]->home_telephone;
         $handphone = $getUser[0]->handphone;
@@ -774,7 +774,7 @@ class profile extends CI_Controller {
         $user_data = array(
             'user_id'=>$user_id,
             'name' => $name,
-            'surname' => $surname,
+            'nickname' => $nickname,
             'home_address' => $home_address,
             'home_telephone' => $home_telephone,
             'handphone' => $handphone,
