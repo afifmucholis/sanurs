@@ -15,12 +15,13 @@
         'name' => 'year',
     );
     echo form_input($data);
+    echo br(1);
     ?>
-</div>
-<div id="col_right" style="float: right">
+<!--</div>
+<div id="col_right" style="float: right">-->
     <?php
     echo form_label('Areas of interest : ', 'interest');
-    echo br(1);
+    //echo br(1);
     $options = array(
         'all' => 'All interest',
         'design' => 'Design',
@@ -28,6 +29,15 @@
         'business' => 'Business',
     );
     echo form_dropdown('interest', $options, 'all');
+    echo br(1);
+    echo form_label('Major Education : ', 'education');
+    //echo br(1);
+    $optionsmajor = array(
+        'all' => 'All major',
+        'm1' => 'Informatics Engineering',
+        'm2' => 'Electrical Engineering',
+    );
+    echo form_dropdown('education', $optionsmajor, 'all');
     echo br(1);
     echo form_submit('search', 'Search');
     echo form_close();
