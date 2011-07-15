@@ -223,7 +223,6 @@ class profile extends CI_Controller {
         //$option = array('id' => $user_id);
         $option = array();
         $getUser = $this->userModel->getUsers($option); //ini berisi semua data user yang ada di database
-        
         // get location
         if ($getUser) {
             $count = 0;
@@ -233,6 +232,7 @@ class profile extends CI_Controller {
                     $userArray[$count] = array(
                         'id' => $user->id,
                         'name' => $user->name,
+                        'year' => $user->graduate_year,
                         'lat' => $user->location_latitude,
                         'lng' => $user->location_longitude
                     );

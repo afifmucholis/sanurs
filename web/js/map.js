@@ -59,11 +59,12 @@ function initmap(page) {
                     for (i=0; i<msg.length; i++) {
                         id = msg[i]['id'];
                         name = msg[i]['name'];
+                        year = msg[i]['year'];
                         lat = msg[i]['lat'];
                         lng = msg[i]['lng'];
                         latlng = new google.maps.LatLng(lat,lng);
                         addMarker(name, latlng, false);
-                        var usertemp = [id, name];
+                        var usertemp = [id, name, year];
                         userArray.push(usertemp);
                     }
                 }
@@ -72,7 +73,7 @@ function initmap(page) {
                 for (i=0; i<markersArray.length; i++) {
                     
                     /*** set content infowindow ***/
-                    var contentString = '<a href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +'</a>';
+                    var contentString = '<a href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +' ('+ userArray[i][2] +')</a>';
                     /*** selesai set content infowindow ***/
                     
                     setInfoWindow(markersArray[i], contentString);
