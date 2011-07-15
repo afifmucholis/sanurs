@@ -1,6 +1,16 @@
-<h3>Find a Friend - Search Results : <?php echo count($search_results); if (count($search_results)>1) {echo ' results';} else {echo ' result';}?></h3>
+<h3>Find a Friend - Search Results : 
 <?php
-foreach ($search_results as $result) {
+$num = count($search_results[0]) + count($search_results[1]);
+echo $num;
+if ($num>1) {
+    echo ' results';
+} else {
+    echo ' result';
+}
+?></h3>
+<?php
+// ngambil search result berdasarkan nama
+foreach ($search_results[0] as $result) {
     ?>
 <div>
     <?php
@@ -10,7 +20,52 @@ foreach ($search_results as $result) {
     <a href="../profile/user/<?php echo $result->id; ?>"><?php echo $result->name; ?></a>
     <?php
     echo br(1);
-    echo $result->graduate_year;
+    switch ($result->last_unit_id) {
+        case 1:
+            $unit = 'TK';
+            break;
+        case 2 :
+            $unit = 'SD';
+            break;
+        case 3 :
+            $unit = 'SMP';
+            break;
+        case 4 :
+            $unit = 'SMA';
+            break;
+    }
+    echo $unit + ' ' + $result->graduate_year;
+    echo br(2);
+    ?>
+</div>
+<?php
+}
+// ngambil search result berdasarkan year
+foreach ($search_results[1] as $result) {
+    ?>
+<div>
+    <?php
+    echo $result->profpict_url;
+    echo br(1);
+    ?>
+    <a href="../profile/user/<?php echo $result->id; ?>"><?php echo $result->name; ?></a>
+    <?php
+    echo br(1);
+    switch ($result->last_unit_id) {
+        case 1:
+            $unit = 'TK';
+            break;
+        case 2 :
+            $unit = 'SD';
+            break;
+        case 3 :
+            $unit = 'SMP';
+            break;
+        case 4 :
+            $unit = 'SMA';
+            break;
+    }
+    echo $unit + ' ' + $result->graduate_year;
     echo br(2);
     ?>
 </div>
