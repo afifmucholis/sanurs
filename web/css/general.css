@@ -133,3 +133,11 @@ root {
     margin-top: 20px;
     margin-bottom: 20px;
 }
+
+.ui-corner-all {
+    font-size: 90%;
+}
+
+.fc-day-number{
+    font-family: monospace;
+}

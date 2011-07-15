@@ -31,8 +31,13 @@
         echo form_hidden('url_img', base_url().'res/NoPhotoAvailable.jpg');
         echo form_label('Title : ','title')."<br/>";
         echo form_input('title', set_value('title'), 'id="title"')."<br/>";
-        echo form_label('When : ','when')."<br/>";
-        echo form_input('when', set_value('when'), 'id="datepicker"')."<br/>";
+        echo form_label('When : ','when')."<br/>"; ?>
+        <div class="datepicker">
+        <?php
+        echo form_input('when', set_value('when'), 'id="datepickers"')."<br/>";
+        ?>
+        </div>
+    <?php
         echo form_label('Where : ','where')."<br/>";
         echo form_input('where', set_value('where'), 'id="where"')."<br/>";
         echo form_label('Description : ','description')."<br/>";

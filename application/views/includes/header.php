@@ -7,10 +7,13 @@
         <script type="text/javascript" src="<?php echo base_url();?>js/jquery/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>js/popup.js"></script>
         <script type="text/javascript" src="<?php echo base_url();?>js/map.js"></script>
+        <script src="<?php echo base_url();?>js/jquery/jquery-ui.min.js"></script>
+        <link href="<?php echo base_url();?>css/jquery-ui.css" rel="stylesheet" type="text/css"/>
+        <link href="<?php echo base_url();?>css/demos.css" rel="stylesheet" type="text/css"/>
         
         <!--Kalender Akbar ini"!-->
         <link rel='stylesheet' type='text/css' href="<?php echo base_url();?>css/fullcalendar.css" />
-        <link rel='stylesheet' type='text/css' href="<?php echo base_url();?>css/cupertino-calendar-theme/theme.css" />
+        <link rel='stylesheet' type='text/css' href="<?php echo base_url();?>css/cupertino-jquery-theme/theme.css" />
         <script type='text/javascript' src="<?php echo base_url();?>js/jquery.qtip-1.0.0-rc3.min.js"></script>
         <script type='text/javascript' src="<?php echo base_url();?>js/fullcalendar.js"></script>
         <!-- Akhir Kalender Akbar ini"!-->
@@ -22,14 +25,12 @@
         <?php 
             if (isset($show_calendar) && $show_calendar) {
         ?>
-            <link href="<?php echo base_url();?>css/jquery-ui.css" rel="stylesheet" type="text/css"/>
-            <link href="<?php echo base_url();?>css/timepicker.css" rel="stylesheet" type="text/css"/>
-            <script src="<?php echo base_url();?>js/jquery/jquery-ui.min.js"></script>
+            
             <script src="<?php echo base_url();?>js/jquery/jquery-ui-timepicker-addon.js"></script>
             <script> 
             $(function() {
                     //getter
-                    $( "#datepicker" ).datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'hh:mm:ss'});
+                    $( "#datepickers" ).datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'hh:mm:ss'});
             });
             </script> 
         <?php 
