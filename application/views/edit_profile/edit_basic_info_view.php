@@ -27,7 +27,7 @@
     echo form_hidden('url_img', base_url().$content_edit['img_url']);
     echo br(1);
     echo form_label('Nick Name: ');
-    echo form_input('nick_name', $content_edit['nick_name'], 'id="nick_name"');
+    echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"');
     echo br(1);
     echo form_label('Gender: ');
     $options = array(
