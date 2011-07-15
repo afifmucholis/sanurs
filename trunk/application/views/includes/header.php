@@ -62,6 +62,7 @@
             <?php } else { ?>
                 <label><?php echo anchor('profile','My Profile');?></label>
                 <label><?php echo anchor('sign_in/sign_out','Sign out');?></label>
+                <label><?php echo anchor('message','Message');?></label>
             <?php } ?>
         </div>
       
