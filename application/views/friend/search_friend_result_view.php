@@ -1,4 +1,4 @@
-<h3>Find a Friend - Search Results</h3>
+<h3>Find a Friend - Search Results : <?php echo count($search_results); if (count($search_results)>1) {echo ' results';} else {echo ' result';}?></h3>
 <?php
 foreach ($search_results as $result) {
     ?>
@@ -6,7 +6,9 @@ foreach ($search_results as $result) {
     <?php
     echo $result->profpict_url;
     echo br(1);
-    echo $result->name;
+    ?>
+    <a href="../profile/user/<?php echo $result->id; ?>"><?php echo $result->name; ?></a>
+    <?php
     echo br(1);
     echo $result->graduate_year;
     echo br(2);
