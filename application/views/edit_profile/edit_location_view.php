@@ -2,7 +2,7 @@
 <?php
 echo form_open('profile/submitLocation');
 echo form_input('location', '', 'id="location"');
-$js_search = 'onClick="tesGeocode()"';
+$js_search = 'onClick="geocodeLocation()"';
 echo form_button('searchlocation', 'Search', $js_search);
 ?>
 <p>Or select your location on the map</p>
