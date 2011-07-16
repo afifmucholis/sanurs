@@ -10,6 +10,7 @@
  *
  * @author user
  */
+if (!defined('BASEPATH')) exit('No direct script access allowed');
 class TestModel extends CI_Controller {
 
     function index() {

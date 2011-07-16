@@ -4,12 +4,18 @@
     <label><a href="inbox_view" class="ajax-links">Inbox</a></label>
 </div>
 <div id="content_message">
-    <?php $this->load->view($view); ?>
 </div>
 
 <script type="text/javascript">
-$('a.ajax-links').click(function() {	
-	var link = 'message/view/'+$(this).attr("href");
+$(document).ready(function(){
+    $('a.ajax-links').click(function(){
+            return click_message($(this).attr("href"));
+      });
+      click_message('new_message_view');
+});
+
+function click_message(val) {
+    var link = 'message/view/'+val;
         var form_data = {
 		ajax: '1'		
 	};
@@ -32,7 +38,7 @@ $('a.ajax-links').click(function() {
 	});
 	
 	return false;
-});
+}
 	
 	
 </script>

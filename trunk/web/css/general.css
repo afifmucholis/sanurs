@@ -141,3 +141,34 @@ root {
 .fc-day-number{
     font-family: monospace;
 }
+
+#autocomplete {
+    
+}
+#autocomplete img{
+    height: 70px;
+    width: 70px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#autocomplete #label {
+    white-space: nowrap;
+    text-align: center;
+    font-weight: bold;
+}
+
+#autocomplete #nickname {
+    font-size: 10pt;
+    text-align: center;
+    font-style: italic;
+}
+
+.error {
+    font: normal 12px arial;
+    padding: 3px;
+    margin: 3px;
+    background-color: #ffc;
+    border: 1px solid #c00;
+}
