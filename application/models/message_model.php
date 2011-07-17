@@ -19,7 +19,7 @@
  * @property CI_DB_active_record $db
  * @property CI_DB_forge $dbforge
  */
-class Message extends CI_Model {
+class Message_Model extends CI_Model {
 
     //put your code here
     var $table = 'message';
@@ -39,7 +39,7 @@ class Message extends CI_Model {
     /**
      * Konstruktor
      */
-    function Message() {
+    function Message_Model() {
         parent::__construct();
     }
 
@@ -238,7 +238,5 @@ class Message extends CI_Model {
     function _default($defaults, $options) {
         return array_merge($defaults, $options);
     }
-
 }
-
 ?>
