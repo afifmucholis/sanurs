@@ -135,6 +135,8 @@ class Event_Model extends CI_Model {
      * category_event_id
      * image_url 
      *
+     * limit            limits the number of returned records
+     * offset           how many records to bypass before returning a record (limit required)
      * columnSelect     kolom yang mau diselect
      * distinct         true jika Select distinct, false ato kosong kalo engga
      * sortBy           field kriteria kolom mana yang akan disort
@@ -192,6 +194,12 @@ class Event_Model extends CI_Model {
                 $this->db->where($field, $options[$field]);
             }
         }
+        
+        // If limit / offset are declared (usually for pagination)
+        if (isset($options['limit']) && isset($options['offset']))
+            $this->db->limit($options['limit'], $options['offset']);
+        else if (isset($options['limit']))
+            $this->db->limit($options['limit']);
 
         //Sorting : 
         if (isset($options['sortBy'])) {
