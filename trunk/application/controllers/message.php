@@ -63,33 +63,71 @@ class Message extends CI_Controller {
         $idto = $this->input->post('idto'); //to ini nama $id user
         $message = $this->input->post('message');
         $sender = $this->session->userdata('user_id');
-        
-        echo $idto;
-        echo $message;
-        echo $sender;
 
-        //Get ID dari to_name :
-        $this->load->model('user', 'userModel');
-        $optionUser = array('name' => $to_name);
-        $getUsers = $this->userModel->getUsers($optionUser);
 
-        //Cek $to ini udah friend ma user gak :
         $this->load->model('friend_relationship', 'friendRelationshipModel');
-        $option1 = array('userid_1' => $to, 'userid_2' => $sender);
-        $option2 = array('userid_2' => $to, 'userid_1' => $sender);
+
+        if ($idto == '') {
+            //Get ID dari to_name :
+            $this->load->model('user', 'userModel');
+            $optionUser = array('name' => $to);
+            $getUsers = $this->userModel->getUsers($optionUser);
+            if (is_bool($getUsers)) {
+                echo "No user with name " . $to;
+            } else {
+                //Cek ada 1 gak :
+                if (count($getUsers) == 1) {
+                    $idto = $getUsers[0]->id;
+                } else {
+                    //Ada banyak user dengan nama $to
+                    //Ambil nama yang friend ama dia
+                    //Kalo ternyata friend dengan nama $to juga banyak, kasitau
+                    $countfriend = 0;
+                    for ($i = 0; $i < count($getUsers); ++$i) {
+                        $idcalon = $getUsers[$i]->id;
+
+                        $option1 = array('userid_1' => $idcalon, 'userid_2' => $sender);
+                        $option2 = array('userid_2' => $idcalon, 'userid_1' => $sender);
+
+                        $getReturn1 = $this->friendRelationshipModel->getFriendRelationships($option1);
+                        $getReturn2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+
+                        if (is_bool($getReturn1) && is_bool($getReturn2)) {
+                            
+                        } else {
+                            ++$countfriend;
+                            $friendid = $getUsers[$i]->id;
+                        }
+                    }
+                    if ($countfriend==1) {
+                        $idto = $friendid;
+                    } else if ($countfriend ==0) {
+                        echo "No friends of you have name ".$to;
+                    } else {
+                        echo "More than 1 friends that have name ".$to;
+                    }
+                }
+            }
+        }
+
+        //Cek $idto ini udah friend ma user gak :
+        $option1 = array('userid_1' => $idto, 'userid_2' => $sender);
+        $option2 = array('userid_2' => $idto, 'userid_1' => $sender);
 
         $getReturn1 = $this->friendRelationshipModel->getFriendRelationships($option1);
         $getReturn2 = $this->friendRelationshipModel->getFriendRelationships($option2);
 
         if (is_bool($getReturn1) && is_bool($getReturn2)) {
             //to bukan friend dari pengirim
-            echo "recipient is not your friend";
+            if ($idto !='') {
+                echo "recipient is not your friend";
+            }
         } else {
             //Isi ke database message :
-            $this->load->model('message', 'messageModel');
+            $this->load->model('message_model', 'messageModel');
             $optionInsertMessage = array('subject' => $subject,
                 'userid_from' => $sender,
-                'userid_to' => $to,
+                'userid_to' => $idto,
                 'message' => $message);
             $rowId = $this->messageModel->addMessage($optionInsertMessage);
             if (is_bool($rowId)) {
