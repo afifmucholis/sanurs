@@ -26,7 +26,8 @@
         messages : {
             to : {
                 required : "This Field is required"
-            }        }
+            }        
+        }
     });  
 });
    

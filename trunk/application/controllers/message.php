@@ -25,7 +25,7 @@ class Message extends CI_Controller {
         $data['main_content'] = 'message/main_message_view';
         $data['struktur'] = $this->getStruktur('New Message');
         $data['view'] = 'message/new_message_view';
-        $data['friend_list'] = $this->getFriendList();
+        
         $this->load->view('includes/template', $data);
     }
 
@@ -40,12 +40,15 @@ class Message extends CI_Controller {
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
         $data['view'] = 'message/' . $array['view'];
-        $data['friend_list'] = $this->getFriendList();
+        
         if ($array['view'] == 'new_message_view') {
             $data['struktur'] = $this->getStruktur('New Message');
-        } else if ($array['view'] == 'inbox_view')
+            $data['friend_list'] = $this->getFriendList();
+        } else if ($array['view'] == 'inbox_view') {
             $data['struktur'] = $this->getStruktur('Inbox');
-
+            $data['inbox'] = $this->getInbox();
+        }
+            
 
         if ($this->input->get('ajax')) {
             $text = $this->load->view($data['view'], $data, true);
@@ -158,8 +161,6 @@ class Message extends CI_Controller {
     }
 
     function getFriendList() {
-        //Ngembaliin daftar friend dari $userid
-        //$userid = $this->input->post('user_id');
         $userid = $this->session->userdata('user_id');
 
         //Get friend list dari $userid :
@@ -213,6 +214,39 @@ class Message extends CI_Controller {
         }
 
         return json_encode($friends);
+    }
+    
+    function getInbox($numMessageShow){
+        $userid = $this->session->userdata('user_id');
+        
+        $result = array();
+        
+        //Get All Message to $userid :
+        $this->load->model('message_model', 'messageModel');
+        $option = array('userid_to'=>$userid, 'sortBy'=>'date', 'sortDirection'=>'desc');
+        
+        //Get All Message :
+        $getMessages = $this->messageModel->getMessages($option);
+        $numMessages = count($getMessages);
+        
+        
+        //Generate detail message :
+        //Need user model :
+        $this->load->model('user', 'userModel');
+        for ($i=0; $i<$numMessages; ++$i) {
+            $optionUser = array('id'=>$getMessages[$i]->userid_from);
+            $getUser = $this->userModel->getUsers($options);
+            
+            $messageDetail = array();
+            $messageDetail['from_name'] = $getUser[0]->name;
+            $messageDetail['from_nickname'] = $getUser[0]->nickname;
+            $messageDetail['subject'] = $getMessages[$i]->subject;
+            $messageDetail['message'] = $getMessages[$i]->message;
+            $messageDetail['date'] = $getMessages[$i]->date;
+            $result[$i] = $messageDetail;
+        }
+        
+        return $result;
     }
 }
 
