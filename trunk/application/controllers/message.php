@@ -25,7 +25,7 @@ class Message extends CI_Controller {
         $data['main_content'] = 'message/main_message_view';
         $data['struktur'] = $this->getStruktur('New Message');
         $data['view'] = 'message/new_message_view';
-        
+
         $this->load->view('includes/template', $data);
     }
 
@@ -40,15 +40,30 @@ class Message extends CI_Controller {
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
         $data['view'] = 'message/' . $array['view'];
-        
+
         if ($array['view'] == 'new_message_view') {
             $data['struktur'] = $this->getStruktur('New Message');
             $data['friend_list'] = $this->getFriendList();
         } else if ($array['view'] == 'inbox_view') {
             $data['struktur'] = $this->getStruktur('Inbox');
-            $data['inbox'] = $this->getInbox();
-        }
             
+            //$this->load->library('pagination');
+
+            $per_page = 10;
+            $numMessages = $this->countInbox();
+            $data['inbox'] = $this->getInbox($per_page, $this->uri->segment(3));
+
+            $base_url = site_url('message/inbox_view');
+            $config['base_url'] = $base_url;
+            $config['total_rows'] = $numMessages;
+            $config['per_page'] = $per_page;
+            $config['uri_segment'] = '3';
+
+            //$this->pagination->initialize($config);
+            //echo $this->pagination->create_links();
+            $this->load->view('message/inbox_view', $data, true);
+        }
+
 
         if ($this->input->get('ajax')) {
             $text = $this->load->view($data['view'], $data, true);
@@ -102,12 +117,12 @@ class Message extends CI_Controller {
                             $friendid = $getUsers[$i]->id;
                         }
                     }
-                    if ($countfriend==1) {
+                    if ($countfriend == 1) {
                         $idto = $friendid;
-                    } else if ($countfriend ==0) {
-                        echo "No friends of you have name ".$to;
+                    } else if ($countfriend == 0) {
+                        echo "No friends of you have name " . $to;
                     } else {
-                        echo "More than 1 friends that have name ".$to;
+                        echo "More than 1 friends that have name " . $to;
                     }
                 }
             }
@@ -122,7 +137,7 @@ class Message extends CI_Controller {
 
         if (is_bool($getReturn1) && is_bool($getReturn2)) {
             //to bukan friend dari pengirim
-            if ($idto !='') {
+            if ($idto != '') {
                 echo "recipient is not your friend";
             }
         } else {
@@ -215,38 +230,68 @@ class Message extends CI_Controller {
 
         return json_encode($friends);
     }
-    
-    function getInbox($numMessageShow){
+
+    function getInbox($limit, $offset) {
         $userid = $this->session->userdata('user_id');
         
         $result = array();
-        
-        //Get All Message to $userid :
+
+        //Get All Message to $userid  (using limit and offset for pagination):
         $this->load->model('message_model', 'messageModel');
-        $option = array('userid_to'=>$userid, 'sortBy'=>'date', 'sortDirection'=>'desc');
-        
+        $option = array('userid_to' => $userid, 'sortBy' => 'date', 'sortDirection' => 'desc', 'limit' => $limit, 'offset' => $offset);
+
         //Get All Message :
         $getMessages = $this->messageModel->getMessages($option);
-        $numMessages = count($getMessages);
+        $countMessages = count($getMessages);
         
-        
-        //Generate detail message :
-        //Need user model :
-        $this->load->model('user', 'userModel');
-        for ($i=0; $i<$numMessages; ++$i) {
-            $optionUser = array('id'=>$getMessages[$i]->userid_from);
-            $getUser = $this->userModel->getUsers($options);
-            
-            $messageDetail = array();
-            $messageDetail['from_name'] = $getUser[0]->name;
-            $messageDetail['from_nickname'] = $getUser[0]->nickname;
-            $messageDetail['subject'] = $getMessages[$i]->subject;
-            $messageDetail['message'] = $getMessages[$i]->message;
-            $messageDetail['date'] = $getMessages[$i]->date;
-            $result[$i] = $messageDetail;
+        if (is_bool($getMessages) && !$getMessages) {
+            echo "Gak ada message buat lo";
+        } else {
+            //Generate detail message :
+            //Need user model :
+            $this->load->model('user', 'userModel');
+            for ($i = 0; $i < $countMessages; ++$i) {
+                $optionUser = array('id' => $getMessages[$i]->userid_from);
+                $getUser = $this->userModel->getUsers($optionUser);
+
+                $messageDetail = array();
+                $messageDetail['from_name'] = $getUser[0]->name;
+                $messageDetail['from_nickname'] = $getUser[0]->nickname;
+                $messageDetail['subject'] = $getMessages[$i]->subject;
+                $messageDetail['message'] = $getMessages[$i]->message;
+                $messageDetail['date'] = $getMessages[$i]->date;
+                $result[$i] = $messageDetail;
+            }
         }
-        
+
         return $result;
+    }
+
+    function countInbox() {
+        $userid = $this->session->userdata('user_id');
+        $this->load->model('message_model', 'messageModel');
+
+        //Count all message
+        $optionCountMessage = array('userid_to' => $userid);
+        return count($this->messageModel->getMessages($optionCountMessage));
+    }
+
+    function inbox_view() {
+        $this->load->library('pagination');
+        
+        $per_page = 10;
+        $numMessages = $this->countInbox();
+        $data['inbox'] = $this->getInbox($per_page, $this->uri->segment(3));
+
+        $base_url = site_url('message/inbox_view');
+        $config['base_url'] = $base_url;
+        $config['total_rows'] = $numMessages;
+        $config['per_page'] = $per_page;
+        $config['uri_segment'] = '3';
+
+        $this->pagination->initialize($config);
+        //echo $this->pagination->create_links();
+        $this->load->view('message/inbox_view', $data, true);
     }
 }
 
