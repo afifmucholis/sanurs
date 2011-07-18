@@ -717,63 +717,63 @@ class profile extends CI_Controller {
         $user_id = $this->session->userdata('user_id');
         
         if ($this->input->post('home_address')) {
-            $home_address = true;
+            $home_address = 1;
         } else {
-            $home_address = false;
+            $home_address = 0;
         }
         
         if ($this->input->post('home_telephone')) {
-            $home_telephone = true;
+            $home_telephone = 1;
         } else {
-            $home_telephone = false;
+            $home_telephone = 0;
         }
         
         if ($this->input->post('handphone')) {
-            $handphone = true;
+            $handphone = 1;
         } else {
-            $handphone = false;
+            $handphone = 0;
         }
         
         if ($this->input->post('email')) {
-            $email = true;
+            $email = 1;
         } else {
-            $email = false;
+            $email = 0;
         }
         
         if ($this->input->post('interest')) {
-            $interest = true;
+            $interest = 1;
         } else {
-            $interest = false;
+            $interest = 0;
         }
         
         if ($this->input->post('s1')) {
-            $s1 = true;
+            $s1 = 1;
         } else {
-            $s1 = false;
+            $s1 = 0;
         }
         
         if ($this->input->post('s2')) {
-            $s2 = true;
+            $s2 = 1;
         } else {
-            $s2 = false;
+            $s2 = 0;
         }
         
         if ($this->input->post('s3')) {
-            $s3 = true;
+            $s3 = 1;
         } else {
-            $s3 = false;
+            $s3 = 0;
         }
         
         if ($this->input->post('work_experience')) {
-            $work_experience = true;
+            $work_experience = 1;
         } else {
-            $work_experience = false;
+            $work_experience = 0;
         }
         
         if ($this->input->post('current_experience')) {
-            $current_experience = true;
+            $current_experience = 1;
         } else {
-            $current_experience = false;
+            $current_experience = 0;
         }
         
         //load visibilityModel
@@ -793,6 +793,18 @@ class profile extends CI_Controller {
             'work_experience' => $work_experience,
             'current_experience' => $current_experience
         );
+        
+        echo $options['user_id'];
+        echo $options['home_address'];
+        echo $options['home_telephone'];
+        echo $options['handphone'];
+        echo $options['email'];
+        echo $options['interest'];
+        echo $options['S1'];
+        echo $options['S2'];
+        echo $options['S3'];
+        echo $options['work_experience'];
+        echo $options['current_experience'];
         
         //update visibility table
         $getReturnUpdate = $this->visibilityModel->updateVisibilityStatus($options);
