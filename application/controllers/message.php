@@ -47,21 +47,34 @@ class Message extends CI_Controller {
         } else if ($array['view'] == 'inbox_view') {
             $data['struktur'] = $this->getStruktur('Inbox');
             
-            //$this->load->library('pagination');
-
-            $per_page = 10;
+            $this->load->library('pagination');
+            $per_page = 1;
             $numMessages = $this->countInbox();
-            $data['inbox'] = $this->getInbox($per_page, $this->uri->segment(3));
-
-            $base_url = site_url('message/inbox_view');
+            $offset = $this->input->get('offsetval');
+            
+            $data['inbox'] = $this->getInbox($per_page, $offset);
+            $base_url = site_url('message/view/inbox_view');
             $config['base_url'] = $base_url;
             $config['total_rows'] = $numMessages;
+            $config['uri_segment'] = '1';
             $config['per_page'] = $per_page;
-            $config['uri_segment'] = '3';
-
-            //$this->pagination->initialize($config);
-            //echo $this->pagination->create_links();
-            $this->load->view('message/inbox_view', $data, true);
+            $config['cur_page'] = $offset;
+            
+            $config['first_link'] = 'First';
+            $config['first_tag_open'] = '<div  id="paginationlink">';
+            $config['first_tag_close'] = '</div>';
+            $config['last_link'] = 'Last';
+            $config['last_tag_open'] = '<div id="paginationlink">';
+            $config['last_tag_close'] = '</div>';
+            $config['next_link'] = false;
+            $config['prev_link'] = false;
+            $config['cur_tag_open'] = '<div id="cur_link">';
+            $config['cur_tag_close'] = '</div>';
+            $config['num_tag_open'] = '<div id="paginationlink">';
+            $config['num_tag_close'] = '</div>';
+            
+            $this->pagination->initialize($config);
+            $data['pagination'] = $this->pagination->create_links();
         }
 
 
@@ -183,14 +196,13 @@ class Message extends CI_Controller {
         $option1 = array('userid_1' => $userid);
         $option2 = array('userid_2' => $userid);
 
-        $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);
-        $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+        $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);        
         $friends = array();
-
-        $numfriends1 = count($getFriend1);
-        $numfriends2 = count($getFriend2);
-        $numAllfriends = $numfriends1 + $numfriends2;
-
+        if (!(is_bool($getFriend1))) {
+            $numfriends1 = count($getFriend1);
+        } else {
+            $numfriends1 = 0;
+        }
 
         //Get detail dari friend :
         $this->load->model('user', 'userModel');
@@ -210,6 +222,10 @@ class Message extends CI_Controller {
                 $friends[$i] = $friend;
             }
         }
+        
+        $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+        $numfriends2 = count($getFriend2);
+        $numAllfriends = $numfriends1 + $numfriends2;
 
         if (!is_bool($getFriend2)) {
             for ($i = $numfriends1; $i < $numAllfriends; ++$i) {
@@ -227,7 +243,6 @@ class Message extends CI_Controller {
                 $friends[$i] = $friend;
             }
         }
-
         return json_encode($friends);
     }
 
@@ -245,7 +260,7 @@ class Message extends CI_Controller {
         $countMessages = count($getMessages);
         
         if (is_bool($getMessages) && !$getMessages) {
-            echo "Gak ada message buat lo";
+            //No message;
         } else {
             //Generate detail message :
             //Need user model :
@@ -257,6 +272,7 @@ class Message extends CI_Controller {
                 $messageDetail = array();
                 $messageDetail['from_name'] = $getUser[0]->name;
                 $messageDetail['from_nickname'] = $getUser[0]->nickname;
+                $messageDetail['from_profpict'] = $getUser[0]->profpict_url;
                 $messageDetail['subject'] = $getMessages[$i]->subject;
                 $messageDetail['message'] = $getMessages[$i]->message;
                 $messageDetail['date'] = $getMessages[$i]->date;
@@ -274,24 +290,6 @@ class Message extends CI_Controller {
         //Count all message
         $optionCountMessage = array('userid_to' => $userid);
         return count($this->messageModel->getMessages($optionCountMessage));
-    }
-
-    function inbox_view() {
-        $this->load->library('pagination');
-        
-        $per_page = 10;
-        $numMessages = $this->countInbox();
-        $data['inbox'] = $this->getInbox($per_page, $this->uri->segment(3));
-
-        $base_url = site_url('message/inbox_view');
-        $config['base_url'] = $base_url;
-        $config['total_rows'] = $numMessages;
-        $config['per_page'] = $per_page;
-        $config['uri_segment'] = '3';
-
-        $this->pagination->initialize($config);
-        //echo $this->pagination->create_links();
-        $this->load->view('message/inbox_view', $data, true);
     }
 }
 
