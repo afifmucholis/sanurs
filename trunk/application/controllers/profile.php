@@ -59,6 +59,9 @@ class profile extends CI_Controller {
      *
      */
     function editProfile() {
+        // show map
+        $data['show_map'] = 1;
+        
         $data['title'] = 'Edit your profile ';
         $data['main_content'] = 'edit_profile/edit_profile_view';
         $data['struktur'] = $this->getStruktur2('Basic Info');
