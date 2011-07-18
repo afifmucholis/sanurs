@@ -697,8 +697,17 @@ class profile extends CI_Controller {
      *
      */
     function edit_visibility() {
+        $user_id = $this->session->userdata('user_id');
+        
         $data['struktur'] = $this->getStruktur2('Visibility');
         $data['content_edit_view'] = 'edit_profile/edit_visibility_view';
+        
+        // get visibility data from database
+        $this->load->model('visibility_status', 'visibilityModel');     //load visibility model
+        $option = array('id'=>$user_id);
+        $getVisibility = $this->visibilityModel->getVisibilityStatuses($option);
+        $data['visibility'] = $getVisibility;
+        
         $data['content_edit'] = array();
         
         $text = $this->load->view($data['content_edit_view'],$data,true);
@@ -781,6 +790,7 @@ class profile extends CI_Controller {
         
         //bikin array option untuk update
         $options = array(
+            'id' => $user_id,
             'user_id' => $user_id,
             'home_address' => $home_address,
             'home_telephone' => $home_telephone,
@@ -794,22 +804,12 @@ class profile extends CI_Controller {
             'current_experience' => $current_experience
         );
         
-        echo $options['user_id'];
-        echo $options['home_address'];
-        echo $options['home_telephone'];
-        echo $options['handphone'];
-        echo $options['email'];
-        echo $options['interest'];
-        echo $options['S1'];
-        echo $options['S2'];
-        echo $options['S3'];
-        echo $options['work_experience'];
-        echo $options['current_experience'];
-        
         //update visibility table
         $getReturnUpdate = $this->visibilityModel->updateVisibilityStatus($options);
-        if (!$getReturnUpdate) {
-            echo "failed";
+        if ($getReturnUpdate) {
+            echo "update succeed";
+        } else {
+            echo "update failed";
         }
         /*echo $home_address;
         echo $home_telephone;
