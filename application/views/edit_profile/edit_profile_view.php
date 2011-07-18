@@ -42,8 +42,8 @@ function editProfileReady() {
             return subNavEditProfileClick($(this).attr("href"));
       });
     // load menu awal basic_info
-    //subNavEditProfileClick('education');
-    subNavEditProfileClick('basic_info');
+    subNavEditProfileClick('education');
+    //subNavEditProfileClick('basic_info');
 }
 
 // function sub-navigation edit_profile
@@ -170,36 +170,62 @@ function educationAjaxReady() {
         .unbind('change.edu')
         .bind('change.edu', function(){
            changeEduField($(this).val());
+        })
+        .end()
+        .find('#in_education')
+        .unbind('change.education')
+        .bind('change.education', function(){
+           showCurrentEducationField($(this).val());
         });
 }
 
 // fungsi untuk mengganti education field
 function changeEduField(val) {
     if (val=='1') {
-        $("#edu_d3").attr('style', 'display: none');
-        $("#edu_s1").attr('style', 'display: none');
-        $("#edu_s2").attr('style', 'display: none');
-        $("#edu_s3").attr('style', 'display: none');
+       $('#edu_sma_form').attr('style', 'display: inherit');
+       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_s1_form').attr('style', 'display: none');
+       $('#edu_s2_form').attr('style', 'display: none');
+       $('#edu_s3_form').attr('style', 'display: none');
     } else if (val=='2') {
-        $("#edu_d3").attr('style', 'display: inherit');
-        $("#edu_s1").attr('style', 'display: none');
-        $("#edu_s2").attr('style', 'display: none');
-        $("#edu_s3").attr('style', 'display: none');
+       $('#edu_sma_form').attr('style', 'display: inherit');
+       $('#edu_d3_form').attr('style', 'display: inherit');
+       $('#edu_s1_form').attr('style', 'display: none');
+       $('#edu_s2_form').attr('style', 'display: none');
+       $('#edu_s3_form').attr('style', 'display: none');
     } else if (val=='3') {
-        $("#edu_d3").attr('style', 'display: none');
-        $("#edu_s1").attr('style', 'display: inherit');
-        $("#edu_s2").attr('style', 'display: none');
-        $("#edu_s3").attr('style', 'display: none');
+       $('#edu_sma_form').attr('style', 'display: inherit');
+       $('#edu_s1_form').attr('style', 'display: inherit');
+       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_s2_form').attr('style', 'display: none');
+       $('#edu_s3_form').attr('style', 'display: none');
     } else if (val=='4') {
-        $("#edu_d3").attr('style', 'display: none');
-        $("#edu_s1").attr('style', 'display: inherit');
-        $("#edu_s2").attr('style', 'display: inherit');
-        $("#edu_s3").attr('style', 'display: none');
+       $('#edu_sma_form').attr('style', 'display: inherit');
+       $('#edu_s1_form').attr('style', 'display: inherit');
+       $('#edu_s2_form').attr('style', 'display: inherit');
+       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_s3_form').attr('style', 'display: none');
     } else if (val=='5') {
-        $("#edu_d3").attr('style', 'display: none');
-        $("#edu_s1").attr('style', 'display: inherit');
-        $("#edu_s2").attr('style', 'display: inherit');
-        $("#edu_s3").attr('style', 'display: inherit');
+       $('#edu_sma_form').attr('style', 'display: inherit');
+       $('#edu_s1_form').attr('style', 'display: inherit');
+       $('#edu_s2_form').attr('style', 'display: inherit');
+       $('#edu_s3_form').attr('style', 'display: inherit');
+       $('#edu_d3_form').attr('style', 'display: none');
+    } else if (val=='-') {
+       $('#edu_sma_form').attr('style', 'display: none');
+       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_s1_form').attr('style', 'display: none');
+       $('#edu_s2_form').attr('style', 'display: none');
+       $('#edu_s3_form').attr('style', 'display: none');
+    }
+}
+
+// fungsi untuk menampilkan current education
+function showCurrentEducationField(val) {
+    if (val=='no') {
+        $('#current_edu').attr('style', 'display: none');
+    } else {
+        $('#current_edu').attr('style', 'display: inherit');
     }
 }
 

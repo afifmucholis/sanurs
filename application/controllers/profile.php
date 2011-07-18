@@ -281,16 +281,63 @@ class profile extends CI_Controller {
         $this->load->model('education', 'eduModel');
         $options = array('user_id'=>$user_id);
         $getEducation = $this->eduModel->getEducations($options);
-        $data['education'] = array();
         $data['max_level'] = 1;
+        $year = date('Y');
+        // set default data
+        $max_level=0;
+        // set default education
+        $data['sma_edu']= $this->makeArrayEducation();
+        $data['d3_edu'] = $this->makeArrayEducation();
+        $data['s1_edu'] = $this->makeArrayEducation();
+        $data['s2_edu'] = $this->makeArrayEducation();
+        $data['s3_edu']= $this->makeArrayEducation();
+        $data['current_education']= $this->makeArrayEducation();
+        $data['is_current_edu'] = 'no';
         if (!is_bool($getEducation)) {
-            $max_level=0;
             foreach($getEducation as $edu) :
-                array_push($data['education'], $edu);
-                if ($edu->level_id>$max_level)
-                   $max_level = $edu->level_id;
+                if ($edu->graduate_year>$year) {
+                    $data['current_education']= $edu;
+                    $data['is_current_edu'] = 'yes';
+                } else {
+                    if ($edu->level_id==1) {
+                        $data['sma_edu'] = $edu;
+                    } else if ($edu->level_id==2) {
+                        $data['d3_edu'] = $edu;
+                    } else if ($edu->level_id==3) {
+                        $data['s1_edu'] = $edu;
+                    } else if ($edu->level_id==4) {
+                        $data['s2_edu'] = $edu;
+                    } else if ($edu->level_id==5) {
+                        $data['s3_edu'] = $edu;
+                    }
+                    if ($edu->level_id>$max_level)
+                        $max_level = $edu->level_id;
+                }
             endforeach;
-            $data['max_level'] = $max_level;
+        }
+        $data['max_level'] = $max_level;
+        // load model user untuk cek sma
+        $this->load->model('user', 'userModel');
+        $options = array('id'=>$user_id);
+        $getUser = $this->userModel->getUsers($options);
+        if ($getUser[0]->last_unit_id=='4') {
+            // berarti sudah sekolah di SMA sanur
+            $data['options'] = array(
+                '0' => '-',
+                '2' => 'Sekolah Kejuruan(D3)',
+                '3' => 'Bachelor Degree(S1)',
+                '4' => 'Masters Degree(S2)',
+                '5' => 'Doctorate Degree(S3)'
+            );
+        } else {
+            $data['options'] = array(
+                '0' => '-',
+                '1' => 'High School',
+                '2' => 'Sekolah Kejuruan(D3)',
+                '3' => 'Bachelor Degree(S1)',
+                '4' => 'Masters Degree(S2)',
+                '5' => 'Doctorate Degree(S3)'
+            );
         }
         
         $data['struktur'] = $this->getStruktur2('Education');
@@ -301,6 +348,18 @@ class profile extends CI_Controller {
         $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+    }
+    
+    function makeArrayEducation() {
+        $array = '';
+        $array->user_id='';
+        $array->id='';
+        $array->school='';
+        $array->graduate_year='';
+        $array->level_id='';
+        $array->major='';
+        $array->minor='';
+        return $array;
     }
     
     /**
@@ -314,52 +373,150 @@ class profile extends CI_Controller {
      * @param string post->s1_year graduation year
      */
     function submitPendidikan() {
-        $highest_edu = $this->input->post('highest_edu');
-        $edu = array();
-        $edu['sma']['college'] = $this->input->post('sma');
-        $edu['sma']['grad'] = $this->input->post('year');
-        $edu['d3']['college'] = $this->input->post('d3');
-        $edu['d3']['major'] = $this->input->post('d3_major');
-        $edu['d3']['minor'] = $this->input->post('d3_minor');
-        $edu['d3']['grad'] = $this->input->post('year');
-        $edu['s1']['college'] = $this->input->post('s1');
-        $edu['s1']['major'] = $this->input->post('s1_major');
-        $edu['s1']['minor'] = $this->input->post('s1_minor');
-        $edu['s1']['grad'] = $this->input->post('year');
-        $edu['s2']['college'] = $this->input->post('s2');
-        $edu['s2']['major'] = $this->input->post('s2_major');
-        $edu['s2']['minor'] = $this->input->post('s2_minor');
-        $edu['s2']['grad'] = $this->input->post('s2_year');
-        $edu['s3']['college'] = $this->input->post('s3');
-        $edu['s3']['major'] = $this->input->post('s3_major');
-        $edu['s3']['minor'] = $this->input->post('s3_minor');
-        $edu['s3']['grad'] = $this->input->post('s3_year');
-        
         $user_id = $this->session->userdata('user_id');
-        // load education model
+        $in_education = $this->input->post('in_education');
+        $highest_edu = $this->input->post('highest_edu');
+        // load model education
         $this->load->model('education', 'eduModel');
+        
+        if ($in_education=='yes') { // $degree = 0
+            // cek data lama atau baru
+            $edu_id = $this->input->post('edu_id_0');
+            $college = $this->input->post('college_0');
+            $major = $this->input->post('major_0');
+            $minor = $this->input->post('minor_0');
+            $year = $this->input->post('year_0');
+            $level = $this->input->post('current_edu_list');
+            if ($edu_id!='') {
+                // data lama update dengan edu_id yang ada
+                if ($college=='' && $major=='' && $minor=='' && $year=='') {
+                    // input tidak benar
+                } else {
+                    // update
+                    $options = array('id'=>$edu_id,'user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                    $cekUpdateCurrentEdu = $this->eduModel->updateEducation($options);
+                    if (!is_bool($cekUpdateCurrentEdu))
+                        echo 'success update current education<br/>';
+                }
+            } else {
+                // data baru masukkan current education
+                if ($college=='' && $major=='' && $minor=='' && $year=='') {
+                    // input tidak benar
+                } else {
+                    // insert
+                    $options = array('user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                    $cekInsertCurrentEdu = $this->eduModel->addEducation($options);
+                    if (!is_bool($cekInsertCurrentEdu))
+                        echo 'success insert current education<br/>';
+                }
+            }
+        } else {
+            // cek apakah sebelumnya ada current education
+            // cek data lama atau baru
+            $edu_id = $this->input->post('edu_id_0');
+            // kalau ada didelete
+            if ($edu_id!='') {
+               $options = array('id'=>$edu_id);
+               $cekDeleteCurrentEdu = $this->eduModel->deleteEducation($options);
+               if (!is_bool($cekDeleteCurrentEdu))
+                   echo 'success delete current education<br/>';
+            }
+        }
+        // get maks level education here
+        $max_level=0;
         $options = array('user_id'=>$user_id);
         $getEducation = $this->eduModel->getEducations($options);
-        $max_level=0;   // get highest education from database
         if (!is_bool($getEducation)) {
             foreach($getEducation as $edu) :
-                array_push($data['education'], $edu);
-                if ($edu->level_id>$max_level)
-                   $max_level = $edu->level_id;
+               if ($edu->level_id>$max_level)
+                  $max_level = $edu->level_id;
             endforeach;
         }
         
-        if ($max_level==0) {
-            // insert semua data
-            
-        } else if ($max_level==$highest_edu) {
-            // update semua
-            $insert = array(true,true,true,true,true);
+        // bandingkan dengan highest_edu input user
+        // jika lebih dari, berarti ada data yang harus diinsert dan diupdate
+        if ($highest_edu >= $max_level && $highest_edu!=0) {
+            // cek d3 yg diganti
+            if ($highest_edu>2) {
+                // delete d3
+                $edu_id = $this->input->post('edu_id_2');
+                if ($edu_id!='') {
+                    $options = array('id'=>$edu_id);
+                    $cekDeleteEdu = $this->eduModel->deleteEducation($options);
+                    if (!is_bool($cekDeleteEdu))
+                        echo 'success delete education d3<br/>';
+                }
+            }
+            for ($i=1;$i<=$highest_edu;$i++) {
+                $edu_id = $this->input->post('edu_id_'.$i); // cek sma
+                $college = $this->input->post('college_'.$i);
+                $major = $this->input->post('major_'.$i);
+                $minor = $this->input->post('minor_'.$i);
+                $year = $this->input->post('year_'.$i);
+                
+                if ($college=='' && $major=='' && $minor=='' && $year=='') {
+                    // input tidak benar
+                } else {
+                    if ($edu_id!='') {
+                        // update
+                        $options = array('id'=>$edu_id,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                        $cekUpdateEdu = $this->eduModel->updateEducation($options);
+                        if (!is_bool($cekUpdateEdu))
+                            echo $i.'success update education<br/>';
+                    } else {
+                        // insert
+                        if ($i==2 && $i!=$highest_edu) {
+                            
+                        } else {
+                            $options = array('user_id'=>$user_id,'level_id'=>$i,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                            $cekInsertEdu = $this->eduModel->addEducation($options);
+                            if (!is_bool($cekInsertEdu))
+                                echo $i.'success insert education<br/>';
+                        }
+                    }
+                }
+            }
+        } else if ($highest_edu < $max_level) {
+            // cek d3 yg dipilih
+            if ($highest_edu==2) {
+                // insert d3
+                $edu_id = $this->input->post('edu_id_2');
+                $college = $this->input->post('college_2');
+                $major = $this->input->post('major_2');
+                $minor = $this->input->post('minor_2');
+                $year = $this->input->post('year_2');                
+                $options = array('user_id'=>$user_id,'level_id'=>2,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                $cekInsertEdu = $this->eduModel->addEducation($options);
+                if (!is_bool($cekInsertEdu))
+                    echo 'success insert education d3<br/>';
+            }
+            for ($i=1;$i<=$max_level;$i++) {
+                $edu_id = $this->input->post('edu_id_'.$i); // cek sma
+                $college = $this->input->post('college_'.$i);
+                $major = $this->input->post('major_'.$i);
+                $minor = $this->input->post('minor_'.$i);
+                $year = $this->input->post('year_'.$i);
+                
+                if ($i<=$highest_edu) {
+                    if ($college=='' && $major=='' && $minor=='' && $year=='') {
+                        // input tidak benar
+                    } else {
+                        // update
+                        $options = array('id'=>$edu_id,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                        $cekUpdateEdu = $this->eduModel->updateEducation($options);
+                        if (!is_bool($cekUpdateEdu))
+                            echo $i.'success update education<br/>';
+                    }
+                } else {
+                    // delete
+                    $options = array('id'=>$edu_id);
+                    $cekDeleteEdu = $this->eduModel->deleteEducation($options);
+                    if (!is_bool($cekDeleteEdu))
+                        echo $i.'success delete education<br/>';
+                }
+            }
         }
-        
-        //insert
-        //update
-        //remove
+        // jika kurang dari, berarti ada data yang harus didelete dan diupdate
     }
     
     /**
