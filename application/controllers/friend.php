@@ -26,6 +26,9 @@ class friend extends CI_Controller {
      *
      */
     function index() {
+        // show map
+        $data['show_map'] = 1;
+        
         $data['title'] = 'Find a friend';
         $data['main_content'] = 'friend/find_a_friend_view';
         $data['struktur'] = $this->getStruktur();
