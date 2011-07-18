@@ -48,6 +48,7 @@
         ?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/message.css" />
 </head>
 <body>
   <div id="content">

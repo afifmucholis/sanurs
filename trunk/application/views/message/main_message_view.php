@@ -7,38 +7,41 @@
 </div>
 
 <script type="text/javascript">
-$(document).ready(function(){
-    $('a.ajax-links').click(function(){
+    $(document).ready(function(){
+        $('a.ajax-links').click(function(){
             return click_message($(this).attr("href"));
-      });
-      click_message('new_message_view');
-});
+        });
+        click_message('new_message_view');
+    });
 
-function click_message(val) {
-    var link = 'message/view/'+val;
+    function click_message(val) {
+        var link = 'message/view/'+val;
+        var offsetval;
+        if (val=='inbox_view')
+            offsetval = 0;
+   
         var form_data = {
-		ajax: '1'		
-	};
+            ajax: '1',
+            offset : offsetval
+        };
 
-	$.ajax({
-		url: link,
-		type: 'GET',
-                data: form_data,
-		success: function(msg) {
-                   $('#content_message').html(msg["text"]);
-                   var his = $('#history').html().split('/');
-                   var his2 = "";
-                   var count=0;
-                   while (count<his.length-1) {
-                       his2+=his[count];count++;
-                       his2+="/";
-                   }
-                   $('#history').html(his2+msg["struktur"][2]["label"]);
-		}
-	});
-	
-	return false;
-}
-	
-	
+        $.ajax({
+            url: link,
+            type: 'GET',
+            data: form_data,
+            success: function(msg) {
+                $('#content_message').html(msg["text"]);
+                var his = $('#history').html().split('/');
+                var his2 = "";
+                var count=0;
+                while (count<his.length-1) {
+                    his2+=his[count];count++;
+                    his2+="/";
+                }
+                $('#history').html(his2+msg["struktur"][2]["label"]);
+            }
+        });
+        return false;
+        
+    }
 </script>

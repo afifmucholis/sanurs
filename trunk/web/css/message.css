@@ -1,0 +1,137 @@
+/* 
+    Document   : message
+    Created on : 18 Jul 11, 23:51:45
+    Author     : Akbar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#autocomplete {
+    
+}
+#autocomplete img{
+    height: 70px;
+    width: 70px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#autocomplete #label {
+    white-space: nowrap;
+    text-align: center;
+    font-weight: bold;
+}
+
+#autocomplete #nickname {
+    font-size: 10pt;
+    text-align: center;
+    font-style: italic;
+}
+
+.error {
+    font: normal 12px arial;
+    padding: 3px;
+    margin: 3px;
+    background-color: #ffc;
+    border: 1px solid #c00;
+}
+
+
+#paginationlink {
+    text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(255,255,255);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: black;
+    border: 2px solid rgb(255,255,255);
+}
+
+#paginationlink:hover {
+    text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(0,0,0);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: rgb(255,255,255);
+    border: 2px solid rgb(195,195,195);
+}
+
+#paginationlink a:link{
+    text-decoration: none;
+    color: rgb(255,255,255);
+}
+
+#paginationlink a:visited{
+    text-decoration: none;
+    color: rgb(255,255,255); 
+}
+
+#paginationlink a:hover{
+    text-decoration: none;
+    color: rgb(0,0,0); 
+}
+
+#paginationlink a:active{
+    text-decoration: none;
+    color: rgb(0,0,0); 
+}
+
+#cur_link {
+    text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(0,0,0);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: rgb(255,255,255);
+    border: 2px solid rgb(0,0,0);
+}
+#cur_link:hover {
+    text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(0,0,0);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: rgb(255,255,255);
+    border: 2px solid rgb(0,0,0);
+}
+
+#cur_link a:link{
+    text-decoration: none;
+    color: rgb(0,0,0); 
+}
+
+#cur_link a:visited{
+    text-decoration: none;
+    color: rgb(0,0,0); 
+}
+
+#cur_link a:hover{
+    text-decoration: none;
+    color: rgb(0,0,0); 
+}
+
+#cur_link a:active{
+    text-decoration: none;
+    color: rgb(0,0,0); 
+}
+
+#message #profpict_sender img{
+    width: 90px;
+    float : left;
+}
+
