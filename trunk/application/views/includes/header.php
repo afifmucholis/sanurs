@@ -23,7 +23,7 @@
         <!-- Galeria Akbar ini -->
         <script type="text/javascript" src="<?php echo base_url();?>js/galleria-1.2.4.min.js"></script>
         <!-- Akhir Galeria Akbar ini -->
-        <!-- <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script> -->
+        <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
         <?php 
             if (isset($show_calendar) && $show_calendar) {
         ?>
