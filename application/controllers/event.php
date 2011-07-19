@@ -22,11 +22,11 @@ class Event extends CI_Controller {
     function __construct() {
         parent::__construct();
         //load model category_event
-         $this->load->model('category_event', 'categoryModel');
+         //$this->load->model('category_event', 'categoryModel');
          // load model event
-         $this->load->model('event_Model', 'eventModel');
+         //$this->load->model('event_Model', 'eventModel');
          // load model host_event
-         $this->load->model('host_event', 'hosteventModel');
+         //$this->load->model('host_event', 'hosteventModel');
     }
     
     function index() {
@@ -63,6 +63,10 @@ class Event extends CI_Controller {
      */
     function show_event() {
         $array = $this->uri->uri_to_assoc(2);
+        $idevent =  $array['show_event'];
+        
+        //Load model event :
+        $this->load->model('')
         // get data event
         $title = 'tes sajah';
         $where = 'Bandung';

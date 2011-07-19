@@ -44,7 +44,7 @@ class Event_Gallery extends CI_Controller {
                 $event['big'] = base_url() . $getEventUpcoming[$i]->image_url;
                 $event['title'] = $getEventUpcoming[$i]->title;
                 $event['description'] = $getEventUpcoming[$i]->description;
-                $event['link'] = base_url().'event/show_event/'.$getEventUpcoming[$i]->id;
+                $event['link'] = base_url().'index.php/event/show_event/'.$getEventUpcoming[$i]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
@@ -83,7 +83,7 @@ class Event_Gallery extends CI_Controller {
                 $event['big'] = base_url() . $getEvent[0]->image_url;
                 $event['title'] = $getEvent[0]->title;
                 $event['description'] = $getEvent[0]->description;
-                $event['link'] = base_url().'event/show_event/'.$getEvent[0]->id;
+                $event['link'] = base_url().'index.php/event/show_event/'.$getEvent[0]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
@@ -109,7 +109,7 @@ class Event_Gallery extends CI_Controller {
                 $event['big'] = base_url() . $getEventUpcoming[$i]->image_url;
                 $event['title'] = $getEventUpcoming[$i]->title;
                 $event['description'] = $getEventUpcoming[$i]->description;
-                $event['link'] = base_url().'event/show_event/'.$getEventUpcoming[0]->id;
+                $event['link'] = base_url().'index.php/event/show_event/'.$getEventUpcoming[0]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;

@@ -139,7 +139,7 @@ class Major extends CI_Model {
         }
 
         //Tambah kondisi where ke query :
-        $fieldArray = array($this->id, $this->label);
+        $fieldArray = array($this->id, $this->major);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);
