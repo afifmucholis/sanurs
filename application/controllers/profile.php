@@ -706,9 +706,20 @@ class profile extends CI_Controller {
         $this->load->model('visibility_status', 'visibilityModel');     //load visibility model
         $option = array('id'=>$user_id);
         $getVisibility = $this->visibilityModel->getVisibilityStatuses($option);
-        $data['visibility'] = $getVisibility;
         
-        $data['content_edit'] = array();
+        $data['content_edit'] = array(
+            'home_address' => $getVisibility[0]->home_address,
+            'home_telephone' => $getVisibility[0]->home_telephone,
+            'handphone' => $getVisibility[0]->handphone,
+            'email' => $getVisibility[0]->email,
+            'interest' => $getVisibility[0]->interest,
+            'birthdate' => $getVisibility[0]->birthdate,
+            'S1' => $getVisibility[0]->S1,
+            'S2' => $getVisibility[0]->S2,
+            'S3' => $getVisibility[0]->S3,
+            'work_experience' => $getVisibility[0]->work_experience,
+            'current_experience' => $getVisibility[0]->current_experience
+        );
         
         $text = $this->load->view($data['content_edit_view'],$data,true);
         $this->output
@@ -755,6 +766,12 @@ class profile extends CI_Controller {
             $interest = 0;
         }
         
+        if ($this->input->post('birthdate')) {
+            $birthdate = 1;
+        } else {
+            $birthdate = 0;
+        }
+        
         if ($this->input->post('s1')) {
             $s1 = 1;
         } else {
@@ -797,6 +814,7 @@ class profile extends CI_Controller {
             'handphone' => $handphone,
             'email' => $email,
             'interest' => $interest,
+            'birthdate' => $birthdate,
             'S1' => $s1,
             'S2' => $s2,
             'S3' => $s3,
@@ -811,17 +829,6 @@ class profile extends CI_Controller {
         } else {
             echo "update failed";
         }
-        /*echo $home_address;
-        echo $home_telephone;
-        echo $handphone;
-        echo $email;
-        echo $interest;
-        echo $s1;
-        echo $s2;
-        echo $s3;
-        echo $work_experience;
-        echo $current_experience;
-        echo $user_id;*/
         
         // redirect ke editVisibility
         //redirect('profile', 'refresh');
