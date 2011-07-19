@@ -298,24 +298,14 @@ class Event extends CI_Controller {
             $description = $this->input->post('description');
             $category_event = $this->input->post('category_event');
 
-            if ($image_url != 'res/NoPhotoAvailable.jpg') {
-                $options = array(
-                    'title' => $title,
-                    'description' => $description,
-                    'when' => $when,
-                    'where' => $where,
-                    'category_event_id' => $category_event,
-                    'image_url' => $image_url
-                );
-            } else {
-                $options = array(
-                    'title' => $title,
-                    'description' => $description,
-                    'when' => $when,
-                    'where' => $where,
-                    'category_event_id' => $category_event
-                );
-            }
+            $options = array(
+                'title' => $title,
+                'description' => $description,
+                'when' => $when,
+                'where' => $where,
+                'category_event_id' => $category_event,
+                'image_url' => $image_url
+            );
             $event_id = $this->eventModel->addEvent($options); // masukkan data ke tabel event
 
             $options = array(
