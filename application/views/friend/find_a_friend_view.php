@@ -1,4 +1,3 @@
-<?php echo 'halo pudy'; ?>
 <div id="col_left" style="float: left">
     <h3>Find a Friend</h3>
     <?php
