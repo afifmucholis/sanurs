@@ -1,5 +1,6 @@
 <div id="name">
-    <?php echo $user_data['name'];?>
+    <?php echo $user_data['name'];
+    if ($user_data['nickname']!='') echo ' ('.$user_data['nickname'].')';?>
 </div>
 <div id="alumni">
     <?php echo "Alumni of ".$user_data['kelulusan'].", ".$user_data['tahun_kelulusan'];?>

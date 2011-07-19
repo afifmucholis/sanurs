@@ -22,11 +22,11 @@ class Event extends CI_Controller {
     function __construct() {
         parent::__construct();
         //load model category_event
-         //$this->load->model('category_event', 'categoryModel');
+         $this->load->model('category_event', 'categoryModel');
          // load model event
-         //$this->load->model('event_Model', 'eventModel');
+         $this->load->model('event_Model', 'eventModel');
          // load model host_event
-         //$this->load->model('host_event', 'hosteventModel');
+         $this->load->model('host_event', 'hosteventModel');
     }
     
     function index() {
@@ -51,7 +51,49 @@ class Event extends CI_Controller {
         $data['main_content'] = 'event/main_event_view';
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = $array['sortby'];
+        $data['categories'] = "";
+        if ($array['sortby']=='categories') {
+            $array2 = $this->uri->uri_to_assoc(3);
+            $data['categories'] = $this->get_categories_exist();
+            $options = array('id'=>$array2['categories']);
+            $getCategory = $this->categoryModel->getCategoryEvents($options);
+            $data['current_categories'] = $getCategory[0]->category_event;
+            $data['current_categories_id'] = $getCategory[0]->id;
+        }
         $this->load->view('includes/template',$data);
+    }
+    
+    function get_categories_exist() {
+        // get all events
+        $getEvents = $this->eventModel->getEvents();
+        // get all category_event
+        $getCategory = $this->categoryModel->getCategoryEvents();
+        $array_category = array();
+        $array_category_label = array();
+        foreach ($getCategory as $cat) :
+            $array_category[$cat->id] = 0;
+            $array_category_label[$cat->id] = $cat->category_event;
+        endforeach;
+        foreach($getEvents as $event) :
+            $array_category[$event->category_event_id] += 1;
+        endforeach;
+        $idx_array = array_keys($array_category);
+        $p=0;
+        foreach ($idx_array as $idx) :
+            if ($array_category[$idx] != 0) {
+                $text[$p]['label'] = $array_category_label[$idx];
+                $text[$p]['link'] = site_url('event/sortby/categories/'.$idx);
+                $p++;
+            }
+        endforeach;
+        return $text;
+    }
+    
+    function show_categories() {
+        $text = $this->get_categories_exist();
+        $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode(array('text' => $text)));
     }
     
     /**
@@ -66,7 +108,7 @@ class Event extends CI_Controller {
         $idevent =  $array['show_event'];
         
         //Load model event :
-        $this->load->model('')
+        //$this->load->model('')
         // get data event
         $title = 'tes sajah';
         $where = 'Bandung';
