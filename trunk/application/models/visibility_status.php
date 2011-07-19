@@ -30,6 +30,7 @@ class Visibility_Status extends CI_Model {
     var $handphone = 'handphone';
     var $email = 'email';
     var $interest = 'interest';
+    var $birthdate = 'birthdate';
     var $S1 = 'S1';
     var $S2 = 'S2';
     var $S3 = 'S3';
@@ -61,6 +62,7 @@ class Visibility_Status extends CI_Model {
      * handphone             required, but default = 0 (not visible)
      * email                 required, but default = 0 (not visible)
      * interest              required, but default = 0 (not visible)
+     * birthdate             required, but default = 0 (not visible)
      * S1                    required, but default = 0 (not visible)
      * S2                    required, but default = 0 (not visible)
      * S3                    required, but default = 0 (not visible)
@@ -70,14 +72,14 @@ class Visibility_Status extends CI_Model {
      * @param array $options
      * @return type 
      */
-    function addAlumni($options = array()) {
+    function addVisibilityStatus($options = array()) {
         //Isi nilai default
-        //Pada saat penambahan alumni, isRegistered diisi 0 (belum register)
         $options = $this->_default(array($this->home_address => 0,
                     $this->home_telephone => 0,
                     $this->handphone => 0,
                     $this->email => 0,
                     $this->interest => 0,
+                    $this->birthdate => 0,
                     $this->S1 => 0,
                     $this->S2 => 0,
                     $this->S3 => 0,
@@ -91,7 +93,7 @@ class Visibility_Status extends CI_Model {
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
         $fieldArray = array($this->user_id, $this->home_address, $this->home_telephone, $this->handphone, $this->email,
-            $this->interest, $this->S1, $this->S2, $this->S3, $this->work_experience, $this->current_experience);
+            $this->interest, $this->birthdate, $this->S1, $this->S2, $this->S3, $this->work_experience, $this->current_experience);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -117,6 +119,7 @@ class Visibility_Status extends CI_Model {
      * handphone     
      * email         
      * interest      
+     * birthdate
      * S1            
      * S2            
      * S3            
@@ -133,7 +136,7 @@ class Visibility_Status extends CI_Model {
 
         //Set dari field :
         $fieldArray = array($this->user_id, $this->home_address, $this->home_telephone, $this->handphone, $this->email,
-            $this->interest, $this->S1, $this->S2, $this->S3, $this->work_experience, $this->current_experience);
+            $this->interest, $this->birthdate, $this->S1, $this->S2, $this->S3, $this->work_experience, $this->current_experience);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -160,6 +163,7 @@ class Visibility_Status extends CI_Model {
      * handphone     
      * email         
      * interest      
+     * birthdate
      * S1            
      * S2            
      * S3            
@@ -196,7 +200,7 @@ class Visibility_Status extends CI_Model {
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id, $this->user_id, $this->home_address,
             $this->home_telephone, $this->handphone, $this->email,
-            $this->interest, $this->S1, $this->S2, $this->S3,
+            $this->interest, $this->birthdate, $this->S1, $this->S2, $this->S3,
             $this->work_experience, $this->current_experience);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
