@@ -87,34 +87,63 @@ class friend extends CI_Controller {
         $this->load->model('education', 'educationModel');
         $this->load->model('major', 'majorModel');
         
-        echo $search_name; echo br(1);
-        echo $search_year; echo br(1);
-        echo $interest; echo br(1);
-        echo $major; echo br(1);
-        
-        //cari berdasarkan education dulu
-        if ($major == "") {
-            //gak perlu cari user_id di education
-            
+        //cari berdasarkan education
+        if ($major == 'all') {
+            //get all user_id
+            $option = array(
+                'columnSelect' => 'id'
+            );
+            $getUserByMajor = $this->userModel->getUsers($option);
         } else {
-            //cari user_id di education
+            //get major id
+            $option = array(
+                'major' => $major,
+                'columnSelect' => 'id'
+            );
+            $getMajorId = $this->majorModel->getMajors($option);
+            $major_id = $getMajorId[0]->id;
             
+            //cari id dengan major_id seperti yang ditemukan
+            $option = array(
+                'major_id' => $major_id,
+                'columnSelect' => 'user_id'
+            );
+            $getUserByMajor = $this->educationModel->getEducations($option);
+            if (!isset($getUserByMajor)) {
+                //tidak ada user_id yang memenuhi
+            } else {
+                //ada user_id yang memenuhi
+            }
         }
         
-        /*** cari user yang namanya mengandung $search_name ***/
-        // asumsi nama ditulis lengkap dan benar sesuai database
-        /*$option = array(
-            'name' => $search_name
-        );
-        $getUserByName = $this->userModel->getUsers($option);
-        /*** selesai cari user ***/
-        
-        /*** cari user yang tahun lulusnya sama dengan $search_year ***/
-        /*$option = array(
-            'graduate_year' => $search_year
-        );
-        $getUserByYear = $this->userModel->getUsers($option);
-        /*** selesai cari user ***/
+        //cari berdasarkan interest
+        if ($interest == 'all') {
+            //get all user_id
+            $option = array(
+                'columnSelect' => 'id'
+            );
+            $getUserByInterest = $this->userModel->getUsers($option);
+        } else {
+            //get interest id
+            $option = array(
+                'interest' => $interest,
+                'columnSelect' => 'id'
+            );
+            $getInterestId = $this->interestModel->getInterests($option);
+            $interest_id = $getInterestId[0]->interest;
+            
+            //cari id dengan interest_id seperti yang ditemukan
+            $option = array(
+                'interest_id' => $interest_id,
+                'columnSelect' => 'user_id'
+            );
+            $getUserByInterest = $this->interested_inModel->getInterestedIn($option);
+            if (!isset($getUserByInterest)) {
+                //tidak ada user_id yang memenuhi
+            } else {
+                //ada user_id yang memenuhi
+            }
+        }
         
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
