@@ -59,7 +59,7 @@
         $.ajax({
             url : '<?php echo site_url(); ?>/event_gallery',
             type : 'POST',
-            data : {sortby:'<?php echo $sortby ?>',category:'<?php echo $current_categories_id;?>'},
+            data : {sortby:'<?php echo $sortby ?>'<?php if (isset($categories) && $categories!="") echo ", category:'".$current_categories_id."'";?>},
             success : function(msg) {
                 data=msg;
                 Galleria.loadTheme('<?php echo base_url(); ?>galleria-theme/classic/galleria.classic.min.js');
