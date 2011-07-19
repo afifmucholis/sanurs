@@ -39,20 +39,20 @@ class Event_Gallery extends CI_Controller {
             for ($i = 0; $i < count($getEventCategory); ++$i) {
                 ///Isi ke array hasil
                 $event = array();
-                $event['thumb'] = base_url() . $getEventUpcoming[$i]->image_url;
-                $event['image'] = base_url() . $getEventUpcoming[$i]->image_url;
-                $event['big'] = base_url() . $getEventUpcoming[$i]->image_url;
-                $event['title'] = $getEventUpcoming[$i]->title;
-                $event['description'] = $getEventUpcoming[$i]->description;
-                $event['link'] = base_url().'index.php/event/show_event/'.$getEventUpcoming[$i]->id;
+                $event['thumb'] = base_url() . $getEventCategory[$i]->image_url;
+                $event['image'] = base_url() . $getEventCategory[$i]->image_url;
+                $event['big'] = base_url() . $getEventCategory[$i]->image_url;
+                $event['title'] = $getEventCategory[$i]->title;
+                $event['description'] = $getEventCategory[$i]->description;
+                $event['link'] = base_url() . 'index.php/event/show_event/' . $getEventCategory[$i]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
             }
-             //Kirim result
-                $this->output
-                        ->set_content_type('application/json')
-                        ->set_output(json_encode($result));
+            //Kirim result
+            $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode($result));
         } else if ($sortby == 'number') {
             $this->load->model('rsvp_event', 'rsvpModel');
             $this->load->model('rsvp_status', 'rsvpStatusModel');
@@ -83,7 +83,7 @@ class Event_Gallery extends CI_Controller {
                 $event['big'] = base_url() . $getEvent[0]->image_url;
                 $event['title'] = $getEvent[0]->title;
                 $event['description'] = $getEvent[0]->description;
-                $event['link'] = base_url().'index.php/event/show_event/'.$getEvent[0]->id;
+                $event['link'] = base_url() . 'index.php/event/show_event/' . $getEvent[0]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
@@ -109,7 +109,7 @@ class Event_Gallery extends CI_Controller {
                 $event['big'] = base_url() . $getEventUpcoming[$i]->image_url;
                 $event['title'] = $getEventUpcoming[$i]->title;
                 $event['description'] = $getEventUpcoming[$i]->description;
-                $event['link'] = base_url().'index.php/event/show_event/'.$getEventUpcoming[0]->id;
+                $event['link'] = base_url() . 'index.php/event/show_event/' . $getEventUpcoming[0]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
@@ -122,6 +122,7 @@ class Event_Gallery extends CI_Controller {
             //Do nothing
         }
     }
+
 }
 
 ?>

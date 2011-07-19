@@ -166,7 +166,7 @@ class Event extends CI_Controller {
                 //User udah login, cek RSVP user login :
                 $iduserlogin = $this->session->userdata('user_id');
                 $optionUserLogin = array('event_id'=>$idevent,'user_id'=>$iduserlogin);
-                $getStatusRSVPLoginUser = $this->rsvpModel->getRSVPStatuses($optionUserLogin);
+                $getStatusRSVPLoginUser = $this->rsvpModel->getRSVPEvent($optionUserLogin);
                 if (is_bool($getStatusRSVPLoginUser)) {
                     //Orang ini belom pernah ngasih status kedatangan :
                     $rsvp = 1;
