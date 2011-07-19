@@ -26,10 +26,12 @@ class friend extends CI_Controller {
         );
         $getInterest = $this->interestModel->getInterests($optionInterest);
         
-        $data['interest_list'] = array('All Interest');
+        $data['interest_list'] = array(
+            'all' => 'All Interest'
+        );
         $i = 0;
         while (isset($getInterest[$i])) {
-            $data['interest_list'][] = $getInterest[$i]->interest;
+            $data['interest_list'][$getInterest[$i]->interest] = $getInterest[$i]->interest;
             $i++;
         }
         
@@ -41,10 +43,12 @@ class friend extends CI_Controller {
         );
         $getMajor = $this->majorModel->getMajors($optionMajor);
         
-        $data['major_list'] = array('All Major');
+        $data['major_list'] = array(
+            'all' => 'All Major'
+        );
         $i = 0;
         while (isset($getMajor[$i])) {
-            $data['major_list'][] = $getMajor[$i]->major;
+            $data['major_list'][$getMajor[$i]->major] = $getMajor[$i]->major;
             $i++;
         }
         
@@ -74,19 +78,19 @@ class friend extends CI_Controller {
         $search_name = $this->input->post('name');
         $search_year = $this->input->post('year');
         $interest = $this->input->post('interest');
-        if ($interest == "All Interest") {
-            $interest = "";
-        }
         $major = $this->input->post('major');
-        if ($major == "All Major") {
-            $major = "";
-        }
         
         // load database
         $this->load->model('user', 'userModel');
         $this->load->model('interested_in', 'interested_inModel');
         $this->load->model('interest', 'interestModel');
         $this->load->model('education', 'educationModel');
+        $this->load->model('major', 'majorModel');
+        
+        echo $search_name; echo br(1);
+        echo $search_year; echo br(1);
+        echo $interest; echo br(1);
+        echo $major; echo br(1);
         
         //cari berdasarkan education dulu
         if ($major == "") {
@@ -194,7 +198,7 @@ class friend extends CI_Controller {
         );*/
 
         
-        $this->load->view('includes/template',$data);
+        //$this->load->view('includes/template',$data);
         
     }
     

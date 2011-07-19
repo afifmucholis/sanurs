@@ -13,11 +13,11 @@
     echo br(1);
     
     echo form_label('Areas of interest : ', 'interest');
-    echo form_dropdown('interest', $interest_list, $interest_list[0]);
+    echo form_dropdown('interest', $interest_list, $interest_list['all']);
     echo br(1);
     
     echo form_label('Major Education : ', 'major');
-    echo form_dropdown('major', $major_list, $major_list[0]);
+    echo form_dropdown('major', $major_list, $major_list['all']);
     echo br(1);
     
     echo form_submit('search', 'Search');
