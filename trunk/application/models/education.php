@@ -29,7 +29,7 @@ class Education extends CI_Model {
     var $graduate_year = 'graduate_year';
     var $school = 'school';
     var $major_id = 'major_id';
-    var $minor = 'minor';
+    var $minor_id = 'minor_id';
 
     /**
      * Konstruktor
@@ -55,7 +55,7 @@ class Education extends CI_Model {
      * graduate_year 
      * school
      * major_id
-     * minor
+     * minor_id
      * @param array $options
      * @return type 
      */
@@ -67,7 +67,7 @@ class Education extends CI_Model {
         }
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major_id, $this->minor);
+        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major_id, $this->minor_id);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -92,7 +92,7 @@ class Education extends CI_Model {
      * graduate_year 
      * school
      * major_id
-     * minor
+     * minor_id
      * 
      * @param array $options
      * @return bool/int  
@@ -103,7 +103,7 @@ class Education extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major_id, $this->minor);
+        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major_id, $this->minor_id);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -129,7 +129,7 @@ class Education extends CI_Model {
      * graduate_year 
      * school
      * major_id
-     * minor
+     * minor_id
      * 
      * limit            limits the number of returned records
      * offset           how many records to bypass before returning a record (limit required)
@@ -165,7 +165,7 @@ class Education extends CI_Model {
             $this->graduate_year,
             $this->school,
             $this->major_id,
-            $this->minor);
+            $this->minor_id);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);
