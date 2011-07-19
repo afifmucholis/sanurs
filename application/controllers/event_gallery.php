@@ -29,7 +29,7 @@ class Event_Gallery extends CI_Controller {
         $this->load->model('event_model', 'eventModel');
 
         if ($sortby == 'categories') {
-            //dari eventModel ambil yang whennya belom :
+            //Category dapet dari post data, ini udah id
             $category = $this->input->post('category');
 
             $optionCategory = array('category_event_id' => $category);
@@ -39,19 +39,20 @@ class Event_Gallery extends CI_Controller {
             for ($i = 0; $i < count($getEventCategory); ++$i) {
                 ///Isi ke array hasil
                 $event = array();
-                $event['thumb'] = base_url() . $getEventUpcoming[0]->image_url;
-                $event['image'] = base_url() . $getEventUpcoming[0]->image_url;
-                $event['big'] = base_url() . $getEventUpcoming[0]->image_url;
-                $event['title'] = $getEventUpcoming[0]->title;
-                $event['description'] = $getEventUpcoming[0]->description;
+                $event['thumb'] = base_url() . $getEventUpcoming[$i]->image_url;
+                $event['image'] = base_url() . $getEventUpcoming[$i]->image_url;
+                $event['big'] = base_url() . $getEventUpcoming[$i]->image_url;
+                $event['title'] = $getEventUpcoming[$i]->title;
+                $event['description'] = $getEventUpcoming[$i]->description;
+                $event['link'] = base_url().'event/show_event/'.$getEventUpcoming[$i]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
-                //Kirim result
+            }
+             //Kirim result
                 $this->output
                         ->set_content_type('application/json')
                         ->set_output(json_encode($result));
-            }
         } else if ($sortby == 'number') {
             $this->load->model('rsvp_event', 'rsvpModel');
             $this->load->model('rsvp_status', 'rsvpStatusModel');
@@ -64,7 +65,6 @@ class Event_Gallery extends CI_Controller {
 
             //Get rsvpModel yang status_rsvp_id = $idRSVP (Attending), di groupBy event_id
             $optionsRSVP = array('status_rsvp_id' => $idRSVP, 'groupBy' => 'event_id', 'columnSelect' => 'event_id, COUNT(event_id) as event_number');
-            //print_r($optionsRSVP);
             $getEventAndCount = $this->rsvpModel->getRSVPEvent($optionsRSVP);
 
             //Iterasi hasil event dan countnya buat dapet deskripsi di tabel event
@@ -83,6 +83,7 @@ class Event_Gallery extends CI_Controller {
                 $event['big'] = base_url() . $getEvent[0]->image_url;
                 $event['title'] = $getEvent[0]->title;
                 $event['description'] = $getEvent[0]->description;
+                $event['link'] = base_url().'event/show_event/'.$getEvent[0]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
@@ -103,11 +104,12 @@ class Event_Gallery extends CI_Controller {
             for ($i = 0; $i < count($getEventUpcoming); ++$i) {
                 ///Isi ke array hasil
                 $event = array();
-                $event['thumb'] = base_url() . $getEventUpcoming[0]->image_url;
-                $event['image'] = base_url() . $getEventUpcoming[0]->image_url;
-                $event['big'] = base_url() . $getEventUpcoming[0]->image_url;
-                $event['title'] = $getEventUpcoming[0]->title;
-                $event['description'] = $getEventUpcoming[0]->description;
+                $event['thumb'] = base_url() . $getEventUpcoming[$i]->image_url;
+                $event['image'] = base_url() . $getEventUpcoming[$i]->image_url;
+                $event['big'] = base_url() . $getEventUpcoming[$i]->image_url;
+                $event['title'] = $getEventUpcoming[$i]->title;
+                $event['description'] = $getEventUpcoming[$i]->description;
+                $event['link'] = base_url().'event/show_event/'.$getEventUpcoming[0]->id;
 
                 //Isi $event ini ke array $result
                 $result[$i] = $event;
