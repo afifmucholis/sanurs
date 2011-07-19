@@ -126,7 +126,7 @@ class profile extends CI_Controller {
     function submitProfile() {
         $this->load->model('user','userModel');
         $user_id = $this->session->userdata('user_id');
-        $nickname = $this->input->post('nickname');
+        $nickname = $this->input->post('nick_name');
         $gender = $this->input->post('gender');
         // get gender
         $this->load->model('gender','genderModel');

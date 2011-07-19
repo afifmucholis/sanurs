@@ -12,12 +12,21 @@
     <div id="col_right">
         <div id="sorting">
             <h4>Sort by : </h4>
+            <a href="#" id="categories_click">- Categories</a>
+            <div id="tree_categories">
             <?php
-            if ($sortby == 'categories')
-                echo '<b>'; echo anchor('event/sortby/categories', '- Categories');
-            if ($sortby == 'categories')
-                echo '</b>';
-            ?><br/>
+            //echo anchor('event/sortby/categories', '- Categories');
+            if (isset($categories) && $categories!="") {
+                foreach($categories as $cat) :
+                    if ($current_categories != $cat['label'])
+                        echo '&nbsp;&nbsp;&nbsp;<a href="'.$cat['link'].'">- '.$cat['label'].'</a>';
+                    else
+                        echo '&nbsp;&nbsp;&nbsp;<a href="'.$cat['link'].'"><b>- '.$cat['label'].'</b></a>';
+                    echo br(1);
+                endforeach;
+            }
+            ?>
+            </div>
             <?php
             if ($sortby == 'number')
                 echo '<b>'; echo anchor('event/sortby/number', '- Number of people Attending');
@@ -50,7 +59,7 @@
         $.ajax({
             url : '<?php echo site_url(); ?>/event_gallery',
             type : 'POST',
-            data : {sortby:'<?php echo $sortby ?>'},
+            data : {sortby:'<?php echo $sortby ?>',category:'<?php echo $current_categories_id;?>'},
             success : function(msg) {
                 data=msg;
                 Galleria.loadTheme('<?php echo base_url(); ?>galleria-theme/classic/galleria.classic.min.js');
@@ -64,6 +73,35 @@
                 });
             }
         });
+        
+        $('#categories_click').click(function (){
+            return categories_click();
+        });
     });
-         
+    
+    function categories_click() {
+        var text = $('#tree_categories').html();
+        if (text=='') {
+            $.ajax({
+                url : '<?php echo site_url('event/show_categories'); ?>',
+                type : 'POST',
+                data : {},
+                success : function (msg) {
+                    var txt = "";
+                    jQuery.each(msg.text, function(key, value){
+                        txt += '&nbsp;&nbsp;&nbsp;<a href="';
+                        txt += value.link;
+                        txt += '">- ';
+                        txt += value.label;
+                        txt += '</a>';
+                        txt += '<br/>';
+                    });
+                    $('#tree_categories').html(txt);
+                }
+            });
+        } else {
+            $('#tree_categories').html('');
+        }
+        return false;
+    }
 </script>
