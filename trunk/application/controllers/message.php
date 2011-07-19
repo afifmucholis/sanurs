@@ -48,7 +48,7 @@ class Message extends CI_Controller {
             $data['struktur'] = $this->getStruktur('Inbox');
             
             $this->load->library('pagination');
-            $per_page = 1;
+            $per_page = 5;
             $numMessages = $this->countInbox();
             $offset = $this->input->get('offsetval');
             

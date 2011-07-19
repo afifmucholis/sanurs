@@ -130,8 +130,33 @@
     color: rgb(0,0,0); 
 }
 
-#message #profpict_sender img{
-    width: 90px;
+#message_summary #profpict_sender img{
+    max-height: 90px;    
+    max-width: 90px;
     float : left;
+    margin : 5px 10px 5px 10px;
 }
+
+#message_summary #subject {
+    padding-top: 8px;
+    color : green;
+    font-size: 19px;
+    font-weight: bold;
+}
+
+#message_summary #sender {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#message_summary #date {
+    font-size: 13px;
+    color : red;
+}
+
+#message_summary #content_text {
+    font-size: 16px;
+    color : rgb(105,105,105);
+}
+
 
