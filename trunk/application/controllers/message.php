@@ -46,12 +46,12 @@ class Message extends CI_Controller {
             $data['friend_list'] = $this->getFriendList();
         } else if ($array['view'] == 'inbox_view') {
             $data['struktur'] = $this->getStruktur('Inbox');
-            
+
             $this->load->library('pagination');
-            $per_page = 5;
+            $per_page = 6;
             $numMessages = $this->countInbox();
             $offset = $this->input->get('offsetval');
-            
+
             $data['inbox'] = $this->getInbox($per_page, $offset);
             $base_url = site_url('message/view/inbox_view');
             $config['base_url'] = $base_url;
@@ -59,22 +59,26 @@ class Message extends CI_Controller {
             $config['uri_segment'] = '1';
             $config['per_page'] = $per_page;
             $config['cur_page'] = $offset;
-            
+
             $config['first_link'] = 'First';
-            $config['first_tag_open'] = '<div  id="paginationlink">';
+            $config['first_tag_open'] = '<div  id="num_link">';
             $config['first_tag_close'] = '</div>';
             $config['last_link'] = 'Last';
-            $config['last_tag_open'] = '<div id="paginationlink">';
+            $config['last_tag_open'] = '<div id="num_link">';
             $config['last_tag_close'] = '</div>';
             $config['next_link'] = false;
             $config['prev_link'] = false;
             $config['cur_tag_open'] = '<div id="cur_link">';
             $config['cur_tag_close'] = '</div>';
-            $config['num_tag_open'] = '<div id="paginationlink">';
+            $config['num_tag_open'] = '<div id="num_link">';
             $config['num_tag_close'] = '</div>';
-            
+
             $this->pagination->initialize($config);
             $data['pagination'] = $this->pagination->create_links();
+        } else if ($array['view'] == 'inbox_detail_view') {
+            $data['struktur'] = $this->getStruktur('Inbox Detail');
+            $messageid = $this->input->get('id');
+            $data['inbox_detail'] = $this->getInboxDetail($messageid);
         }
 
 
@@ -196,7 +200,7 @@ class Message extends CI_Controller {
         $option1 = array('userid_1' => $userid);
         $option2 = array('userid_2' => $userid);
 
-        $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);        
+        $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);
         $friends = array();
         if (!(is_bool($getFriend1))) {
             $numfriends1 = count($getFriend1);
@@ -222,7 +226,7 @@ class Message extends CI_Controller {
                 $friends[$i] = $friend;
             }
         }
-        
+
         $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
         $numfriends2 = count($getFriend2);
         $numAllfriends = $numfriends1 + $numfriends2;
@@ -248,7 +252,7 @@ class Message extends CI_Controller {
 
     function getInbox($limit, $offset) {
         $userid = $this->session->userdata('user_id');
-        
+
         $result = array();
 
         //Get All Message to $userid  (using limit and offset for pagination):
@@ -258,7 +262,7 @@ class Message extends CI_Controller {
         //Get All Message :
         $getMessages = $this->messageModel->getMessages($option);
         $countMessages = count($getMessages);
-        
+
         if (is_bool($getMessages) && !$getMessages) {
             //No message;
         } else {
@@ -273,8 +277,20 @@ class Message extends CI_Controller {
                 $messageDetail['from_name'] = $getUser[0]->name;
                 $messageDetail['from_nickname'] = $getUser[0]->nickname;
                 $messageDetail['from_profpict'] = $getUser[0]->profpict_url;
-                $messageDetail['subject'] = $getMessages[$i]->subject;
-                $messageDetail['message'] = $getMessages[$i]->message;
+                $messageDetail['id'] = $getMessages[$i]->id;
+
+                if (strlen($getMessages[$i]->subject) < 80) {
+                    $messageDetail['subject'] = $getMessages[$i]->subject;
+                } else {
+                    $messageDetail['subject'] = substr($getMessages[$i]->subject, 0, 80) . '.....';
+                }
+
+                if (strlen($getMessages[$i]->message) < 120) {
+                    $messageDetail['message'] = $getMessages[$i]->message;
+                } else {
+                    $messageDetail['message'] = substr($getMessages[$i]->message, 0, 120) . '.....';
+                }
+
                 $messageDetail['date'] = $getMessages[$i]->date;
                 $result[$i] = $messageDetail;
             }
@@ -291,6 +307,39 @@ class Message extends CI_Controller {
         $optionCountMessage = array('userid_to' => $userid);
         return count($this->messageModel->getMessages($optionCountMessage));
     }
+
+    function getInboxDetail($messageid) {
+        $messageDetail = array();
+
+        //Get Message dengan id = $messageid
+        $this->load->model('message_model', 'messageModel');
+        $option = array('id' => $messageid);
+
+        //Get The Message :
+        $getMessage = $this->messageModel->getMessages($option);
+
+        if (is_bool($getMessage) && !$getMessage) {
+            //No message;
+        } else {
+            //Generate detail message :
+            //Need user model :
+            $this->load->model('user', 'userModel');
+
+            $optionUser = array('id' => $getMessage[0]->userid_from);
+            $getUser = $this->userModel->getUsers($optionUser);
+
+            
+            $messageDetail['from_name'] = $getUser[0]->name;
+            $messageDetail['from_nickname'] = $getUser[0]->nickname;
+            $messageDetail['from_profpict'] = $getUser[0]->profpict_url;
+            $messageDetail['id'] = $getMessage[0]->id;
+            $messageDetail['subject'] = $getMessage[0]->subject;
+            $messageDetail['message'] = $getMessage[0]->message;
+            $messageDetail['date'] = $getMessage[0]->date;
+        }
+        return $messageDetail;
+    }
+
 }
 
 ?>

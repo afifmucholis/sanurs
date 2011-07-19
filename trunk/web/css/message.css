@@ -42,8 +42,12 @@
     border: 1px solid #c00;
 }
 
+#link_pagination {
+    padding : 5px 20px 5px 20px;
+    margin : 5px 30px 5px 30px
+}
 
-#paginationlink {
+#num_link {
     text-decoration: none;
     float : left;
     font: 16px console;
@@ -55,7 +59,7 @@
     border: 2px solid rgb(255,255,255);
 }
 
-#paginationlink:hover {
+#num_link:hover {
     text-decoration: none;
     float : left;
     font: 16px console;
@@ -67,22 +71,22 @@
     border: 2px solid rgb(195,195,195);
 }
 
-#paginationlink a:link{
+#num_link a:link{
     text-decoration: none;
     color: rgb(255,255,255);
 }
 
-#paginationlink a:visited{
+#num_link a:visited{
     text-decoration: none;
     color: rgb(255,255,255); 
 }
 
-#paginationlink a:hover{
+#num_link a:hover{
     text-decoration: none;
     color: rgb(0,0,0); 
 }
 
-#paginationlink a:active{
+#num_link a:active{
     text-decoration: none;
     color: rgb(0,0,0); 
 }
@@ -130,32 +134,49 @@
     color: rgb(0,0,0); 
 }
 
+#message_wrapper {
+    padding : 5px 20px 5px 20px;
+    margin : 5px 30px 5px 30px
+}
+/* 
+#message_wrapper:hover {
+    padding : 10px 40px 10px 40px;
+    margin : 10px 5px 10px 5px;
+    background-color: rgb(240,240,240);
+} */
+
+#message_summary:hover {
+    background-color: rgb(240,240,240);
+}
+
+
 #message_summary #profpict_sender img{
-    max-height: 90px;    
-    max-width: 90px;
+    max-height: 80px;    
+    max-width: 80px;
     float : left;
-    margin : 5px 10px 5px 10px;
+    margin : 0px 10px 0px 10px;
 }
 
 #message_summary #subject {
-    padding-top: 8px;
+    padding-top: 5px;
     color : green;
-    font-size: 19px;
+    font-size: 17px;
     font-weight: bold;
 }
 
 #message_summary #sender {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: bold;
 }
 
 #message_summary #date {
-    font-size: 13px;
+    font-size: 12px;
     color : red;
 }
 
+
 #message_summary #content_text {
-    font-size: 16px;
+    font-size: 15px;
     color : rgb(105,105,105);
 }
 
