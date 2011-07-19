@@ -87,13 +87,14 @@ class friend extends CI_Controller {
         $this->load->model('education', 'educationModel');
         $this->load->model('major', 'majorModel');
         
+        //get all user_id
+        $option = array('columnSelect' => 'id');
+        $getAllUser = $this->userModel->getUsers($option);
+        
         //cari berdasarkan education
         if ($major == 'all') {
             //get all user_id
-            $option = array(
-                'columnSelect' => 'id'
-            );
-            $getUserByMajor = $this->userModel->getUsers($option);
+            $getUserByMajor = $getAllUser;
         } else {
             //get major id
             $option = array(
@@ -119,10 +120,7 @@ class friend extends CI_Controller {
         //cari berdasarkan interest
         if ($interest == 'all') {
             //get all user_id
-            $option = array(
-                'columnSelect' => 'id'
-            );
-            $getUserByInterest = $this->userModel->getUsers($option);
+            $getUserByInterest = $getAllUser;
         } else {
             //get interest id
             $option = array(
@@ -130,7 +128,7 @@ class friend extends CI_Controller {
                 'columnSelect' => 'id'
             );
             $getInterestId = $this->interestModel->getInterests($option);
-            $interest_id = $getInterestId[0]->interest;
+            $interest_id = $getInterestId[0]->id;
             
             //cari id dengan interest_id seperti yang ditemukan
             $option = array(
@@ -143,6 +141,13 @@ class friend extends CI_Controller {
             } else {
                 //ada user_id yang memenuhi
             }
+        }
+        
+        //cari berdasarkan nama dan tahun
+        if ($search_name == "") {
+            //kolom nama gak diisi, langsung cari berdasarkan tahun kalo ada
+        } else {
+            
         }
         
         $data['title'] = 'Profile';
