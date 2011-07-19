@@ -28,7 +28,7 @@ class Education extends CI_Model {
     var $level_id = 'level_id';
     var $graduate_year = 'graduate_year';
     var $school = 'school';
-    var $major = 'major';
+    var $major_id = 'major_id';
     var $minor = 'minor';
 
     /**
@@ -54,7 +54,7 @@ class Education extends CI_Model {
      * level_id          required
      * graduate_year 
      * school
-     * major
+     * major_id
      * minor
      * @param array $options
      * @return type 
@@ -67,7 +67,7 @@ class Education extends CI_Model {
         }
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major, $this->minor);
+        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major_id, $this->minor);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -91,7 +91,7 @@ class Education extends CI_Model {
      * level_id         
      * graduate_year 
      * school
-     * major
+     * major_id
      * minor
      * 
      * @param array $options
@@ -103,7 +103,7 @@ class Education extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major, $this->minor);
+        $fieldArray = array($this->user_id, $this->level_id, $this->graduate_year, $this->school, $this->major_id, $this->minor);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -128,7 +128,7 @@ class Education extends CI_Model {
      * level_id         
      * graduate_year 
      * school
-     * major
+     * major_id
      * minor
      * 
      * limit            limits the number of returned records
@@ -164,7 +164,7 @@ class Education extends CI_Model {
             $this->level_id,
             $this->graduate_year,
             $this->school,
-            $this->major,
+            $this->major_id,
             $this->minor);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
