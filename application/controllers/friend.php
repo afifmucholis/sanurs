@@ -21,15 +21,31 @@ class friend extends CI_Controller {
         
         // get list of interest
         $this->load->model('interest', 'interestModel');
-        $option = array(
-            'columnSelect' => 'interest'
+        $optionInterest = array(
+            'columnSelect' => 'interest',
+            'sortBy' => 'interest'
         );
-        $getInterest = $this->interestModel->getInterests($option);
+        $getInterest = $this->interestModel->getInterests($optionInterest);
         
         $data['interest_list'] = array('All Interest');
         $i = 0;
         while (isset($getInterest[$i])) {
             $data['interest_list'][] = $getInterest[$i]->interest;
+            $i++;
+        }
+        
+        // get list of major
+        $this->load->model('major', 'majorModel');
+        $optionMajor = array(
+            'columnSelect' => 'major',
+            'sortBy' => 'major'
+        );
+        $getMajor = $this->majorModel->getMajors($optionMajor);
+        
+        $data['major_list'] = array('All Major');
+        $i = 0;
+        while (isset($getMajor[$i])) {
+            $data['major_list'][] = $getMajor[$i]->major;
             $i++;
         }
         
