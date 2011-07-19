@@ -4,7 +4,7 @@
         slide show event here<br/>
         <div id="gallery-event">
         </div>
-        <?php echo anchor('event/show_event/2', 'Click to view this event'); ?>
+        Click Picture in Slide Show to view the event
     </div>
 </div>
 
