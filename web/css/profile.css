@@ -1,0 +1,18 @@
+/* 
+    Document   : profile
+    Created on : 19 Jul 11, 13:28:12
+    Author     : Akbar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#profpic {
+    max-height: 300px;
+    max-width: 300px;       
+}
+
