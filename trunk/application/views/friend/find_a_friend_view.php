@@ -1,3 +1,4 @@
+<?php echo 'halo pudy'; ?>
 <div id="col_left" style="float: left">
     <h3>Find a Friend</h3>
     <?php
@@ -12,23 +13,11 @@
     echo br(1);
     
     echo form_label('Areas of interest : ', 'interest');
-    /*$interest = array(
-        'all' => 'All Interest',
-        'design' => 'Design',
-        'it' => 'IT',
-        'business' => 'Business'
-    );*/
-    //$interest = array('All Interest', $interest_list[0]->interest);
-    echo form_dropdown('interest', $interest_list, 0);
+    echo form_dropdown('interest', $interest_list, $interest_list[0]);
     echo br(1);
     
     echo form_label('Major Education : ', 'major');
-    $major = array(
-        'all' => 'All Major',
-        'm1' => 'Informatics Engineering',
-        'm2' => 'Electrical Engineering',
-    );
-    echo form_dropdown('major', $major, 'all');
+    echo form_dropdown('major', $major_list, $major_list[0]);
     echo br(1);
     
     echo form_submit('search', 'Search');
