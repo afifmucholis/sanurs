@@ -13,8 +13,7 @@
         <div id="sorting">
             <h4>Sort by : </h4>
             <a href="#" id="categories_click">- Categories</a>
-            <div id="tree_categories">
-            <?php
+            <div id="tree_categories"><?php
             //echo anchor('event/sortby/categories', '- Categories');
             if (isset($categories) && $categories!="") {
                 foreach($categories as $cat) :
@@ -25,8 +24,7 @@
                     echo br(1);
                 endforeach;
             }
-            ?>
-            </div>
+            ?></div>
             <?php
             if ($sortby == 'number')
                 echo '<b>'; echo anchor('event/sortby/number', '- Number of people Attending');
