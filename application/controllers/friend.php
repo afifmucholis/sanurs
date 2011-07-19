@@ -1,15 +1,5 @@
 <?php
 
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
-/**
- * Description of friend
- *
- * @author user
- */
 /** * @property CI_Loader $load
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
@@ -28,6 +18,20 @@ class friend extends CI_Controller {
     function index() {
         // show map
         $data['show_map'] = 1;
+        
+        // get list of interest
+        $this->load->model('interest', 'interestModel');
+        $option = array(
+            'columnSelect' => 'interest'
+        );
+        $getInterest = $this->interestModel->getInterests($option);
+        
+        $data['interest_list'] = array('All Interest');
+        $i = 0;
+        while (isset($getInterest[$i])) {
+            $data['interest_list'][] = $getInterest[$i]->interest;
+            $i++;
+        }
         
         $data['title'] = 'Find a friend';
         $data['main_content'] = 'friend/find_a_friend_view';
@@ -55,21 +59,39 @@ class friend extends CI_Controller {
         $search_name = $this->input->post('name');
         $search_year = $this->input->post('year');
         $interest = $this->input->post('interest');
-        $major = $this->input->post('education');
+        if ($interest == "All Interest") {
+            $interest = "";
+        }
+        $major = $this->input->post('major');
+        if ($major == "All Major") {
+            $major = "";
+        }
         
         // load database
         $this->load->model('user', 'userModel');
+        $this->load->model('interested_in', 'interested_inModel');
+        $this->load->model('interest', 'interestModel');
+        $this->load->model('education', 'educationModel');
+        
+        //cari berdasarkan education dulu
+        if ($major == "") {
+            //gak perlu cari user_id di education
+            
+        } else {
+            //cari user_id di education
+            
+        }
         
         /*** cari user yang namanya mengandung $search_name ***/
         // asumsi nama ditulis lengkap dan benar sesuai database
-        $option = array(
+        /*$option = array(
             'name' => $search_name
         );
         $getUserByName = $this->userModel->getUsers($option);
         /*** selesai cari user ***/
         
         /*** cari user yang tahun lulusnya sama dengan $search_year ***/
-        $option = array(
+        /*$option = array(
             'graduate_year' => $search_year
         );
         $getUserByYear = $this->userModel->getUsers($option);
