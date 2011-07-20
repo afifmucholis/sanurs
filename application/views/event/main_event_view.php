@@ -38,11 +38,11 @@ if (isset($categories) && $categories != "") {
                     echo '</b>';
                 ?><br/>
         </div>
-        <?php echo br(5); ?>
+        <?php echo br(3); ?>
         <div id="link_host_event">
             <?php echo anchor('event/host', 'Host an event') . "&nbsp;&nbsp;&nbsp;"; ?>
         </div>
-        <?php echo br(5); ?>
+        <?php echo br(3); ?>
         <?php if ($this->session->userdata('name') == null) { ?>
             <p>Sign in first to view your personal calendar</p>
             <?php $this->load->view('sign_in_view'); ?>
