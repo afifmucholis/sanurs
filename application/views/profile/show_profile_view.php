@@ -6,8 +6,6 @@
                           'src' => $user_data['image'],
                           'class' => 'event_images',
                           'id' => 'upload_image',
-                          'width' => '250',
-                          'height' => '400',
                           'rel' => 'lightbox',
                     );
                     echo img($image_properties);
