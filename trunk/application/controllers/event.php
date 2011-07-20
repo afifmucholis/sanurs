@@ -96,6 +96,12 @@ class Event extends CI_Controller {
         return $text;
     }
 
+    /**
+     * show_categories()
+     *
+     * fungsi yang dipanggil dengan ajax ketika user klik categories di main_event_view
+     *
+     */
     function show_categories() {
         $text = $this->get_categories_exist();
         $this->output

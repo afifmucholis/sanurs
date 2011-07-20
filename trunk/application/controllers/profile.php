@@ -18,6 +18,15 @@ class profile extends CI_Controller {
         $user_id = $this->session->userdata('user_id');
         
         $data['user_data'] = $this->setUserData($user_id);
+        // get jumlah friend request
+        $this->load->model('friend_request','friend_requestModel');
+        $options = array('userid_requested'=>$user_id);
+        $getRequest = $this->friend_requestModel->getFriendRelationships($options);
+        if (is_bool($getRequest)) {
+            $data['request_friend'] = 0;
+        } else {
+            $data['request_friend'] = count($getRequest);
+        }
         
         $this->load->view('includes/template',$data);
     }

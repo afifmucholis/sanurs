@@ -15,6 +15,9 @@ class friend extends CI_Controller {
      *
      */
     function index() {
+        if ($this->session->userdata('name')==null) {
+            redirect('/home', 'refresh');
+        }
         // show map
         $data['show_map'] = 1;
         
@@ -54,7 +57,7 @@ class friend extends CI_Controller {
         
         $data['title'] = 'Find a friend';
         $data['main_content'] = 'friend/find_a_friend_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->getStruktur('Find a friend');
         $this->load->view('includes/template',$data);
     }
     
@@ -74,12 +77,128 @@ class friend extends CI_Controller {
         $this->load->model('friend_request','friendModel');
         $options = array('userid_requester'=>$user_requester,'userid_requested'=>$user_id,'message'=>$message);
         $addGan = $this->friendModel->addFriendRequest($options);
+        // load model notification
+//        $this->load->model('notification','notifModel');
+//        $name_requester = $this->session->userdata('name');
+//        $message = '';
+//        $options = array('message','link');
+        
         if (is_bool($addGan)) {
             echo 0;
         } else {
             echo 1;
         }
     }
+    
+    /**
+     * friend_request()
+     *
+     * menampilkan halaman friend request
+     *
+     */
+    function friend_request() {
+        if ($this->session->userdata('name')==null) {
+            redirect('/home', 'refresh');
+        }
+        $data['title'] = 'View Friend Request';
+        $data['main_content'] = 'friend/friend_request_view';
+        $data['struktur'] = $this->getStruktur('Friend Request');
+        $user_id = $this->session->userdata('user_id');
+        // load model friend request
+        $this->load->model('friend_request','friend_requestModel');
+        // load model user
+        $this->load->model('user','userModel');
+        $options = array('userid_requested'=>$user_id);
+        $getRequest = $this->friend_requestModel->getFriendRelationships($options);
+        if (is_bool($getRequest)) {
+            $data['request_friend'] = 0;
+        } else {
+            $i=0;
+            foreach($getRequest as $request) :
+                // get user requester info
+                $options = array('id'=>$request->userid_requester);
+                $getUser = $this->userModel->getUsers($options);
+                $prof_pic = "";
+                $name = "";
+                if (!is_bool($getUser)) {
+                    $prof_pic = $getUser[0]->profpict_url;
+                    $name = $getUser[0]->name;
+                }
+                $data['request_friend'][$i] = array (
+                    'user_requester'=>$request->userid_requester,
+                    'prof_pic'=>$prof_pic,
+                    'name'=>$name,
+                    'message'=>$request->message,
+                    'id_request'=>$request->id
+                );
+                $i++;
+            endforeach;
+        }
+        
+        
+        $this->load->view('includes/template',$data);
+    }
+    
+    /**
+     * confirm_request
+     *
+     * confirm request data dikirim dengan post ajax
+     *
+     */
+    function confirm_request() {
+        if ($this->session->userdata('name')==null) {
+            redirect('/home', 'refresh');
+        }
+        // load model friend request
+        $this->load->model('friend_request','friend_requestModel');
+        // load model friend relationship
+        $this->load->model('friend_relationship','friend_relationshipModel');
+        // load model user
+        $this->load->model('user','userModel');
+        $user_id = $this->session->userdata('user_id');
+        $id_request = $this->input->post('id');
+        $confirm = $this->input->post('type');
+        
+        $success=0;
+        $message="";
+        // get id requester
+        $options = array('id'=>$id_request);
+        $getRequest = $this->friend_requestModel->getFriendRelationships($options);
+        
+        if (!is_bool($getRequest)) {        
+            $user_requester = $getRequest[0]->userid_requester;
+            // get info requester
+            $options = array('id'=>$user_requester);
+            $getUser = $this->userModel->getUsers($options);
+            if ($confirm=='true') {
+                // add to friend relationship tabel
+                $options = array('userid_1'=>$user_id,'userid_2'=>$user_requester);
+                $ret = $this->friend_relationshipModel->addFriendRelationship($options);
+                if (is_bool($ret)) {
+                    $success = 0;
+                } else {
+                    // add notifi accepted ke user yang nge request
+                    $success = 1;
+                    $message = "You have accepted ".$getUser[0]->name."'s friend request.";
+                }
+            } else {
+                // add notifi rejected ke user yang nge request
+                $success = 1;
+                $message = "You have rejected ".$getUser[0]->name."'s friend request.";
+            }
+            // remove record dari tabel friend request
+            $options = array('id'=>$id_request);
+            $deleteRequest = $this->friend_requestModel->deleteFriendRequest($options);
+            if (is_bool($deleteRequest)) {
+                $success = 0;
+                $message = "error deleting friend request";
+            }
+        }
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('success' => $success, 'message'=>$message)));
+    }
+        
     
     function search() {
         // get data from form
@@ -288,7 +407,7 @@ class friend extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
-    function getStruktur() {
+    function getStruktur($name) {
         $struktur = array (
             array (
                 'islink'=>1,
@@ -302,7 +421,7 @@ class friend extends CI_Controller {
             ),
             array (
                 'islink'=>0,
-                'label'=>'Find a friend'
+                'label'=>$name
             )
         );
         return $struktur;
