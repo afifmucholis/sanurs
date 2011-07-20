@@ -909,7 +909,7 @@ class profile extends CI_Controller {
         $email = $getUser[0]->email;
         $image = $getUser[0]->profpict_url;
         if ($image=="")
-            $image = './res/default.jpg';
+            $image = '/res/default.jpg';
         $tahun_kelulusan= $getUser[0]->graduate_year;
         // load model unit
         $this->load->model('unit', 'unitModel');
