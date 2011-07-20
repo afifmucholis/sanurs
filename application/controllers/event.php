@@ -165,7 +165,7 @@ class Event extends CI_Controller {
                 $attending = 0;
             }
 
-            $rsvp;
+            $rsvp=0;
             if ($this->session->userdata('name') == null) // user belum sign in
                 $rsvp = 0;
             else {
@@ -184,6 +184,18 @@ class Event extends CI_Controller {
                     $rsvp = 3;
                 }
             }
+            $data['data_event'] = array(
+                'event_id' => $array['show_event'],
+                'title' => $title,
+                'where' => $where,
+                'when' => $when,
+                'description' => $description,
+                'cp' => $cp,
+                'attending' => $attending,
+                'list_attending' => $list_attending,
+                'url_image' => $url_image,
+                'rsvp' => $rsvp
+            );
         } else {
             //Gak ada event dengan id atau query gagal
         }
@@ -191,18 +203,7 @@ class Event extends CI_Controller {
         $data['title'] = 'Event - ' . $title;
         $data['main_content'] = 'event/show_event_view';
         $data['struktur'] = $this->getStruktur2($title);
-        $data['data_event'] = array(
-            'event_id' => $array['show_event'],
-            'title' => $title,
-            'where' => $where,
-            'when' => $when,
-            'description' => $description,
-            'cp' => $cp,
-            'attending' => $attending,
-            'list_attending' => $list_attending,
-            'url_image' => $url_image,
-            'rsvp' => $rsvp
-        );
+
         $this->load->view('includes/template', $data);
     }
 
@@ -215,9 +216,47 @@ class Event extends CI_Controller {
      * @param int event_id id event
      */
     function rsvp() {
-        $user_id = $this->input->post('user_id');
-        $event_id = $this->input->post('event_id');
-        echo "Berhasil gan";
+        $user_id = $this->session->userdata('user_id');
+        $event_id = $this->input->post('id');
+        $status_rsvp_id = $this->input->post('type');
+        
+        //load model rsvp event
+        $this->load->model('rsvp_event','rsvpModel');
+        
+        //cek dulu sebelumnya ada atau ga
+        $options = array('user_id'=>$user_id,'event_id'=>$event_id);
+        $getEventRSVP = $this->rsvpModel->getRSVPEvent($options);
+        $success = 0;
+        $status ="";
+        $link="";
+        $count=0;
+        $name="";
+        if (!is_bool($getEventRSVP)) {
+            $success = 0;
+        } else {
+            $options = array('user_id'=>$user_id,'event_id'=>$event_id,'status_rsvp_id'=>$status_rsvp_id);
+            $addEventRSVP = $this->rsvpModel->addRSVPEvent($options);
+            if (is_bool($addEventRSVP)) {
+                $success = 0;
+            } else {
+                $success = 1;
+                // update jumlah
+                $options = array('event_id'=>$event_id, 'status_rsvp_id'=>1);
+                $getEventRSVP = $this->rsvpModel->getRSVPEvent($options);
+                if (!is_bool($getEventRSVP))
+                    $count = count($getEventRSVP);
+                if ($status_rsvp_id==1) {
+                    $status = "RSVP-ed for Attending";
+                } else if ($status_rsvp_id==2) {
+                    $status = "RSVP-ed for Not Attending";
+                }
+                $link = site_url('profile/user/'.$user_id);
+                $name = $this->session->userdata('name');
+            }
+        }
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('success'=>$success, 'status' => $status, 'link'=>$link, 'name'=>$name, 'count'=>$count)));
     }
 
     /**
@@ -303,11 +342,13 @@ class Event extends CI_Controller {
             $where = $this->input->post('where');
             $description = $this->input->post('description');
             $category_event = $this->input->post('category_event');
-
+            // convert php date to mysql date
+            $phpdate = strtotime($when);
+            $when2 = date( 'Y-m-d H:i:s', $phpdate);
             $options = array(
                 'title' => $title,
                 'description' => $description,
-                'start_time' => $when,
+                'start_time' => $when2,
                 'venue' => $where,
                 'category_event_id' => $category_event,
                 'image_url' => $image_url

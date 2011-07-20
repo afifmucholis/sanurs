@@ -63,7 +63,7 @@ class RSVP_Event extends CI_Model {
         }
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->user_id, $this->event_id);
+        $fieldArray = array($this->user_id, $this->event_id, $this->status_rsvp_id);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
