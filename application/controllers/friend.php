@@ -94,6 +94,37 @@ class friend extends CI_Controller {
     }
     
     /**
+     * unfriend()
+     *
+     * fungsi untuk remove dari friend
+     *
+     */
+    function unfriend() {
+        if ($this->session->userdata('name')==null) {
+            redirect('/home', 'refresh');
+        }
+        $user_id = $this->session->userdata('user_id');
+        $user_removed = $this->input->post('user_id');
+        // load model friend relationship
+        $this->load->model('friend_relationship','frModel');
+        $options = array('userid_1'=>$user_id,'userid_2'=>$user_removed);
+        $getFriendID = $this->frModel->getFriendRelationships($options);
+        if (is_bool($getFriendID)) {
+            $options = array('userid_2'=>$user_id,'userid_1'=>$user_removed);
+            $getFriendID = $this->frModel->getFriendRelationships($options);
+        }
+        // delete friend relationship
+        $options = array('id'=>$getFriendID[0]->id);
+        $deleteFriend = $this->frModel->deleteFriendRelationship($options);
+        $success = 1;
+        if (is_bool($deleteFriend))
+            $success = 0;
+        $this->output
+        ->set_content_type('application/json')
+        ->set_output(json_encode(array('success' => $success)));
+    }
+    
+    /**
      * friend_request()
      *
      * menampilkan halaman friend request

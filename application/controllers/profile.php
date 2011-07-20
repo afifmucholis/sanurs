@@ -79,7 +79,7 @@ class profile extends CI_Controller {
             }
             
             if (!is_bool($getFriendRelationship) && count($getFriendRelationship)==1) {     // cek apakah sudah friend atau belum
-                $data['add_as_friend'] = 0;
+                $data['add_as_friend'] = 3;
             } else if (!is_bool($getFriendRequest) && count($getFriendRequest)==1) { // cek apakah masih requested
                 $data['add_as_friend'] = 2;
             }
