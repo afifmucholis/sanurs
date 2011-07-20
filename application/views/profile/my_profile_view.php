@@ -1,6 +1,13 @@
 <div class="left-menu">
     <div id="col_left">
-        <?php echo anchor('profile/editProfile', 'Edit your profile'); ?>
+        <?php 
+            echo anchor('profile/editProfile', 'Edit your profile');
+            echo "&nbsp;&nbsp;&nbsp;";
+            if ($request_friend == 0)
+                echo anchor('friend/friend_request', 'Friend Request');
+            else
+                echo anchor('friend/friend_request', 'Friend Request('.$request_friend.')');
+        ?>
         <div id="profpic">
              <?php
                 $image_properties = array(
