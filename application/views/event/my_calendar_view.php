@@ -12,10 +12,16 @@
         <?php echo anchor('event/mycalendar/all_events', 'View all events'); ?>
     <?php } ?>
     <br/>
-    <?php if ($sortby == 'rsvp_ed') { ?>
-        <b><?php echo anchor('event/mycalendar/rsvp_ed', 'View event RSVP-ed'); ?></b>
+    <?php if ($sortby == 'attending_rsvp') { ?>
+        <b><?php echo anchor('event/mycalendar/attending_rsvp', 'View all your attending-RSVP event'); ?></b>
     <?php } else { ?>
-        <?php echo anchor('event/mycalendar/rsvp_ed', 'View event RSVP-ed'); ?>
+        <?php echo anchor('event/mycalendar/attending_rsvp', 'View all your attending-RSVP event'); ?>
+    <?php } ?>
+    <br/>
+    <?php if ($sortby == 'not_attending_rsvp') { ?>
+        <b><?php echo anchor('event/mycalendar/not_attending_rsvp', 'View all your not-attending-RSVP event'); ?></b>
+    <?php } else { ?>
+        <?php echo anchor('event/mycalendar/not_attending_rsvp', 'View all your not-attending-RSVP event'); ?>
     <?php } ?>
     <?php echo br(10); ?>
     <p>Boxes in orange are events not hosted by alumni.</p>
@@ -42,7 +48,6 @@
                 type : "POST",
                 data : {
                     sortby : '<?php echo $sortby ?>' 
-                    //sortby : 'all_events' 
                 }
             },
             
