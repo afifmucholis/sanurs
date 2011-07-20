@@ -193,14 +193,14 @@ class friend extends CI_Controller {
             if ($search_year == "") {
                 //cari berdasarkan nama saja
                 $option = array(
-                    'name' => $search_name,
+                    'name LIKE' => $search_name,
                     'columnSelect' => 'id'
                 );
                 $getUserByNameAndYear = $this->userModel->getUsers($option);
             } else {
                 //cari berdasarkan nama dan tahun
                 $option = array(
-                    'name' => $search_name,
+                    'name LIKE' => $search_name,
                     'graduate_year' => $search_year,                    
                     'columnSelect' => 'id'
                 );
