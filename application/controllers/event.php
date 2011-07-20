@@ -53,17 +53,17 @@ class Event extends CI_Controller {
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = $array['sortby'];
         $data['categories'] = "";
-        if ($array['sortby']=='categories') {
+        if ($array['sortby'] == 'categories') {
             $array2 = $this->uri->uri_to_assoc(3);
             $data['categories'] = $this->get_categories_exist();
-            $options = array('id'=>$array2['categories']);
+            $options = array('id' => $array2['categories']);
             $getCategory = $this->categoryModel->getCategoryEvents($options);
             $data['current_categories'] = $getCategory[0]->category_event;
             $data['current_categories_id'] = $getCategory[0]->id;
         }
         $this->load->view('includes/template', $data);
     }
-    
+
     /**
      * get_categories_exist()
      *
@@ -81,28 +81,28 @@ class Event extends CI_Controller {
             $array_category[$cat->id] = 0;
             $array_category_label[$cat->id] = $cat->category_event;
         endforeach;
-        foreach($getEvents as $event) :
+        foreach ($getEvents as $event) :
             $array_category[$event->category_event_id] += 1;
         endforeach;
         $idx_array = array_keys($array_category);
-        $p=0;
+        $p = 0;
         foreach ($idx_array as $idx) :
             if ($array_category[$idx] != 0) {
                 $text[$p]['label'] = $array_category_label[$idx];
-                $text[$p]['link'] = site_url('event/sortby/categories/'.$idx);
+                $text[$p]['link'] = site_url('event/sortby/categories/' . $idx);
                 $p++;
             }
         endforeach;
         return $text;
     }
-    
+
     function show_categories() {
         $text = $this->get_categories_exist();
         $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode(array('text' => $text)));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('text' => $text)));
     }
-    
+
     /**
      * show_event()
      *
@@ -141,22 +141,27 @@ class Event extends CI_Controller {
             $optionRSVPAttendingEvent = array('event_id' => $idevent, 'status_rsvp_id' => $idStatusAttending);
             $getRSVPAttendingEvent = $this->rsvpModel->getRSVPEvent($optionRSVPAttendingEvent);
 
-            $attending = count($getRSVPAttendingEvent);
-
-            //List user yang attending :
-            //Load model user :
-            $this->load->model('user', 'userModel');
             $list_attending = array();
-            //Iterasi hasil query $getRSVPAttendingEvent, then dapetin detail user :
-            for ($i = 0; $i < $attending; ++$i) {
-                $idUserAttending = $getRSVPAttendingEvent[$i]->user_id;
+            //Cek udah ada yang attending :
+            if (!is_bool($getRSVPAttendingEvent)) {
+                $attending = count($getRSVPAttendingEvent);
 
-                $optionUser = array('id' => $idUserAttending);
-                $getUser = $this->userModel->getUsers($optionUser);
-                $user = array();
-                $user['user_id'] = $getUser[0]->id;
-                $user['name'] = $getUser[0]->name;
-                $list_attending[$i] = $user;
+                //List user yang attending :
+                //Load model user :
+                $this->load->model('user', 'userModel');
+                //Iterasi hasil query $getRSVPAttendingEvent, then dapetin detail user :
+                for ($i = 0; $i < $attending; ++$i) {
+                    $idUserAttending = $getRSVPAttendingEvent[$i]->user_id;
+
+                    $optionUser = array('id' => $idUserAttending);
+                    $getUser = $this->userModel->getUsers($optionUser);
+                    $user = array();
+                    $user['user_id'] = $getUser[0]->id;
+                    $user['name'] = $getUser[0]->name;
+                    $list_attending[$i] = $user;
+                }
+            } else {
+                //Do nothing
             }
 
             $rsvp;
@@ -165,7 +170,7 @@ class Event extends CI_Controller {
             else {
                 //User udah login, cek RSVP user login :
                 $iduserlogin = $this->session->userdata('user_id');
-                $optionUserLogin = array('event_id'=>$idevent,'user_id'=>$iduserlogin);
+                $optionUserLogin = array('event_id' => $idevent, 'user_id' => $iduserlogin);
                 $getStatusRSVPLoginUser = $this->rsvpModel->getRSVPEvent($optionUserLogin);
                 if (is_bool($getStatusRSVPLoginUser)) {
                     //Orang ini belom pernah ngasih status kedatangan :
@@ -176,7 +181,7 @@ class Event extends CI_Controller {
                 } else if ($getStatusRSVPLoginUser[0]->status_rsvp_id == 2) {
                     //Status RSVP orang ini Not Attending :
                     $rsvp = 3;
-                }   
+                }
             }
         } else {
             //Gak ada event dengan id atau query gagal
@@ -407,6 +412,7 @@ class Event extends CI_Controller {
         );
         return $struktur;
     }
+
 }
 
 ?>
