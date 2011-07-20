@@ -281,6 +281,9 @@ class friend extends CI_Controller {
         $data['main_content'] = 'friend/search_friend_result_view';
         $data['struktur'] = $this->getStruktur2('Your Profile');
         $data['search_name'] = $search_name;
+        $data['search_year'] = $search_year;
+        $data['interest'] = $interest;
+        $data['major'] = $major;
         
         $this->load->view('includes/template',$data);
     }
