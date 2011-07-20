@@ -83,9 +83,10 @@ class TestModel extends CI_Controller {
         $today = time();
         $mysqldatetoday = date( 'Y-m-d H:i:s', $today);
         
-        $optionUpcoming = array('start_time <' => $mysqldatetoday);
+        //$optionUpcoming = array('start_time <' => $mysqldatetoday);
+        $optionLike = array('title LIKE' => 'es');
         
-        $getReturn = $this->eventModel->getEvents($optionUpcoming);
+        $getReturn = $this->eventModel->getEvents($optionLike);
         if (is_bool($getReturn)) {
             echo "no record";
         } else {
