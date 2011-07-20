@@ -41,7 +41,7 @@ class Calendar extends CI_Controller {
                 $result[$i] = $event;
             }
             echo json_encode($result);
-        } else if ($sortby == 'rsvp_ed') {
+        } else if ($sortby == 'attending_rsvp') {
             //Dapetin userid :
             $userid = $this->session->userdata('user_id');
 
@@ -62,12 +62,51 @@ class Calendar extends CI_Controller {
             if (!is_bool($getAttendingEvent)) {
                 for ($i = 0; $i < count($getAttendingEvent); ++$i) {
                     $event = array();
-                    $eventid = $getAttendingEvent[$i]->id;
+                    $eventid = $getAttendingEvent[$i]->event_id;
 
                     $optionEventDetail = array('id' => $eventid);
                     $getEventDetail = $this->eventModel->getEvents($optionEventDetail);
 
-                    $event['id'] = $getAttendingEvent[$i]->id;
+                    $event['id'] = $getAttendingEvent[$i]->event_id;
+                    $event['title'] = $getEventDetail[0]->title;
+                    $event['description'] = $getEventDetail[0]->description;
+                    $event['start'] = $getEventDetail[0]->start_time;
+                    $event['where'] = $getEventDetail[0]->venue;
+                    $event['category_event_id'] = $getEventDetail[0]->category_event_id;
+                    $event['image_url'] = $getEventDetail[0]->image_url;
+                    $result[$i] = $event;
+                }
+            } else {
+                //Do nothing, kirim kosong aje
+            }
+            echo json_encode($result);
+        } else if ($sortby == 'not_attending_rsvp') {
+            //Dapetin userid :
+            $userid = $this->session->userdata('user_id');
+
+            //Dapetin semua event di rsvp_event yang user_id = $userid dan status_rsvp_id = not attending
+            //Butuh model rsvp_event ma rsvp_status :
+            $this->load->model('rsvp_event', 'rsvpModel');
+            $this->load->model('rsvp_status', 'rsvpStatusModel');
+
+            //Get id status dari label attending :
+            $optionStatusNotAttending = array('label' => 'Not Attending');
+            $getStatusNotAttending = $this->rsvpStatusModel->getRSVPStatuses($optionStatusNotAttending);
+            $idStatusNotAttending = $getStatusNotAttending[0]->id;
+
+            //Query ke rsvpModel :
+            $optionRSVPNotAttendingEvent = array('user_id' => $userid, 'status_rsvp_id' => $idStatusNotAttending);
+            $getNotAttendingEvent = $this->rsvpModel->getRSVPEvent($optionRSVPNotAttendingEvent);
+
+            if (!is_bool($getNotAttendingEvent)) {
+                for ($i = 0; $i < count($getNotAttendingEvent); ++$i) {
+                    $event = array();
+                    $eventid = $getNotAttendingEvent[$i]->event_id;
+
+                    $optionEventDetail = array('id' => $eventid);
+                    $getEventDetail = $this->eventModel->getEvents($optionEventDetail);
+
+                    $event['id'] = $getNotAttendingEvent[$i]->event_id;
                     $event['title'] = $getEventDetail[0]->title;
                     $event['description'] = $getEventDetail[0]->description;
                     $event['start'] = $getEventDetail[0]->start_time;
