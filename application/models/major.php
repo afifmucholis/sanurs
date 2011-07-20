@@ -165,6 +165,14 @@ class Major extends CI_Model {
             }
         }
         
+        //Penanganan operator LIKE :
+        foreach ($fieldArray as $startString) {
+            $fieldLike = $startString . ' LIKE';
+            if (isset($options[$fieldLike])) {
+                $this->db->like($startString,$options[$fieldLike]);
+            }
+        }
+        
         // If limit / offset are declared (usually for pagination)
         if (isset($options['limit']) && isset($options['offset']))
             $this->db->limit($options['limit'], $options['offset']);

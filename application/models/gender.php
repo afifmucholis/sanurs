@@ -82,7 +82,7 @@ class Gender extends CI_Model {
      * @param array $options
      * @return bool/int  
      */
-    function updateAlumni($options = array()) {
+    function updateGender($options = array()) {
         // required (id harus ada) :
         if (!$this->_required(array($this->id), $options))
             return false;
@@ -162,6 +162,14 @@ class Gender extends CI_Model {
         foreach ($fieldOperatorArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);
+            }
+        }
+        
+        //Penanganan operator LIKE :
+        foreach ($fieldArray as $startString) {
+            $fieldLike = $startString . ' LIKE';
+            if (isset($options[$fieldLike])) {
+                $this->db->like($startString,$options[$fieldLike]);
             }
         }
         
