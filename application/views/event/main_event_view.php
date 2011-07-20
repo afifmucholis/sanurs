@@ -14,30 +14,35 @@
             <h4>Sort by : </h4>
             <a href="#" id="categories_click">- Categories</a>
             <div id="tree_categories"><?php
-            //echo anchor('event/sortby/categories', '- Categories');
-            if (isset($categories) && $categories!="") {
-                foreach($categories as $cat) :
-                    if ($current_categories != $cat['label'])
-                        echo '&nbsp;&nbsp;&nbsp;<a href="'.$cat['link'].'">- '.$cat['label'].'</a>';
-                    else
-                        echo '&nbsp;&nbsp;&nbsp;<a href="'.$cat['link'].'"><b>- '.$cat['label'].'</b></a>';
-                    echo br(1);
-                endforeach;
-            }
-            ?></div>
+//echo anchor('event/sortby/categories', '- Categories');
+if (isset($categories) && $categories != "") {
+    foreach ($categories as $cat) :
+        if ($current_categories != $cat['label'])
+            echo '&nbsp;&nbsp;&nbsp;<a href="' . $cat['link'] . '">- ' . $cat['label'] . '</a>';
+        else
+            echo '&nbsp;&nbsp;&nbsp;<a href="' . $cat['link'] . '"><b>- ' . $cat['label'] . '</b></a>';
+        echo br(1);
+    endforeach;
+}
+?></div>
             <?php
             if ($sortby == 'number')
                 echo '<b>'; echo anchor('event/sortby/number', '- Number of people Attending');
             if ($sortby == 'number')
                 echo '</b>';
             ?><br/>
-            <?php
-            if ($sortby == 'upcoming')
-                echo '<b>'; echo anchor('event/sortby/upcoming', '- Upcoming Events');
-            if ($sortby == 'upcoming')
-                echo '</b>';
-            ?><br/>
+                <?php
+                if ($sortby == 'upcoming')
+                    echo '<b>'; echo anchor('event/sortby/upcoming', '- Upcoming Events');
+                if ($sortby == 'upcoming')
+                    echo '</b>';
+                ?><br/>
         </div>
+        <?php echo br(5); ?>
+        <div id="link_host_event">
+            <?php echo anchor('event/host', 'Host an event') . "&nbsp;&nbsp;&nbsp;"; ?>
+        </div>
+        <?php echo br(5); ?>
         <?php if ($this->session->userdata('name') == null) { ?>
             <p>Sign in first to view your personal calendar</p>
             <?php $this->load->view('sign_in_view'); ?>
@@ -57,7 +62,8 @@
         $.ajax({
             url : '<?php echo site_url(); ?>/event_gallery',
             type : 'POST',
-            data : {sortby:'<?php echo $sortby ?>'<?php if (isset($categories) && $categories!="") echo ", category:'".$current_categories_id."'";?>},
+            data : {sortby:'<?php echo $sortby ?>'<?php if (isset($categories) && $categories != "")
+            echo ", category:'" . $current_categories_id . "'"; ?>},
             success : function(msg) {
                 data=msg;
                 Galleria.loadTheme('<?php echo base_url(); ?>galleria-theme/classic/galleria.classic.min.js');

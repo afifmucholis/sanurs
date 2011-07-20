@@ -32,7 +32,6 @@
 <div class="right-menu">
     <div id="col_right">
         <div id="link">
-            <?php echo anchor('event/host', 'Host an event') . "&nbsp;&nbsp;&nbsp;"; ?>
             <?php echo anchor('friend', 'Find a friend') . "&nbsp;"; ?>
             <?php echo anchor('notification', 'Notification'); ?>
         </div>

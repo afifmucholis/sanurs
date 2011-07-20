@@ -450,8 +450,8 @@ class Event extends CI_Controller {
             ),
             array(
                 'islink' => 1,
-                'link' => 'profile',
-                'label' => 'Your Profile'
+                'link' => 'event',
+                'label' => 'Event'
             ),
             array(
                 'islink' => 0,
