@@ -25,7 +25,7 @@
         disablePopup();
         var link = '<?php echo site_url('friend/add');?>';
         var form_data = {
-                user_id : $('#user_id').val(),
+                user_id : $('input[name=user_id]').val(),
                 message : $('#pesan').val(),
 		ajax: '1'		
 	};
@@ -37,9 +37,8 @@
 		success: function(msg) {
                    if (msg==1) {
                       $('#add_as_friend').html('Request has been sent.');
-                      //alert('Rqequest has been sent');
                    } else {
-                      //alert('Error');
+                      alert('Error');
                    }
 		}
 	});	
