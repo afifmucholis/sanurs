@@ -180,4 +180,28 @@
     color : rgb(105,105,105);
 }
 
+#message_wrapper {
+    
+}
 
+#message_top {
+    background-color: rgb(195,195,195);
+}
+
+#message_top #subject {
+    font-size: 20px;
+    color: green;
+    font-weight: bold;
+}
+
+#message_top #date {
+    font: 12px;
+    color: red;
+    font-style: italic;
+}
+
+#message_info #profpict_sender img{
+    max-height: 80px;
+    max-width : 80px;
+    float : left;
+}
