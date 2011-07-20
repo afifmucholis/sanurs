@@ -29,6 +29,16 @@ class notification extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
+    function getNotification() {
+        $user_id = $this->session->userdata('user_id');
+        // load model friend request
+        $this->load->model('friend_request', 'friend_requestModel');
+        // load model friend relationship
+        $this->load->model('friend_relationship', 'friend_relationshipModel');
+        // get friend request
+        
+    }
+    
     function getStruktur($name) {
         $struktur = array (
             array (
