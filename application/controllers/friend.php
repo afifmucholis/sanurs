@@ -90,10 +90,16 @@ class friend extends CI_Controller {
         
         // load database
         $this->load->model('user', 'userModel');
+        $this->load->model('unit', 'unitModel');
         $this->load->model('interested_in', 'interested_inModel');
         $this->load->model('interest', 'interestModel');
         $this->load->model('education', 'educationModel');
         $this->load->model('major', 'majorModel');
+        
+        //array untuk menyimpan user_id
+        $userByMajor = array();
+        $userByInterest = array();
+        $userByNameAndYear = array();
         
         //get all user_id
         $option = array('columnSelect' => 'id');
@@ -103,6 +109,13 @@ class friend extends CI_Controller {
         if ($major == 'all') {
             //get all user_id
             $getUserByMajor = $getAllUser;
+            if ($getUserByMajor) {
+                $i = 0;
+                while ($i < count($getUserByMajor)) {
+                    $userByMajor[] = $getUserByMajor[$i]->id;
+                    $i++;
+                }
+            }
         } else {
             //get major id
             $option = array(
@@ -118,17 +131,26 @@ class friend extends CI_Controller {
                 'columnSelect' => 'user_id'
             );
             $getUserByMajor = $this->educationModel->getEducations($option);
+            if ($getUserByMajor) {
+                $i = 0;
+                while ($i < count($getUserByMajor)) {
+                    $userByMajor[] = $getUserByMajor[$i]->user_id;
+                    $i++;
+                }
+            }
         }
-        if (!isset($getUserByMajor)) {
-            //tidak ada user_id yang memenuhi
-        } else {
-            //ada user_id yang memenuhi
-        }
-
+        
         //cari berdasarkan interest
         if ($interest == 'all') {
             //get all user_id
             $getUserByInterest = $getAllUser;
+            if ($getUserByInterest) {
+                $i = 0;
+                while ($i < count($getUserByInterest)) {
+                    $userByInterest[] = $getUserByInterest[$i]->id;
+                    $i++;
+                }
+            }
         } else {
             //get interest id
             $option = array(
@@ -144,10 +166,12 @@ class friend extends CI_Controller {
                 'columnSelect' => 'user_id'
             );
             $getUserByInterest = $this->interested_inModel->getInterestedIn($option);
-            if (!isset($getUserByInterest)) {
-                //tidak ada user_id yang memenuhi
-            } else {
-                //ada user_id yang memenuhi
+            if ($getUserByInterest) {
+                $i = 0;
+                while ($i < count($getUserByInterest)) {
+                    $userByInterest[] = $getUserByInterest[$i]->user_id;
+                    $i++;
+                }
             }
         }
         
@@ -183,91 +207,82 @@ class friend extends CI_Controller {
                 $getUserByNameAndYear = $this->userModel->getUsers($option);
             }
         }
+        if ($getUserByNameAndYear) {
+            $i = 0;
+            while ($i < count($getUserByNameAndYear)) {
+                $userByNameAndYear[] = $getUserByNameAndYear[$i]->id;
+                $i++;
+            }
+        }
         
+        $temp = array();
+        $results = array();
+        
+        if (count($userByInterest) > 0) {
+            //cek userByMajor
+            if (count($userByMajor) > 0) {
+                //cocokkin userByInterest sama userByMajor
+                foreach ($userByInterest as $uInterest) {
+                    $i = 0;
+                    $found = FALSE;
+                    while (!$found && $i<count($userByMajor)) {
+                        if ($uInterest == $userByMajor[$i]) {
+                            $temp[] = $uInterest;
+                            $found = TRUE;
+                        }
+                        $i++;
+                    }
+                }
+                
+                if (count($temp) > 0) {
+                    if (count($userByNameAndYear) > 0) {
+                        //cocokkin hasil pencocokan dengan userByNameAndYear
+                        foreach ($temp as $t) {
+                            $i = 0;
+                            $found = FALSE;
+                            while (!$found && $i < count($userByNameAndYear)) {
+                                if ($t == $userByNameAndYear[$i]) {
+                                    $results[] = $t;
+                                    $found = TRUE;
+                                }
+                                $i++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        $data['search_results'] = array();
+        
+        if (count($results) > 0) {
+            foreach ($results as $res) {
+                $option = array('id' => $res);
+                $getUser = $this->userModel->getUsers($option);
+                
+                $unit_id = $getUser[0]->last_unit_id;
+                $option = array(
+                    'id' => $unit_id,
+                    'columnSelect' => 'label'
+                );
+                $getUnit = $this->unitModel->getUnits($option);
+                
+                $elmt = array(
+                    'id' => $getUser[0]->id,
+                    'name' => $getUser[0]->name,
+                    'profpict_url' => $getUser[0]->profpict_url,
+                    'graduate_year' => $getUser[0]->graduate_year,
+                    'unit' => $getUnit[0]->label
+                );
+                $data['search_results'][] = $elmt;
+            }
+        }
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
         $data['struktur'] = $this->getStruktur2('Your Profile');
         $data['search_name'] = $search_name;
-        //$data['search_results'] = array($getUserByName, $getUserByYear);
-        
-        /*
-        $data['title'] = 'Profile';
-        $data['main_content'] = 'friend/search_friend_result_view';
-        $data['struktur'] = $this->getStruktur2('Your Profile');
-        $data['search_name'] = $search_name;
-        $data['search_year'] = $search_year;
-        $data['interest'] = $interest;
-        $data['education'] = $major;
-        // get user profile info
-        $user_id = $this->session->userdata('user_id');
-        $name = $this->session->userdata('name');
-        $email = $this->session->userdata('email');
-        $image = 'Ini image';
-        $calendar= 'Ini calendar';
-        $kelulusan= 'SMA St. Ursula';
-        $tahun_kelulusan= '2010';
-        $pendidikan = array (
-            array (
-                'degree' => 'Bachelor',
-                'where' => 'University of Southern California',
-                'major' => 'Chemical Biology',
-                'minor' => 'none',
-                'current' => 1
-            )
-        );
-        $interest = array (
-            'movies',
-            'medicines',
-            'fashion'
-        );
-        $working_experience = array(
-            array (
-                'company' => 'PT Sumarno Pabotingi',
-                'year' => 2011,
-                'position' => 'programmer',
-                'address' => 'Jln Cikini V no 12, Jakarta Pusat',
-                'telephone' => '02100292',
-                'fax' => '021929292',
-                'work_hp' => '082222',
-                'work_email' => 'danang@yaaahoo.com',
-                'is_current_work' => 1
-            )
-        );
-        
-        $data['search_result'] = array(
-            array (
-                'user_data' => array (
-                        'user_id'=>$user_id,
-                        'name' => $name,
-                        'email' => $email,
-                        'image' => $image,
-                        'calendar' => $calendar,
-                        'kelulusan' => $kelulusan,
-                        'tahun_kelulusan' => $tahun_kelulusan,
-                        'pendidikan' => $pendidikan,
-                        'interest' => $interest,
-                        'working_experience' => $working_experience
-                    )
-                ),
-            array (
-                'user_data' => array (
-                        'user_id'=>$user_id,
-                        'name' => $name,
-                        'email' => $email,
-                        'image' => $image,
-                        'calendar' => $calendar,
-                        'kelulusan' => $kelulusan,
-                        'tahun_kelulusan' => $tahun_kelulusan,
-                        'pendidikan' => $pendidikan,
-                        'interest' => $interest,
-                        'working_experience' => $working_experience
-                    )
-                )
-        );*/
-
         
         //$this->load->view('includes/template',$data);
-        
     }
     
     function getStruktur() {
