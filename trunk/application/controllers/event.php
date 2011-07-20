@@ -162,6 +162,7 @@ class Event extends CI_Controller {
                 }
             } else {
                 //Do nothing
+                $attending = 0;
             }
 
             $rsvp;
