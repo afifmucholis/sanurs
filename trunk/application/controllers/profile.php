@@ -860,8 +860,7 @@ class profile extends CI_Controller {
             echo "update failed";
         }
         
-        // redirect ke editVisibility
-        //redirect('profile', 'refresh');
+        redirect('profile/editProfile', 'refresh');
     }
     
     /**
