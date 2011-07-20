@@ -24,6 +24,7 @@ class Notification extends CI_Model {
     //put your code here
     var $table = 'notification';
     var $id = 'id';
+    var $userid_to = 'userid_to';
     var $message = 'message';
     var $date = 'date';
     var $status_read = 'status_read';
@@ -48,6 +49,7 @@ class Notification extends CI_Model {
      * 
      * option: values
      * --------------
+     * userid_to      required
      * message        required
      * date           required. Default mysqlnya now 
      * status_read    required. Defaulnya 0 dari model ini
@@ -62,12 +64,12 @@ class Notification extends CI_Model {
         $options = $this->_default(array($this->status_read => 0), $options);
 
         //Cek yang required :
-        if (!$this->_required(array($this->message), $options)) {
+        if (!$this->_required(array($this->userid_to, $this->message), $options)) {
             return false;
         }
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->message, $this->date, $this->status_read, $this->link);
+        $fieldArray = array($this->userid_to, $this->message, $this->date, $this->status_read, $this->link);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -87,6 +89,7 @@ class Notification extends CI_Model {
      * option: values
      * --------------
      * id               field id buat kriteria where
+     * userid_to
      * message        
      * date           
      * status_read    
@@ -101,7 +104,7 @@ class Notification extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->message, $this->date, $this->status_read, $this->link);
+        $fieldArray = array($this->userid_to,$this->message, $this->date, $this->status_read, $this->link);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -122,6 +125,7 @@ class Notification extends CI_Model {
      * option : values
      * ---------------
      * id               field kriteria id untuk klause where
+     * userid_to
      * message        
      * date           
      * status_read    
@@ -156,6 +160,7 @@ class Notification extends CI_Model {
 
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id,
+            $this->userid_to,
             $this->message,
             $this->date,
             $this->status_read,
