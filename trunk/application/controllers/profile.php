@@ -854,12 +854,7 @@ class profile extends CI_Controller {
         
         //update visibility table
         $getReturnUpdate = $this->visibilityModel->updateVisibilityStatus($options);
-        if ($getReturnUpdate) {
-            echo "update succeed";
-        } else {
-            echo "update failed";
-        }
-        
+                
         redirect('profile/editProfile', 'refresh');
     }
     
