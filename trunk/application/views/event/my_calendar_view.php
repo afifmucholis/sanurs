@@ -37,7 +37,14 @@
                 right: 'month,basicWeek,basicDay'
             },
 
-            events: "<?php echo site_url(); ?>/calendar",
+            events: {
+                url : "<?php echo site_url(); ?>/calendar",
+                type : "POST",
+                data : {
+                    sortby : '<?php echo $sortby ?>' 
+                    //sortby : 'all_events' 
+                }
+            },
             
             eventClick: function(calEvent, jsEvent) {
                 return false;
