@@ -8,7 +8,7 @@
         echo ' result';
     }
     ?></h3>
-<p>Category : </p>
+Category : <br/>
 <?php
 if ($search_name != "") {
     echo 'name : '.$search_name;
