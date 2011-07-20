@@ -55,6 +55,7 @@
                     $found = TRUE;
                     $status = TRUE;
                 }
+                $i++;
             }
         }
         echo form_checkbox('interest[]', $interest->id, $status);
