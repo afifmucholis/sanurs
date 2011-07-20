@@ -1,5 +1,5 @@
 <div class="left-menu" style="width: 500px">
-    <div id="img">
+    <div id="profpic">
         <a href="#" class="popup_link">Click to change Picture</a>
         <?php
         //echo anchor('#','Click to change Picture','class="popup_link"');
@@ -8,8 +8,6 @@
             'src' => $content_edit['img_url'],
             'class' => 'upload_images',
             'id' => 'upload_image',
-            'width' => '150',
-            'height' => '150',
             'alt' => $content_edit['name'],
             'title' => $content_edit['name'],
             'rel' => 'lightbox',
