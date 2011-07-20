@@ -11,8 +11,8 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-#profpic {
+#profpic img{
     max-height: 300px;
-    max-width: 300px;       
+    max-width: 300px;
 }
 
