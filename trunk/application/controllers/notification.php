@@ -28,6 +28,22 @@ class notification extends CI_Controller {
         
         $this->load->view('includes/template',$data);
     }
+    
+    function getStruktur($name) {
+        $struktur = array (
+            array (
+                'islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>$name
+            )
+        );
+        return $struktur;
+    }
+    
 }
 
 ?>
