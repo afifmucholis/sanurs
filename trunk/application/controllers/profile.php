@@ -104,6 +104,25 @@ class profile extends CI_Controller {
     function edit_basic_info() {
         $data['struktur'] = $this->getStruktur2('Basic Info');
         $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
+        
+        //list area of interest
+        $this->load->model('interest', 'interestModel');
+        $option = array(
+            'sortBy' => 'interest'
+        );
+        $getInterestList = $this->interestModel->getInterests($option);
+        $data['interest_list'] = $getInterestList;
+        //$interestList = array();
+        
+/*        if ($getInterestList) {
+            $i = i;
+            while ($i < count($getInterestList)) {
+                $interestList[$getInterestList[$i]->interest] = $getInterestList[$i]->interest;
+                $i++;
+            }
+        }
+        $data['interestList'] = $interestList;*/
+        
         // load basic user info
         $this->load->model('user','userModel');
         $options = array('id' => $this->session->userdata('user_id'));
