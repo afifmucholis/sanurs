@@ -28,7 +28,7 @@
     <?php echo validation_errors(); //menampilkan pesan error form ?>
     <?php
         echo form_open('event/submit_event');
-        echo form_hidden('url_img', base_url().'res/NoPhotoAvailable.jpg');
+        echo form_hidden('url_img', base_url().'res/default.jpg');
         echo form_label('Title : ','title')."<br/>";
         echo form_input('title', set_value('title'), 'id="title"')."<br/>";
         echo form_label('When : ','when')."<br/>"; ?>

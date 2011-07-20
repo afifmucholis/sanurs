@@ -33,7 +33,13 @@
     <div id="col_right">
         <div id="link">
             <?php echo anchor('friend', 'Find a friend') . "&nbsp;"; ?>
-            <?php echo anchor('notification', 'Notification'); ?>
+            <?php 
+                  if ($new_notification==0) { 
+                    echo anchor('notification', 'Notification'); 
+                  } else {
+                    echo anchor('notification', 'Notification ('.$new_notification.')');
+                  }
+            ?>
         </div>
         <div id="info">
             <?php $this->load->view('profile/user_info', $user_data); ?>

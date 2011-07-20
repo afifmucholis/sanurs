@@ -7,11 +7,14 @@
 </div>
 
 <script type="text/javascript">
+    <?php
+        $view = explode('/',$view);
+    ?>
     $(document).ready(function(){
         $('a.ajax-links').click(function(){
             return click_message($(this).attr("href"));
         });
-        click_message('new_message_view');
+        click_message('<?php echo $view[count($view)-1];?>');
     });
 
     function click_message(val) {

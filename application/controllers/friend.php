@@ -73,17 +73,20 @@ class friend extends CI_Controller {
         $user_id = $this->input->post('user_id');
         $message = $this->input->post('message');
         $user_requester = $this->session->userdata('user_id');
+        $name_requester = $this->session->userdata('name');
         // load model friend_request
         $this->load->model('friend_request','friendModel');
         $options = array('userid_requester'=>$user_requester,'userid_requested'=>$user_id,'message'=>$message);
         $addGan = $this->friendModel->addFriendRequest($options);
         // load model notification
-//        $this->load->model('notification','notifModel');
-//        $name_requester = $this->session->userdata('name');
-//        $message = '';
-//        $options = array('message','link');
+        $this->load->model('notification_model','notifModel');
+        // add notifi ada yg nge request friend
+        $notify = $name_requester." wants to be your friend.";
+        $link = 'friend/friend_request';
+        $options = array('userid_to'=>$user_id,'message'=>$notify,'link'=>$link);
+        $addNotify = $this->notifModel->addNotification($options);
         
-        if (is_bool($addGan)) {
+        if (is_bool($addGan) || is_bool($addNotify)) {
             echo 0;
         } else {
             echo 1;
@@ -155,7 +158,10 @@ class friend extends CI_Controller {
         $this->load->model('friend_relationship','friend_relationshipModel');
         // load model user
         $this->load->model('user','userModel');
+        // load model notification
+        $this->load->model('notification_model','notificationModel');
         $user_id = $this->session->userdata('user_id');
+        $user_name = $this->session->userdata('name');
         $id_request = $this->input->post('id');
         $confirm = $this->input->post('type');
         
@@ -178,11 +184,17 @@ class friend extends CI_Controller {
                     $success = 0;
                 } else {
                     // add notifi accepted ke user yang nge request
+                    $notify = $user_name." has accepted your friend request.";
+                    $options = array('userid_to'=>$user_requester,'message'=>$notify);
+                    $addNotify = $this->notificationModel->addNotification($options);
                     $success = 1;
                     $message = "You have accepted ".$getUser[0]->name."'s friend request.";
                 }
             } else {
                 // add notifi rejected ke user yang nge request
+                $notify = $user_name." has rejected your friend request.";
+                $options = array('userid_to'=>$user_requester,'message'=>$notify);
+                $addNotify = $this->notificationModel->addNotification($options);
                 $success = 1;
                 $message = "You have rejected ".$getUser[0]->name."'s friend request.";
             }
