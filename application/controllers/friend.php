@@ -110,13 +110,13 @@ class friend extends CI_Controller {
                 'columnSelect' => 'user_id'
             );
             $getUserByMajor = $this->educationModel->getEducations($option);
-            if (!isset($getUserByMajor)) {
-                //tidak ada user_id yang memenuhi
-            } else {
-                //ada user_id yang memenuhi
-            }
         }
-        
+        if (!isset($getUserByMajor)) {
+            //tidak ada user_id yang memenuhi
+        } else {
+            //ada user_id yang memenuhi
+        }
+
         //cari berdasarkan interest
         if ($interest == 'all') {
             //get all user_id
@@ -146,15 +146,41 @@ class friend extends CI_Controller {
         //cari berdasarkan nama dan tahun
         if ($search_name == "") {
             //kolom nama gak diisi, langsung cari berdasarkan tahun kalo ada
+            if ($search_year == "") {
+                //get semua user
+                $getUserByNameAndYear = $getAllUser;
+            } else {
+                //cari berdasarkan tahun saja
+                $option = array(
+                    'graduate_year' => $search_year,
+                    'columnSelect' => 'id'
+                );
+                $getUserByNameAndYear = $this->userModel->getUsers($option);
+            }
         } else {
-            
+            if ($search_year == "") {
+                //cari berdasarkan nama saja
+                $option = array(
+                    'name' => $search_name,
+                    'columnSelect' => 'id'
+                );
+                $getUserByNameAndYear = $this->userModel->getUsers($option);
+            } else {
+                //cari berdasarkan nama dan tahun
+                $option = array(
+                    'name' => $search_name,
+                    'graduate_year' => $search_year,                    
+                    'columnSelect' => 'id'
+                );
+                $getUserByNameAndYear = $this->userModel->getUsers($option);
+            }
         }
         
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
         $data['struktur'] = $this->getStruktur2('Your Profile');
         $data['search_name'] = $search_name;
-        $data['search_results'] = array($getUserByName, $getUserByYear);
+        //$data['search_results'] = array($getUserByName, $getUserByYear);
         
         /*
         $data['title'] = 'Profile';
