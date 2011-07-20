@@ -18,6 +18,7 @@ class profile extends CI_Controller {
         $user_id = $this->session->userdata('user_id');
         
         $data['user_data'] = $this->setUserData($user_id);
+        
         // get jumlah friend request
         $this->load->model('friend_request','friend_requestModel');
         $options = array('userid_requested'=>$user_id);
@@ -36,6 +37,9 @@ class profile extends CI_Controller {
         } else {
             $data['new_notification'] = count($getNotification);
         }
+        
+        //Get friend list :
+        $data['friend_list'] = $this->getFriendList($user_id);
         
         $this->load->view('includes/template',$data);
     }
@@ -84,6 +88,10 @@ class profile extends CI_Controller {
                 $data['add_as_friend'] = 2;
             }
         }
+        
+        //Get friend list :
+        $data['friend_list'] = $this->getFriendList($user_id);
+        
         $this->load->view('includes/template',$data);
         
     }
@@ -1113,6 +1121,63 @@ class profile extends CI_Controller {
             )
         );
         return $struktur;
+    }
+    
+    function getFriendList($userid){
+        //Get friend list dari $userid :
+        $this->load->model('friend_relationship', 'friendRelationshipModel');
+        $option1 = array('userid_1' => $userid);
+        $option2 = array('userid_2' => $userid);
+
+        $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);
+        $friends = array();
+        if (!(is_bool($getFriend1))) {
+            $numfriends1 = count($getFriend1);
+        } else {
+            $numfriends1 = 0;
+        }
+
+        //Get detail dari friend :
+        $this->load->model('user', 'userModel');
+
+        if (!is_bool($getFriend1)) {
+            for ($i = 0; $i < $numfriends1; ++$i) {
+                $idfriend = $getFriend1[$i]->userid_2;
+                $option = array('id' => $idfriend);
+                $getUser = $this->userModel->getUsers($option);
+
+                $friend = array();
+                $friend['id'] = $getUser[0]->id;
+                $friend['name'] = $getUser[0]->name;
+                $friend['nickname'] = $getUser[0]->nickname;
+                $friend['profpict_url'] = $getUser[0]->profpict_url;
+
+                $friends[$i] = $friend;
+            }
+        }
+
+        $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+        $numfriends2 = count($getFriend2);
+        $numAllfriends = $numfriends1 + $numfriends2;
+
+        if (!is_bool($getFriend2)) {
+            for ($i = $numfriends1; $i < $numAllfriends; ++$i) {
+                $idfriend = $getFriend2[$i - $numfriends1]->userid_1;
+
+                $option = array('id' => $idfriend);
+                $getUser = $this->userModel->getUsers($option);
+
+                $friend = array();
+                $friend['id'] = $getUser[0]->id;
+                $friend['name'] = $getUser[0]->name;
+                $friend['nickname'] = $getUser[0]->nickname;
+                $friend['profpict_url'] = $getUser[0]->profpict_url;
+
+                $friends[$i] = $friend;
+            }
+        }
+        
+        return $friends;
     }
     
 }
