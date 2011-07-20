@@ -11,18 +11,7 @@
                     echo img($image_properties);
               ?>
         </div>
-        <div id="news">
-            Levana is hosting “A Night of Neglect” this Saturday, 8 October 2011. Check it out
-        </div>
-    </div>
-</div>
-
-<div class="right-menu">
-    <div id="col_right">
-        <div id="info">
-            <?php $this->load->view('profile/user_info', $user_data); ?>
-        </div>
-        <br/>
+        
         <?php if ($add_as_friend==1) { ?>
             <div id="add_as_friend">
                 <a href="#" class="popup_link">Add as friend</a>
@@ -36,6 +25,42 @@
                 <a href="#" onclick="javascript:unfriend('<?php echo $user_data['user_id'];?>')";>Block from friend</a>
             </div>
         <?php } ?>
+        </br></br>
+        <div id="info">
+            Info :
+            <?php $this->load->view('profile/user_info', $user_data); ?>
+        </div>
+        </br></br></br></br>
+        
+        <div id="news">
+            Levana is hosting “A Night of Neglect” this Saturday, 8 October 2011. Check it out
+        </div>
+    </div>
+</div>
+
+<div class="right-menu">
+    <div id="col_right">
+        <div id="friend_list_sidebar">
+            <h1>Ini buat friend list sidebar</h1>
+            <?php if (count($friend_list)==0) {
+                echo "You don't have any friends.";
+            } else {
+                foreach ($friend_list as $friend) { ?>
+                    <div id = "friend_wrapper">
+                        <div id="profpic">
+                             <?php echo "<img src =' " . base_url() . $friend['profpict_url'] . "'/>"; ?>
+                        </div>
+                        <div id="name">
+                             <?php echo $friend['name'] ; ?>
+                        </div>
+                        <div id="nickname">
+                            <?php echo $friend['nickname'] ; ?>
+                        </div>
+                    </div>
+                <?php }
+            } ?>
+        </div>
+    </div>
     </div>
 </div>
 <div id="clearboth">

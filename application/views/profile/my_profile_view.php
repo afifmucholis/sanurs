@@ -1,13 +1,13 @@
 <div class="left-menu">
     <div id="col_left">
         <div id="link">
-            <?php 
+            <?php
             echo anchor('profile/editProfile', ' Edit your profile') . "&nbsp&nbsp&nbsp";
             echo anchor('friend', 'Find a friend') . "&nbsp&nbsp&nbsp";
             if ($new_notification == 0) {
                 echo anchor('notification', 'Notification') . "&nbsp&nbsp&nbsp";
             } else {
-                echo anchor('notification', 'Notification (' . $new_notification . ')'."&nbsp&nbsp&nbsp");
+                echo anchor('notification', 'Notification (' . $new_notification . ')' . "&nbsp&nbsp&nbsp");
             }
             if ($request_friend == 0)
                 echo anchor('friend/friend_request', 'Friend Request') . "&nbsp&nbsp&nbsp";
@@ -27,7 +27,7 @@
             echo img($image_properties);
             ?>
         </div>
-        
+
         <div id="info">
             Info :
             <?php $this->load->view('profile/user_info', $user_data); ?>
@@ -46,6 +46,25 @@
     <div id="col_right">
         <div id="friend_list_sidebar">
             <h1>Ini buat friend list sidebar</h1>
+            <?php
+            if (count($friend_list) == 0) {
+                echo "You don't have any friends.";
+            } else {
+                foreach ($friend_list as $friend) {
+                    ?>
+                    <div id = "friend_wrapper">
+                        <div id="profpic">
+                            <?php echo "<img src =' " . base_url() . $friend['profpict_url'] . "'/>"; ?>
+                        </div>
+                        <div id="name">
+                            <?php echo $friend['name']; ?>
+                        </div>
+                        <div id="nickname">
+                    <?php echo $friend['nickname']; ?>
+                        </div>
+                    </div>
+    <?php }
+} ?>
         </div>
     </div>
 </div>
