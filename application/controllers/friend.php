@@ -282,7 +282,7 @@ class friend extends CI_Controller {
         $data['struktur'] = $this->getStruktur2('Your Profile');
         $data['search_name'] = $search_name;
         
-        //$this->load->view('includes/template',$data);
+        $this->load->view('includes/template',$data);
     }
     
     function getStruktur() {
