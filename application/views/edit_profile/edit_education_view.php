@@ -33,6 +33,7 @@ echo form_open('profile/submitPendidikan');
             $data['degree'] = 'your current';
             $data['degree_id'] = 0;
             $data['edu'] = $current_education;
+            $data['major_options'] = $major_options;
             $this->load->view('edit_profile/education_form', $data);
             ?>
         </div>
@@ -55,6 +56,7 @@ echo form_open('profile/submitPendidikan');
                 $data['degree'] = 'High School';
                 $data['degree_id'] = 1;
                 $data['edu'] = $sma_edu;
+                $data['major_options'] = $major_options;
                 $this->load->view('edit_profile/education_form', $data);
                 ?>
             </div>
@@ -64,6 +66,7 @@ echo form_open('profile/submitPendidikan');
             $data['degree'] = 'Sekolah Kejuruan(D3)';
             $data['degree_id'] = 2;
             $data['edu'] = $d3_edu;
+            $data['major_options'] = $major_options;
             $this->load->view('edit_profile/education_form', $data);
             ?>
         </div>
@@ -72,6 +75,7 @@ echo form_open('profile/submitPendidikan');
             $data['degree'] = 'Bachelor Degree(S1)';
             $data['degree_id'] = 3;
             $data['edu'] = $s1_edu;
+            $data['major_options'] = $major_options;
             $this->load->view('edit_profile/education_form', $data);
             ?>
         </div>
@@ -80,6 +84,7 @@ echo form_open('profile/submitPendidikan');
             $data['degree'] = 'Masters Degree(S2)';
             $data['degree_id'] = 4;
             $data['edu'] = $s2_edu;
+            $data['major_options'] = $major_options;
             $this->load->view('edit_profile/education_form', $data);
             ?>
         </div>
@@ -88,6 +93,7 @@ echo form_open('profile/submitPendidikan');
             $data['degree'] = 'Doctorate Degree(S3)';
             $data['degree_id'] = 5;
             $data['edu'] = $s3_edu;
+            $data['major_options'] = $major_options;
             $this->load->view('edit_profile/education_form', $data);
             ?>
         </div>

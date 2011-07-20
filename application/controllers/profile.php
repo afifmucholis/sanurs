@@ -41,12 +41,30 @@ class profile extends CI_Controller {
         $data['main_content'] = 'profile/show_profile_view';
         $data['struktur'] = $this->getStruktur($data['user_data']['name']);
         // cek apakah bisa add friend
-        if ($this->session->userdata('name')==null) {   // belum sign in
-            $data['add_as_friend'] = 0;
-        } else if (false) {     // cek apakah sudah friend atau belum
+        $data['add_as_friend'] = 1;
+        if ($this->session->userdata('user_id')==null) {   // belum sign in
             $data['add_as_friend'] = 0;
         } else {
-            $data['add_as_friend'] = 1;
+            $user_view = $this->session->userdata('user_id');
+            // load model friend request dan friend relationship
+            $this->load->model('friend_request', 'friend_requestModel');
+            $this->load->model('friend_relationship', 'friend_relationshipModel');
+            
+            $options = array('userid_requester'=>$user_view, 'userid_requested'=>$user_id);
+            $getFriendRequest = $this->friend_requestModel->getFriendRelationships($options);
+            
+            $options = array('userid_1'=>$user_view, 'userid_2'=>$user_id);
+            $getFriendRelationship = $this->friend_relationshipModel->getFriendRelationships($options);
+            if (is_bool($getFriendRelationship)) {
+                $options = array('userid_2'=>$user_view, 'userid_1'=>$user_id);
+                $getFriendRelationship = $this->friend_relationshipModel->getFriendRelationships($options);
+            }
+            
+            if (!is_bool($getFriendRelationship) && count($getFriendRelationship)==1) {     // cek apakah sudah friend atau belum
+                $data['add_as_friend'] = 0;
+            } else if (!is_bool($getFriendRequest) && count($getFriendRequest)==1) { // cek apakah masih requested
+                $data['add_as_friend'] = 2;
+            }
         }
         $this->load->view('includes/template',$data);
         
@@ -342,6 +360,17 @@ class profile extends CI_Controller {
                 '5' => 'Doctorate Degree(S3)'
             );
         }
+        // load model major
+        $this->load->model('major', 'majorModel');
+        $major = $this->majorModel->getMajors();
+        $major_options = array(
+            '-' => '-'
+        );
+        $c = 1;
+        foreach($major as $m) :
+            $major_options[$m->id] = $m->major;
+        endforeach;
+        $data['major_options'] = $major_options;
         
         $data['struktur'] = $this->getStruktur2('Education');
         $data['content_edit_view'] = 'edit_profile/edit_education_view';
@@ -360,8 +389,8 @@ class profile extends CI_Controller {
         $array->school='';
         $array->graduate_year='';
         $array->level_id='';
-        $array->major='';
-        $array->minor='';
+        $array->major_id='';
+        $array->minor_id='';
         return $array;
     }
     
@@ -396,7 +425,7 @@ class profile extends CI_Controller {
                     // input tidak benar
                 } else {
                     // update
-                    $options = array('id'=>$edu_id,'user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                    $options = array('id'=>$edu_id,'user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
                     $cekUpdateCurrentEdu = $this->eduModel->updateEducation($options);
                     if (!is_bool($cekUpdateCurrentEdu))
                         echo 'success update current education<br/>';
@@ -407,7 +436,7 @@ class profile extends CI_Controller {
                     // input tidak benar
                 } else {
                     // insert
-                    $options = array('user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                    $options = array('user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
                     $cekInsertCurrentEdu = $this->eduModel->addEducation($options);
                     if (!is_bool($cekInsertCurrentEdu))
                         echo 'success insert current education<br/>';
@@ -429,9 +458,10 @@ class profile extends CI_Controller {
         $max_level=0;
         $options = array('user_id'=>$user_id);
         $getEducation = $this->eduModel->getEducations($options);
+        $year = date('Y');
         if (!is_bool($getEducation)) {
             foreach($getEducation as $edu) :
-               if ($edu->level_id>$max_level)
+               if ($edu->level_id>$max_level && $edu->graduate_year<=$year)
                   $max_level = $edu->level_id;
             endforeach;
         }
@@ -462,7 +492,7 @@ class profile extends CI_Controller {
                 } else {
                     if ($edu_id!='') {
                         // update
-                        $options = array('id'=>$edu_id,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                        $options = array('id'=>$edu_id,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
                         $cekUpdateEdu = $this->eduModel->updateEducation($options);
                         if (!is_bool($cekUpdateEdu))
                             echo $i.'success update education<br/>';
@@ -471,7 +501,7 @@ class profile extends CI_Controller {
                         if ($i==2 && $i!=$highest_edu) {
                             
                         } else {
-                            $options = array('user_id'=>$user_id,'level_id'=>$i,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                            $options = array('user_id'=>$user_id,'level_id'=>$i,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
                             $cekInsertEdu = $this->eduModel->addEducation($options);
                             if (!is_bool($cekInsertEdu))
                                 echo $i.'success insert education<br/>';
@@ -488,7 +518,7 @@ class profile extends CI_Controller {
                 $major = $this->input->post('major_2');
                 $minor = $this->input->post('minor_2');
                 $year = $this->input->post('year_2');                
-                $options = array('user_id'=>$user_id,'level_id'=>2,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                $options = array('user_id'=>$user_id,'level_id'=>2,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
                 $cekInsertEdu = $this->eduModel->addEducation($options);
                 if (!is_bool($cekInsertEdu))
                     echo 'success insert education d3<br/>';
@@ -505,7 +535,7 @@ class profile extends CI_Controller {
                         // input tidak benar
                     } else {
                         // update
-                        $options = array('id'=>$edu_id,'school'=>$college,'major'=>$major,'minor'=>$minor,'graduate_year'=>$year);
+                        $options = array('id'=>$edu_id,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
                         $cekUpdateEdu = $this->eduModel->updateEducation($options);
                         if (!is_bool($cekUpdateEdu))
                             echo $i.'success update education<br/>';
@@ -891,17 +921,33 @@ class profile extends CI_Controller {
         if ($getPendidikan) {
             // load model level
             $this->load->model('level', 'levelModel');
+            // load model major
+            $this->load->model('major', 'majorModel');
             $count = 0;
             $year = date('Y');
             foreach ($getPendidikan as $edu) :
                 if ($edu->graduate_year>$year) $current=1; else $current=0;
                 $options = array('id'=>$edu->level_id);
                 $degree = $this->levelModel->getLevels($options);
+                $options = array('id'=>$edu->major_id);
+                $major = $this->majorModel->getMajors($options);
+                if (is_bool($major)) {
+                    $major = 'none';
+                } else {
+                    $major = $major[0]->major;
+                }
+                $options = array('id'=>$edu->minor_id);
+                $minor = $this->majorModel->getMajors($options);
+                if (is_bool($minor)) {
+                    $minor = 'none';
+                } else {
+                    $minor = $minor[0]->major;
+                }
                 $pendidikan[$count] = array (
                     'degree' => $degree[0]->label,
                     'where' => $edu->school,
-                    'major' => $edu->major,
-                    'minor' => $edu->minor,
+                    'major' => $major,
+                    'minor' => $minor,
                     'current' => $current
                 );
                 $count++;

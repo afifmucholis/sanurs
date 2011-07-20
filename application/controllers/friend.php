@@ -69,8 +69,16 @@ class friend extends CI_Controller {
     function add() {
         $user_id = $this->input->post('user_id');
         $message = $this->input->post('message');
-        $user_requested = $this->session->userdata('user_id');
-        echo 1;
+        $user_requester = $this->session->userdata('user_id');
+        // load model friend_request
+        $this->load->model('friend_request','friendModel');
+        $options = array('userid_requester'=>$user_requester,'userid_requested'=>$user_id,'message'=>$message);
+        $addGan = $this->friendModel->addFriendRequest($options);
+        if (is_bool($addGan)) {
+            echo 0;
+        } else {
+            echo 1;
+        }
     }
     
     function search() {

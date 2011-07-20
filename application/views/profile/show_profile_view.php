@@ -24,29 +24,14 @@
         <div id="info">
             <?php $this->load->view('profile/user_info', $user_data); ?>
         </div>
-        <br/><br/>
-<!--        <div id="send_email">
-            Send Message to <?php //echo $user_data['name']; ?><br/>
-            <?php
-//            echo form_open('about_us/contact');
-//            echo form_label('Email : ', 'email') . "   ";
-//            echo form_input('Email', '', 'id="email"') . "<br/>";
-//            echo form_label('Subject : ', 'subject') . "  ";
-//            echo form_input('Subject', '', 'id="subject"') . "<br/>";
-//            $data = array(
-//                'name' => 'isi',
-//                'id' => 'isi',
-//                'rows' => '10',
-//                'cols' => '30'
-//            );
-//            echo form_textarea($data) . "<br/>";
-//            echo form_submit('submit', 'Submit', 'id="submit"');
-//            echo form_close();
-            ?>
-        </div>-->
-        <?php if ($add_as_friend) { ?>
+        <br/>
+        <?php if ($add_as_friend==1) { ?>
             <div id="add_as_friend">
                 <a href="#" class="popup_link">Add as friend</a>
+            </div>
+        <?php } else if ($add_as_friend==2) { ?>
+            <div id="add_as_friend">
+                Request has been sent.
             </div>
         <?php } ?>
     </div>
