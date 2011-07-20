@@ -1,4 +1,4 @@
-<div class="left-menu">
+<div class="left-menu" style="width: 500px">
     <div id="img">
         <a href="#" class="popup_link">Click to change Picture</a>
         <?php
@@ -24,7 +24,7 @@
 
     <?php
     echo form_open('profile/submitProfile');
-    echo form_hidden('url_img', base_url().$content_edit['img_url']);
+    echo form_hidden('url_img', base_url() . $content_edit['img_url']);
     echo br(1);
     echo form_label('Nick Name: ');
     echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"');
@@ -44,7 +44,14 @@
     echo br(1);
     echo form_label('Handphone:');
     echo form_input('handphone', $content_edit['handphone'], 'id="handphone"');
+    echo br(2);
+    echo 'Select area of interest (you can choose more than one) : ';
     echo br(1);
+    foreach ($interest_list as $interest) {
+        echo form_checkbox('data', $interest->id);
+        echo form_label($interest->interest);
+        echo br(1);
+    }
     echo form_submit('save', 'Save Changes');
     echo form_close();
     ?>
