@@ -27,6 +27,15 @@ class profile extends CI_Controller {
         } else {
             $data['request_friend'] = count($getRequest);
         }
+        // get jumlah new notification
+        $this->load->model('notification_model', 'notificationModel');
+        $options=array('userid_to'=>$user_id, 'status_read' => 0);
+        $getNotification = $this->notificationModel->getNotifications($options);
+        if (is_bool($getNotification)) {
+            $data['new_notification'] = 0;
+        } else {
+            $data['new_notification'] = count($getNotification);
+        }
         
         $this->load->view('includes/template',$data);
     }
@@ -136,7 +145,7 @@ class profile extends CI_Controller {
             $options = array('id' => $getReturn[0]->gender_id);
             $genderLabel = $this->genderModel->getGenders($options);
             if ($getReturn[0]->profpict_url=="")
-                $img_url='res/NoPhotoAvailable.jpg';
+                $img_url='res/default.jpg';
             else
                 $img_url=$getReturn[0]->profpict_url;
             $data['content_edit'] = array(

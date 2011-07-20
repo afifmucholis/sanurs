@@ -369,7 +369,7 @@ class Event extends CI_Controller {
             if (is_bool($host_event_id) || is_bool($event_id)) { // error
                 echo 'error on database';
             } else {
-                if ($image_url != 'res/NoPhotoAvailable.jpg') {
+                if ($image_url != 'res/default.jpg') {
                     $new_imgurl = 'res/event/event_' . $event_id . '.' . $ext[count($ext) - 1];
                     if (rename('./' . $image_url, './' . $new_imgurl)) {
                         // update new image url yang telah direname

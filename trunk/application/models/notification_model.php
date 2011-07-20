@@ -19,7 +19,7 @@
  * @property CI_DB_active_record $db
  * @property CI_DB_forge $dbforge
  */
-class Notification extends CI_Model {
+class Notification_Model extends CI_Model {
 
     //put your code here
     var $table = 'notification';
@@ -40,7 +40,7 @@ class Notification extends CI_Model {
     /**
      * Konstruktor
      */
-    function Notification() {
+    function Notification_Model() {
         parent::__construct();
     }
 

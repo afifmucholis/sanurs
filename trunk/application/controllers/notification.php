@@ -26,17 +26,23 @@ class notification extends CI_Controller {
         $data['main_content'] = 'profile/notification_view';
         $data['struktur'] = $this->getStruktur('Your Notification');
         
-        $this->load->view('includes/template',$data);
-    }
-    
-    function getNotification() {
         $user_id = $this->session->userdata('user_id');
-        // load model friend request
-        $this->load->model('friend_request', 'friend_requestModel');
-        // load model friend relationship
-        $this->load->model('friend_relationship', 'friend_relationshipModel');
-        // get friend request
-        
+        // load model notification
+        $this->load->model('notification_model', 'notificationModel');
+        $options=array('userid_to'=>$user_id, 'sortBy' => 'date', 'sortDirection' => 'desc');
+        $getNotification = $this->notificationModel->getNotifications($options);
+        if (is_bool($getNotification))
+            $data['notification'] = array();
+        else {
+            $data['notification'] = $getNotification;
+            // update status read
+            foreach ($getNotification as $notif) :
+                $options = array('id'=>$notif->id,'status_read'=>1);
+                $update = $this->notificationModel->updateNotification($options);
+            endforeach;
+        }
+            
+        $this->load->view('includes/template',$data);
     }
     
     function getStruktur($name) {

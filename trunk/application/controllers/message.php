@@ -24,8 +24,8 @@ class Message extends CI_Controller {
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
         $data['struktur'] = $this->getStruktur('New Message');
+        
         $data['view'] = 'message/new_message_view';
-
         $this->load->view('includes/template', $data);
     }
 
@@ -98,6 +98,7 @@ class Message extends CI_Controller {
         $idto = $this->input->post('idto'); //to ini nama $id user
         $message = $this->input->post('message');
         $sender = $this->session->userdata('user_id');
+        $sender_name = $this->session->userdata('name');
 
 
         $this->load->model('friend_relationship', 'friendRelationshipModel');
@@ -168,6 +169,12 @@ class Message extends CI_Controller {
             if (is_bool($rowId)) {
                 echo "Kirim message gagal";
             } else {
+                // load model notification
+                $this->load->model('notification_model','notifModel');
+                $notify = $sender_name." send you a new message.";
+                $link = 'message/view/inbox_view';
+                $options = array('userid_to'=>$idto,'message'=>$notify,'link'=>$link);
+                $addNotify = $this->notifModel->addNotification($options);
                 echo "Kirim message sukses";
             }
         }
