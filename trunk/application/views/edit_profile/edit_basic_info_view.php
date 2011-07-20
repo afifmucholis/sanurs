@@ -46,7 +46,18 @@
     echo 'Select area of interest (you can choose more than one) : ';
     echo br(1);
     foreach ($interest_list as $interest) {
-        echo form_checkbox('data', $interest->id);
+        $status = FALSE;
+        if ($user_interest) {
+            $i = 0;
+            $found = FALSE;
+            while (!$found && $i<count($user_interest)) {
+                if ($interest->id == $user_interest[$i]->interest_id) {
+                    $found = TRUE;
+                    $status = TRUE;
+                }
+            }
+        }
+        echo form_checkbox('interest[]', $interest->id, $status);
         echo form_label($interest->interest);
         echo br(1);
     }

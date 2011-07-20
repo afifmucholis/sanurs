@@ -116,21 +116,17 @@ class profile extends CI_Controller {
         
         //list area of interest
         $this->load->model('interest', 'interestModel');
-        $option = array(
-            'sortBy' => 'interest'
-        );
+        $option = array('sortBy' => 'interest');
         $getInterestList = $this->interestModel->getInterests($option);
         $data['interest_list'] = $getInterestList;
-        //$interestList = array();
         
-/*        if ($getInterestList) {
-            $i = i;
-            while ($i < count($getInterestList)) {
-                $interestList[$getInterestList[$i]->interest] = $getInterestList[$i]->interest;
-                $i++;
-            }
-        }
-        $data['interestList'] = $interestList;*/
+        $this->load->model('interested_in', 'interestedInModel');
+        $option = array(
+            'user_id' => $this->session->userdata('user_id'),
+            'columnSelect' => 'interest_id'
+        );
+        $getUserInterests = $this->interestedInModel->getInterestedIn($option);
+        $data['user_interest'] = $getUserInterests;
         
         // load basic user info
         $this->load->model('user','userModel');
@@ -179,8 +175,45 @@ class profile extends CI_Controller {
      * @param string post->url_img url_img profpic
      */
     function submitProfile() {
-        $this->load->model('user','userModel');
         $user_id = $this->session->userdata('user_id');
+        
+        /*** update area of interest ***/
+        $myInterests = $this->input->post('interest');
+        $this->load->model('interest_in', 'interestedInModel');
+        if ($myInterests) {
+            //hapus dulu yg di database tapi gak ada di array
+            $itemDel = array();
+            $option = array('user_id' => $user_id);
+            $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
+            if ($getAllMyInterest) {
+                foreach ($getAllMyInterest as $item) {
+                    $i = 0;
+                    $found = FALSE;
+                    while (!$found && $i<count($myInterests)) {
+                        if ($item->interest_id == $myInterests[$i]) {
+                            $found = TRUE;
+                        } else {
+                            $i++;
+                        }
+                    }
+                    if (!$found) {
+                        $itemDel[] = $item->id;
+                    }
+                }
+            }
+            if ($itemDel) {
+                foreach ($itemDel as $del) {
+                    $option = array('id' => $del);
+                    $returnDel = $this->interestedInModel->deleteInterestedIn($option);
+                }
+            }
+            //cocokkin yg di myInterests, kalo ada di database gak usah update, kalo gak ada tambahin
+        } else {
+            //hapus semua yg ada di database interested_in
+        }
+        /*** selesai update area of interest ***/
+        
+/*        $this->load->model('user','userModel');
         $nickname = $this->input->post('nick_name');
         $gender = $this->input->post('gender');
         // get gender
@@ -238,7 +271,7 @@ class profile extends CI_Controller {
         } else {
             // update berhasil
             echo 'success update';
-        }
+        }*/
     }
     
     /**
