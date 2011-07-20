@@ -27,7 +27,7 @@
         <div id="link">
             <?php echo anchor('event/host', 'Host an event') . "&nbsp;&nbsp;&nbsp;"; ?>
             <?php echo anchor('friend', 'Find a friend') . "&nbsp;"; ?>
-            <?php echo anchor('friend', 'Notification'); ?>
+            <?php echo anchor('notification', 'Notification'); ?>
         </div>
         <div id="info">
             <?php $this->load->view('profile/user_info', $user_data); ?>
