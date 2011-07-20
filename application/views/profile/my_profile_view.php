@@ -25,8 +25,9 @@
 <div class="right-menu">
     <div id="col_right">
         <div id="link">
-            <?php echo anchor('event/host', 'Host an event') . "&nbsp;&nbsp;&nbsp;&nbsp;"; ?>
-            <?php echo anchor('friend', 'Find a friend'); ?>
+            <?php echo anchor('event/host', 'Host an event') . "&nbsp;&nbsp;&nbsp;"; ?>
+            <?php echo anchor('friend', 'Find a friend') . "&nbsp;"; ?>
+            <?php echo anchor('friend', 'Notification'); ?>
         </div>
         <div id="info">
             <?php $this->load->view('profile/user_info', $user_data); ?>

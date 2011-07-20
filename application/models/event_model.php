@@ -113,7 +113,7 @@ class Event_Model extends CI_Model {
                 $this->db->set($field, $options[$field]);
             }
         }
-        $this->db->venue($this->id, $options[$this->id]);
+        $this->db->where($this->id, $options[$this->id]);
 
         //Jalankan query :
         $this->db->update($this->table);
