@@ -3,7 +3,6 @@
         <div id="link">
             <?php
             echo anchor('profile/editProfile', ' Edit your profile') . "&nbsp&nbsp&nbsp";
-            echo anchor('friend', 'Find a friend') . "&nbsp&nbsp&nbsp";
             if ($new_notification == 0) {
                 echo anchor('notification', 'Notification') . "&nbsp&nbsp&nbsp";
             } else {

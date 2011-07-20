@@ -57,7 +57,7 @@ class friend extends CI_Controller {
         
         $data['title'] = 'Find a friend';
         $data['main_content'] = 'friend/find_a_friend_view';
-        $data['struktur'] = $this->getStruktur('Find a friend');
+        $data['struktur'] = $this->getStruktur3();
         $this->load->view('includes/template',$data);
     }
     
@@ -420,7 +420,7 @@ class friend extends CI_Controller {
         if (count($results) > 0) {
             foreach ($results as $res) {
                 $option = array('id' => $res);
-                $getUser = $this->userModel->getUsers($option);
+               $getUser = $this->userModel->getUsers($option);
                 
                 $unit_id = $getUser[0]->last_unit_id;
                 $option = array(
@@ -473,22 +473,22 @@ class friend extends CI_Controller {
         $struktur = array (
             array (
                 'islink'=>1,
-                'link'=>'home',
-                'label'=>'Home'
-            ),
-            array (
-                'islink'=>1,
-                'link'=>'profile',
-                'label'=>'Your Profile'
-            ),
-            array (
-                'islink'=>1,
                 'link'=>'friend',
-                'label'=>'Find a friend'
+                'label'=>'Find A Friend'
             ),
+            array(
+                'islink'=>0,
+                'label'=>'Search Result'
+            )
+        );
+        return $struktur;
+    }
+    
+    function getStruktur3() {
+        $struktur = array (
             array (
                 'islink'=>0,
-                'label'=>'Search result'
+                'label'=>'Find A Friend'
             )
         );
         return $struktur;
