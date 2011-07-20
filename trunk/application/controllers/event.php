@@ -301,8 +301,8 @@ class Event extends CI_Controller {
             $options = array(
                 'title' => $title,
                 'description' => $description,
-                'when' => $when,
-                'where' => $where,
+                'start_time' => $when,
+                'venue' => $where,
                 'category_event_id' => $category_event,
                 'image_url' => $image_url
             );
