@@ -11,21 +11,17 @@
 Category : <br/>
 <?php
 if ($search_name != "") {
-    echo 'name : '.$search_name;
+    echo 'name : ' . $search_name;
     echo br(1);
 }
 if ($search_year != "") {
-    echo 'year : '.$search_year;
+    echo 'year : ' . $search_year;
     echo br(1);
 }
-if ($interest != 'all') {
-    echo 'interest : '.$interest;
-    echo br(1);
-}
-if ($major != 'all') {
-    echo 'major : '.$major;
-    echo br(1);
-}
+echo 'interest : ' . $interest;
+echo br(1);
+echo 'major : ' . $major;
+echo br(1);
 echo br(1);
 ?>
 <?php
