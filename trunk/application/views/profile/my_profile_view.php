@@ -44,26 +44,30 @@
 <div class="right-menu">
     <div id="col_right">
         <div id="friend_list_sidebar">
-            <h1>Ini buat friend list sidebar</h1>
+            <a href="">Friends(<?php echo $count_friends?>)</a>
             <?php
-            if (count($friend_list) == 0) {
+            if (count($friend_list_sidebar) == 0) {
                 echo "You don't have any friends.";
             } else {
-                foreach ($friend_list as $friend) {
+                foreach ($friend_list_sidebar as $friend) {
                     ?>
                     <div id = "friend_wrapper">
                         <div id="profpic">
                             <?php echo "<img src =' " . base_url() . $friend['profpict_url'] . "'/>"; ?>
                         </div>
-                        <div id="name">
-                            <?php echo $friend['name']; ?>
-                        </div>
-                        <div id="nickname">
-                    <?php echo $friend['nickname']; ?>
+                        <div id="info_wrapper">
+                            <div id="name">
+                                <a href="profile/user/<?php echo $friend['id'];?>"><?php echo $friend['name']; ?></a>
+                            </div>
+                            <div id="nickname">
+                                <?php echo $friend['nickname']; ?>
+                            </div>
                         </div>
                     </div>
-    <?php }
-} ?>
+                    <div id="clearboth">
+                    </div>
+                <?php }
+            } ?>
         </div>
     </div>
 </div>
