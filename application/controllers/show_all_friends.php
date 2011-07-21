@@ -48,10 +48,10 @@ class show_all_friends extends CI_Controller {
         $data['userid_viewed'] = $user_id;
         //Get friend list :
         $friends_list_result = $this->getAllFriendList($user_id);
-        $total_friends = count($friends_list_result);
+        $total_friends = count($friends_list_result['friends']);
 
         $this->load->library('pagination');
-        $per_page = 1;
+        $per_page = 2;
         $offset = $this->input->post('offsetval');
 
         $friends_pagin_result = $this->getAllFriendListPaginate($per_page, $offset, $friends_list_result);
@@ -62,7 +62,7 @@ class show_all_friends extends CI_Controller {
         $config['total_rows'] = $total_friends;
         $config['uri_segment'] = '2';
         $config['per_page'] = $per_page;
-        $config['cur_page'] = $offset;
+        //$config['cur_page'] = $offset;
 
         $config['first_link'] = 'First';
         $config['first_tag_open'] = '<div  id="num_link">';
@@ -215,7 +215,7 @@ class show_all_friends extends CI_Controller {
             $start_index = $offset+1;
             $end_index = $start_index + $limit;
             $iterator = 0;
-            for ($i = $start_index; $i <= $end_index; ++$i) {
+            for ($i = $start_index; $i < $end_index; ++$i) {
                 if (isset($friends_list[$i-1]->id)) {
                     $friend = array();
                     $friend['id'] = $friends_list[$i-1]['id'];
