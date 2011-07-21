@@ -13,6 +13,22 @@ class sign_up extends CI_Controller {
         $data['main_content'] = 'sign_up/sign_up_view';
         $data['struktur'] = $this->getStruktur();
         $data['show_calendar'] = 1;
+        
+        /*** get list of unit (education) ***/
+        $this->load->model('unit', 'unitModel');
+        $option = array('columnSelect'=>'label');
+        $getUnit = $this->unitModel->getUnits($option);
+        $unit_list = array(
+            '-' => '-'
+        );
+        if ($getUnit) {
+            foreach ($getUnit as $unit) {
+                $unit_list[$unit->label] = $unit->label;
+            }
+        }
+        $data['unit_list'] = $unit_list;
+        /*** end of get unit list ***/
+        
         $this->load->view('includes/template', $data);
     }
 
@@ -196,7 +212,7 @@ class sign_up extends CI_Controller {
             $option = array(
                 'user_id' => $getReturnInsert
             );
-            $getVisibilityInsert = $this->visibilityModel->addAlumni($option);
+            $getVisibilityInsert = $this->visibilityModel->addVisibilityStatus($option);
             /******/
             
             /*** redirect ke halaman login ***/

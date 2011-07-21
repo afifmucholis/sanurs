@@ -3,16 +3,17 @@
 <p>Please choose the last level of education achieved in St. Ursula</p>
 <div id="divjenjang">
     <?php
-    $jenjang = array(
+    /*$jenjang = array(
         '-' => '-',
         'TK' => 'TK',
         'SD' => 'SD',
         'SMP' => 'SMP',
         'SMA' => 'SMA',
-    );
+    );*/
     echo form_label('Select last level education : ', 'jenjang');
     $js = 'id="jenjang" onChange="showTahun();"';
-    echo form_dropdown('jenjang', $jenjang, '-', $js);
+    //echo form_dropdown('jenjang', $jenjang, '-', $js);
+    echo form_dropdown('jenjang', $unit_list, '-', $js);
     echo br(1);
     ?>
 </div>
