@@ -1,0 +1,21 @@
+/* 
+    Document   : error-validation
+    Created on : 21 Jul 11, 12:57:48
+    Author     : Akbar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.error {
+    font: normal 12px arial;
+    padding: 3px;
+    margin: 3px;
+    background-color: #ffc;
+    border: 1px solid #c00;
+}
+
