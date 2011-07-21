@@ -44,7 +44,7 @@ class show_all_friends extends CI_Controller {
         $data['title'] = 'Show All Friends';
         $data['main_content'] = 'profile/show_all_friends_view';
         $data['struktur'] = $this->getStruktur($this->getName($user_id), $user_id);
-        $data['view'] = 'show_all_friends/user/' . $user_id;
+        $data['view'] = 'profile/show_all_friends_view';
         $data['userid_viewed'] = $user_id;
         //Get friend list :
         $friends_list_result = $this->getAllFriendList($user_id);
@@ -57,7 +57,7 @@ class show_all_friends extends CI_Controller {
         $friends_pagin_result = $this->getAllFriendListPaginate($per_page, $offset, $friends_list_result);
 
         $data['friends'] = $friends_pagin_result;
-        $base_url = site_url('');
+        $base_url = site_url('show_all_friends/user');
         $config['base_url'] = $base_url;
         $config['total_rows'] = $total_friends;
         $config['uri_segment'] = '2';
@@ -80,7 +80,7 @@ class show_all_friends extends CI_Controller {
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
 
-        if ($this->input->get('ajax')) {
+        if ($this->input->post('ajax')) {
             $text = $this->load->view($data['view'], $data, true);
             $this->output
                     ->set_content_type('application/json')
