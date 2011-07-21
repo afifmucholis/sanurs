@@ -1,0 +1,36 @@
+/* 
+    Document   : autocomplete
+    Created on : 21 Jul 11, 12:58:39
+    Author     : Akbar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+#autocomplete {
+    
+}
+#autocomplete img{
+    height: 70px;
+    width: 70px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#autocomplete #label {
+    white-space: nowrap;
+    text-align: center;
+    font-weight: bold;
+}
+
+#autocomplete #nickname {
+    font-size: 10pt;
+    text-align: center;
+    font-style: italic;
+}
+
