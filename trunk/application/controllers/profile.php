@@ -114,15 +114,15 @@ class profile extends CI_Controller {
         $data['title'] = 'Edit your profile ';
         $data['main_content'] = 'edit_profile/edit_profile_view';
         $data['struktur'] = $this->getStruktur2('Basic Info');
-        
+
         // get uri to check default view edit exist
         $array = $this->uri->uri_to_assoc(2);
-        if ($array['editProfile']!='')
-            $data['view']=$array['editProfile'];
+        if ($array['editProfile'] != '')
+            $data['view'] = $array['editProfile'];
         else
-            $data['view']='basic_info';
-        
-        $this->load->view('includes/template',$data);
+            $data['view'] = 'basic_info';
+
+        $this->load->view('includes/template', $data);
     }
 
     /**
@@ -149,7 +149,7 @@ class profile extends CI_Controller {
         $getUserInterests = $this->interestedInModel->getInterestedIn($option);
         $data['user_interest'] = $getUserInterests;
 
-        /*** get list of gender ***/
+        /*         * * get list of gender ** */
         $this->load->model('gender', 'genderModel');
         $option = array();
         $getGender = $this->genderModel->getGenders($option);
@@ -160,8 +160,8 @@ class profile extends CI_Controller {
             }
         }
         $data['gender_list'] = $gender_list;
-        /*** end of get list of gender ***/
-        
+        /*         * * end of get list of gender ** */
+
         // load basic user info
         $this->load->model('user', 'userModel');
         $options = array('id' => $this->session->userdata('user_id'));
@@ -178,7 +178,7 @@ class profile extends CI_Controller {
                 $img_url = 'res/default.jpg';
             else
                 $img_url=$getReturn[0]->profpict_url;
-            
+
             $data['content_edit'] = array(
                 'name' => $getReturn[0]->name,
                 'img_url' => $img_url,
@@ -249,7 +249,7 @@ class profile extends CI_Controller {
                 if ($getAllMyInterest) {
                     $i = 0;
                     $found = FALSE;
-                    while(!$found && $i<count($getAllMyInterest)) {
+                    while (!$found && $i < count($getAllMyInterest)) {
                         if ($itemUpdate == $getAllMyInterest[$i]->interest_id) {
                             $found = TRUE;
                         }
@@ -262,7 +262,7 @@ class profile extends CI_Controller {
                         );
                         $returnAdd = $this->interestedInModel->addInterestedIn($option);
                     }
-        } else {
+                } else {
                     $option = array(
                         'user_id' => $user_id,
                         'interest_id' => $itemUpdate
@@ -281,72 +281,73 @@ class profile extends CI_Controller {
                 foreach ($getDelId as $delId) {
                     $option = array('id' => $delId->id);
                     $returnDel = $this->interestedInModel->deleteInterestedIn($option);
-        }
-
-        /*** selesai update area of interest ***/
-        
-        $this->load->model('user','userModel');
-        $nickname = $this->input->post('nick_name');
-        $gender = $this->input->post('gender');
-        
-        $home_address = $this->input->post('home_address');
-        $home_telephone = $this->input->post('home_telephone');
-        $handphone = $this->input->post('handphone');
-        // proses data disini
-        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
-        
-        $options = array(
-            'id'=>$user_id,
-            'nickname'=>$nickname,
-            'gender_id' => $gender,
-            'home_address'=>$home_address,
-            'home_telephone'=>$home_telephone,
-            'handphone'=>$handphone
-        );
-        $error_rename_img = false;
-        $dir = explode("/",$image_url);
-        $ext = explode(".",$image_url);
-        if (count($dir)==2) {
-            // $image_url still null
-            
-        } else {
-            // cek apakah $default image atau image upload baru
-            if ($dir[1]=="temp") {
-                // cek file lama kalau ada
-                $options2 = array('id'=>$user_id);
-                $getReturn = $this->userModel->getUsers($options2);
-                $img_lama = $getReturn[0]->profpict_url;
-                if ($img_lama!="") {
-                    // delete file yang lama
-                    unlink('./'.$img_lama);
                 }
-                // image baru ada di folder temp
-                $new_imgurl = 'res/user/user_'.$user_id.'.'.$ext[count($ext)-1];
-                 if (rename('./'.$image_url, './'.$new_imgurl)) {
-                     $options['profpict_url'] = $new_imgurl;
-                 } else {
-                     $error_rename_img = true;
-                 }
-            } else {
-                // image lama tidak perlu diupdate
+
+                /*                 * * selesai update area of interest ** */
+
+                $this->load->model('user', 'userModel');
+                $nickname = $this->input->post('nick_name');
+                $gender = $this->input->post('gender');
+
+                $home_address = $this->input->post('home_address');
+                $home_telephone = $this->input->post('home_telephone');
+                $handphone = $this->input->post('handphone');
+                // proses data disini
+                $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+
+                $options = array(
+                    'id' => $user_id,
+                    'nickname' => $nickname,
+                    'gender_id' => $gender,
+                    'home_address' => $home_address,
+                    'home_telephone' => $home_telephone,
+                    'handphone' => $handphone
+                );
+                $error_rename_img = false;
+                $dir = explode("/", $image_url);
+                $ext = explode(".", $image_url);
+                if (count($dir) == 2) {
+                    // $image_url still null
+                } else {
+                    // cek apakah $default image atau image upload baru
+                    if ($dir[1] == "temp") {
+                        // cek file lama kalau ada
+                        $options2 = array('id' => $user_id);
+                        $getReturn = $this->userModel->getUsers($options2);
+                        $img_lama = $getReturn[0]->profpict_url;
+                        if ($img_lama != "") {
+                            // delete file yang lama
+                            unlink('./' . $img_lama);
+                        }
+                        // image baru ada di folder temp
+                        $new_imgurl = 'res/user/user_' . $user_id . '.' . $ext[count($ext) - 1];
+                        if (rename('./' . $image_url, './' . $new_imgurl)) {
+                            $options['profpict_url'] = $new_imgurl;
+                        } else {
+                            $error_rename_img = true;
+                        }
+                    } else {
+                        // image lama tidak perlu diupdate
+                    }
+                }
+                // update database dengan opsi $options
+                $cek_bol = $this->userModel->updateUser($options);
+                if (is_bool($cek_bol) || count($cek_bol) != 1 || $error_rename_img) {
+                    // update gagal
+                    $message['status'] = 'An error occurred';
+                    $message['message'] = 'An Error occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
+                } else {
+                    // update berhasil
+                    $message['status'] = 'Update success';
+                    $message['message'] = 'Your Basic Info has successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+                }
+                $message['page_before'] = 'Edit Your Profile';
+                $message['page_link'] = 'profile/editProfile';
+                // redirect ke info view
+                $this->session->set_flashdata('message', $message);
+                redirect('info/show', 'refresh');
             }
         }
-        // update database dengan opsi $options
-        $cek_bol = $this->userModel->updateUser($options);
-        if (is_bool($cek_bol) || count($cek_bol)!=1 || $error_rename_img) {
-            // update gagal
-            $message['status'] = 'An error occurred';
-            $message['message'] = 'An Error occurred with your data input. Please '.anchor('profile/editProfile','try again').'.';
-        } else {
-            // update berhasil
-            $message['status'] = 'Update success';
-            $message['message'] = 'Your Basic Info has successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
-        }
-        $message['page_before'] = 'Edit Your Profile';
-        $message['page_link'] = 'profile/editProfile';
-        // redirect ke info view
-        $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
     }
 
     /**
@@ -558,16 +559,16 @@ class profile extends CI_Controller {
         // load model user
         $this->load->model('user', 'userModel');
         // cek SMA ada atau ga
-        $options = array('id'=>$user_id);
+        $options = array('id' => $user_id);
         $getUser = $this->userModel->getUsers($options);
-        if ($getUser[0]->last_unit_id=='4') {
+        if ($getUser[0]->last_unit_id == '4') {
             // berarti sudah sekolah di SMA sanur
             $iterate_start = 2;
         } else {
             $iterate_start = 1;
         }
-        
-        if ($in_education=='yes') { // $degree = 0
+
+        if ($in_education == 'yes') { // $degree = 0
             // cek data lama atau baru
             $edu_id = $this->input->post('edu_id_0');
             $college = $this->input->post('college_0');
@@ -577,8 +578,8 @@ class profile extends CI_Controller {
             $level = $this->input->post('current_edu_list');
             if ($edu_id != '') {
                 // data lama update dengan edu_id yang ada
-                if ($college=='' || ($major=='-' || $major=='') || $year=='') {
-                    echo ' input tidak benar current education'.br(1);
+                if ($college == '' || ($major == '-' || $major == '') || $year == '') {
+                    echo ' input tidak benar current education' . br(1);
                 } else {
                     // update
                     $options = array('id' => $edu_id, 'user_id' => $user_id, 'level_id' => $level, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
@@ -588,8 +589,8 @@ class profile extends CI_Controller {
                 }
             } else {
                 // data baru masukkan current education
-                if ($college=='' || ($major=='-' || $major=='') || $year=='') {
-                    echo ' input tidak benar current education'.br(1);
+                if ($college == '' || ($major == '-' || $major == '') || $year == '') {
+                    echo ' input tidak benar current education' . br(1);
                 } else {
                     // insert
                     $options = array('user_id' => $user_id, 'level_id' => $level, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
@@ -633,31 +634,31 @@ class profile extends CI_Controller {
                 $major = $this->input->post('major_2');
                 $minor = $this->input->post('minor_2');
                 $year = $this->input->post('year_2');
-                if ($edu_id!='' && $college=='' && ($major=='' || $major=='-') && $year=='') {
-                    $options = array('id'=>$edu_id);
+                if ($edu_id != '' && $college == '' && ($major == '' || $major == '-') && $year == '') {
+                    $options = array('id' => $edu_id);
                     $cekDeleteEdu = $this->eduModel->deleteEducation($options);
                     if (!is_bool($cekDeleteEdu))
                         echo 'success delete education d3<br/>';
                 }
             }
 
-            for ($i=$iterate_start;$i<=$highest_edu;$i++) {
-                $edu_id = $this->input->post('edu_id_'.$i); // cek sma
-                $college = $this->input->post('college_'.$i);
-                $major = $this->input->post('major_'.$i);
-                $minor = $this->input->post('minor_'.$i);
-                $year = $this->input->post('year_'.$i);
-                echo $i.br(1);
-                echo $college.br(1);
-                echo $major.br(1);
-                echo $minor.br(1);
-                echo $year.br(1);
-                if ($college=='' || ($major=='-' || $major=='') || $year=='') {
-                    if ($i!=2)
-                        echo ' input tidak benar'.br(1);
-                    else if (($college=='' || $major=='-' || $year=='') && ($college!='' || $major!='-' || $year!='')) {
+            for ($i = $iterate_start; $i <= $highest_edu; $i++) {
+                $edu_id = $this->input->post('edu_id_' . $i); // cek sma
+                $college = $this->input->post('college_' . $i);
+                $major = $this->input->post('major_' . $i);
+                $minor = $this->input->post('minor_' . $i);
+                $year = $this->input->post('year_' . $i);
+                echo $i . br(1);
+                echo $college . br(1);
+                echo $major . br(1);
+                echo $minor . br(1);
+                echo $year . br(1);
+                if ($college == '' || ($major == '-' || $major == '') || $year == '') {
+                    if ($i != 2)
+                        echo ' input tidak benar' . br(1);
+                    else if (($college == '' || $major == '-' || $year == '') && ($college != '' || $major != '-' || $year != '')) {
                         // ada d3 input yg tidak lengkap
-                        echo ' input tidak benar 1'.br(1);
+                        echo ' input tidak benar 1' . br(1);
                     }
                 } else {
                     if ($edu_id != '') {
@@ -668,10 +669,10 @@ class profile extends CI_Controller {
                             echo $i . 'success update education<br/>';
                     } else {
                         // insert
-                        $options = array('user_id'=>$user_id,'level_id'=>$i,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                        $options = array('user_id' => $user_id, 'level_id' => $i, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                         $cekInsertEdu = $this->eduModel->addEducation($options);
                         if (!is_bool($cekInsertEdu))
-                            echo $i.'success insert education<br/>';
+                            echo $i . 'success insert education<br/>';
                     }
                 }
             }
@@ -690,26 +691,26 @@ class profile extends CI_Controller {
                     echo 'success insert education d3<br/>';
             }
 
-            for ($i=$iterate_start;$i<=$max_level;$i++) {
-                $edu_id = $this->input->post('edu_id_'.$i); // cek sma
-                $college = $this->input->post('college_'.$i);
-                $major = $this->input->post('major_'.$i);
-                $minor = $this->input->post('minor_'.$i);
-                $year = $this->input->post('year_'.$i);
-                
-                echo $i.br(1);
-                echo $college.br(1);
-                echo $major.br(1);
-                echo $minor.br(1);
-                echo $year.br(1);
-                
-                if ($i<=$highest_edu) {
-                    if ($college=='' || $major=='-' || $major=='' || $year=='') {
-                        if ($i!=2)
-                            echo ' input tidak benar'.br(1);
-                        else if (($college=='' || $major=='-' || $year=='') && ($college!='' || $major!='-' || $year!='')) {
+            for ($i = $iterate_start; $i <= $max_level; $i++) {
+                $edu_id = $this->input->post('edu_id_' . $i); // cek sma
+                $college = $this->input->post('college_' . $i);
+                $major = $this->input->post('major_' . $i);
+                $minor = $this->input->post('minor_' . $i);
+                $year = $this->input->post('year_' . $i);
+
+                echo $i . br(1);
+                echo $college . br(1);
+                echo $major . br(1);
+                echo $minor . br(1);
+                echo $year . br(1);
+
+                if ($i <= $highest_edu) {
+                    if ($college == '' || $major == '-' || $major == '' || $year == '') {
+                        if ($i != 2)
+                            echo ' input tidak benar' . br(1);
+                        else if (($college == '' || $major == '-' || $year == '') && ($college != '' || $major != '-' || $year != '')) {
                             // ada d3 input yg tidak lengkap
-                            echo ' input tidak benar 2'.br(1);
+                            echo ' input tidak benar 2' . br(1);
                         }
                     } else {
                         // update
@@ -914,7 +915,7 @@ class profile extends CI_Controller {
         $option = array('id' => $user_id);
         $getVisibility = $this->visibilityModel->getVisibilityStatuses($option);
 
-        
+
         $data['content_edit'] = array(
             'home_address' => $getVisibility[0]->home_address,
             'home_telephone' => $getVisibility[0]->home_telephone,
@@ -1228,7 +1229,7 @@ class profile extends CI_Controller {
         //Get friend list dari $userid :
         $result = array();
         $totalnumfriends = 0;
-        
+
         $this->load->model('friend_relationship', 'friendRelationshipModel');
         $option1 = array('userid_1' => $userid);
         $option2 = array('userid_2' => $userid);
@@ -1324,6 +1325,7 @@ class profile extends CI_Controller {
 
         return $numAllfriends;
     }
+
 }
-    
+
 ?>
