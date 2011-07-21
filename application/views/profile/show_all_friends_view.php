@@ -37,7 +37,6 @@
                 url: link,
                 data : {offsetval:offset[offset.length-1], ajax : 1},
                 success: function(msg){
-                    alert('hai');
                     $("#show_all_friends").html(msg["text"]);
                 }
             });               
