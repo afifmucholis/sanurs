@@ -1,12 +1,14 @@
 <h3>Search Your Location</h3>
 <?php
 echo form_open('profile/submitLocation');
+?>
+<p>Input your current city : </p>
+<?php
 echo form_input('location', '', 'id="location"');
 $js_search = 'onClick="geocodeLocation()"';
-echo form_button('searchlocation', 'Search', $js_search);
+echo form_button('searchlocation', 'Submit', $js_search);
 ?>
-<p>Or select your location on the map</p>
-<?php echo br(4); ?>
+<?php echo br(2); ?>
 <div id="map">
     Map disini
 </div>

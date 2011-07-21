@@ -12,7 +12,7 @@ function initmap(page) {
     geocoder = new google.maps.Geocoder();
     var latlng = new google.maps.LatLng(0, 0);
     var myOptions = {
-        zoom: 1,
+        zoom: 2,
         center: latlng,
         mapTypeId: google.maps.MapTypeId.ROADMAP
     };
@@ -31,7 +31,8 @@ function initmap(page) {
                 lng = msg['lng'];
                 if (lat!=null && lng!=null) {
                     latlng = new google.maps.LatLng(lat,lng);
-                    addMarker('my location', latlng, true);
+                    //addMarker('my location', latlng, true);
+                    addMarker('my location', latlng, false);
                 }
                 clearOverlays();
                 showOverlay();
@@ -39,7 +40,7 @@ function initmap(page) {
             }
         });
         // bisa create pin
-        google.maps.event.addListener(map, 'click', function(event) {
+        /*google.maps.event.addListener(map, 'click', function(event) {
             if (markersArray.length < 2) {
                 // pin cuma bisa 1 lokasi
                 deleteOverlays();
@@ -49,7 +50,7 @@ function initmap(page) {
                 setInfoWindow(markersArray[0], markersArray[0].title);
                 setLocation();
             }
-        });
+        });*/
     } else if (page == 'searchfriend') {
         link = "http://localhost/sanurs/web/index.php/profile/get_all_location";
         $.ajax({
