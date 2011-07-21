@@ -62,7 +62,7 @@ class show_all_friends extends CI_Controller {
         $config['total_rows'] = $total_friends;
         $config['uri_segment'] = '2';
         $config['per_page'] = $per_page;
-        //$config['cur_page'] = $offset;
+        $config['cur_page'] = $offset;
 
         $config['first_link'] = 'First';
         $config['first_tag_open'] = '<div  id="num_link">';
