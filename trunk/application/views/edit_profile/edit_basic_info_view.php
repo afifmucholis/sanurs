@@ -28,11 +28,12 @@
     echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"');
     echo br(1);
     echo form_label('Gender: ');
-    $options = array(
+    /*$options = array(
         'male' => 'Male',
         'female' => 'Female'
     );
-    echo form_dropdown('gender', $options, $content_edit['gender']);
+    echo form_dropdown('gender', $options, $content_edit['gender']);*/
+    echo form_dropdown('gender', $gender_list, $content_edit['gender']);
     echo br(1);
     echo form_label('Home Address: ');
     echo form_input('home_address', $content_edit['home_address'], 'id="home_address"');
