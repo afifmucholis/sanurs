@@ -1,0 +1,8 @@
+admin :
+	- content home
+	- content about us -> visi misi, sejarah,  link ke web
+	- content news
+	- daftar interest
+	- daftar kategori event
+
+pengolahan manajerial data
