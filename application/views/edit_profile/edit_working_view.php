@@ -23,6 +23,7 @@
 
 <div class="work-menu">
     <h3>Current Work</h3>
+    <div id="work_cur">
     <?php
         $data = array(
             'counter' => 0
@@ -34,8 +35,11 @@
             $data['work'] = $working_current;
         }
         $this->load->view('edit_profile/work_form',$data);
-        echo br(2);
-        echo form_submit('save','Save Changes');
+    ?>
+    </div>
+    <?php
+    echo br(2);
+    echo form_submit('save','Save Changes');
     ?>
 </div>
 

@@ -53,6 +53,11 @@ class notification extends CI_Controller {
                 'label'=>'Home'
             ),
             array (
+                'islink'=>1,
+                'link'=>'profile',
+                'label'=>'Your Profile'
+            ),
+            array (
                 'islink'=>0,
                 'label'=>$name
             )

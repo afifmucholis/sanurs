@@ -53,5 +53,7 @@
     <br/>
     <?php if ($counter!=0) { ?>
     <a href="#" class="remove_links">Remove field</a>
+    <?php } else { ?>
+    <a href="#" class="resetfield_links">Reset field</a>
     <?php } ?>
 </div>

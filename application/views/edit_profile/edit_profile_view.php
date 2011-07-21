@@ -116,6 +116,7 @@ function showPopUpImage(){
 /**** Fungsi untuk working view ****/
 // fungsi binding untuk work view
 function workAjaxReady() {
+   _WorkFieldBinding();
    $('#content_edit')
         .find('a.add_links')
         .unbind('click.add_work')
@@ -127,6 +128,16 @@ function workAjaxReady() {
         .unbind('click.submit_form')
         .bind('click.submit_form', function(){
           // $('#form_work').submit();
+        });
+   $('.work-menu')
+        .find('a.resetfield_links')
+        .unbind('click.resetit')
+        .bind('click.resetit', function(){
+           $('#work_cur input[type!=hidden]').each(
+                function(idx, item) {
+                    $(item).val('');
+                }
+            );
         });
 }
 
@@ -156,7 +167,7 @@ function _WorkFieldBinding() {
         .unbind('click.removeit')
         .bind('click.removeit', function(){
             $(this).parent().remove();
-            $('input[name=counter]').val($('input[name=counter]').val()-1);
+            //$('input[name=counter]').val($('input[name=counter]').val()-1);
         });
     cekIsDirtyForm();
 }
