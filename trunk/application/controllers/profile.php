@@ -243,8 +243,44 @@ class profile extends CI_Controller {
                 }
             }
             //cocokkin yg di myInterests, kalo ada di database gak usah update, kalo gak ada tambahin
+            $option = array('user_id' => $user_id);
+            $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
+            foreach ($myInterests as $itemUpdate) {
+                if ($getAllMyInterest) {
+                    $i = 0;
+                    $found = FALSE;
+                    while(!$found && $i<count($getAllMyInterest)) {
+                        if ($itemUpdate == $getAllMyInterest[$i]->interest_id) {
+                            $found = TRUE;
+                        }
+                        $i++;
+                    }
+                    if (!$found) {
+                        $option = array(
+                            'user_id' => $user_id,
+                            'interest_id' => $itemUpdate
+                        );
+                        $returnAdd = $this->interestedInModel->addInterestedIn($option);
+                    }
+        } else {
+                    $option = array(
+                        'user_id' => $user_id,
+                        'interest_id' => $itemUpdate
+                    );
+                    $returnAdd = $this->interestedInModel->addInterestedIn($option);
+                }
+            }
         } else {
             //hapus semua yg ada di database interested_in
+            $option = array(
+                'user_id' => $user_id,
+                'columnSelect' => 'id'
+            );
+            $getDelId = $this->interestedInModel->getInterestedIn($option);
+            if ($getDelId) {
+                foreach ($getDelId as $delId) {
+                    $option = array('id' => $delId->id);
+                    $returnDel = $this->interestedInModel->deleteInterestedIn($option);
         }
 
         /*** selesai update area of interest ***/
