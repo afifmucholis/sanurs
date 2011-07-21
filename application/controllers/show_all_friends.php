@@ -44,13 +44,50 @@ class show_all_friends extends CI_Controller {
         $data['title'] = 'Show All Friends';
         $data['main_content'] = 'profile/show_all_friends_view';
         $data['struktur'] = $this->getStruktur($this->getName($user_id), $user_id);
-
+        $data['view'] = 'show_all_friends/user/' . $user_id;
+        $data['userid_viewed'] = $user_id;
         //Get friend list :
-        $friends = $this->getAllFriendList($user_id);
-        $data['friend_list'] = $friends['friends'];
-        $data['count_friends'] = $friends['total_friends'];
+        $friends_list_result = $this->getAllFriendList($user_id);
+        $total_friends = count($friends_list_result);
 
-        $this->load->view('includes/template', $data);
+        $this->load->library('pagination');
+        $per_page = 1;
+        $offset = $this->input->post('offsetval');
+
+        $friends_pagin_result = $this->getAllFriendListPaginate($per_page, $offset, $friends_list_result);
+
+        $data['friends'] = $friends_pagin_result;
+        $base_url = site_url('');
+        $config['base_url'] = $base_url;
+        $config['total_rows'] = $total_friends;
+        $config['uri_segment'] = '2';
+        $config['per_page'] = $per_page;
+        $config['cur_page'] = $offset;
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<div  id="num_link">';
+        $config['first_tag_close'] = '</div>';
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<div id="num_link">';
+        $config['last_tag_close'] = '</div>';
+        $config['next_link'] = false;
+        $config['prev_link'] = false;
+        $config['cur_tag_open'] = '<div id="cur_link">';
+        $config['cur_tag_close'] = '</div>';
+        $config['num_tag_open'] = '<div id="num_link">';
+        $config['num_tag_close'] = '</div>';
+
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+
+        if ($this->input->get('ajax')) {
+            $text = $this->load->view($data['view'], $data, true);
+            $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
+        } else {
+            $this->load->view('includes/template', $data);
+        }
     }
 
     function getStruktur($name, $user_id) {
@@ -105,7 +142,7 @@ class show_all_friends extends CI_Controller {
 
     function getAllFriendList($userid) {
         $result = array();
-        
+
         //Get friend list dari $userid :
         $this->load->model('friend_relationship', 'friendRelationshipModel');
         $option1 = array('userid_1' => $userid);
@@ -164,8 +201,34 @@ class show_all_friends extends CI_Controller {
             }
         }
         $result['friends'] = $friends;
-        $result['total_friends'] = $numAllfriends; 
+        $result['total_friends'] = $numAllfriends;
         return $result;
+    }
+
+    function getAllFriendListPaginate($limit, $offset, $friends) {
+        $friends_list = $friends['friends'];
+        $total_friends = count($friends_list);
+        $friends_paginate = array();
+        if ($total_friends <= $offset) {
+            //Do nothing  
+        } else {
+            $start_index = $offset+1;
+            $end_index = $start_index + $limit;
+            $iterator = 0;
+            for ($i = $start_index; $i <= $end_index; ++$i) {
+                if (isset($friends_list[$i-1]->id)) {
+                    $friend = array();
+                    $friend['id'] = $friends_list[$i-1]['id'];
+                    $friend['name'] = $friends_list[$i-1]['name'];
+                    $friend['nickname'] = $friends_list[$i-1]['nickname'];
+                    $friend['profpict_url'] = $friends_list[$i-1]['profpict_url'];
+
+                    $friends_paginate[$iterator] = $friend;
+                    ++$iterator;
+                }
+            }
+        }
+        return $friends_paginate;
     }
 }
 
