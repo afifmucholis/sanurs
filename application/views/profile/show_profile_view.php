@@ -41,7 +41,7 @@
 <div class="right-menu">
     <div id="col_right">
         <div id="friend_list_sidebar">
-            <a href="">Friends(<?php echo $count_friends?>)</a>
+            <?php echo anchor('show_all_friends/user/'.$user_data['user_id'], 'Friends ('.$count_friends.')')?>
             <?php
             if (count($friend_list_sidebar) == 0) {
                 echo "You don't have any friends.";

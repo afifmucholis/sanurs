@@ -16,3 +16,25 @@
     max-width: 300px;
 }
 
+#friend_wrapper {
+    margin: 10px 10px 10px 10px;
+}
+
+#friend_wrapper #profpic img{
+    min-height: 50px;
+    min-width: 50px;
+    max-height: 55px;
+    max-width: 55px;
+    float : left;
+}
+
+#info_wrapper {
+    float : left;
+}
+#info_wrapper #name{
+    padding: 3px 5px 5px 5px;
+}
+
+#info_wrapper #nickname{
+    padding: 3px 5px 5px 5px;  
+}
