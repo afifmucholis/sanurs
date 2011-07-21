@@ -28,6 +28,7 @@
         if (isset($show_map) && $show_map) {
             ?>
         <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
+        <script type="text/javascript" src="<?php echo base_url();?>js/markerclusterer.js"></script>
         <?php
         }
         ?>
