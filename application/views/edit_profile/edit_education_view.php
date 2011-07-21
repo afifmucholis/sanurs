@@ -61,9 +61,9 @@ echo form_open('profile/submitPendidikan');
                 ?>
             </div>
         <?php } ?>
-        <div id="edu_d3_form" style="<?php if ($d3_edu->school=='') { ?>display:none;<?php } else { ?>display:inherit;<?php } ?>">
+        <div id="edu_d3_form" style="<?php if ($d3_edu->school=='' && $s1_edu->school=='' && $s2_edu->school=='' && $s3_edu->school=='') { ?>display:none;<?php } else { ?>display:inherit;<?php } ?>">
             <?php
-            $data['degree'] = 'Sekolah Kejuruan(D3)';
+            $data['degree'] = 'Sekolah Kejuruan(D3) (<i>Optional</i>)';
             $data['degree_id'] = 2;
             $data['edu'] = $d3_edu;
             $data['major_options'] = $major_options;

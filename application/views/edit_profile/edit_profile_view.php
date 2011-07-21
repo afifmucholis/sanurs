@@ -42,8 +42,7 @@ function editProfileReady() {
             return subNavEditProfileClick($(this).attr("href"));
       });
     // load menu awal basic_info
-    subNavEditProfileClick('visibility');
-    //subNavEditProfileClick('basic_info');
+    subNavEditProfileClick('<?php echo $view; ?>');
 }
 
 // function sub-navigation edit_profile
@@ -196,21 +195,21 @@ function changeEduField(val) {
     } else if (val=='3') {
        $('#edu_sma_form').attr('style', 'display: inherit');
        $('#edu_s1_form').attr('style', 'display: inherit');
-       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_d3_form').attr('style', 'display: inherit');
        $('#edu_s2_form').attr('style', 'display: none');
        $('#edu_s3_form').attr('style', 'display: none');
     } else if (val=='4') {
        $('#edu_sma_form').attr('style', 'display: inherit');
        $('#edu_s1_form').attr('style', 'display: inherit');
        $('#edu_s2_form').attr('style', 'display: inherit');
-       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_d3_form').attr('style', 'display: inherit');
        $('#edu_s3_form').attr('style', 'display: none');
     } else if (val=='5') {
        $('#edu_sma_form').attr('style', 'display: inherit');
        $('#edu_s1_form').attr('style', 'display: inherit');
        $('#edu_s2_form').attr('style', 'display: inherit');
        $('#edu_s3_form').attr('style', 'display: inherit');
-       $('#edu_d3_form').attr('style', 'display: none');
+       $('#edu_d3_form').attr('style', 'display: inherit');
     } else if (val=='0') {
        $('#edu_sma_form').attr('style', 'display: none');
        $('#edu_d3_form').attr('style', 'display: none');
