@@ -337,7 +337,7 @@ class profile extends CI_Controller {
         } else {
             // update berhasil
             $message['status'] = 'Update success';
-            $message['message'] = 'Your Basic Info has successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+            $message['message'] = 'Your Basic Info has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
         }
         $message['page_before'] = 'Edit Your Profile';
         $message['page_link'] = 'profile/editProfile';
@@ -429,7 +429,18 @@ class profile extends CI_Controller {
         $this->load->model('user', 'userModel');
         $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
 
-        redirect('profile/editProfile', 'refresh');
+        if (is_bool($update_location)) {
+            $message['status'] = 'An Error Occurred';
+            $message['message'] = 'Error updating your location.'.br(1).'Click '.anchor('profile/editProfile/location','here').' to try again.';
+        } else {
+            $message['status'] = 'Update Success';
+            $message['message'] = 'Your location has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+        }
+        $message['page_before'] = 'Edit Your Profile';
+        $message['page_link'] = 'profile/editProfile/location';
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show','refresh');
     }
 
     /**
@@ -718,7 +729,7 @@ class profile extends CI_Controller {
                 }
             }
             $message['status'] = 'Update Success';
-            $message['message'] = 'Your Education has successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+            $message['message'] = 'Your Education has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
         } catch (Exception $e) {
             $message['status'] = 'An Error Occurred';
             $message['message'] = $e->getMessage().''.br(1).'Click '.anchor('profile/editProfile/education','here').' to try again.';
@@ -820,82 +831,102 @@ class profile extends CI_Controller {
                 array_push($id_array, $work->id);
             endforeach;
         }
-
-        $old_array = array();
-        $old = '_old_';
-        $new = '_new_';
-        $i = 0;
-        $counter = $this->input->post('counter');
-        for ($i = 0; $i <= $counter; $i++) {
-            $status = '';
-            if ($this->input->post('id' . $old . $i)) { // out work id
-                $work_id = $this->input->post('id' . $old . $i);
-                $status = $old;
-                // push to array for checkin deleted array
-                array_push($old_array, $work_id);
-            }
-            if ($this->input->post('id' . $new . $i)) { // out counter
-                $status = $new;
-            }
-            $company = $this->input->post('company' . $status . $i);
-            $year = $this->input->post('year' . $status . $i);
-            $position = $this->input->post('position' . $status . $i);
-            $address = $this->input->post('address' . $status . $i);
-            $telephone = $this->input->post('telephone' . $status . $i);
-            $fax = $this->input->post('fax' . $status . $i);
-            $work_hp = $this->input->post('work_hp' . $status . $i);
-            $work_email = $this->input->post('work_email' . $status . $i);
-            $options = array();
-
-            $options['user_id'] = $user_id;
-            $options['company'] = $company;
-            $options['year'] = $year;
-            $options['position'] = $position;
-            $options['address'] = $address;
-            $options['telephone'] = $telephone;
-            $options['fax'] = $fax;
-            $options['work_hp'] = $work_hp;
-            $options['work_email'] = $work_email;
-
-            // cek dulu yang harus ada apa *required
-            if ($status == $old) {
-                // update isinya
-                if ($i == 0 && $company == "" && $year == "" && $position == "" && $address == "" && $telephone == "" && $fax == "" && $work_hp == "" && $work_email == "") {
-                    // erase from deleted array
-                    $old_array = array_diff($old_array, array($work_id));
-                    $add_update_Work = 2;
-                } else {
-                    $options['id'] = $work_id;
-                    $add_update_Work = $this->workModel->updateWorkExperience($options);
+        try {
+            $old_array = array();
+            $old = '_old_';
+            $new = '_new_';
+            $i = 0;
+            $counter = $this->input->post('counter');
+            for ($i = 0; $i <= $counter; $i++) {
+                $status = '';
+                if ($this->input->post('id' . $old . $i)) { // out work id
+                    $work_id = $this->input->post('id' . $old . $i);
+                    $status = $old;
+                    // push to array for checkin deleted array
+                    array_push($old_array, $work_id);
                 }
-            } else {
-                // insert baru
-                if ($i == 0)
-                    $options['is_current_work'] = 1;
-                if ($company != "" && $year != "" && $position != "" && $address != "" && $telephone != "" && $fax != "" && $work_hp != "" && $work_email != "") {
-                    $add_update_Work = $this->workModel->addWorkExperience($options);
+                if ($this->input->post('id' . $new . $i)) { // out counter
+                    $status = $new;
                 }
-            }
-            if (isset($add_update_Work) && is_bool($add_update_Work)) {
-                echo 'error update/insert';
-            } else if (isset($add_update_Work)) {
-                echo 'success update/insert';
-            }
-        }
-        $options = array();
-        // delete work_experience
-        foreach ($id_array as $old_id) :
-            if (in_array($old_id, $old_array)) {
+                $company = $this->input->post('company' . $status . $i);
+                $year = $this->input->post('year' . $status . $i);
+                $position = $this->input->post('position' . $status . $i);
+                $address = $this->input->post('address' . $status . $i);
+                $telephone = $this->input->post('telephone' . $status . $i);
+                $fax = $this->input->post('fax' . $status . $i);
+                $work_hp = $this->input->post('work_hp' . $status . $i);
+                $work_email = $this->input->post('work_email' . $status . $i);
+                $options = array();
+
+                $options['user_id'] = $user_id;
+                $options['company'] = $company;
+                $options['year'] = $year;
+                $options['position'] = $position;
+                $options['address'] = $address;
+                $options['telephone'] = $telephone;
+                $options['fax'] = $fax;
+                $options['work_hp'] = $work_hp;
+                $options['work_email'] = $work_email;
                 
-            } else {
-                // delete here
-                $options['id'] = $old_id;
-                $delete_Work = $this->workModel->deleteWorkExperience($options);
-                if (is_bool($delete_Work)) {
-                    echo 'error on delete : id ' . $old_id;
+                if ($status == $old) {
+                    // update isinya
+                    if ($i == 0 && $company == "" && $year == "" && $position == "" && $address == "" && $telephone == "" && $fax == "" && $work_hp == "" && $work_email == "") {
+                        // erase from deleted array
+                        $old_array = array_diff($old_array, array($work_id));
+                        $add_update_Work = 2;
+                    } else {
+                        // cek dulu yang harus ada apa *required
+                        if ($company=='' && $i != 0)
+                            throw new Exception('Error on input data : Field company must be not blank '.$year);
+                        else if ($i==0 && $company=='' && ($year!='' || $position!='' || $address!='' || $telephone!='' || $fax!='' || $work_hp!='' || $work_email!='')) {
+                            throw new Exception('Error on input data : Field company on current working must be not blank '.$year);
+                        }
+                        $options['id'] = $work_id;
+                        $add_update_Work = $this->workModel->updateWorkExperience($options);
+                    }
+                } else if ($status==$new) {
+                    // cek dulu yang harus ada apa *required
+                    if ($company=='' && $i!=0)
+                        throw new Exception('Error on input data : Field company must be not blank'.$year);
+                    else if ($i==0 && $company=='' && ($year!='' || $position!='' || $address!='' || $telephone!='' || $fax!='' || $work_hp!='' || $work_email!='')) {
+                        throw new Exception('Error on input data : Field company on current working must be not blank'.$year);
+                    }
+                    // insert baru
+                    if ($i == 0)
+                        $options['is_current_work'] = 1;
+                    if ($company!='')
+                        $add_update_Work = $this->workModel->addWorkExperience($options);
+                }
+                if (isset($add_update_Work) && is_bool($add_update_Work)) {
+                    throw new Exception('Error on database : insert/update working experience for company : '.$company);
                 }
             }
-        endforeach;
+            $options = array();
+            // delete work_experience
+            foreach ($id_array as $old_id) :
+                if (in_array($old_id, $old_array)) {
+                    
+                } else {
+                    // delete here
+                    $options['id'] = $old_id;
+                    $delete_Work = $this->workModel->deleteWorkExperience($options);
+                    if (is_bool($delete_Work)) {
+                        throw new Exception('Error on database : deleting old working experience.');
+                    }
+                }
+            endforeach;
+            $message['status'] = 'Update Success';
+            $message['message'] = 'Your Working Experience has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+        } catch (Exception $e) {
+            $message['status'] = 'An Error Occurred';
+            $message['message'] = $e->getMessage().''.br(1).'Click '.anchor('profile/editProfile/working','here').' to try again.';
+        }
+        
+        $message['page_before'] = 'Edit Your Profile';
+        $message['page_link'] = 'profile/editProfile/working';
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show','refresh');
     }
 
     /**
@@ -1034,7 +1065,18 @@ class profile extends CI_Controller {
         //update visibility table
         $getReturnUpdate = $this->visibilityModel->updateVisibilityStatus($options);
 
-        redirect('profile/editProfile', 'refresh');
+        if (is_bool($getReturnUpdate)) {
+            $message['status'] = 'An Error Occurred';
+            $message['message'] = 'Error updating your visibility status.'.br(1).'Click '.anchor('profile/editProfile/visibility','here').' to try again.';
+        } else {
+            $message['status'] = 'Update Success';
+            $message['message'] = 'Your visibility status has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+        }
+        $message['page_before'] = 'Edit Your Profile';
+        $message['page_link'] = 'profile/editProfile/visibility';
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show','refresh');
     }
 
     /**
