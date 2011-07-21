@@ -49,7 +49,8 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/style.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/message.css" />
-         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/profile.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/profile.css" />
+        <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/pagination.css" />
 </head>
 <body>
   <div id="content">
