@@ -3,6 +3,7 @@ var geocoder;
 var userArray = [];     //menyimpan info user
 var markersArray = [];  //menyimpan marker dari overlay (objek) yang ada pada peta
 var locationArray = []; //menyimpan lokasi user (digunakan pada edit location)
+var markerCluster;
 
 /*
  * initialize map
@@ -78,6 +79,8 @@ function initmap(page) {
                     
                     setInfoWindow(markersArray[i], contentString);
                 }
+                var mcOptions = {gridSize: 50, maxZoom: 15};
+                markerCluster = new MarkerClusterer(map, markersArray, mcOptions);
             }
         });
     }
