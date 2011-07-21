@@ -1,4 +1,5 @@
-<?php 
+<?php
+
 /** * @property CI_Loader $load
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
@@ -7,8 +8,9 @@
  * @property CI_DB_forge $dbforge
  */
 class profile extends CI_Controller {
+
     function index() {
-        if ($this->session->userdata('name')==null) {
+        if ($this->session->userdata('name') == null) {
             redirect('/home', 'refresh');
         }
         $data['title'] = 'Profile';
@@ -16,12 +18,12 @@ class profile extends CI_Controller {
         $data['struktur'] = $this->getStruktur('Your Profile');
         // get user profile info
         $user_id = $this->session->userdata('user_id');
-        
+
         $data['user_data'] = $this->setUserData($user_id);
-        
+
         // get jumlah friend request
-        $this->load->model('friend_request','friend_requestModel');
-        $options = array('userid_requested'=>$user_id);
+        $this->load->model('friend_request', 'friend_requestModel');
+        $options = array('userid_requested' => $user_id);
         $getRequest = $this->friend_requestModel->getFriendRelationships($options);
         if (is_bool($getRequest)) {
             $data['request_friend'] = 0;
@@ -30,20 +32,22 @@ class profile extends CI_Controller {
         }
         // get jumlah new notification
         $this->load->model('notification_model', 'notificationModel');
-        $options=array('userid_to'=>$user_id, 'status_read' => 0);
+        $options = array('userid_to' => $user_id, 'status_read' => 0);
         $getNotification = $this->notificationModel->getNotifications($options);
         if (is_bool($getNotification)) {
             $data['new_notification'] = 0;
         } else {
             $data['new_notification'] = count($getNotification);
         }
-        
-        //Get friend list :
-        $data['friend_list'] = $this->getFriendList($user_id);
-        
-        $this->load->view('includes/template',$data);
+
+        //Get friend list for sidebar:
+        $friends = $this->getAllFriendListLimited($user_id, 5);
+        $data['friend_list_sidebar'] = $friends['friends'];
+        $data['count_friends'] = $friends['total_friends'];
+
+        $this->load->view('includes/template', $data);
     }
-    
+
     /**
      * user()
      *
@@ -54,48 +58,49 @@ class profile extends CI_Controller {
     function user() {
         $array = $this->uri->uri_to_assoc(2);
         $user_id = $array['user'];
-        if ($this->session->userdata('user_id')==$user_id) { // cek apakah dia melihat profilnya sendiri
+        if ($this->session->userdata('user_id') == $user_id) { // cek apakah dia melihat profilnya sendiri
             redirect('/profile', 'refresh');
         }
-        
+
         $data['user_data'] = $this->setUserData($user_id);
-        $data['title'] = 'Profile - '.$data['user_data']['name'];
+        $data['title'] = 'Profile - ' . $data['user_data']['name'];
         $data['main_content'] = 'profile/show_profile_view';
         $data['struktur'] = $this->getStruktur($data['user_data']['name']);
         // cek apakah bisa add friend
         $data['add_as_friend'] = 1;
-        if ($this->session->userdata('user_id')==null) {   // belum sign in
+        if ($this->session->userdata('user_id') == null) {   // belum sign in
             $data['add_as_friend'] = 0;
         } else {
             $user_view = $this->session->userdata('user_id');
             // load model friend request dan friend relationship
             $this->load->model('friend_request', 'friend_requestModel');
             $this->load->model('friend_relationship', 'friend_relationshipModel');
-            
-            $options = array('userid_requester'=>$user_view, 'userid_requested'=>$user_id);
+
+            $options = array('userid_requester' => $user_view, 'userid_requested' => $user_id);
             $getFriendRequest = $this->friend_requestModel->getFriendRelationships($options);
-            
-            $options = array('userid_1'=>$user_view, 'userid_2'=>$user_id);
+
+            $options = array('userid_1' => $user_view, 'userid_2' => $user_id);
             $getFriendRelationship = $this->friend_relationshipModel->getFriendRelationships($options);
             if (is_bool($getFriendRelationship)) {
-                $options = array('userid_2'=>$user_view, 'userid_1'=>$user_id);
+                $options = array('userid_2' => $user_view, 'userid_1' => $user_id);
                 $getFriendRelationship = $this->friend_relationshipModel->getFriendRelationships($options);
             }
-            
-            if (!is_bool($getFriendRelationship) && count($getFriendRelationship)==1) {     // cek apakah sudah friend atau belum
+
+            if (!is_bool($getFriendRelationship) && count($getFriendRelationship) == 1) {     // cek apakah sudah friend atau belum
                 $data['add_as_friend'] = 3;
-            } else if (!is_bool($getFriendRequest) && count($getFriendRequest)==1) { // cek apakah masih requested
+            } else if (!is_bool($getFriendRequest) && count($getFriendRequest) == 1) { // cek apakah masih requested
                 $data['add_as_friend'] = 2;
             }
         }
-        
+
         //Get friend list :
-        $data['friend_list'] = $this->getFriendList($user_id);
-        
-        $this->load->view('includes/template',$data);
-        
+        $friends = $this->getAllFriendListLimited($user_id, 5);
+        $data['friend_list_sidebar'] = $friends['friends'];
+        $data['count_friends'] = $friends['total_friends'];
+
+        $this->load->view('includes/template', $data);
     }
-    
+
     /**
      * editProfile()
      *
@@ -105,13 +110,13 @@ class profile extends CI_Controller {
     function editProfile() {
         // show map
         $data['show_map'] = 1;
-        
+
         $data['title'] = 'Edit your profile ';
         $data['main_content'] = 'edit_profile/edit_profile_view';
         $data['struktur'] = $this->getStruktur2('Basic Info');
-        $this->load->view('includes/template',$data);
+        $this->load->view('includes/template', $data);
     }
-    
+
     /**
      * edit_basic_info()
      *
@@ -121,63 +126,54 @@ class profile extends CI_Controller {
     function edit_basic_info() {
         $data['struktur'] = $this->getStruktur2('Basic Info');
         $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
-        
+
         //list area of interest
         $this->load->model('interest', 'interestModel');
         $option = array('sortBy' => 'interest');
         $getInterestList = $this->interestModel->getInterests($option);
-        $data['interest_list'] = $getInterestList;  //daftar interest yang ada di database
-        
+        $data['interest_list'] = $getInterestList;
+
         $this->load->model('interested_in', 'interestedInModel');
         $option = array(
             'user_id' => $this->session->userdata('user_id'),
             'columnSelect' => 'interest_id'
         );
         $getUserInterests = $this->interestedInModel->getInterestedIn($option);
-        $data['user_interest'] = $getUserInterests; //daftar interest yang dimiliki user saat ini
-        
-        /*** get list of gender ***/
-        $this->load->model('gender', 'genderModel');
-        $option = array();
-        $getGender = $this->genderModel->getGenders($option);
-        $gender_list = array();
-        if ($getGender) {
-            foreach ($getGender as $gender) {
-                $gender_list[$gender->id] = $gender->label;
-            }
-        }
-        $data['gender_list'] = $gender_list;
-        /*** end of get list of gender ***/
-        
+        $data['user_interest'] = $getUserInterests;
+
         // load basic user info
-        $this->load->model('user','userModel');
+        $this->load->model('user', 'userModel');
         $options = array('id' => $this->session->userdata('user_id'));
         $getReturn = $this->userModel->getUsers($options);
         if (is_bool($getReturn) && !$getReturn) {
             //gak ada user yang memenuhi
             redirect('/home', 'refresh');
         } else {
-            if ($getReturn[0]->profpict_url=="")
-                $img_url='res/default.jpg';
+            // get gender
+            $this->load->model('gender', 'genderModel');
+            $options = array('id' => $getReturn[0]->gender_id);
+            $genderLabel = $this->genderModel->getGenders($options);
+            if ($getReturn[0]->profpict_url == "")
+                $img_url = 'res/default.jpg';
             else
                 $img_url=$getReturn[0]->profpict_url;
-                $data['content_edit'] = array(
+            $data['content_edit'] = array(
                 'name' => $getReturn[0]->name,
                 'img_url' => $img_url,
                 'nickname' => $getReturn[0]->nickname,
-                'gender' => $getReturn[0]->gender_id,
+                'gender' => $genderLabel[0]->label,
                 'home_address' => $getReturn[0]->home_address,
                 'home_telephone' => $getReturn[0]->home_telephone,
                 'handphone' => $getReturn[0]->handphone
             );
-        
-            $text = $this->load->view($data['content_edit_view'],$data,true);
+
+            $text = $this->load->view($data['content_edit_view'], $data, true);
             $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
         }
     }
-    
+
     /**
      * submitProfile()
      *
@@ -193,10 +189,10 @@ class profile extends CI_Controller {
      */
     function submitProfile() {
         $user_id = $this->session->userdata('user_id');
-        
-        /*** update area of interest ***/
+
+        /*         * * update area of interest ** */
         $myInterests = $this->input->post('interest');
-        $this->load->model('interested_in', 'interestedInModel');
+        $this->load->model('interest_in', 'interestedInModel');
         if ($myInterests) {
             //hapus dulu yg di database tapi gak ada di array
             $itemDel = array();
@@ -206,7 +202,7 @@ class profile extends CI_Controller {
                 foreach ($getAllMyInterest as $item) {
                     $i = 0;
                     $found = FALSE;
-                    while (!$found && $i<count($myInterests)) {
+                    while (!$found && $i < count($myInterests)) {
                         if ($item->interest_id == $myInterests[$i]) {
                             $found = TRUE;
                         } else {
@@ -225,106 +221,72 @@ class profile extends CI_Controller {
                 }
             }
             //cocokkin yg di myInterests, kalo ada di database gak usah update, kalo gak ada tambahin
-            $option = array('user_id' => $user_id);
-            $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
-            foreach ($myInterests as $itemUpdate) {
-                if ($getAllMyInterest) {
-                    $i = 0;
-                    $found = FALSE;
-                    while(!$found && $i<count($getAllMyInterest)) {
-                        if ($itemUpdate == $getAllMyInterest[$i]->interest_id) {
-                            $found = TRUE;
-                        }
-                        $i++;
-                    }
-                    if (!$found) {
-                        $option = array(
-                            'user_id' => $user_id,
-                            'interest_id' => $itemUpdate
-                        );
-                        $returnAdd = $this->interestedInModel->addInterestedIn($option);
-                    }
-                } else {
-                    $option = array(
-                        'user_id' => $user_id,
-                        'interest_id' => $itemUpdate
-                    );
-                    $returnAdd = $this->interestedInModel->addInterestedIn($option);
-                }
-            }
         } else {
             //hapus semua yg ada di database interested_in
-            $option = array(
-                'user_id' => $user_id,
-                'columnSelect' => 'id'
-            );
-            $getDelId = $this->interestedInModel->getInterestedIn($option);
-            if ($getDelId) {
-                foreach ($getDelId as $delId) {
-                    $option = array('id' => $delId->id);
-                    $returnDel = $this->interestedInModel->deleteInterestedIn($option);
-                }
-            }
         }
-        /*** selesai update area of interest ***/
-        
-        $this->load->model('user','userModel');
-        $nickname = $this->input->post('nick_name');
-        $gender = $this->input->post('gender');
-        
-        $home_address = $this->input->post('home_address');
-        $home_telephone = $this->input->post('home_telephone');
-        $handphone = $this->input->post('handphone');
-        // proses data disini
-        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
-        
-        $options = array(
-            'id'=>$user_id,
-            'nickname'=>$nickname,
-            'gender_id' => $gender,
-            'home_address'=>$home_address,
-            'home_telephone'=>$home_telephone,
-            'handphone'=>$handphone
-        );
-        
-        $dir = explode("/",$image_url);
-        $ext = explode(".",$image_url);
-        if (count($dir)==2) {
-            // $image_url still null
-            
-        } else {
-            // cek apakah $default image atau image upload baru
-            if ($dir[1]=="temp") {
-                // cek file lama kalau ada
-                $options2 = array('id'=>$user_id);
-                $getReturn = $this->userModel->getUsers($options2);
-                $img_lama = $getReturn[0]->profpict_url;
-                if ($img_lama!="") {
-                    // delete file yang lama
-                    unlink('./'.$img_lama);
-                }
-                // image baru ada di folder temp
-                $new_imgurl = 'res/user/user_'.$user_id.'.'.$ext[count($ext)-1];
-                 if (rename('./'.$image_url, './'.$new_imgurl)) {
-                     $options['profpict_url'] = $new_imgurl;
-                 } else {
-                     echo 'error moving file';
-                 }
-            } else {
-                // image lama tidak perlu diupdate
-            }
-        }
-        // update database dengan opsi $options
-        $cek_bol = $this->userModel->updateUser($options);
-        if (is_bool($cek_bol) || count($cek_bol)!=1) {
-            // update gagal
-            echo 'update gagal';
-        } else {
-            // update berhasil
-            echo 'success update';
-        }
+        /*         * * selesai update area of interest ** */
+
+        /*        $this->load->model('user','userModel');
+          $nickname = $this->input->post('nick_name');
+          $gender = $this->input->post('gender');
+          // get gender
+          $this->load->model('gender','genderModel');
+          $options = array('label' => $gender);
+          $getGender_id = $this->genderModel->getGenders($options);
+
+          $home_address = $this->input->post('home_address');
+          $home_telephone = $this->input->post('home_telephone');
+          $handphone = $this->input->post('handphone');
+          // proses data disini
+          $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+
+          $options = array(
+          'id'=>$user_id,
+          'nickname'=>$nickname,
+          'gender'=>$getGender_id[0]->id,
+          'home_address'=>$home_address,
+          'home_telephone'=>$home_telephone,
+          'handphone'=>$handphone
+          );
+
+          $dir = explode("/",$image_url);
+          $ext = explode(".",$image_url);
+          if (count($dir)==2) {
+          // $image_url still null
+
+          } else {
+          // cek apakah $default image atau image upload baru
+          if ($dir[1]=="temp") {
+          // cek file lama kalau ada
+          $options2 = array('id'=>$user_id);
+          $getReturn = $this->userModel->getUsers($options2);
+          $img_lama = $getReturn[0]->profpict_url;
+          if ($img_lama!="") {
+          // delete file yang lama
+          unlink('./'.$img_lama);
+          }
+          // image baru ada di folder temp
+          $new_imgurl = 'res/user/user_'.$user_id.'.'.$ext[count($ext)-1];
+          if (rename('./'.$image_url, './'.$new_imgurl)) {
+          $options['profpict_url'] = $new_imgurl;
+          } else {
+          echo 'error moving file';
+          }
+          } else {
+          // image lama tidak perlu diupdate
+          }
+          }
+          // update database dengan opsi $options
+          $cek_bol = $this->userModel->updateUser($options);
+          if (is_bool($cek_bol) || count($cek_bol)!=1) {
+          // update gagal
+          echo 'update gagal';
+          } else {
+          // update berhasil
+          echo 'success update';
+          } */
     }
-    
+
     /**
      * editLocation()
      *
@@ -335,13 +297,13 @@ class profile extends CI_Controller {
         $data['struktur'] = $this->getStruktur2('Location');
         $data['content_edit_view'] = 'edit_profile/edit_location_view';
         $data['content_edit'] = array();
-        
-        $text = $this->load->view($data['content_edit_view'],$data,true);
+
+        $text = $this->load->view($data['content_edit_view'], $data, true);
         $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
     }
-    
+
     /**
      * untuk mendapatkan lokasi (latitude-longitude) dari user yang sedang aktif
      */
@@ -350,15 +312,15 @@ class profile extends CI_Controller {
         $this->load->model('user', 'userModel');
         $option = array('id' => $this->session->userdata('user_id'));
         $getUser = $this->userModel->getUsers($option);
-        
+
         // get location
         $lat = $getUser[0]->location_latitude;
         $lng = $getUser[0]->location_longitude;
         $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode(array('lat'=>$lat, 'lng'=>$lng)));
+                ->set_output(json_encode(array('lat' => $lat, 'lng' => $lng)));
     }
-    
+
     function get_all_location() {
         // load model user
         $this->load->model('user', 'userModel');
@@ -398,19 +360,19 @@ class profile extends CI_Controller {
     function submitLocation() {
         $lat = $this->input->post('save_lat');
         $lng = $this->input->post('save_lng');
-        
+
         $options = array(
             'id' => $this->session->userdata('user_id'),
             'location_latitude' => $lat,
             'location_longitude' => $lng
         );
-        
+
         $this->load->model('user', 'userModel');
         $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
-        
+
         redirect('profile/editProfile', 'refresh');
     }
-    
+
     /**
      * edit_education()
      *
@@ -421,38 +383,38 @@ class profile extends CI_Controller {
         $user_id = $this->session->userdata('user_id');
         // load education model
         $this->load->model('education', 'eduModel');
-        $options = array('user_id'=>$user_id);
+        $options = array('user_id' => $user_id);
         $getEducation = $this->eduModel->getEducations($options);
         $data['max_level'] = 1;
         $year = date('Y');
         // set default data
-        $max_level=0;
+        $max_level = 0;
         // set default education
-        $data['sma_edu']= $this->makeArrayEducation();
+        $data['sma_edu'] = $this->makeArrayEducation();
         $data['d3_edu'] = $this->makeArrayEducation();
         $data['s1_edu'] = $this->makeArrayEducation();
         $data['s2_edu'] = $this->makeArrayEducation();
-        $data['s3_edu']= $this->makeArrayEducation();
-        $data['current_education']= $this->makeArrayEducation();
+        $data['s3_edu'] = $this->makeArrayEducation();
+        $data['current_education'] = $this->makeArrayEducation();
         $data['is_current_edu'] = 'no';
         if (!is_bool($getEducation)) {
-            foreach($getEducation as $edu) :
-                if ($edu->graduate_year>$year) {
-                    $data['current_education']= $edu;
+            foreach ($getEducation as $edu) :
+                if ($edu->graduate_year > $year) {
+                    $data['current_education'] = $edu;
                     $data['is_current_edu'] = 'yes';
                 } else {
-                    if ($edu->level_id==1) {
+                    if ($edu->level_id == 1) {
                         $data['sma_edu'] = $edu;
-                    } else if ($edu->level_id==2) {
+                    } else if ($edu->level_id == 2) {
                         $data['d3_edu'] = $edu;
-                    } else if ($edu->level_id==3) {
+                    } else if ($edu->level_id == 3) {
                         $data['s1_edu'] = $edu;
-                    } else if ($edu->level_id==4) {
+                    } else if ($edu->level_id == 4) {
                         $data['s2_edu'] = $edu;
-                    } else if ($edu->level_id==5) {
+                    } else if ($edu->level_id == 5) {
                         $data['s3_edu'] = $edu;
                     }
-                    if ($edu->level_id>$max_level)
+                    if ($edu->level_id > $max_level)
                         $max_level = $edu->level_id;
                 }
             endforeach;
@@ -460,9 +422,9 @@ class profile extends CI_Controller {
         $data['max_level'] = $max_level;
         // load model user untuk cek sma
         $this->load->model('user', 'userModel');
-        $options = array('id'=>$user_id);
+        $options = array('id' => $user_id);
         $getUser = $this->userModel->getUsers($options);
-        if ($getUser[0]->last_unit_id=='4') {
+        if ($getUser[0]->last_unit_id == '4') {
             // berarti sudah sekolah di SMA sanur
             $data['options'] = array(
                 '0' => '-',
@@ -488,33 +450,33 @@ class profile extends CI_Controller {
             '-' => '-'
         );
         $c = 1;
-        foreach($major as $m) :
+        foreach ($major as $m) :
             $major_options[$m->id] = $m->major;
         endforeach;
         $data['major_options'] = $major_options;
-        
+
         $data['struktur'] = $this->getStruktur2('Education');
         $data['content_edit_view'] = 'edit_profile/edit_education_view';
         $data['content_edit'] = array();
-        
-        $text = $this->load->view($data['content_edit_view'],$data,true);
+
+        $text = $this->load->view($data['content_edit_view'], $data, true);
         $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
     }
-    
+
     function makeArrayEducation() {
         $array = '';
-        $array->user_id='';
-        $array->id='';
-        $array->school='';
-        $array->graduate_year='';
-        $array->level_id='';
-        $array->major_id='';
-        $array->minor_id='';
+        $array->user_id = '';
+        $array->id = '';
+        $array->school = '';
+        $array->graduate_year = '';
+        $array->level_id = '';
+        $array->major_id = '';
+        $array->minor_id = '';
         return $array;
     }
-    
+
     /**
      * submitPendidikan
      *
@@ -531,8 +493,8 @@ class profile extends CI_Controller {
         $highest_edu = $this->input->post('highest_edu');
         // load model education
         $this->load->model('education', 'eduModel');
-        
-        if ($in_education=='yes') { // $degree = 0
+
+        if ($in_education == 'yes') { // $degree = 0
             // cek data lama atau baru
             $edu_id = $this->input->post('edu_id_0');
             $college = $this->input->post('college_0');
@@ -540,24 +502,24 @@ class profile extends CI_Controller {
             $minor = $this->input->post('minor_0');
             $year = $this->input->post('year_0');
             $level = $this->input->post('current_edu_list');
-            if ($edu_id!='') {
+            if ($edu_id != '') {
                 // data lama update dengan edu_id yang ada
-                if ($college=='' && $major=='' && $minor=='' && $year=='') {
+                if ($college == '' && $major == '' && $minor == '' && $year == '') {
                     // input tidak benar
                 } else {
                     // update
-                    $options = array('id'=>$edu_id,'user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                    $options = array('id' => $edu_id, 'user_id' => $user_id, 'level_id' => $level, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                     $cekUpdateCurrentEdu = $this->eduModel->updateEducation($options);
                     if (!is_bool($cekUpdateCurrentEdu))
                         echo 'success update current education<br/>';
                 }
             } else {
                 // data baru masukkan current education
-                if ($college=='' && $major=='' && $minor=='' && $year=='') {
+                if ($college == '' && $major == '' && $minor == '' && $year == '') {
                     // input tidak benar
                 } else {
                     // insert
-                    $options = array('user_id'=>$user_id,'level_id'=>$level,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                    $options = array('user_id' => $user_id, 'level_id' => $level, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                     $cekInsertCurrentEdu = $this->eduModel->addEducation($options);
                     if (!is_bool($cekInsertCurrentEdu))
                         echo 'success insert current education<br/>';
@@ -568,111 +530,111 @@ class profile extends CI_Controller {
             // cek data lama atau baru
             $edu_id = $this->input->post('edu_id_0');
             // kalau ada didelete
-            if ($edu_id!='') {
-               $options = array('id'=>$edu_id);
-               $cekDeleteCurrentEdu = $this->eduModel->deleteEducation($options);
-               if (!is_bool($cekDeleteCurrentEdu))
-                   echo 'success delete current education<br/>';
+            if ($edu_id != '') {
+                $options = array('id' => $edu_id);
+                $cekDeleteCurrentEdu = $this->eduModel->deleteEducation($options);
+                if (!is_bool($cekDeleteCurrentEdu))
+                    echo 'success delete current education<br/>';
             }
         }
         // get maks level education here
-        $max_level=0;
-        $options = array('user_id'=>$user_id);
+        $max_level = 0;
+        $options = array('user_id' => $user_id);
         $getEducation = $this->eduModel->getEducations($options);
         $year = date('Y');
         if (!is_bool($getEducation)) {
-            foreach($getEducation as $edu) :
-               if ($edu->level_id>$max_level && $edu->graduate_year<=$year)
-                  $max_level = $edu->level_id;
+            foreach ($getEducation as $edu) :
+                if ($edu->level_id > $max_level && $edu->graduate_year <= $year)
+                    $max_level = $edu->level_id;
             endforeach;
         }
-        
+
         // bandingkan dengan highest_edu input user
         // jika lebih dari, berarti ada data yang harus diinsert dan diupdate
-        if ($highest_edu >= $max_level && $highest_edu!=0) {
+        if ($highest_edu >= $max_level && $highest_edu != 0) {
             // cek d3 yg diganti
-            if ($highest_edu>2) {
+            if ($highest_edu > 2) {
                 // delete d3
                 $edu_id = $this->input->post('edu_id_2');
-                if ($edu_id!='') {
-                    $options = array('id'=>$edu_id);
+                if ($edu_id != '') {
+                    $options = array('id' => $edu_id);
                     $cekDeleteEdu = $this->eduModel->deleteEducation($options);
                     if (!is_bool($cekDeleteEdu))
                         echo 'success delete education d3<br/>';
                 }
             }
-            for ($i=1;$i<=$highest_edu;$i++) {
-                $edu_id = $this->input->post('edu_id_'.$i); // cek sma
-                $college = $this->input->post('college_'.$i);
-                $major = $this->input->post('major_'.$i);
-                $minor = $this->input->post('minor_'.$i);
-                $year = $this->input->post('year_'.$i);
-                
-                if ($college=='' && $major=='' && $minor=='' && $year=='') {
+            for ($i = 1; $i <= $highest_edu; $i++) {
+                $edu_id = $this->input->post('edu_id_' . $i); // cek sma
+                $college = $this->input->post('college_' . $i);
+                $major = $this->input->post('major_' . $i);
+                $minor = $this->input->post('minor_' . $i);
+                $year = $this->input->post('year_' . $i);
+
+                if ($college == '' && $major == '' && $minor == '' && $year == '') {
                     // input tidak benar
                 } else {
-                    if ($edu_id!='') {
+                    if ($edu_id != '') {
                         // update
-                        $options = array('id'=>$edu_id,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                        $options = array('id' => $edu_id, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                         $cekUpdateEdu = $this->eduModel->updateEducation($options);
                         if (!is_bool($cekUpdateEdu))
-                            echo $i.'success update education<br/>';
+                            echo $i . 'success update education<br/>';
                     } else {
                         // insert
-                        if ($i==2 && $i!=$highest_edu) {
+                        if ($i == 2 && $i != $highest_edu) {
                             
                         } else {
-                            $options = array('user_id'=>$user_id,'level_id'=>$i,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                            $options = array('user_id' => $user_id, 'level_id' => $i, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                             $cekInsertEdu = $this->eduModel->addEducation($options);
                             if (!is_bool($cekInsertEdu))
-                                echo $i.'success insert education<br/>';
+                                echo $i . 'success insert education<br/>';
                         }
                     }
                 }
             }
         } else if ($highest_edu < $max_level) {
             // cek d3 yg dipilih
-            if ($highest_edu==2) {
+            if ($highest_edu == 2) {
                 // insert d3
                 $edu_id = $this->input->post('edu_id_2');
                 $college = $this->input->post('college_2');
                 $major = $this->input->post('major_2');
                 $minor = $this->input->post('minor_2');
-                $year = $this->input->post('year_2');                
-                $options = array('user_id'=>$user_id,'level_id'=>2,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                $year = $this->input->post('year_2');
+                $options = array('user_id' => $user_id, 'level_id' => 2, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                 $cekInsertEdu = $this->eduModel->addEducation($options);
                 if (!is_bool($cekInsertEdu))
                     echo 'success insert education d3<br/>';
             }
-            for ($i=1;$i<=$max_level;$i++) {
-                $edu_id = $this->input->post('edu_id_'.$i); // cek sma
-                $college = $this->input->post('college_'.$i);
-                $major = $this->input->post('major_'.$i);
-                $minor = $this->input->post('minor_'.$i);
-                $year = $this->input->post('year_'.$i);
-                
-                if ($i<=$highest_edu) {
-                    if ($college=='' && $major=='' && $minor=='' && $year=='') {
+            for ($i = 1; $i <= $max_level; $i++) {
+                $edu_id = $this->input->post('edu_id_' . $i); // cek sma
+                $college = $this->input->post('college_' . $i);
+                $major = $this->input->post('major_' . $i);
+                $minor = $this->input->post('minor_' . $i);
+                $year = $this->input->post('year_' . $i);
+
+                if ($i <= $highest_edu) {
+                    if ($college == '' && $major == '' && $minor == '' && $year == '') {
                         // input tidak benar
                     } else {
                         // update
-                        $options = array('id'=>$edu_id,'school'=>$college,'major_id'=>$major,'minor_id'=>$minor,'graduate_year'=>$year);
+                        $options = array('id' => $edu_id, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                         $cekUpdateEdu = $this->eduModel->updateEducation($options);
                         if (!is_bool($cekUpdateEdu))
-                            echo $i.'success update education<br/>';
+                            echo $i . 'success update education<br/>';
                     }
                 } else {
                     // delete
-                    $options = array('id'=>$edu_id);
+                    $options = array('id' => $edu_id);
                     $cekDeleteEdu = $this->eduModel->deleteEducation($options);
                     if (!is_bool($cekDeleteEdu))
-                        echo $i.'success delete education<br/>';
+                        echo $i . 'success delete education<br/>';
                 }
             }
         }
         // jika kurang dari, berarti ada data yang harus didelete dan diupdate
     }
-    
+
     /**
      * function cekInputEducationKosong($array)
      *
@@ -681,11 +643,11 @@ class profile extends CI_Controller {
      * @param array $array array['college', 'major', 'minor', 'grad']
      */
     function cekInputEducationKosong($array) {
-        if ($array['college']=="" && $array['major']=="" && $array['minor']=="" && $array['grad']=="")
+        if ($array['college'] == "" && $array['major'] == "" && $array['minor'] == "" && $array['grad'] == "")
             return true;
         return false;
     }
-    
+
     /**
      * editWorking()
      *
@@ -699,12 +661,12 @@ class profile extends CI_Controller {
         $data['content_edit'] = array();
         // load model work_experience
         $this->load->model('work_experience', 'workModel');
-        $options = array('user_id'=>$user_id);
+        $options = array('user_id' => $user_id);
         $getWork = $this->workModel->getWorkExperiences($options);
         $working_experience = array();
         $working_current = array();
         if (!is_bool($getWork)) {
-            $count=0;
+            $count = 0;
             foreach ($getWork as $work):
                 if (!$work->is_current_work) {
                     $working_experience[$count] = $work;
@@ -715,17 +677,17 @@ class profile extends CI_Controller {
                 }
             endforeach;
         }
-        
-        $data['counter'] = count($working_experience)+count($working_current);
+
+        $data['counter'] = count($working_experience) + count($working_current);
         $data['working_experience'] = $working_experience;
         $data['working_current'] = $working_current;
-        
-        $text = $this->load->view($data['content_edit_view'],$data,true);
+
+        $text = $this->load->view($data['content_edit_view'], $data, true);
         $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
     }
-    
+
     /**
      * add_working_field()
      *
@@ -734,15 +696,15 @@ class profile extends CI_Controller {
      */
     function add_working_field() {
         $data = array(
-            'counter' => ($this->input->post('counter')+1),
+            'counter' => ($this->input->post('counter') + 1),
             'status' => 'new'
         );
-        $text = $this->load->view('edit_profile/work_form',$data,true);
+        $text = $this->load->view('edit_profile/work_form', $data, true);
         $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'counter'=>$data['counter'])));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('text' => $text, 'counter' => $data['counter'])));
     }
-    
+
     /**
      * submitWorking()
      *
@@ -754,67 +716,67 @@ class profile extends CI_Controller {
         $user_id = $this->session->userdata('user_id');
         // load model work_experience
         $this->load->model('work_experience', 'workModel');
-        $options = array('user_id'=>$user_id);
+        $options = array('user_id' => $user_id);
         $getWork = $this->workModel->getWorkExperiences($options);
         $id_array = array();
         if (!is_bool($getWork)) {
-            foreach($getWork as $work) :
+            foreach ($getWork as $work) :
                 array_push($id_array, $work->id);
             endforeach;
         }
-        
+
         $old_array = array();
         $old = '_old_';
         $new = '_new_';
-        $i=0;
+        $i = 0;
         $counter = $this->input->post('counter');
-        for($i=0;$i<=$counter;$i++) {
+        for ($i = 0; $i <= $counter; $i++) {
             $status = '';
-            if ($this->input->post('id'.$old.$i)) { // out work id
-                $work_id = $this->input->post('id'.$old.$i);
+            if ($this->input->post('id' . $old . $i)) { // out work id
+                $work_id = $this->input->post('id' . $old . $i);
                 $status = $old;
                 // push to array for checkin deleted array
                 array_push($old_array, $work_id);
             }
-            if ($this->input->post('id'.$new.$i)) { // out counter
+            if ($this->input->post('id' . $new . $i)) { // out counter
                 $status = $new;
             }
-            $company = $this->input->post('company'.$status.$i);
-            $year = $this->input->post('year'.$status.$i);
-            $position = $this->input->post('position'.$status.$i);
-            $address = $this->input->post('address'.$status.$i);
-            $telephone = $this->input->post('telephone'.$status.$i);
-            $fax = $this->input->post('fax'.$status.$i);
-            $work_hp = $this->input->post('work_hp'.$status.$i);
-            $work_email = $this->input->post('work_email'.$status.$i);
+            $company = $this->input->post('company' . $status . $i);
+            $year = $this->input->post('year' . $status . $i);
+            $position = $this->input->post('position' . $status . $i);
+            $address = $this->input->post('address' . $status . $i);
+            $telephone = $this->input->post('telephone' . $status . $i);
+            $fax = $this->input->post('fax' . $status . $i);
+            $work_hp = $this->input->post('work_hp' . $status . $i);
+            $work_email = $this->input->post('work_email' . $status . $i);
             $options = array();
-            
-            $options['user_id']=$user_id;
-            $options['company']=$company;
-            $options['year']=$year;
-            $options['position']=$position;
-            $options['address']=$address;
-            $options['telephone']=$telephone;
-            $options['fax']=$fax;
-            $options['work_hp']=$work_hp;
-            $options['work_email']=$work_email;
-            
+
+            $options['user_id'] = $user_id;
+            $options['company'] = $company;
+            $options['year'] = $year;
+            $options['position'] = $position;
+            $options['address'] = $address;
+            $options['telephone'] = $telephone;
+            $options['fax'] = $fax;
+            $options['work_hp'] = $work_hp;
+            $options['work_email'] = $work_email;
+
             // cek dulu yang harus ada apa *required
-            if ($status==$old) {
+            if ($status == $old) {
                 // update isinya
-                if ($i==0 && $company=="" && $year=="" && $position=="" && $address=="" && $telephone=="" && $fax=="" && $work_hp=="" && $work_email=="") {
+                if ($i == 0 && $company == "" && $year == "" && $position == "" && $address == "" && $telephone == "" && $fax == "" && $work_hp == "" && $work_email == "") {
                     // erase from deleted array
                     $old_array = array_diff($old_array, array($work_id));
-                    $add_update_Work=2;
+                    $add_update_Work = 2;
                 } else {
                     $options['id'] = $work_id;
                     $add_update_Work = $this->workModel->updateWorkExperience($options);
                 }
             } else {
                 // insert baru
-                if ($i==0)
+                if ($i == 0)
                     $options['is_current_work'] = 1;
-                if ($company!="" && $year!="" && $position!="" && $address!="" && $telephone!="" && $fax!="" && $work_hp!="" && $work_email!="") {
+                if ($company != "" && $year != "" && $position != "" && $address != "" && $telephone != "" && $fax != "" && $work_hp != "" && $work_email != "") {
                     $add_update_Work = $this->workModel->addWorkExperience($options);
                 }
             }
@@ -826,7 +788,7 @@ class profile extends CI_Controller {
         }
         $options = array();
         // delete work_experience
-        foreach($id_array as $old_id) :
+        foreach ($id_array as $old_id) :
             if (in_array($old_id, $old_array)) {
                 
             } else {
@@ -834,13 +796,12 @@ class profile extends CI_Controller {
                 $options['id'] = $old_id;
                 $delete_Work = $this->workModel->deleteWorkExperience($options);
                 if (is_bool($delete_Work)) {
-                    echo 'error on delete : id '.$old_id;
+                    echo 'error on delete : id ' . $old_id;
                 }
             }
         endforeach;
-        
     }
-    
+
     /**
      * editVisibility()
      *
@@ -849,15 +810,15 @@ class profile extends CI_Controller {
      */
     function edit_visibility() {
         $user_id = $this->session->userdata('user_id');
-        
+
         $data['struktur'] = $this->getStruktur2('Visibility');
         $data['content_edit_view'] = 'edit_profile/edit_visibility_view';
-        
+
         // get visibility data from database
         $this->load->model('visibility_status', 'visibilityModel');     //load visibility model
-        $option = array('id'=>$user_id);
+        $option = array('id' => $user_id);
         $getVisibility = $this->visibilityModel->getVisibilityStatuses($option);
-        
+
         $data['content_edit'] = array(
             'home_address' => $getVisibility[0]->home_address,
             'home_telephone' => $getVisibility[0]->home_telephone,
@@ -871,13 +832,13 @@ class profile extends CI_Controller {
             'work_experience' => $getVisibility[0]->work_experience,
             'current_experience' => $getVisibility[0]->current_experience
         );
-        
-        $text = $this->load->view($data['content_edit_view'],$data,true);
+
+        $text = $this->load->view($data['content_edit_view'], $data, true);
         $this->output
-        ->set_content_type('application/json')
-        ->set_output(json_encode(array('text' => $text, 'struktur'=>$data['struktur'])));
+                ->set_content_type('application/json')
+                ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
     }
-    
+
     /**
      * submitVisibility
      *
@@ -886,76 +847,76 @@ class profile extends CI_Controller {
      */
     function submitVisibility() {
         $user_id = $this->session->userdata('user_id');
-        
+
         if ($this->input->post('home_address')) {
             $home_address = 1;
         } else {
             $home_address = 0;
         }
-        
+
         if ($this->input->post('home_telephone')) {
             $home_telephone = 1;
         } else {
             $home_telephone = 0;
         }
-        
+
         if ($this->input->post('handphone')) {
             $handphone = 1;
         } else {
             $handphone = 0;
         }
-        
+
         if ($this->input->post('email')) {
             $email = 1;
         } else {
             $email = 0;
         }
-        
+
         if ($this->input->post('interest')) {
             $interest = 1;
         } else {
             $interest = 0;
         }
-        
+
         if ($this->input->post('birthdate')) {
             $birthdate = 1;
         } else {
             $birthdate = 0;
         }
-        
+
         if ($this->input->post('s1')) {
             $s1 = 1;
         } else {
             $s1 = 0;
         }
-        
+
         if ($this->input->post('s2')) {
             $s2 = 1;
         } else {
             $s2 = 0;
         }
-        
+
         if ($this->input->post('s3')) {
             $s3 = 1;
         } else {
             $s3 = 0;
         }
-        
+
         if ($this->input->post('work_experience')) {
             $work_experience = 1;
         } else {
             $work_experience = 0;
         }
-        
+
         if ($this->input->post('current_experience')) {
             $current_experience = 1;
         } else {
             $current_experience = 0;
         }
-        
+
         //load visibilityModel
         $this->load->model('visibility_status', 'visibilityModel');
-        
+
         //bikin array option untuk update
         $options = array(
             'id' => $user_id,
@@ -972,13 +933,13 @@ class profile extends CI_Controller {
             'work_experience' => $work_experience,
             'current_experience' => $current_experience
         );
-        
+
         //update visibility table
         $getReturnUpdate = $this->visibilityModel->updateVisibilityStatus($options);
-                
+
         redirect('profile/editProfile', 'refresh');
     }
-    
+
     /**
      * setUserData($user_id)
      *
@@ -989,30 +950,30 @@ class profile extends CI_Controller {
     function setUserData($user_id) {
         //Load model user
         $this->load->model('user', 'userModel');
-        $options = array('id'=>$user_id);
+        $options = array('id' => $user_id);
         $getUser = $this->userModel->getUsers($options);
         if (!$getUser) { // error
             redirect('/home', 'refresh');
         }
         // load visibility status
         $this->load->model('visibility_status', 'visModel');
-        $visibility_res = $this->visModel->getVisibilityStatuses(array('user_id'=>$user_id));
+        $visibility_res = $this->visModel->getVisibilityStatuses(array('user_id' => $user_id));
         $visibility = $visibility_res[0];
         // cek apakah dia melihat profilnya sendiri
-        if ($this->session->userdata('user_id')==$user_id) { 
+        if ($this->session->userdata('user_id') == $user_id) {
             // set semua visibility menjadi 1
-            $visibility->home_address=1;
-            $visibility->home_telephone=1;
-            $visibility->handphone=1;
-            $visibility->email=1;
-            $visibility->interest=1;
-            $visibility->S1=1;
-            $visibility->S2=1;
-            $visibility->S3=1;
-            $visibility->work_experience=1;
-            $visibility->current_experience=1;
+            $visibility->home_address = 1;
+            $visibility->home_telephone = 1;
+            $visibility->handphone = 1;
+            $visibility->email = 1;
+            $visibility->interest = 1;
+            $visibility->S1 = 1;
+            $visibility->S2 = 1;
+            $visibility->S3 = 1;
+            $visibility->work_experience = 1;
+            $visibility->current_experience = 1;
         }
-        
+
         $name = $getUser[0]->name;
         $nickname = $getUser[0]->nickname;
         $home_address = $getUser[0]->home_address;
@@ -1020,17 +981,17 @@ class profile extends CI_Controller {
         $handphone = $getUser[0]->handphone;
         $email = $getUser[0]->email;
         $image = $getUser[0]->profpict_url;
-        if ($image=="")
+        if ($image == "")
             $image = 'res/default.jpg';
-        $tahun_kelulusan= $getUser[0]->graduate_year;
+        $tahun_kelulusan = $getUser[0]->graduate_year;
         // load model unit
         $this->load->model('unit', 'unitModel');
-        $options = array('id'=>$getUser[0]->last_unit_id);
+        $options = array('id' => $getUser[0]->last_unit_id);
         $getUnitLabel = $this->unitModel->getUnits($options);
-        $kelulusan= $getUnitLabel[0]->label.' St. Ursula';
+        $kelulusan = $getUnitLabel[0]->label . ' St. Ursula';
         // load model pendidikan
         $this->load->model('education', 'eduModel');
-        $options = array('user_id'=>$user_id,'sortBy'=>'graduate_year','sortDirection'=>'desc');
+        $options = array('user_id' => $user_id, 'sortBy' => 'graduate_year', 'sortDirection' => 'desc');
         $getPendidikan = $this->eduModel->getEducations($options);
         $pendidikan = array();
         if ($getPendidikan) {
@@ -1041,24 +1002,26 @@ class profile extends CI_Controller {
             $count = 0;
             $year = date('Y');
             foreach ($getPendidikan as $edu) :
-                if ($edu->graduate_year>$year) $current=1; else $current=0;
-                $options = array('id'=>$edu->level_id);
+                if ($edu->graduate_year > $year)
+                    $current = 1; else
+                    $current=0;
+                $options = array('id' => $edu->level_id);
                 $degree = $this->levelModel->getLevels($options);
-                $options = array('id'=>$edu->major_id);
+                $options = array('id' => $edu->major_id);
                 $major = $this->majorModel->getMajors($options);
                 if (is_bool($major)) {
                     $major = 'none';
                 } else {
                     $major = $major[0]->major;
                 }
-                $options = array('id'=>$edu->minor_id);
+                $options = array('id' => $edu->minor_id);
                 $minor = $this->majorModel->getMajors($options);
                 if (is_bool($minor)) {
                     $minor = 'none';
                 } else {
                     $minor = $minor[0]->major;
                 }
-                $pendidikan[$count] = array (
+                $pendidikan[$count] = array(
                     'degree' => $degree[0]->label,
                     'where' => $edu->school,
                     'major' => $major,
@@ -1068,16 +1031,16 @@ class profile extends CI_Controller {
                 $count++;
             endforeach;
         }
-        
+
         // load model interest_in
         $this->load->model('interested_in', 'interestInModel');
-        $options = array('user_id'=>$user_id);
+        $options = array('user_id' => $user_id);
         $getInterestIn = $this->interestInModel->getInterestedIn($options);
-        $interest = array ();
+        $interest = array();
         // load model interest_in
         $this->load->model('interest', 'interestModel');
         if ($getInterestIn) {
-            $count=0;
+            $count = 0;
             foreach ($getInterestIn as $itr) :
                 $options = array('id' => $itr->interest_id);
                 $getInterest = $this->interestModel->getInterests($options);
@@ -1085,16 +1048,16 @@ class profile extends CI_Controller {
                 $count++;
             endforeach;
         }
-        
+
         // load model work_experience
         $this->load->model('work_experience', 'workModel');
-        $options = array('user_id'=>$user_id);
+        $options = array('user_id' => $user_id);
         $getWork = $this->workModel->getWorkExperiences($options);
         $working_experience = array();
         if ($getWork) {
-            $count=0;
+            $count = 0;
             foreach ($getWork as $work):
-                $working_experience[$count] = array (
+                $working_experience[$count] = array(
                     'company' => $work->company,
                     'year' => $work->year,
                     'position' => $work->position,
@@ -1108,11 +1071,11 @@ class profile extends CI_Controller {
                 $count++;
             endforeach;
         }
-        
-        $calendar= 'Ini calendar';
-        
+
+        $calendar = 'Ini calendar';
+
         $user_data = array(
-            'user_id'=>$user_id,
+            'user_id' => $user_id,
             'name' => $name,
             'nickname' => $nickname,
             'home_address' => $home_address,
@@ -1126,48 +1089,50 @@ class profile extends CI_Controller {
             'pendidikan' => $pendidikan,
             'interest' => $interest,
             'working_experience' => $working_experience,
-            'visibility'=>$visibility
+            'visibility' => $visibility
         );
         return $user_data;
     }
 
-
     function getStruktur($name) {
-        $struktur = array (
-            array (
-                'islink'=>1,
-                'link'=>'home',
-                'label'=>'Home'
+        $struktur = array(
+            array(
+                'islink' => 1,
+                'link' => 'home',
+                'label' => 'Home'
             ),
-            array (
-                'islink'=>0,
-                'label'=>$name
+            array(
+                'islink' => 0,
+                'label' => $name
             )
         );
         return $struktur;
     }
-    
+
     function getStruktur2($name) {
-        $struktur = array (
-            array (
-                'islink'=>1,
-                'link'=>'home',
-                'label'=>'Home'
+        $struktur = array(
+            array(
+                'islink' => 1,
+                'link' => 'home',
+                'label' => 'Home'
             ),
-            array (
-                'islink'=>0,
-                'label'=>'Edit Your Profile'
+            array(
+                'islink' => 0,
+                'label' => 'Edit Your Profile'
             ),
-            array (
-                'islink'=>0,
-                'label'=>$name
+            array(
+                'islink' => 0,
+                'label' => $name
             )
         );
         return $struktur;
     }
-    
-    function getFriendList($userid){
+
+    function getAllFriendListLimited($userid, $limit) {
         //Get friend list dari $userid :
+        $result = array();
+        $totalnumfriends = 0;
+        
         $this->load->model('friend_relationship', 'friendRelationshipModel');
         $option1 = array('userid_1' => $userid);
         $option2 = array('userid_2' => $userid);
@@ -1176,6 +1141,10 @@ class profile extends CI_Controller {
         $friends = array();
         if (!(is_bool($getFriend1))) {
             $numfriends1 = count($getFriend1);
+            $totalnumfriends += $numfriends1;
+            if ($numfriends1 > $limit) {
+                $numfriends1 = $limit;
+            }
         } else {
             $numfriends1 = 0;
         }
@@ -1200,7 +1169,16 @@ class profile extends CI_Controller {
         }
 
         $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
-        $numfriends2 = count($getFriend2);
+        if (!(is_bool($getFriend2))) {
+            $numfriends2 = count($getFriend2);
+            $totalnumfriends += $numfriends2;
+            if ($numfriends2 > $limit) {
+                $numfriends2 = $limit;
+            }
+        } else {
+            $numfriends2 = 0;
+        }
+
         $numAllfriends = $numfriends1 + $numfriends2;
 
         if (!is_bool($getFriend2)) {
@@ -1219,10 +1197,37 @@ class profile extends CI_Controller {
                 $friends[$i] = $friend;
             }
         }
-        
-        return $friends;
+        $result['friends'] = $friends;
+        $result['total_friends'] = $totalnumfriends;
+        return $result;
     }
-    
+
+    function countNumberFriends($userid) {
+        //Get friend list dari $userid :
+        $this->load->model('friend_relationship', 'friendRelationshipModel');
+        $option1 = array('userid_1' => $userid);
+        $option2 = array('userid_2' => $userid);
+
+        $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);
+        $friends = array();
+        if (!(is_bool($getFriend1))) {
+            $numfriends1 = count($getFriend1);
+        } else {
+            $numfriends1 = 0;
+        }
+
+
+        $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+        if (!(is_bool($getFriend2))) {
+            $numfriends2 = count($getFriend2);
+        } else {
+            $numfriends2 = 0;
+        }
+
+        $numAllfriends = $numfriends1 + $numfriends2;
+
+        return $numAllfriends;
+    }
 }
 
 ?>
