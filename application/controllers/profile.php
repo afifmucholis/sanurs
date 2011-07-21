@@ -126,7 +126,7 @@ class profile extends CI_Controller {
         $this->load->model('interest', 'interestModel');
         $option = array('sortBy' => 'interest');
         $getInterestList = $this->interestModel->getInterests($option);
-        $data['interest_list'] = $getInterestList;
+        $data['interest_list'] = $getInterestList;  //daftar interest yang ada di database
         
         $this->load->model('interested_in', 'interestedInModel');
         $option = array(
@@ -134,7 +134,20 @@ class profile extends CI_Controller {
             'columnSelect' => 'interest_id'
         );
         $getUserInterests = $this->interestedInModel->getInterestedIn($option);
-        $data['user_interest'] = $getUserInterests;
+        $data['user_interest'] = $getUserInterests; //daftar interest yang dimiliki user saat ini
+        
+        /*** get list of gender ***/
+        $this->load->model('gender', 'genderModel');
+        $option = array();
+        $getGender = $this->genderModel->getGenders($option);
+        $gender_list = array();
+        if ($getGender) {
+            foreach ($getGender as $gender) {
+                $gender_list[$gender->id] = $gender->label;
+            }
+        }
+        $data['gender_list'] = $gender_list;
+        /*** end of get list of gender ***/
         
         // load basic user info
         $this->load->model('user','userModel');
@@ -144,19 +157,15 @@ class profile extends CI_Controller {
             //gak ada user yang memenuhi
             redirect('/home', 'refresh');
         } else {
-            // get gender
-            $this->load->model('gender','genderModel');
-            $options = array('id' => $getReturn[0]->gender_id);
-            $genderLabel = $this->genderModel->getGenders($options);
             if ($getReturn[0]->profpict_url=="")
                 $img_url='res/default.jpg';
             else
                 $img_url=$getReturn[0]->profpict_url;
-            $data['content_edit'] = array(
+                $data['content_edit'] = array(
                 'name' => $getReturn[0]->name,
                 'img_url' => $img_url,
                 'nickname' => $getReturn[0]->nickname,
-                'gender' => $genderLabel[0]->label,
+                'gender' => $getReturn[0]->gender_id,
                 'home_address' => $getReturn[0]->home_address,
                 'home_telephone' => $getReturn[0]->home_telephone,
                 'handphone' => $getReturn[0]->handphone
@@ -262,10 +271,6 @@ class profile extends CI_Controller {
         $this->load->model('user','userModel');
         $nickname = $this->input->post('nick_name');
         $gender = $this->input->post('gender');
-        // get gender
-        $this->load->model('gender','genderModel');
-        $options = array('label' => $gender);
-        $getGender_id = $this->genderModel->getGenders($options);
         
         $home_address = $this->input->post('home_address');
         $home_telephone = $this->input->post('home_telephone');
@@ -276,7 +281,7 @@ class profile extends CI_Controller {
         $options = array(
             'id'=>$user_id,
             'nickname'=>$nickname,
-            'gender'=>$getGender_id[0]->id,
+            'gender_id' => $gender,
             'home_address'=>$home_address,
             'home_telephone'=>$home_telephone,
             'handphone'=>$handphone
