@@ -149,7 +149,7 @@ class profile extends CI_Controller {
         $getUserInterests = $this->interestedInModel->getInterestedIn($option);
         $data['user_interest'] = $getUserInterests;
 
-        /*         * * get list of gender ** */
+        /*** get list of gender ***/
         $this->load->model('gender', 'genderModel');
         $option = array();
         $getGender = $this->genderModel->getGenders($option);
@@ -160,7 +160,7 @@ class profile extends CI_Controller {
             }
         }
         $data['gender_list'] = $gender_list;
-        /*         * * end of get list of gender ** */
+        /*** end of get list of gender ***/
 
         // load basic user info
         $this->load->model('user', 'userModel');
@@ -170,10 +170,6 @@ class profile extends CI_Controller {
             //gak ada user yang memenuhi
             redirect('/home', 'refresh');
         } else {
-            // get gender
-            $this->load->model('gender', 'genderModel');
-            $options = array('id' => $getReturn[0]->gender_id);
-            $genderLabel = $this->genderModel->getGenders($options);
             if ($getReturn[0]->profpict_url == "")
                 $img_url = 'res/default.jpg';
             else
@@ -183,7 +179,7 @@ class profile extends CI_Controller {
                 'name' => $getReturn[0]->name,
                 'img_url' => $img_url,
                 'nickname' => $getReturn[0]->nickname,
-                'gender' => $genderLabel[0]->label,
+                'gender' => $getReturn[0]->gender_id,
                 'home_address' => $getReturn[0]->home_address,
                 'home_telephone' => $getReturn[0]->home_telephone,
                 'handphone' => $getReturn[0]->handphone
@@ -214,7 +210,7 @@ class profile extends CI_Controller {
 
         /*         * * update area of interest ** */
         $myInterests = $this->input->post('interest');
-        $this->load->model('interest_in', 'interestedInModel');
+        $this->load->model('interested_in', 'interestedInModel');
         if ($myInterests) {
             //hapus dulu yg di database tapi gak ada di array
             $itemDel = array();
@@ -283,71 +279,71 @@ class profile extends CI_Controller {
                     $returnDel = $this->interestedInModel->deleteInterestedIn($option);
                 }
 
-                /*                 * * selesai update area of interest ** */
-
-                $this->load->model('user', 'userModel');
-                $nickname = $this->input->post('nick_name');
-                $gender = $this->input->post('gender');
-
-                $home_address = $this->input->post('home_address');
-                $home_telephone = $this->input->post('home_telephone');
-                $handphone = $this->input->post('handphone');
-                // proses data disini
-                $image_url = substr($this->input->post('url_img'), strlen(base_url()));
-
-                $options = array(
-                    'id' => $user_id,
-                    'nickname' => $nickname,
-                    'gender_id' => $gender,
-                    'home_address' => $home_address,
-                    'home_telephone' => $home_telephone,
-                    'handphone' => $handphone
-                );
-                $error_rename_img = false;
-                $dir = explode("/", $image_url);
-                $ext = explode(".", $image_url);
-                if (count($dir) == 2) {
-                    // $image_url still null
-                } else {
-                    // cek apakah $default image atau image upload baru
-                    if ($dir[1] == "temp") {
-                        // cek file lama kalau ada
-                        $options2 = array('id' => $user_id);
-                        $getReturn = $this->userModel->getUsers($options2);
-                        $img_lama = $getReturn[0]->profpict_url;
-                        if ($img_lama != "") {
-                            // delete file yang lama
-                            unlink('./' . $img_lama);
-                        }
-                        // image baru ada di folder temp
-                        $new_imgurl = 'res/user/user_' . $user_id . '.' . $ext[count($ext) - 1];
-                        if (rename('./' . $image_url, './' . $new_imgurl)) {
-                            $options['profpict_url'] = $new_imgurl;
-                        } else {
-                            $error_rename_img = true;
-                        }
-                    } else {
-                        // image lama tidak perlu diupdate
-                    }
-                }
-                // update database dengan opsi $options
-                $cek_bol = $this->userModel->updateUser($options);
-                if (is_bool($cek_bol) || count($cek_bol) != 1 || $error_rename_img) {
-                    // update gagal
-                    $message['status'] = 'An error occurred';
-                    $message['message'] = 'An Error occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
-                } else {
-                    // update berhasil
-                    $message['status'] = 'Update success';
-                    $message['message'] = 'Your Basic Info has successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
-                }
-                $message['page_before'] = 'Edit Your Profile';
-                $message['page_link'] = 'profile/editProfile';
-                // redirect ke info view
-                $this->session->set_flashdata('message', $message);
-                redirect('info/show', 'refresh');
+               
             }
         }
+         /*                 * * selesai update area of interest ** */
+        $this->load->model('user', 'userModel');
+        $nickname = $this->input->post('nick_name');
+        $gender = $this->input->post('gender');
+
+        $home_address = $this->input->post('home_address');
+        $home_telephone = $this->input->post('home_telephone');
+        $handphone = $this->input->post('handphone');
+        // proses data disini
+        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+
+        $options = array(
+            'id' => $user_id,
+            'nickname' => $nickname,
+            'gender_id' => $gender,
+            'home_address' => $home_address,
+            'home_telephone' => $home_telephone,
+            'handphone' => $handphone
+        );
+        $error_rename_img = false;
+        $dir = explode("/", $image_url);
+        $ext = explode(".", $image_url);
+        if (count($dir) == 2) {
+            // $image_url still null
+        } else {
+            // cek apakah $default image atau image upload baru
+            if ($dir[1] == "temp") {
+                // cek file lama kalau ada
+                $options2 = array('id' => $user_id);
+                $getReturn = $this->userModel->getUsers($options2);
+                $img_lama = $getReturn[0]->profpict_url;
+                if ($img_lama != "") {
+                    // delete file yang lama
+                    unlink('./' . $img_lama);
+                }
+                // image baru ada di folder temp
+                $new_imgurl = 'res/user/user_' . $user_id . '.' . $ext[count($ext) - 1];
+                if (rename('./' . $image_url, './' . $new_imgurl)) {
+                    $options['profpict_url'] = $new_imgurl;
+                } else {
+                    $error_rename_img = true;
+                }
+            } else {
+                // image lama tidak perlu diupdate
+            }
+        }
+        // update database dengan opsi $options
+        $cek_bol = $this->userModel->updateUser($options);
+        if (is_bool($cek_bol) || count($cek_bol) != 1 || $error_rename_img) {
+            // update gagal
+            $message['status'] = 'An error occurred';
+            $message['message'] = 'An Error occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
+        } else {
+            // update berhasil
+            $message['status'] = 'Update success';
+            $message['message'] = 'Your Basic Info has successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+        }
+        $message['page_before'] = 'Edit Your Profile';
+        $message['page_link'] = 'profile/editProfile';
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show', 'refresh');
     }
 
     /**
