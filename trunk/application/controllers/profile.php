@@ -1325,5 +1325,5 @@ class profile extends CI_Controller {
         return $numAllfriends;
     }
 }
-
+    
 ?>
