@@ -149,6 +149,19 @@ class profile extends CI_Controller {
         $getUserInterests = $this->interestedInModel->getInterestedIn($option);
         $data['user_interest'] = $getUserInterests;
 
+        /*** get list of gender ***/
+        $this->load->model('gender', 'genderModel');
+        $option = array();
+        $getGender = $this->genderModel->getGenders($option);
+        $gender_list = array();
+        if ($getGender) {
+            foreach ($getGender as $gender) {
+                $gender_list[$gender->id] = $gender->label;
+            }
+        }
+        $data['gender_list'] = $gender_list;
+        /*** end of get list of gender ***/
+        
         // load basic user info
         $this->load->model('user', 'userModel');
         $options = array('id' => $this->session->userdata('user_id'));
