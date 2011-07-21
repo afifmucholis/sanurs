@@ -3,6 +3,13 @@
 var popupStatus = 0;
 var id_click ="";
 
+function show_popup() {
+     id_click =  "#upload_popup";
+    //centering with css
+    centerPopup();
+    //load popup
+    loadPopup();
+}
 
 //loading popup with jQuery magic!
 function loadPopup(){

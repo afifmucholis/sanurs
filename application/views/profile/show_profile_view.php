@@ -24,6 +24,11 @@
             <div id="add_as_friend">
                 <a href="#" onclick="javascript:unfriend('<?php echo $user_data['user_id']; ?>')";>Block from friend</a>
             </div>
+        <?php } else if ($add_as_friend == 4) { ?>
+            <div id="add_as_friend">
+                <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', true)";>Confirm</a> &nbsp;&nbsp;
+                <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', false)";>Reject</a>
+            </div>
         <?php } ?>
         </br></br>
         <div id="info">
@@ -89,6 +94,58 @@
                 success: function(msg) {
                     if (msg.success==1) {
                         $('#add_as_friend').html(link_add);
+                        // bind function
+                        $('#add_as_friend')
+                            .find('.popup_link')
+                            .unbind('click.pop')
+                            .bind('click.pop', function(){
+                               show_popup();
+                            });
+                    } else {
+                        alert('Error');
+                    }
+                }
+            });
+        }
+        return false;
+    }
+    
+    function confirm_friend(id, val) {
+        var message='';
+        var link = '';
+        var link_add = '<a href="#" class="popup_link">Add as friend</a>';
+        var link_block = '<a href="#" onclick="javascript:unfriend(\'<?php echo $user_data['user_id']; ?>\')";>Block from friend</a>';
+        if (val) {
+            message = 'Are you sure to confirm his friend request?';
+            link = '<?php echo site_url('friend/confirm_request');?>';
+        } else {
+            message = 'Are you sure to reject his friend request?';
+            link = '<?php echo site_url('friend/confirm_request');?>';
+        }
+        if (confirm(message)) {
+            var form_data = {
+                id : id,
+                type : val,
+		ajax: '1'		
+            };
+
+            $.ajax({
+                url: link,
+                type: 'POST',
+                data: form_data,
+                success: function(msg) {
+                    if (msg.success==1) {
+                        if (val) {
+                            $('#add_as_friend').html(link_block);
+                        } else {
+                            $('#add_as_friend').html(link_add);
+                            $('#add_as_friend')
+                                .find('.popup_link')
+                                .unbind('click.pop')
+                                .bind('click.pop', function(){
+                                   show_popup();
+                                });
+                        }
                     } else {
                         alert('Error');
                     }

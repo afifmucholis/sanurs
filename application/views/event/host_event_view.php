@@ -40,6 +40,10 @@
     <?php
         echo form_label('Where : ','where')."<br/>";
         echo form_input('where', set_value('where'), 'id="where"')."<br/>";
+        echo form_label('Contact Person : ','cp')."<br/>";
+        echo form_input('cp', '', 'id="cp"')."<br/>";
+        echo form_label('Contact Person HP : ','cp_hp')."<br/>";
+        echo form_input('cp_hp', '', 'id="cp_hp"')."<br/>";
         echo form_label('Description : ','description')."<br/>";
         echo form_input('description', set_value('description'), 'id="description"')."<br/>";
         echo "Select category for this event<br/>";
