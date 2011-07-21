@@ -341,48 +341,61 @@ class Event extends CI_Controller {
         if ($this->form_validation->run() == FALSE) {
             $this->host();
         } else {
-            $image_url = substr($this->input->post('url_img'), strlen(base_url()));
-            $ext = explode(".", $image_url);
-            $title = $this->input->post('title');
-            $when = $this->input->post('when');
-            $where = $this->input->post('where');
-            $description = $this->input->post('description');
-            $category_event = $this->input->post('category_event');
-            // convert php date to mysql date
-            $phpdate = strtotime($when);
-            $when2 = date( 'Y-m-d H:i:s', $phpdate);
-            $options = array(
-                'title' => $title,
-                'description' => $description,
-                'start_time' => $when2,
-                'venue' => $where,
-                'category_event_id' => $category_event,
-                'image_url' => $image_url
-            );
-            $event_id = $this->eventModel->addEvent($options); // masukkan data ke tabel event
+            try {
+                $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+                $ext = explode(".", $image_url);
+                $title = $this->input->post('title');
+                $when = $this->input->post('when');
+                $where = $this->input->post('where');
+                $description = $this->input->post('description');
+                $category_event = $this->input->post('category_event');
+                // convert php date to mysql date
+                $phpdate = strtotime($when);
+                $when2 = date('Y-m-d H:i:s', $phpdate);
+                $options = array(
+                    'title' => $title,
+                    'description' => $description,
+                    'start_time' => $when2,
+                    'venue' => $where,
+                    'category_event_id' => $category_event,
+                    'image_url' => $image_url
+                );
+                $event_id = $this->eventModel->addEvent($options); // masukkan data ke tabel event
 
-            $options = array(
-                'user_id' => $this->session->userdata('user_id'),
-                'event_id' => $event_id
-            );
-            $host_event_id = $this->hosteventModel->addHostEvent($options); // masukkan data ke tabel host_event
-            if (is_bool($host_event_id) || is_bool($event_id)) { // error
-                echo 'error on database';
-            } else {
-                if ($image_url != 'res/default.jpg') {
-                    $new_imgurl = 'res/event/event_' . $event_id . '.' . $ext[count($ext) - 1];
-                    if (rename('./' . $image_url, './' . $new_imgurl)) {
-                        // update new image url yang telah direname
-                        $options = array('id' => $event_id, 'image_url' => $new_imgurl);
-                        $this->eventModel->updateEvent($options);
-                        echo 'success';
-                    } else {
-                        echo 'error moving file';
-                    }
+                $options = array(
+                    'user_id' => $this->session->userdata('user_id'),
+                    'event_id' => $event_id
+                );
+                $host_event_id = $this->hosteventModel->addHostEvent($options); // masukkan data ke tabel host_event
+                if (is_bool($host_event_id) || is_bool($event_id)) { // error
+                    throw new Exception('Error on database : insert event.');
                 } else {
-                    echo 'success';
+                    if ($image_url != 'res/default.jpg') {
+                        $new_imgurl = 'res/event/event_' . $event_id . '.' . $ext[count($ext) - 1];
+                        if (rename('./' . $image_url, './' . $new_imgurl)) {
+                            // update new image url yang telah direname
+                            $options = array('id' => $event_id, 'image_url' => $new_imgurl);
+                            $this->eventModel->updateEvent($options);
+                            $message['status'] = 'Success';
+                            $message['message'] = 'Event is successfully created.'.br(1).'Click '.anchor('event/show_event/'.$event_id,'here').' to view this event.';
+                        } else {
+                            throw new Exception('Error moving file picture');
+                        }
+                    } else {
+                        $message['status'] = 'Success';
+                        $message['message'] = 'Event is successfully created.'.br(1).'Click '.anchor('event/show_event/'.$event_id,'here').' to view this event.';
+                    }
                 }
+            } catch (Exception $e) {
+                $message['status'] = 'An Error Occurred';
+                $message['message'] = $e->getMessage().''.br(1).'Click '.anchor('event/host','here').' to try again.';
             }
+            $message['page_before'] = 'Host an Event';
+            $message['page_link'] = 'event/host';
+
+            // redirect ke info view
+            $this->session->set_flashdata('message', $message);
+            redirect('info/show','refresh');
         }
     }
 

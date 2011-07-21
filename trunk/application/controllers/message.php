@@ -102,82 +102,93 @@ class Message extends CI_Controller {
 
 
         $this->load->model('friend_relationship', 'friendRelationshipModel');
-
-        if ($idto == '') {
-            //Get ID dari to_name :
-            $this->load->model('user', 'userModel');
-            $optionUser = array('name' => $to);
-            $getUsers = $this->userModel->getUsers($optionUser);
-            if (is_bool($getUsers)) {
-                echo "No user with name " . $to;
-            } else {
-                //Cek ada 1 gak :
-                if (count($getUsers) == 1) {
-                    $idto = $getUsers[0]->id;
+        try {
+            if ($idto == '') {
+                //Get ID dari to_name :
+                $this->load->model('user', 'userModel');
+                $optionUser = array('name' => $to);
+                $getUsers = $this->userModel->getUsers($optionUser);
+                if (is_bool($getUsers)) {
+                    throw new Exception("No user with name " . $to);
                 } else {
-                    //Ada banyak user dengan nama $to
-                    //Ambil nama yang friend ama dia
-                    //Kalo ternyata friend dengan nama $to juga banyak, kasitau
-                    $countfriend = 0;
-                    for ($i = 0; $i < count($getUsers); ++$i) {
-                        $idcalon = $getUsers[$i]->id;
-
-                        $option1 = array('userid_1' => $idcalon, 'userid_2' => $sender);
-                        $option2 = array('userid_2' => $idcalon, 'userid_1' => $sender);
-
-                        $getReturn1 = $this->friendRelationshipModel->getFriendRelationships($option1);
-                        $getReturn2 = $this->friendRelationshipModel->getFriendRelationships($option2);
-
-                        if (is_bool($getReturn1) && is_bool($getReturn2)) {
-                            
-                        } else {
-                            ++$countfriend;
-                            $friendid = $getUsers[$i]->id;
-                        }
-                    }
-                    if ($countfriend == 1) {
-                        $idto = $friendid;
-                    } else if ($countfriend == 0) {
-                        echo "No friends of you have name " . $to;
+                    //Cek ada 1 gak :
+                    if (count($getUsers) == 1) {
+                        $idto = $getUsers[0]->id;
                     } else {
-                        echo "More than 1 friends that have name " . $to;
+                        //Ada banyak user dengan nama $to
+                        //Ambil nama yang friend ama dia
+                        //Kalo ternyata friend dengan nama $to juga banyak, kasitau
+                        $countfriend = 0;
+                        for ($i = 0; $i < count($getUsers); ++$i) {
+                            $idcalon = $getUsers[$i]->id;
+
+                            $option1 = array('userid_1' => $idcalon, 'userid_2' => $sender);
+                            $option2 = array('userid_2' => $idcalon, 'userid_1' => $sender);
+
+                            $getReturn1 = $this->friendRelationshipModel->getFriendRelationships($option1);
+                            $getReturn2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+
+                            if (is_bool($getReturn1) && is_bool($getReturn2)) {
+                                
+                            } else {
+                                ++$countfriend;
+                                $friendid = $getUsers[$i]->id;
+                            }
+                        }
+                        if ($countfriend == 1) {
+                            $idto = $friendid;
+                        } else if ($countfriend == 0) {
+                            throw new Exception("No friends of you have name " . $to);
+                        } else {
+                            throw new Exception("More than 1 friends that have name " . $to);
+                        }
                     }
                 }
             }
-        }
 
-        //Cek $idto ini udah friend ma user gak :
-        $option1 = array('userid_1' => $idto, 'userid_2' => $sender);
-        $option2 = array('userid_2' => $idto, 'userid_1' => $sender);
+            //Cek $idto ini udah friend ma user gak :
+            $option1 = array('userid_1' => $idto, 'userid_2' => $sender);
+            $option2 = array('userid_2' => $idto, 'userid_1' => $sender);
 
-        $getReturn1 = $this->friendRelationshipModel->getFriendRelationships($option1);
-        $getReturn2 = $this->friendRelationshipModel->getFriendRelationships($option2);
+            $getReturn1 = $this->friendRelationshipModel->getFriendRelationships($option1);
+            $getReturn2 = $this->friendRelationshipModel->getFriendRelationships($option2);
 
-        if (is_bool($getReturn1) && is_bool($getReturn2)) {
-            //to bukan friend dari pengirim
-            if ($idto != '') {
-                echo "recipient is not your friend";
-            }
-        } else {
-            //Isi ke database message :
-            $this->load->model('message_model', 'messageModel');
-            $optionInsertMessage = array('subject' => $subject,
-                'userid_from' => $sender,
-                'userid_to' => $idto,
-                'message' => $message);
-            $rowId = $this->messageModel->addMessage($optionInsertMessage);
-            if (is_bool($rowId)) {
-                echo "Kirim message gagal";
+            if (is_bool($getReturn1) && is_bool($getReturn2)) {
+                //to bukan friend dari pengirim
+                if ($idto != '') {
+                    throw new Exception("recipient is not your friend");
+                }
             } else {
-                // load model notification
-                $this->load->model('notification_model','notifModel');
-                $notify = $sender_name." send you a new message.";
-                $link = 'message/view/inbox_view';
-                $options = array('userid_to'=>$idto,'message'=>$notify,'link'=>$link);
-                $addNotify = $this->notifModel->addNotification($options);
-                echo "Kirim message sukses";
+                //Isi ke database message :
+                $this->load->model('message_model', 'messageModel');
+                $optionInsertMessage = array('subject' => $subject,
+                    'userid_from' => $sender,
+                    'userid_to' => $idto,
+                    'message' => $message);
+                $rowId = $this->messageModel->addMessage($optionInsertMessage);
+                if (is_bool($rowId)) {
+                    throw new Exception("Kirim message gagal");
+                } else {
+                    // load model notification
+                    $this->load->model('notification_model', 'notifModel');
+                    $notify = $sender_name . " send you a new message.";
+                    $link = 'message/view/inbox_view';
+                    $options = array('userid_to' => $idto, 'message' => $notify, 'link' => $link);
+                    $addNotify = $this->notifModel->addNotification($options);
+                    $m['status'] = "Success";
+                    $m['message'] = "Kirim message sukses";
+                }
             }
+        } catch (Exception $e) {
+            $m['status'] = 'An Error Occurred';
+            $m['message'] = $e->getMessage().''.br(1).'Click '.anchor('message/view/new_message_view','here').' to send message again.';
         }
+        $m['page_before'] = 'Message';
+        $m['page_link'] = 'message/view/new_message_view';
+        
+        // redirect ke info view
+        $this->session->set_flashdata('message', $m);
+        redirect('info/show','refresh');
     }
 
     function getStruktur($view) {

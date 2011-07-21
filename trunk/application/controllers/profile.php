@@ -78,7 +78,9 @@ class profile extends CI_Controller {
 
             $options = array('userid_requester' => $user_view, 'userid_requested' => $user_id);
             $getFriendRequest = $this->friend_requestModel->getFriendRelationships($options);
-
+            $options = array('userid_requester' => $user_id, 'userid_requested' => $user_view);
+            $getFriendRequested = $this->friend_requestModel->getFriendRelationships($options);
+            
             $options = array('userid_1' => $user_view, 'userid_2' => $user_id);
             $getFriendRelationship = $this->friend_relationshipModel->getFriendRelationships($options);
             if (is_bool($getFriendRelationship)) {
@@ -90,6 +92,9 @@ class profile extends CI_Controller {
                 $data['add_as_friend'] = 3;
             } else if (!is_bool($getFriendRequest) && count($getFriendRequest) == 1) { // cek apakah masih requested
                 $data['add_as_friend'] = 2;
+            } else if (!is_bool($getFriendRequested) && count($getFriendRequested) == 1) { // cek apakah yg liat direquest friend
+                $data['add_as_friend'] = 4;
+                $data['id_request'] = $getFriendRequested[0]->id;
             }
         }
 

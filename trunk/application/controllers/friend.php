@@ -76,20 +76,32 @@ class friend extends CI_Controller {
         $name_requester = $this->session->userdata('name');
         // load model friend_request
         $this->load->model('friend_request','friendModel');
-        $options = array('userid_requester'=>$user_requester,'userid_requested'=>$user_id,'message'=>$message);
-        $addGan = $this->friendModel->addFriendRequest($options);
-        // load model notification
-        $this->load->model('notification_model','notifModel');
-        // add notifi ada yg nge request friend
-        $notify = $name_requester." wants to be your friend.";
-        $link = 'friend/friend_request';
-        $options = array('userid_to'=>$user_id,'message'=>$notify,'link'=>$link);
-        $addNotify = $this->notifModel->addNotification($options);
         
-        if (is_bool($addGan) || is_bool($addNotify)) {
-            echo 0;
+        // cek sudah ada request sebelumnya atau belum
+        $options = array('userid_requester'=>$user_requester,'userid_requested'=>$user_id);
+        $getGan = $this->friendModel->getFriendRelationships($options);
+        if (is_bool($getGan)) {
+            $options = array('userid_requester'=>$user_id,'userid_requested'=>$user_requester);
+            $getGan = $this->friendModel->getFriendRelationships($options);
+        }
+        if (is_bool($getGan)) {
+            $options = array('userid_requester'=>$user_requester,'userid_requested'=>$user_id,'message'=>$message);
+            $addGan = $this->friendModel->addFriendRequest($options);
+            // load model notification
+            $this->load->model('notification_model','notifModel');
+            // add notifi ada yg nge request friend
+            $notify = $name_requester." wants to be your friend.";
+            $link = 'friend/friend_request';
+            $options = array('userid_to'=>$user_id,'message'=>$notify,'link'=>$link);
+            $addNotify = $this->notifModel->addNotification($options);
+
+            if (is_bool($addGan) || is_bool($addNotify)) {
+                echo 0;
+            } else {
+                echo 1;
+            }
         } else {
-            echo 1;
+            echo 0;
         }
     }
     
@@ -103,6 +115,7 @@ class friend extends CI_Controller {
         if ($this->session->userdata('name')==null) {
             redirect('/home', 'refresh');
         }
+        $user_name = $this->session->userdata('name');
         $user_id = $this->session->userdata('user_id');
         $user_removed = $this->input->post('user_id');
         // load model friend relationship
@@ -117,8 +130,17 @@ class friend extends CI_Controller {
         $options = array('id'=>$getFriendID[0]->id);
         $deleteFriend = $this->frModel->deleteFriendRelationship($options);
         $success = 1;
-        if (is_bool($deleteFriend))
+        if (is_bool($deleteFriend)) {
             $success = 0;
+        } else {
+            // load model notification
+            $this->load->model('notification_model','notifModel');
+            // add notifi ada yg nge remove dari friend
+            $notify = $user_name." has removed you from being his friend.";
+            $link = 'profile/user/'.$user_id;
+            $options = array('userid_to'=>$user_removed,'message'=>$notify,'link'=>$link);
+            $addNotify = $this->notifModel->addNotification($options);
+        }
         $this->output
         ->set_content_type('application/json')
         ->set_output(json_encode(array('success' => $success)));
