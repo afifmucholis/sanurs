@@ -53,7 +53,7 @@ class show_all_friends extends CI_Controller {
         $total_friends = count($friends_list_result['friends']);
 
         $this->load->library('pagination');
-        $per_page = 1;
+        $per_page = 10;
         $offset = $this->input->post('offsetval');
 
         $friends_pagin_result = $this->getAllFriendListPaginate($per_page, $offset, $friends_list_result);

@@ -73,16 +73,8 @@ class Friend_List extends CI_Controller {
                 $friends[$i] = $friend;
             }
         }
-
-
-        /* $this->output
-        ->set_content_type('application/json')
-                ->set_output(json_encode($friends)); */
         echo json_encode($friends);
-        //echo json_encode($tes);
-        //echo array_to_json($friend);
     }
-
 }
 
 ?>
