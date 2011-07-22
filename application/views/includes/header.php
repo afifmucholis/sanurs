@@ -69,23 +69,23 @@
         <div id="sanur_title_description">
             <h2>Association of Students from St Ursula School</h2>
         </div>
-        
-        <div id="navigation">
-            <label><?php echo anchor('home','Home');?></label>
-            <label><?php echo anchor('about_us','About us');?></label>
-            <label><?php echo anchor('event','Event');?></label>
-            <label><?php echo anchor('news/show','News');?></label>
+
+        <ul class="navigation">
+            <li><a href="<?php echo site_url('home')?>">Home</a></li>
+            <li><a href="<?php echo site_url('about_us')?>">About Us</a></li>
+            <li><a href="<?php echo site_url('event')?>">Event</a></li>
+            <li><a href="<?php echo site_url('news/show')?>">News</a></li>
             <?php if ($this->session->userdata('name')==null) { ?>
-                <label><?php echo anchor('sign_in','Sign in');?></label>
-                <label><?php echo anchor('sign_up','Sign up');?></label>
-                <label><?php echo anchor('sign_in', 'Find a friend');?></label>
+                <li><a href="<?php echo site_url('sign_in')?>">Sign In</a></li>
+                <li><a href="<?php echo site_url('sign_up')?>">Sign Up</a></li>
+                <li><a href="<?php echo site_url('sign_in')?>">Find A Friend</a></li>
             <?php } else { ?>
-                <label><?php echo anchor('profile','My Profile');?></label>
-                <label><?php echo anchor('sign_in/sign_out','Sign out');?></label>
-                <label><?php echo anchor('message','Message');?></label>
-                <label><?php echo anchor('friend', 'Find a friend');?></label>
+                <li><a href="<?php echo site_url('profile')?>">My Profile</a></li>
+                <li><a href="<?php echo site_url('sign_in/sign_out')?>">Sign Out</a></li>
+                <li><a href="<?php echo site_url('message')?>">Message</a></li>
+                <li><a href="<?php echo site_url('friend')?>">Find a friend</a></li>
             <?php } ?>
-        </div>
+        </ul>
       
         <div id="history">
             <?php
