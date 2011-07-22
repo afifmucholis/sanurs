@@ -1,5 +1,5 @@
 <?php
-    if (count($all_news) == 0) {
+    if (is_bool($all_news) || count($all_news) == 0) {
         echo "No Any News.<br/>";
     } else {
         foreach ($all_news as $news) :
