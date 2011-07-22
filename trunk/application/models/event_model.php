@@ -48,7 +48,7 @@ class Event_Model extends CI_Model {
     }
 
     /**
-     * Method addAlumni : tambah alumni, no null allowed. Ini udah tested
+     * Method addEvent : tambah event, no null allowed. Ini udah tested
      * 
      * option: values
      * --------------
@@ -65,6 +65,8 @@ class Event_Model extends CI_Model {
      * @return type 
      */
     function addEvent($options = array()) {
+        //Default gambar : 
+        $options = $this->_default(array($this->image_url=>'res/default.jpg'), $options);
         //Cek yang required :
         if (!$this->_required(array($this->title,
                     $this->description,
