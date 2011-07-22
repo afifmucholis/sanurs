@@ -550,6 +550,9 @@ class friend extends CI_Controller {
     }
     function getStruktur2() {
         $struktur = array (
+            array('islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'),
             array (
                 'islink'=>1,
                 'link'=>'friend',
@@ -565,6 +568,9 @@ class friend extends CI_Controller {
     
     function getStruktur3() {
         $struktur = array (
+            array('islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'),
             array (
                 'islink'=>0,
                 'label'=>'Find A Friend'
