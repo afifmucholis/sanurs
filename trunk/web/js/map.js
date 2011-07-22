@@ -3,6 +3,7 @@ var geocoder;
 var userArray = [];     //menyimpan info user
 var markersArray = [];  //menyimpan marker dari overlay (objek) yang ada pada peta
 var locationArray = []; //menyimpan lokasi user (digunakan pada edit location)
+var areaLocation = [];  //isinya : name, latitude, longitude
 var markerCluster;
 
 /*
@@ -31,8 +32,7 @@ function initmap(page) {
                 lng = msg['lng'];
                 if (lat!=null && lng!=null) {
                     latlng = new google.maps.LatLng(lat,lng);
-                    addMarker('my location', latlng, true);
-                    //addMarker('my location', latlng, false);
+                    addMarker('my location', latlng, false);
                 }
                 clearOverlays();
                 showOverlay();
@@ -41,38 +41,60 @@ function initmap(page) {
         });
         // bisa create pin
         google.maps.event.addListener(map, 'click', function(event) {
-            alert(event.latLng);
             geocoder.geocode({
-                'latLng' : event.latLng },
+                'latLng' : event.latLng},
                 function(results, status) {
                     status = google.maps.GeocoderStatus.OK;
                     if (status) {
                         if (results[0]) {
                             var found = false;
                             var i = 0;
-                            //alert(results[0].formatted_address);
                             while (!found) {
-                                //if (results[0].address_components[i].types[0] == 'administrative_area_level_1') {
                                 if (results[0].address_components[i].types[0] == 'country') {
                                     found = true;
                                 } else {
                                     i++;
                                 }
                             }
-                            if (found) {
-                                alert(results[0].address_components[i].long_name);
-                                if (markersArray.length < 2) {
-                                    // pin cuma bisa 1 lokasi
-                                    deleteOverlays();
-                                    addMarker('my location', event.latLng, true);
-                                    clearOverlays();
-                                    showOverlay();
-                                    setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
-                                    setLocation();
-                                }
+                            if (markersArray.length > 0) {
+                                // pin cuma bisa 1 lokasi
+                                deleteOverlays();
+                                addMarker('my location', event.latLng, true);
+                                clearOverlays();
+                                showOverlay();
+                                setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
+                                setLocation();
+                            }
+                            
+                            name = results[0].address_components[i].long_name;
+                            if (areaLocation.length==0 || areaLocation[0]!=name) {
+                                var geocoder2 = new google.maps.Geocoder();
+                                geocoder2.geocode({
+                                    'address' : name},
+                                    function(results2,status2) {
+                                        if (status2 = google.maps.GeocoderStatus.OK) {
+                                            posisi = results2[0].geometry.location;
+                                            posisi = posisi.toString();
+                                            posisi = posisi.substring(1,posisi.length-1);
+                                            posisi = posisi.split(",", 2);
+                                            area_lat = parseFloat(posisi[0]);
+                                            area_lng = parseFloat(posisi[1]);
+                                            deleteArea();
+                                            addArea(name);
+                                            addArea(area_lat);
+                                            addArea(area_lng);
+                                            //alert(areaLocation[0]);
+                                            
+                                            $('input[name=area_name]').attr('value', areaLocation[0]);
+                                            $('input[name=area_lat]').attr('value', areaLocation[1]);
+                                            $('input[name=area_lng]').attr('value', areaLocation[2]);
+                                        }
+                                    }
+                                );
+                                //alert(areaLocation[0]);
                             }
                         } else {
-                            alert("daerah tidak terdefinisi, jangan pilih laut, antartika, dsb");
+                            alert("daerah tidak terdefinisi, jangan pilih laut, dsb");
                         }
                     } else {
                         alert("Geocode was not successfull for the following reason : " + status);
@@ -102,11 +124,7 @@ function initmap(page) {
                 clearOverlays();
                 showOverlay();
                 for (i=0; i<markersArray.length; i++) {
-                    
-                    /*** set content infowindow ***/
                     var contentString = '<a href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +' ('+ userArray[i][2] +')</a>';
-                    /*** selesai set content infowindow ***/
-                    
                     setInfoWindow(markersArray[i], contentString);
                 }
                 var mcOptions = {gridSize: 50, maxZoom: 15};
@@ -175,37 +193,61 @@ function geocodeLocation() {
             {'address' : address},
             function(results, status) {
                 if (status == google.maps.GeocoderStatus.OK) {
-                    map.setCenter(results[0].geometry.location);
-                    deleteOverlays();
-                    addMarker('my location', results[0].geometry.location, true);
-                    clearOverlays();
-                    showOverlay();
-                    setLocation();
+                    var found = false;
+                    var i = 0;
+                    if (results[0].address_components[i].types[0] == "natural_feature") {
+                        alert("daerah tidak terdefinisi, jangan pilih laut, dsb");
+                    } else {
+                        do {
+                            if (results[0].address_components[i].types[0] == "country") {
+                                found = true;
+                            } else {
+                                i++;
+                            }
+                        } while (!found);
+                        map.setCenter(results[0].geometry.location);
+                        deleteOverlays();
+                        addMarker('my location', results[0].geometry.location, false);
+                        clearOverlays();
+                        showOverlay();
+                        setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
+                        setLocation();
+                        
+                        name = results[0].address_components[i].long_name;
+                        if (areaLocation.length==0 || areaLocation[0]!=name) {
+                            var geocoder2 = new google.maps.Geocoder();
+                            geocoder2.geocode({
+                                'address' : name},
+                                function(results2,status2) {
+                                    if (status2 = google.maps.GeocoderStatus.OK) {
+                                        posisi = results2[0].geometry.location;
+                                        posisi = posisi.toString();
+                                        posisi = posisi.substring(1,posisi.length-1);
+                                        posisi = posisi.split(",", 2);
+                                        area_lat = parseFloat(posisi[0]);
+                                        area_lng = parseFloat(posisi[1]);
+                                        deleteArea();
+                                        addArea(name);
+                                        addArea(area_lat);
+                                        addArea(area_lng);
+                                        //alert(areaLocation[0]);
+
+                                        $('input[name=area_name]').attr('value', areaLocation[0]);
+                                        $('input[name=area_lat]').attr('value', areaLocation[1]);
+                                        $('input[name=area_lng]').attr('value', areaLocation[2]);
+                                    }
+                                }
+                            );
+                            //alert(areaLocation[0]);
+                        }
+                        
+                    }
                 } else {
                     alert("Geocode was not successfull for the following reason : " + status);
                 }
             }
         );
     }
-}
-
-function codeLatLng(lat, lng) {
-    var latlng = new google.maps.LatLng(lat, lng);
-    var address;
-    geocoder.geocode({
-        'latLng' : latlng},
-        function(results, status) {
-            if (status == google.maps.GeocoderStatus.OK) {
-                if (results[1]) {
-                    nyam = results[1].formatted_address;
-                    address = results[0].formatted_address;
-                } else {
-                    address = 'failed';
-                }
-            }
-        }
-    );
-    return address;
 }
 
 /*
@@ -263,4 +305,23 @@ function setInfoWindow(marker, content) {
     google.maps.event.addListener(marker, 'click', function() {
         infowindow.open(map,marker);
     });
+}
+
+/*
+ * memasukkan data baru ke dalam areaLocation
+ */
+function addArea(data) {
+    areaLocation.push(data);
+}
+
+/*
+ * menghapus semua isi areaLocation
+ */
+function deleteArea() {
+    if (areaLocation) {
+        for (i in areaLocation) {
+            areaLocation[i] = "";
+        }
+        areaLocation.length = 0;
+    }
 }
