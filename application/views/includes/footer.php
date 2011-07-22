@@ -1,5 +1,5 @@
 <div id="footer">
-    <h1>Footer</h1>
+    ALL RIGHTS FOR THE PHOTOS RESERVED TO <b>SANTA URSULA POS JAKARTA</b>
 </div>   
 </div>
 

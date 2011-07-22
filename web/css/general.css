@@ -19,22 +19,26 @@ root {
     height: 45px;
 }
 
+.navigation {
+    padding: 0px 0px 0px 0px;
+}
 
 .navigation ul {
     float:left;
     width:100%;
-    padding:0;
-    margin:0;
     list-style-type:none;
     display:  inline;
+    padding:0;
+    margin:0;
 }
 
 .navigation a {
     float:left;
     text-decoration:none;
     color: rgb(0,0,0);
-    background-color: rgb(255,255,255);
-    padding:0.2em 0.6em;
+    background-color: rgb(245,245,245);
+    padding:0.4em 0.7em;
+    margin-right: 3px;
     border-right:1px solid white;
     display: inline;
 }
@@ -47,6 +51,7 @@ root {
 .navigation li{
     display:inline;
 }
+
 
 .search_site_box {
     float : right;
@@ -80,6 +85,9 @@ root {
 }
 
 
+#footer {
+    
+}
 
 .left-menu {
     float:left;
@@ -129,36 +137,11 @@ root {
     min-height: 500px;
 }
 
-#header {
-    display: block; 
-    margin-left: auto; 
-    margin-right: auto;
-    border-right-style: solid;
-    border-left-style: solid;
-    border-bottom-style: solid;
-    border-top-style: solid;
-}
-
-
-#navigation{
-    width: 400px;
-    display: block; 
-    margin-left: auto; 
-    margin-right: auto;
-}
-
 #history{
     width: 240px;
     display: block; 
     margin-left: auto; 
     margin-right: auto;
-}
-
-#footer {
-    border-right-style: solid;
-    border-left-style: solid;
-    border-bottom-style: solid;
-    border-top-style: solid;
 }
 
 
