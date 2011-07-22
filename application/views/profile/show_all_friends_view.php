@@ -1,4 +1,10 @@
-Hai
+<?php  
+    if ($userid_login==$userid_viewed) {
+        echo "Your Friends :";
+    } else {
+        echo $username_viewed."'s Friends :";
+    }
+?>
 <div id="show_all_friends">    
     <?php
         $data['friends'] = $friends;
