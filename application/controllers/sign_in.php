@@ -55,7 +55,8 @@ class Sign_in extends CI_Controller {
                 $session_data = array (
                     'email' => $getReturn[0]->email,
                     'name'  => $getReturn[0]->name,
-                    'user_id' => $getReturn[0]->id
+                    'user_id' => $getReturn[0]->id,
+                    'isadmin' => $getReturn[0]->status_admin
                 );
                 $this->session->set_userdata($session_data);
                 redirect('/home', 'refresh');

@@ -28,10 +28,67 @@ class news extends CI_Controller {
         $data['title'] = 'News';
         $data['main_content'] = 'news/show_all_news';
         $data['struktur'] = $this->getStruktur('News');
-        $this->load->view('includes/template',$data);
+        // cek admin
+        $data['isadmin'] = $this->session->userdata('isadmin');
+        
+        // load model news
+        $this->load->model('news_model','newsModel');
+        $getNewsAll = $this->newsModel->getNews();
+        if (is_bool($getNewsAll))
+            $total_news = 0;
+        else
+            $total_news = count($getNewsAll);
+        
+        $per_page = 3;
+        $offset = $this->input->post('offsetval');
+        $options = array('sortBy'=>'publishing_date','sortDirection'=>'desc','limit'=>$per_page,'offset'=>$offset);
+        $news_result = $this->newsModel->getNews($options);
+        if (is_bool($news_result))
+            $new_result = array();
+        
+        $data['all_news'] = $news_result;
+        
+        $this->load->library('pagination');
+        $base_url = site_url('news/show');
+        $config['base_url'] = $base_url;
+        $config['total_rows'] = $total_news;
+        $config['uri_segment'] = '2';
+        $config['per_page'] = $per_page;
+        $config['cur_page'] = $offset;
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<div  id="num_link">';
+        $config['first_tag_close'] = '</div>';
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<div id="num_link">';
+        $config['last_tag_close'] = '</div>';
+        $config['next_link'] = false;
+        $config['prev_link'] = false;
+        $config['cur_tag_open'] = '<div id="cur_link">';
+        $config['cur_tag_close'] = '</div>';
+        $config['num_tag_open'] = '<div id="num_link">';
+        $config['num_tag_close'] = '</div>';
+
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+        
+        // load helper
+        $this->load->helper('simple_html_dom');
+        $this->load->helper('text');
+        
+        if ($this->input->post('ajax')) {
+            $text = $this->load->view('news/list_news',$data, true);
+            $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
+        } else {
+            $this->load->view('includes/template', $data);
+        }
     }
     
     function show_news() {
+        // cek admin
+        $data['isadmin'] = $this->session->userdata('isadmin');
         $array = $this->uri->uri_to_assoc(2);
         $data['id_news'] = $array['show_news'];
         
@@ -54,14 +111,18 @@ class news extends CI_Controller {
         $data['title_news'] = $getNews[0]->title;
         $data['title'] = 'News - '.$data['title_news'];
         $data['main_content'] = 'news/show_news';
-        $data['struktur'] = $this->getStruktur('News');
+        $data['struktur'] = $this->getStruktur2($data['title_news']);
         $this->load->view('includes/template',$data);
     }
     
     function add_news() {
+        if ($this->session->userdata('isadmin')!=1) {
+            redirect('home','refresh');
+        }
+            
         $data['title'] = 'News';
         $data['main_content'] = 'news/add_news_view';
-        $data['struktur'] = $this->getStruktur('News');
+        $data['struktur'] = $this->getStruktur2('Add News');
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 300;
@@ -69,6 +130,9 @@ class news extends CI_Controller {
     }
     
     function edit_news() {
+        if ($this->session->userdata('isadmin')!=1) {
+            redirect('home','refresh');
+        }
         $array = $this->uri->uri_to_assoc(2);
         $data['id_news'] = $array['edit_news'];
         // get content old news
@@ -89,7 +153,7 @@ class news extends CI_Controller {
         $data['old_news'] = $getNews[0]->content;
         $data['title'] = 'Edit News';
         $data['main_content'] = 'news/edit_news_view';
-        $data['struktur'] = $this->getStruktur('News');
+        $data['struktur'] = $this->getStruktur2('Edit News');
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 300;
@@ -346,6 +410,25 @@ class news extends CI_Controller {
         return $struktur;
     }
     
+    function getStruktur2($view) {
+        $struktur = array (
+            array (
+                'islink'=>1,
+                'link'=>'home',
+                'label'=>'Home'
+            ),
+            array (
+                'islink'=>1,
+                'link'=>'news/show',
+                'label'=>'News'
+            ),
+            array (
+                'islink'=>0,
+                'label'=>$view
+            )
+        );
+        return $struktur;
+    }
 }
 
 ?>
