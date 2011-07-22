@@ -15,9 +15,10 @@ root {
     display: block;
 }
 
-.navigation {
-    display: inline;
+.top-menu {
+    height: 45px;
 }
+
 
 .navigation ul {
     float:left;
@@ -30,7 +31,6 @@ root {
 
 .navigation a {
     float:left;
-    width:6em;
     text-decoration:none;
     color: rgb(0,0,0);
     background-color: rgb(255,255,255);
@@ -48,8 +48,39 @@ root {
     display:inline;
 }
 
+.search_site_box {
+    float : right;
+}
 
-/* Classes */
+#right-banner {
+    padding-top: 20px;
+    padding-right: 15px;
+    float: right;
+}
+
+#grouper1{
+    float: right;
+}
+.banner {
+    height: 217px;
+    background-color : green;
+}
+
+.heading {
+    font-family: impact;
+    font-size: 45px;
+    color: rgb(255,255,255);
+}
+
+
+.heading2 {
+    font-family: georgia;
+    font-size: 18px;
+    color: rgb(255,255,255);
+}
+
+
+
 .left-menu {
     float:left;
     border-right-style: solid;
@@ -85,7 +116,7 @@ root {
 
 
 #content {
-    width: 1000px;
+    width: 982px;
     margin-left: auto;
     margin-right: auto;
 }

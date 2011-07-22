@@ -58,35 +58,54 @@
 </head>
 <body>
   <div id="content">
-    <div id="header">
-           <ul class="navigation">
-            <li><a href="<?php echo site_url('home')?>">Home</a></li>
-            <li><a href="<?php echo site_url('about_us')?>">About Us</a></li>
-            <li><a href="<?php echo site_url('event')?>">Event</a></li>
-            <li><a href="<?php echo site_url('news/show')?>">News</a></li>
-            <?php if ($this->session->userdata('name')==null) { ?>
-                <li><a href="<?php echo site_url('sign_in')?>">Sign In</a></li>
-                <li><a href="<?php echo site_url('sign_up')?>">Sign Up</a></li>
-                <li><a href="<?php echo site_url('sign_in')?>">Find A Friend</a></li>
-            <?php } else { ?>
-                <li><a href="<?php echo site_url('profile')?>">My Profile</a></li>
-                <li><a href="<?php echo site_url('sign_in/sign_out')?>">Sign Out</a></li>
-                <li><a href="<?php echo site_url('message')?>">Message</a></li>
-                <li><a href="<?php echo site_url('friend')?>">Find a friend</a></li>
-            <?php } ?>
-        </ul>
-      
-        <div id="search_site_box">
-            <input></input>
-        </div>
-        <div id="sanur_title">
-            <h2>St. Ursula Alumni Association</h2>
-        </div>
-      
-        <div id="sanur_title_description">
-            <h2>Association of Students from St Ursula School</h2>
-        </div>
+    <div class="header">
+        <div class="top-menu">
+               <ul class="navigation">
+                <li><a href="<?php echo site_url('home')?>">Home</a></li>
+                <li><a href="<?php echo site_url('about_us')?>">About Us</a></li>
+                <li><a href="<?php echo site_url('event')?>">Event</a></li>
+                <li><a href="<?php echo site_url('news/show')?>">News</a></li>
+                <?php if ($this->session->userdata('name')==null) { ?>
+                    <li><a href="<?php echo site_url('sign_in')?>">Sign In</a></li>
+                    <li><a href="<?php echo site_url('sign_up')?>">Sign Up</a></li>
+                    <li><a href="<?php echo site_url('sign_in')?>">Find A Friend</a></li>
+                <?php } else { ?>
+                    <li><a href="<?php echo site_url('profile')?>">My Profile</a></li>
+                    <li><a href="<?php echo site_url('sign_in/sign_out')?>">Sign Out</a></li>
+                    <li><a href="<?php echo site_url('message')?>">Message</a></li>
+                    <li><a href="<?php echo site_url('friend')?>">Find a friend</a></li>
+                <?php } ?>
+            </ul>
 
+            <div class="search_site_box">
+                <input></input>
+            </div>
+        </div>
+        
+        <div class="banner"> 
+            <div id="left-banner">
+            </div>
+            <div id="right-banner">
+                <div id="sanur_title">
+                    <div id="grouper1">
+                        <div id="right-logo">
+                        </div>
+                        <div class="heading">
+                            IKATAN ALUMNI
+                        </div>
+                        <div class="heading">
+                           SANTA URSULA 
+                        </div>
+                    </div>
+                    <div class="heading">
+                        JALAN POS JAKARTA 
+                    </div>
+                    <div class="heading2">
+                        Ini Sanur Posta - <b><i>Servira non Servari</i></b>
+                    </div>
+                </div>
+            </div>
+        </div>
      
         <div id="history">
             <?php
@@ -104,4 +123,4 @@
                 }
                     ?>
                 </div>
-            </div>
+    </div>
