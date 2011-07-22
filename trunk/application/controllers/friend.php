@@ -161,7 +161,7 @@ class friend extends CI_Controller {
         $data['struktur'] = $this->getStruktur('Friend Request');
         $user_id = $this->session->userdata('user_id');
         $this->load->library('pagination');
-        $per_page = 1;
+        $per_page = 10;
         $offset = $this->input->post('offsetval');
         $friends_request_result = $this->getFriendRequestList($user_id, $per_page, $offset);
         $total_friends = $this->countTotalFriendRequest($user_id);
