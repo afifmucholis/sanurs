@@ -16,6 +16,7 @@
 <script type="text/javascript">
     $(document).ready(function(){
         bindPagination();
+        bindDeleteConfirm();
     });
     
     function bindPagination() {
@@ -37,8 +38,24 @@
             success: function(msg){
                 $("#news_holder").html(msg["text"]);
                 bindPagination();
+                bindDeleteConfirm();
             }
         });               
         return false;
     }
+    
+    function bindDeleteConfirm() {
+        $('#news_holder')
+            .find('a.remove_news')
+            .unbind('click.delete')
+            .bind('click.delete',function(){
+                return delete_news_confirm();
+            });
+    }
+    
+    function delete_news_confirm() {
+        return confirm('Are you sure to delete this news?');
+    }
+    
+    
 </script>
