@@ -10,7 +10,7 @@ var markerCluster;
  */
 function initmap(page) {
     geocoder = new google.maps.Geocoder();
-    var latlng = new google.maps.LatLng(0, 0);
+    var latlng = new google.maps.LatLng(-6.166092,106.833369);
     var myOptions = {
         zoom: 2,
         center: latlng,
@@ -31,8 +31,8 @@ function initmap(page) {
                 lng = msg['lng'];
                 if (lat!=null && lng!=null) {
                     latlng = new google.maps.LatLng(lat,lng);
-                    //addMarker('my location', latlng, true);
-                    addMarker('my location', latlng, false);
+                    addMarker('my location', latlng, true);
+                    //addMarker('my location', latlng, false);
                 }
                 clearOverlays();
                 showOverlay();
@@ -40,17 +40,46 @@ function initmap(page) {
             }
         });
         // bisa create pin
-        /*google.maps.event.addListener(map, 'click', function(event) {
-            if (markersArray.length < 2) {
-                // pin cuma bisa 1 lokasi
-                deleteOverlays();
-                addMarker('my location', event.latLng, true);
-                clearOverlays();
-                showOverlay();
-                setInfoWindow(markersArray[0], markersArray[0].title);
-                setLocation();
-            }
-        });*/
+        google.maps.event.addListener(map, 'click', function(event) {
+            alert(event.latLng);
+            geocoder.geocode({
+                'latLng' : event.latLng },
+                function(results, status) {
+                    status = google.maps.GeocoderStatus.OK;
+                    if (status) {
+                        if (results[0]) {
+                            var found = false;
+                            var i = 0;
+                            //alert(results[0].formatted_address);
+                            while (!found) {
+                                //if (results[0].address_components[i].types[0] == 'administrative_area_level_1') {
+                                if (results[0].address_components[i].types[0] == 'country') {
+                                    found = true;
+                                } else {
+                                    i++;
+                                }
+                            }
+                            if (found) {
+                                alert(results[0].address_components[i].long_name);
+                                if (markersArray.length < 2) {
+                                    // pin cuma bisa 1 lokasi
+                                    deleteOverlays();
+                                    addMarker('my location', event.latLng, true);
+                                    clearOverlays();
+                                    showOverlay();
+                                    setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
+                                    setLocation();
+                                }
+                            }
+                        } else {
+                            alert("daerah tidak terdefinisi, jangan pilih laut, antartika, dsb");
+                        }
+                    } else {
+                        alert("Geocode was not successfull for the following reason : " + status);
+                    }
+                }
+            );
+        });
     } else if (page == 'searchfriend') {
         link = "http://localhost/sanurs/web/index.php/profile/get_all_location";
         $.ajax({
