@@ -59,18 +59,7 @@
 <body>
   <div id="content">
     <div id="header">
-        <div id="search_site_box">
-            <input></input>
-        </div>
-        <div id="sanur_title">
-            <h2>St. Ursula Alumni Association</h2>
-        </div>
-      
-        <div id="sanur_title_description">
-            <h2>Association of Students from St Ursula School</h2>
-        </div>
-
-        <ul class="navigation">
+           <ul class="navigation">
             <li><a href="<?php echo site_url('home')?>">Home</a></li>
             <li><a href="<?php echo site_url('about_us')?>">About Us</a></li>
             <li><a href="<?php echo site_url('event')?>">Event</a></li>
@@ -87,6 +76,18 @@
             <?php } ?>
         </ul>
       
+        <div id="search_site_box">
+            <input></input>
+        </div>
+        <div id="sanur_title">
+            <h2>St. Ursula Alumni Association</h2>
+        </div>
+      
+        <div id="sanur_title_description">
+            <h2>Association of Students from St Ursula School</h2>
+        </div>
+
+     
         <div id="history">
             <?php
                 $c=0;
