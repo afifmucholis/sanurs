@@ -195,6 +195,10 @@ class friend extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
+    function getFriendRequestList($userid, $limit, $offset) {
+        
+    }
+    
     /**
      * confirm_request
      *
