@@ -29,8 +29,10 @@ class notification extends CI_Controller {
         $user_id = $this->session->userdata('user_id');
         // load model notification
         $this->load->model('notification_model', 'notificationModel');
-        $options=array('userid_to'=>$user_id, 'sortBy' => 'date', 'sortDirection' => 'desc');
+        $options=array('userid_to'=>$user_id, 'status_read'=>0, 'sortBy' => 'date', 'sortDirection' => 'desc');
+        
         $getNotification = $this->notificationModel->getNotifications($options);
+        
         if (is_bool($getNotification))
             $data['notification'] = array();
         else {

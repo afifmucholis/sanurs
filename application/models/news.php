@@ -26,6 +26,7 @@ class News extends CI_Model {
     var $id = 'id';
     var $publishing_date = 'publishing_date';
     var $content = 'content';
+    var $title = 'title';
 
     /**
      * Konstruktor
@@ -47,13 +48,14 @@ class News extends CI_Model {
      * option: values
      * --------------
      * publishing_date  required
-     * content        
+     * content
+     * title        
      * 
      * @param array $options
      * @return type 
      */
     function addNews($options = array()) {
-        $fieldArray = array($this->publishing_date, $this->content);
+        $fieldArray = array($this->publishing_date, $this->content, $this->title);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -74,7 +76,8 @@ class News extends CI_Model {
      * --------------
      * id               field id buat kriteria where
      * publishing_date             
-     * content          
+     * content
+     * title          
      * 
      * @param array $options
      * @return bool/int  
@@ -85,7 +88,7 @@ class News extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->publishing_date, $this->content);
+        $fieldArray = array($this->publishing_date, $this->content, $this->title);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -108,6 +111,7 @@ class News extends CI_Model {
      * id               field kriteria id untuk klause where
      * publishing_date             
      * content        
+     * title
      * 
      * limit            limits the number of returned records
      * offset           how many records to bypass before returning a record (limit required)
@@ -139,7 +143,7 @@ class News extends CI_Model {
         //Tambah kondisi where ke query :
         $fieldArray = array($this->id,
             $this->publishing_date,
-            $this->content);
+            $this->content, $this->title);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);
