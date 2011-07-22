@@ -58,6 +58,7 @@ root {
     border-left-style: solid;
     border-bottom-style: solid;
     border-top-style: solid;
+    min-height: 500px;
 }
 
 #header {
