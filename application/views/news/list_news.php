@@ -7,6 +7,14 @@
             <div id="title_news">
                 <h4><?php echo anchor('news/show_news/'.$news->id,$news->title); ?></h4>
             </div>
+            <?php
+                if ($isadmin) {
+                    echo anchor('news/edit_news/'.$news->id, 'Edit News');
+                    echo '&nbsp;&nbsp;';
+                    echo anchor('news/delete_news/'.$news->id, 'Delete News', 'class="remove_news"');
+                    echo br(1);
+                }
+            ?>
             <div id="publishing_date">
                 <?php echo $news->publishing_date;?>
             </div>

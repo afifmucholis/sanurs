@@ -116,7 +116,7 @@ class news extends CI_Controller {
     }
     
     function add_news() {
-        if ($this->session->userdata('isadmin')!=1) {
+        if ($this->session->userdata('isadmin')=='' || $this->session->userdata('isadmin')!=1) {
             redirect('home','refresh');
         }
             
@@ -130,7 +130,7 @@ class news extends CI_Controller {
     }
     
     function edit_news() {
-        if ($this->session->userdata('isadmin')!=1) {
+        if ($this->session->userdata('isadmin')=='' || $this->session->userdata('isadmin')!=1) {
             redirect('home','refresh');
         }
         $array = $this->uri->uri_to_assoc(2);
@@ -159,6 +159,31 @@ class news extends CI_Controller {
         $data['textarea_size'] = 300;
         
         $this->load->view('includes/template',$data);
+    }
+    
+    function delete_news() {
+        if ($this->session->userdata('isadmin')=='' || $this->session->userdata('isadmin')!=1) {
+            redirect('home','refresh');
+        }
+        $array = $this->uri->uri_to_assoc(2);
+        $id_news = $array['delete_news'];
+        try {
+            $this->load->model('news_model','newsModel');
+            $options = array('id'=>$id_news);
+            $getNews = $this->newsModel->deleteNews($options);
+            if (is_bool($getNews))
+                throw new Exception('Error on deleting news.');
+            $message['status'] = 'Success';
+            $message['message'] = 'News is successfully deleted.'.br(1).'Click '.anchor('news/show','here').' to back to news.';
+        } catch (Exception $e) {
+            $message['status'] = 'An Error Occurred';
+            $message['message'] = $e->getMessage().br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to try again.';
+        }
+        $message['page_before'] = 'News';
+        $message['page_link'] = 'news/show/';
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show','refresh');
     }
     
     /*** For NIC Upload Images ***/
