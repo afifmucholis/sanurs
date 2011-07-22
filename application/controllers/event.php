@@ -35,7 +35,7 @@ class Event extends CI_Controller {
         $data['main_content'] = 'event/main_event_view';
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = 'categories';
-
+        $data['show_calendar_and_event'] = true;
         $this->load->view('includes/template', $data);
     }
 

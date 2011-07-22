@@ -12,18 +12,21 @@
         <script type='text/javascript' src="<?php echo base_url(); ?>js/jquery/jquery.validate.min.js"></script>
         <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/fullcalendar.css" />
         <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/cupertino-jquery-theme/theme.css" />
-        <script type='text/javascript' src="<?php echo base_url(); ?>js/jquery.qtip-1.0.0-rc3.min.js"></script>
-        <script type='text/javascript' src="<?php echo base_url(); ?>js/fullcalendar.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>js/galleria-1.2.4.min.js"></script>
+        <?php
+        if (isset($show_calendar_and_event) && $show_calendar_and_event) {
+            ?>
+            <script type='text/javascript' src="<?php echo base_url(); ?>js/jquery.qtip-1.0.0-rc3.min.js"></script>
+            <script type='text/javascript' src="<?php echo base_url(); ?>js/fullcalendar.js"></script>
+            <script type="text/javascript" src="<?php echo base_url(); ?>js/galleria-1.2.4.min.js"></script>
+            <?php }
+        ?>  
         <?php
         if (isset($show_map) && $show_map) {
             ?>
             <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
             <script type="text/javascript" src="<?php echo base_url(); ?>js/markerclusterer.js"></script>
-            <?php
-        }
+            <?php }
         ?>
-
         <?php
         if (isset($show_calendar) && $show_calendar) {
             ?>     
@@ -34,10 +37,8 @@
                     $( "#datepickers" ).datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'hh:mm:ss'});
                 });
             </script> 
-            <?php
-        }
+            <?php }
         ?>
-
         <?php
         // load editor text
         if (isset($show_editor) && $show_editor) {
@@ -53,7 +54,6 @@
             <?php
         }
         ?>
-
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/general.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/message.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/profile.css" />
