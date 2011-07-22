@@ -78,6 +78,7 @@
             <?php if ($this->session->userdata('name')==null) { ?>
                 <label><?php echo anchor('sign_in','Sign in');?></label>
                 <label><?php echo anchor('sign_up','Sign up');?></label>
+                <label><?php echo anchor('sign_in', 'Find a friend');?></label>
             <?php } else { ?>
                 <label><?php echo anchor('profile','My Profile');?></label>
                 <label><?php echo anchor('sign_in/sign_out','Sign out');?></label>
