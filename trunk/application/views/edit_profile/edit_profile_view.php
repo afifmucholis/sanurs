@@ -7,7 +7,8 @@
         <a href="visibility" class="ajax-links">Visibility</a>
     </div>
 </div>
-<div id="clearboth"></div>
+<div class="clearboth">
+</div>
 
 <div id="content_edit">
 </div>

@@ -43,7 +43,7 @@
     ?>
 </div>
 
-<div id="clearboth">
+<div class="clearboth">
 </div>
 <?php
     echo form_close();

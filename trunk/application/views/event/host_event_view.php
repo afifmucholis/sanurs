@@ -54,5 +54,5 @@
     ?>
     
 </div>
-<div id="clearboth"></div>
+<div class="clearboth"></div>
 <?php $this->load->view('popup/upload_image');?>

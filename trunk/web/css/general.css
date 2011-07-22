@@ -43,6 +43,9 @@ root {
     width: 491px;
 }
 
+.clearboth {
+    clear: both;
+}
 
 /* Ids */
 
@@ -109,9 +112,6 @@ root {
     font-size: 10px;
 }
 
-#clearboth {
-    clear: both;
-}
 
 #map {
     width: 900px;

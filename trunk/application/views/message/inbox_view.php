@@ -27,7 +27,7 @@
                         <?php echo form_hidden('id', $message['id']);?>
                     </div>
                 </a>
-                <div id="clearboth">
+                <div class="clearboth">
                 </div>
                 <div id="liner">
                     <?php echo "<hr>"; ?>    
@@ -40,7 +40,7 @@
         </div>
     <?php } ?>
 
-    <div id="clearboth">
+    <div class="clearboth">
     </div>
 </div>
 

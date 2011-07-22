@@ -17,7 +17,7 @@ if (count($friends) == 0) {
                 </div>                
             </div>
         </div>
-        <div id="clearboth">
+        <div class="clearboth">
         </div>
         <hr>
     <?php }
@@ -26,5 +26,5 @@ if (count($friends) == 0) {
 <div id ="link_pagination"> 
     <?php echo $pagination; ?>
 </div>
-<div id="clearboth">
+<div class="clearboth">
 </div>

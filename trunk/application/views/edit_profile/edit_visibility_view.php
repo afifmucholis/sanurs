@@ -119,5 +119,5 @@ echo form_open('profile/submitVisibility');
     </div>
 </div>
 
-<div id ="clearboth">
+<div class ="clearboth">
 </div>

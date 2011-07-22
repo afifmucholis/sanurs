@@ -62,6 +62,6 @@
     echo form_close();
     ?>
 </div>
-<div id="clearboth">
+<div class="clearboth">
 </div>
 <?php $this->load->view('popup/upload_image'); ?>

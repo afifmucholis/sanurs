@@ -28,7 +28,7 @@
     <p>Events in yellow are hosted by us.</p>
 </div>
 
-<div id="clearboth"></div>
+<div class="clearboth"></div>
 
 <script type="text/javascript">
     $(document).ready(function() {

@@ -11,11 +11,13 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-.error {
+.error label{
     font: normal 11px arial;
-    padding: 2px;
+    padding: 4px;
     margin: 2px;
     background-color: #ffc;
     border: 1px solid #c00;
+    display : inline;
+    width: auto;
 }
 
