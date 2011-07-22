@@ -6,14 +6,12 @@
         <title><?php echo $title; ?></title>
         <script type="text/javascript" src="<?php echo base_url(); ?>js/jquery/jquery-1.6.2.min.js"></script>
         <script type="text/javascript" src="<?php echo base_url(); ?>js/popup.js"></script>
-        <script type="text/javascript" src="<?php echo base_url(); ?>js/map.js"></script>
         <script src="<?php echo base_url(); ?>js/jquery/jquery-ui.min.js"></script>
         <link href="<?php echo base_url(); ?>css/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <script type='text/javascript' src="<?php echo base_url(); ?>js/jquery/jquery.validate.min.js"></script>
         <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/cupertino-jquery-theme/theme.css" />
         <?php
-        if (isset($show_calendar_and_event) && $show_calendar_and_event) {
-            ?>
+        if (isset($show_calendar_and_event) && $show_calendar_and_event) {?>
             <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/fullcalendar.css" />
             <script type='text/javascript' src="<?php echo base_url(); ?>js/jquery.qtip-1.0.0-rc3.min.js"></script>
             <script type='text/javascript' src="<?php echo base_url(); ?>js/fullcalendar.js"></script>
@@ -21,15 +19,14 @@
         <?php }
         ?>  
         <?php
-        if (isset($show_map) && $show_map) {
-            ?>
+        if (isset($show_map) && $show_map) {?>
+            <script type="text/javascript" src="<?php echo base_url(); ?>js/map.js"></script>
             <script src="http://maps.google.com/maps/api/js?sensor=false" type="text/javascript"></script>
             <script type="text/javascript" src="<?php echo base_url(); ?>js/markerclusterer.js"></script>
         <?php }
         ?>
         <?php
-        if (isset($show_calendar) && $show_calendar) {
-            ?>     
+        if (isset($show_calendar) && $show_calendar) {?>     
             <script src="<?php echo base_url(); ?>js/jquery/jquery-ui-timepicker-addon.js"></script>
             <script> 
                 $(function() {
@@ -40,9 +37,7 @@
         <?php }
         ?>
         <?php
-            // load editor text
-            if (isset($show_editor) && $show_editor) {
-                ?>
+            if (isset($show_editor) && $show_editor) {?>
                 <script src="<?php echo base_url();?>js/nicEdit.js"></script>
                 <script>
                  //<![CDATA[
@@ -52,9 +47,7 @@
                  //]]>
                 </script>
                 <?php
-            }
-        ?>
-            
+            }?>
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/message.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/profile.css" />
