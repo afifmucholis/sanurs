@@ -109,7 +109,7 @@ class Message extends CI_Controller {
                 $optionUser = array('name' => $to);
                 $getUsers = $this->userModel->getUsers($optionUser);
                 if (is_bool($getUsers)) {
-                    throw new Exception("No user with name " . $to);
+                    throw new Exception("No user has name " . $to);
                 } else {
                     //Cek ada 1 gak :
                     if (count($getUsers) == 1) {
@@ -140,7 +140,7 @@ class Message extends CI_Controller {
                         } else if ($countfriend == 0) {
                             throw new Exception("No friends of you have name " . $to);
                         } else {
-                            throw new Exception("More than 1 friends that have name " . $to);
+                            throw new Exception("More than 1 of your friends that have name " . $to);
                         }
                     }
                 }
@@ -156,7 +156,7 @@ class Message extends CI_Controller {
             if (is_bool($getReturn1) && is_bool($getReturn2)) {
                 //to bukan friend dari pengirim
                 if ($idto != '') {
-                    throw new Exception("recipient is not your friend");
+                    throw new Exception("Your message is not succesfully sent. Recipient is not your friend");
                 }
             } else {
                 //Isi ke database message :
@@ -176,7 +176,7 @@ class Message extends CI_Controller {
                     $options = array('userid_to' => $idto, 'message' => $notify, 'link' => $link);
                     $addNotify = $this->notifModel->addNotification($options);
                     $m['status'] = "Success";
-                    $m['message'] = "Kirim message sukses";
+                    $m['message'] = "Your message is succesfully sent.";
                 }
             }
         } catch (Exception $e) {
