@@ -73,7 +73,7 @@
                     <li><a href="<?php echo site_url('profile')?>">My Profile</a></li>
                     <li><a href="<?php echo site_url('sign_in/sign_out')?>">Sign Out</a></li>
                     <li><a href="<?php echo site_url('message')?>">Message</a></li>
-                    <li><a href="<?php echo site_url('friend')?>">Find a friend</a></li>
+                    <li><a href="<?php echo site_url('friend')?>">Find A Friend</a></li>
                 <?php } ?>
             </ul>
 

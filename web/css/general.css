@@ -15,6 +15,16 @@ root {
     display: block;
 }
 
+#content {
+    -moz-box-shadow: 0px 0px 20px rgb(40,40,40);
+    -webkit-box-shadow: 0px 0px 20px rgb(40,40,40);
+    box-shadow: 0px 0px 20px rgb(40,40,40);
+    /* For IE 8 */
+    /* -ms-filter: "progid:DXImageTransform.Microsoft.Shadow(Strength=25, Direction=90, Color='#191919')";
+    /* For IE 5.5 - 7 */
+    /* filter: progid:DXImageTransform.Microsoft.Shadow(Strength=25, Direction=90, Color='#191919'); */
+}
+
 .top-menu {
     height: 45px;
 }
@@ -33,6 +43,7 @@ root {
 }
 
 .navigation a {
+    min-width: 4em;
     float:left;
     text-decoration:none;
     color: rgb(0,0,0);
@@ -41,6 +52,7 @@ root {
     margin-right: 3px;
     border-right:1px solid white;
     display: inline;
+    text-align: center;
 }
 
 .navigation a:hover {
@@ -86,33 +98,22 @@ root {
 
 
 #footer {
-    
+    padding: 0px 0px 0px 30px;
+    color: rgb(130,130,130);
 }
 
 .left-menu {
     float:left;
-    border-right-style: solid;
-    border-left-style: solid;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    width: 697px;
+    width: 680px;
 }
 
 .right-menu {
     float:left;
-    border-right-style: solid;
-    border-left-style: solid;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    width: 285px;
+    width: 280px;
 }
 
 .work-menu{
     float:left;
-    border-right-style: solid;
-    border-left-style: solid;
-    border-bottom-style: solid;
-    border-top-style: solid;
     width: 491px;
 }
 
@@ -130,11 +131,7 @@ root {
 }
 
 #main_content {
-    border-right-style: solid;
-    border-left-style: solid;
-    border-bottom-style: solid;
-    border-top-style: solid;
-    min-height: 500px;
+    min-height: 600px;
 }
 
 #history{
