@@ -94,7 +94,7 @@
                             IKATAN ALUMNI
                         </div>
                         <div class="heading">
-                           SANTA URSULA 
+                           SANTA URSULA
                         </div>
                     </div>
                     <div class="heading">
