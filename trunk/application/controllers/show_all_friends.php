@@ -46,6 +46,8 @@ class show_all_friends extends CI_Controller {
         $data['struktur'] = $this->getStruktur($this->getName($user_id), $user_id);
         $data['view'] = 'profile/show_all_friends_view';
         $data['userid_viewed'] = $user_id;
+        $data['userid_login'] = $this->session->userdata('user_id');
+        $data['username_viewed'] = $this->getName($user_id);
         //Get friend list :
         $friends_list_result = $this->getAllFriendList($user_id);
         $total_friends = count($friends_list_result['friends']);
