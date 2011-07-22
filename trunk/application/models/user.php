@@ -82,7 +82,8 @@ class User extends CI_Model {
     function addUser($options = array()) {
         //Isi nilai default
         //User biasa = 0
-        $options = $this->_default(array($this->status_admin => 0), $options);
+        $options = $this->_default(array($this->status_admin => 0,
+                                         $this->profpict_url=>'res/default.jpg'), $options);
         
         
         //Cek yang required :
