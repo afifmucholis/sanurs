@@ -21,7 +21,7 @@
                 }
         },
         messages : {
-            email : "Please enter a valid email address"
+            email : "Please enter a valid email"
              
         }
     });  
