@@ -47,6 +47,23 @@
         <?php 
             }
         ?>
+            
+        <?php
+            // load editor text
+            if (isset($show_editor) && $show_editor) {
+                ?>
+                <script src="<?php echo base_url();?>js/nicEdit.js"></script>
+                <script>
+                 //<![CDATA[
+                        bkLib.onDomLoaded(function() { 
+                            new nicEditor({fullPanel : true, maxHeight:<?php echo $textarea_size; ?>, iconsPath : '<?php echo base_url();?>res/nicEditorIcons.gif', uploadURI:'<?php echo site_url('news/nicUpload');?>'}).panelInstance('<?php echo $textarea;?>');
+                        });
+                 //]]>
+                </script>
+                <?php
+            }
+        ?>
+            
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/general.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/message.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/profile.css" />
