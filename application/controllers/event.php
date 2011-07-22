@@ -133,7 +133,7 @@ class Event extends CI_Controller {
             $where = $getEvent[0]->venue;
             $when = $getEvent[0]->start_time;
             $description = $getEvent[0]->description;
-            $cp = array('name' => 'Danang', 'telp' => '08888xxxx');
+            $cp = array('name' => $getEvent[0]->cp_name, 'telp' => $getEvent[0]->cp_hp);
             $url_image = base_url() . $getEvent[0]->image_url;
 
             //Load model RSVP Event buat dapet data yang RSVP :
@@ -350,6 +350,8 @@ class Event extends CI_Controller {
                 $where = $this->input->post('where');
                 $description = $this->input->post('description');
                 $category_event = $this->input->post('category_event');
+                $cp_name = $this->input->post('cp_name');
+                $cp_hp = $this->input->post('cp_hp');
                 // convert php date to mysql date
                 $phpdate = strtotime($when);
                 $when2 = date('Y-m-d H:i:s', $phpdate);
@@ -358,6 +360,8 @@ class Event extends CI_Controller {
                     'description' => $description,
                     'start_time' => $when2,
                     'venue' => $where,
+                    'cp_name' => $cp_name,
+                    'cp_hp' => $cp_hp,
                     'category_event_id' => $category_event,
                     'image_url' => $image_url
                 );

@@ -65,19 +65,34 @@ class About_us extends CI_Controller {
         $email = $this->input->post('email');
         $subject = $this->input->post('subject');
         $message = $this->input->post('message');
+        try {        
+            $this->load->library('email');
+
+            $this->email->from($email, 'anonymous web sanur');
+            $this->email->to('the.end.4ever@gmail.com');
+            $this->email->subject($subject);
+            $this->email->message($message);
+
+            if (!$this->email->send()) {
+                // error
+                $message2['status'] = 'An Error Occurred';
+                $message2['message'] = 'Your message is not successfully sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
+            } else {
+                // success
+                $message2['status'] = 'Success';
+                $message2['message'] = 'Your message is successfully sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
+            }
+        } catch (Exception $e) {
+            $message2['status'] = 'An Error Occurred';
+            $message2['message'] = 'Your message is not successfully sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
+        }
         
-        $this->load->library('email');
+        $message2['page_before'] = 'Contact Us';
+        $message2['page_link'] = 'about_us/view/contact';
 
-        $this->email->from($email, 'anonymous web sanur');
-        $this->email->to('the.end.4ever@gmail.com');
-        $this->email->subject($subject);
-        $this->email->message($message);	
-
-        $this->email->send();
-
-        echo $this->email->print_debugger();
-        
-        echo "Email dikirim.";
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message2);
+        redirect('info/show','refresh');
     }
     
     function getStruktur($view) {
