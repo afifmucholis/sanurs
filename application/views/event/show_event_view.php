@@ -42,7 +42,7 @@
         echo img($image_properties);
     ?>
 </div>
-<div id="clearboth"></div>
+<div class="clearboth"></div>
 
 <script type="text/javascript">
     function RSVPEvent(event_id, val) {

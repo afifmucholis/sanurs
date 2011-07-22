@@ -17,7 +17,7 @@
                 <?php echo $inbox_detail['from_nickname'] . ' )<br/>'; ?>
             </div>
         </div>
-        <div id="clearboth">
+        <div class="clearboth">
         </div>
         Message : 
         <div id='content_text'>

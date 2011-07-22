@@ -53,7 +53,7 @@ if (isset($categories) && $categories != "") {
         ?>
     </div>
 </div>
-<div id="clearboth">
+<div class="clearboth">
 </div>
 
 <script>

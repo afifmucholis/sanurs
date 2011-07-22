@@ -64,12 +64,12 @@
                             </div>
                         </div>
                     </div>
-                    <div id="clearboth">
+                    <div class="clearboth">
                     </div>
                 <?php }
             } ?>
         </div>
     </div>
 </div>
-<div id="clearboth">
+<div class="clearboth">
 </div>

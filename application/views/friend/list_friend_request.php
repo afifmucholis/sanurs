@@ -36,7 +36,7 @@ if ($request_friend == 0) {
                     ?>
                 </div>
             </div>
-            <div id="clearboth"></div>
+            <div class="clearboth"></div>
         </div>
         <?php
         echo br(1);
@@ -48,5 +48,5 @@ if ($request_friend == 0) {
 <div id ="link_pagination"> 
     <?php echo $pagination; ?>
 </div>
-<div id="clearboth">
+<div class="clearboth">
 </div>
