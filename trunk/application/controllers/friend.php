@@ -160,27 +160,69 @@ class friend extends CI_Controller {
         $data['main_content'] = 'friend/friend_request_view';
         $data['struktur'] = $this->getStruktur('Friend Request');
         $user_id = $this->session->userdata('user_id');
+        $this->load->library('pagination');
+        $per_page = 1;
+        $offset = $this->input->post('offsetval');
+        $friends_request_result = $this->getFriendRequestList($user_id, $per_page, $offset);
+        $total_friends = $this->countTotalFriendRequest($user_id);
+        
+        $data['request_friend'] = $friends_request_result;
+        $base_url = site_url('friend/friend_request');
+        $config['base_url'] = $base_url;
+        $config['total_rows'] = $total_friends;
+        $config['uri_segment'] = '2';
+        $config['per_page'] = $per_page;
+        $config['cur_page'] = $offset;
+
+        $config['first_link'] = 'First';
+        $config['first_tag_open'] = '<div  id="num_link">';
+        $config['first_tag_close'] = '</div>';
+        $config['last_link'] = 'Last';
+        $config['last_tag_open'] = '<div id="num_link">';
+        $config['last_tag_close'] = '</div>';
+        $config['next_link'] = false;
+        $config['prev_link'] = false;
+        $config['cur_tag_open'] = '<div id="cur_link">';
+        $config['cur_tag_close'] = '</div>';
+        $config['num_tag_open'] = '<div id="num_link">';
+        $config['num_tag_close'] = '</div>';
+
+        $this->pagination->initialize($config);
+        $data['pagination'] = $this->pagination->create_links();
+        
+         if ($this->input->post('ajax')) {
+            $text = $this->load->view('friend/list_friend_request',$data, true);
+            $this->output
+                    ->set_content_type('application/json')
+                    ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
+        } else {
+            $this->load->view('includes/template', $data);
+        }
+    }
+    
+    function getFriendRequestList($user_id, $limit, $offset) {
         // load model friend request
         $this->load->model('friend_request','friend_requestModel');
         // load model user
         $this->load->model('user','userModel');
-        $options = array('userid_requested'=>$user_id);
+        $options = array('userid_requested'=>$user_id, 'limit'=>$limit, 'offset'=>$offset);
         $getRequest = $this->friend_requestModel->getFriendRelationships($options);
+        $result = array();
         if (is_bool($getRequest)) {
-            $data['request_friend'] = 0;
+            //$data['request_friend'] = 0;
         } else {
             $i=0;
             foreach($getRequest as $request) :
                 // get user requester info
                 $options = array('id'=>$request->userid_requester);
                 $getUser = $this->userModel->getUsers($options);
-                $prof_pic = "";
-                $name = "";
+                $prof_pic;
+                $name;
                 if (!is_bool($getUser)) {
                     $prof_pic = $getUser[0]->profpict_url;
                     $name = $getUser[0]->name;
                 }
-                $data['request_friend'][$i] = array (
+                $result[$i] = array (
                     'user_requester'=>$request->userid_requester,
                     'prof_pic'=>$prof_pic,
                     'name'=>$name,
@@ -191,12 +233,23 @@ class friend extends CI_Controller {
             endforeach;
         }
         
-        
-        $this->load->view('includes/template',$data);
+        return $result;
     }
     
-    function getFriendRequestList($userid, $limit, $offset) {
+    function countTotalFriendRequest($user_id){
+         // load model friend request
+        $this->load->model('friend_request','friend_requestModel');
+        $options = array('userid_requested'=>$user_id);
+        $getRequest = $this->friend_requestModel->getFriendRelationships($options);
+        $total_friend;
         
+        if (is_bool($getRequest)) {
+            $total_friend = 0;
+        } else {
+            $total_friend = count($getRequest);
+        }
+        
+        return $total_friend;
     }
     
     /**
