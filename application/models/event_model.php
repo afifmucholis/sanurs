@@ -30,6 +30,8 @@ class Event_Model extends CI_Model {
     var $venue = 'venue';
     var $category_event_id = 'category_event_id';
     var $image_url = 'image_url';
+    var $cp_name = 'cp_name';
+    var $cp_hp = 'cp_hp';
 
     /**
      * Konstruktor
@@ -55,7 +57,9 @@ class Event_Model extends CI_Model {
      * start_time                  required
      * venue              required
      * category_event_id     required
-     * image_url 
+     * image_url
+     * cp_name
+     * cp_hp 
      * 
      * @param array $options
      * @return type 
@@ -71,7 +75,8 @@ class Event_Model extends CI_Model {
         }
 
         //Isi ke database, at this step, si $options harusnya udah memenuhi syarat isset
-        $fieldArray = array($this->title, $this->description, $this->start_time, $this->venue, $this->category_event_id, $this->image_url);
+        $fieldArray = array($this->title, $this->description, $this->start_time, $this->venue, $this->category_event_id, $this->image_url,
+                            $this->cp_name, $this->cp_hp);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -96,7 +101,9 @@ class Event_Model extends CI_Model {
      * start_time                   required
      * venue                 required
      * category_event_id     required
-     * image_url 
+     * image_url
+     * cp_name
+     * cp_hp 
      * 
      * @param array $options
      * @return bool/int  
@@ -107,7 +114,8 @@ class Event_Model extends CI_Model {
             return false;
 
         //Set dari field :
-        $fieldArray = array($this->title, $this->description, $this->start_time , $this->venue, $this->category_event_id, $this->image_url);
+        $fieldArray = array($this->title, $this->description, $this->start_time , $this->venue, $this->category_event_id, $this->image_url,
+                            $this->cp_name, $this->cp_hp);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -133,7 +141,9 @@ class Event_Model extends CI_Model {
      * start_time        
      * venue      
      * category_event_id
-     * image_url 
+     * image_url
+     * cp_name
+     * cp_hp 
      *
      * limit            limits the number of returned records
      * offset           how many records to bypass before returning a record (limit required)
@@ -169,7 +179,9 @@ class Event_Model extends CI_Model {
             $this->start_time ,
             $this->venue,
             $this->category_event_id,
-            $this->image_url);
+            $this->image_url,
+            $this->cp_name, 
+            $this->cp_hp);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);

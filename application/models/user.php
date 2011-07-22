@@ -38,6 +38,7 @@ class User extends CI_Model {
     var $profpict_url = 'profpict_url';
     var $location_latitude = 'location_latitude';
     var $location_longitude = 'location_longitude';
+    var $status_admin = 'status_admin';
 
     /**
      * Konstruktor
@@ -70,13 +71,20 @@ class User extends CI_Model {
      * graduate_year    required
      * last_unit_id     required
      * profpict_url
+     * 
      * location_latitude
      * location_longitude  
+     * status_admin     default = 0 (user biasa)
      * 
      * @param array $options
      * @return type 
      */
     function addUser($options = array()) {
+        //Isi nilai default
+        //User biasa = 0
+        $options = $this->_default(array($this->status_admin => 0), $options);
+        
+        
         //Cek yang required :
         if (!$this->_required(array($this->name,
                     $this->email,
@@ -128,7 +136,8 @@ class User extends CI_Model {
      * last_unit_id     
      * profpict_url
      * location_latitude
-     * location_longitude  
+     * location_longitude
+     * status_admin  
      * 
      * 
      * @param array $options
@@ -145,7 +154,8 @@ class User extends CI_Model {
             $this->home_address, $this->home_telephone,
             $this->handphone, $this->graduate_year,
             $this->last_unit_id, $this->profpict_url,
-            $this->location_latitude, $this->location_longitude);
+            $this->location_latitude, $this->location_longitude,
+            $this->status_admin);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->set($field, $options[$field]);
@@ -185,6 +195,7 @@ class User extends CI_Model {
      * profpict_url
      * location_latitude
      * location_longitude
+     * status_admin
      *  
      * limit            limits the number of returned records
      * offset           how many records to bypass before returning a record (limit required) 
@@ -219,7 +230,8 @@ class User extends CI_Model {
             $this->home_address, $this->home_telephone,
             $this->handphone, $this->graduate_year,
             $this->last_unit_id, $this->profpict_url,
-            $this->location_latitude, $this->location_longitude);
+            $this->location_latitude, $this->location_longitude,
+            $this->status_admin);
         foreach ($fieldArray as $field) {
             if (isset($options[$field])) {
                 $this->db->where($field, $options[$field]);
