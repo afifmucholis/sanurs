@@ -16,5 +16,8 @@ echo form_button('searchlocation', 'Submit', $js_search);
 echo form_submit('save', 'Save Changes');
 echo form_hidden('save_lat', 0);
 echo form_hidden('save_lng', 0);
+echo form_input('area_name', '');
+echo form_input('area_lat', 0);
+echo form_input('area_lng', 0);
 echo form_close();
 ?>

@@ -422,17 +422,110 @@ class profile extends CI_Controller {
      * @param string post->location lokasi_user
      */
     function submitLocation() {
+        $user_id = $this->session->userdata('user_id');
+        
+        /*** update user country ***/
+        $this->load->model('area_user', 'areaUserModel');
+        $this->load->model('area', 'areaModel');
+        
+        $area_name = $this->input->post('area_name');
+        $area_lat = $this->input->post('area_lat');
+        $area_lng = $this->input->post('area_lng');
+        
+        //ambil data user country yang lama
+        $option = array('user_id' => $user_id);
+        $getAreaUser = $this->areaUserModel->getAreaUser($option);
+        if ($getAreaUser) {
+            //ada di database, berarti update, trus update count di area
+            //update = cek nama country user dengan area_name
+            //kalo sama, gak usah update apa2
+            //kalo beda, update tabel area_user sama count di area (WTH)
+            $option = array('id' => $getAreaUser[0]->area_id);
+            $getArea = $this->areaModel->getAreas($option);
+            if ($getArea[0]->name != $area_name) {
+                //berarti namanya beda, nyari namanya ada di database ato nggak
+                //kalo ada, update countnya
+                //kalo belom, add country baru, trus country yg lama diupdate countnya
+                $option = array('name' => $area_name);
+                $getNewArea = $this->areaModel->getAreas($option);
+                if ($getNewArea) {
+                    //berarti countrynya udah ada, update count
+                    $option = array(
+                        'id' => $getNewArea[0]->id,
+                        'count' => $getNewArea[0]->count + 1
+                    );
+                    $updateNewArea = $this->areaModel->updateArea($option);
+                    $new_area_id = $getNewArea[0]->id;
+                } else {
+                    //berarti countrynya belom ada, add country baru
+                    $option = array(
+                        'name' => $area_name,
+                        'latitude' => $area_lat,
+                        'longitude' => $area_lng
+                    );
+                    $addNewArea = $this->areaModel->addArea($option);
+                    $new_area_id = $addNewArea;
+                }
+                $option = array(
+                    'id' => $getArea[0]->id,
+                    'count' => $getArea[0]->count - 1
+                );
+                $updateOldArea = $this->areaModel->updateArea($option);
+                $option = array(
+                    'id' => $getAreaUser[0]->id,
+                    'area_id' => $new_area_id
+                );
+                $updateAreaUser = $this->areaUserModel->updateAreaUser($option);
+                }
+        } else {
+            //gak ada di database, berarti addAreaUser,
+            //trus cek di area, udah ada countrynya apa belom,
+            //kalo belom, addArea
+            //kalo udah, updateArea (nilai countnya)
+            $option = array(
+                'name' => $area_name
+            );
+            $getArea = $this->areaModel->getAreas($option);
+            if ($getArea) {
+                //country sudah ada di database, berarti tinggal update count
+                $area_id = $getArea[0]->id;
+                $count = $getArea[0]->count;
+                $count++;
+                $option = array(
+                    'id' => $area_id,
+                    'count' => $count
+                );
+                $this->areaModel->updateArea($option);
+                $new_area_id = $area_id;
+            } else {
+                //country belum ada di database, berarti add record
+                $option = array(
+                    'name' => $area_name,
+                    'latitude' => $area_lat,
+                    'longitude' => $area_lng
+                );
+                $returnUpdate = $this->areaModel->addArea($option);
+                $new_area_id = $returnUpdate;
+            }
+            $option = array(
+                'user_id' => $user_id,
+                'area_id' => $new_area_id
+            );
+            $addNewAreaUser = $this->areaUserModel->addAreaUser($option);
+        }
+        /*** end of update user country ***/
+        
+        /*** update user exact location ***/
         $lat = $this->input->post('save_lat');
         $lng = $this->input->post('save_lng');
-
         $options = array(
-            'id' => $this->session->userdata('user_id'),
+            'id' => $user_id,
             'location_latitude' => $lat,
             'location_longitude' => $lng
         );
-
         $this->load->model('user', 'userModel');
         $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
+        /*** end of update user exact location ***/
 
         if (is_bool($update_location)) {
             $message['status'] = 'An Error Occurred';
