@@ -53,6 +53,7 @@ class Event extends CI_Controller {
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = $array['sortby'];
         $data['categories'] = "";
+        $data['show_calendar_and_event'] = true;
         if ($array['sortby'] == 'categories') {
             $array2 = $this->uri->uri_to_assoc(3);
             $data['categories'] = $this->get_categories_exist();
@@ -416,6 +417,7 @@ class Event extends CI_Controller {
         $data['title'] = 'Your event calendar';
         $data['main_content'] = 'event/my_calendar_view';
         $data['struktur'] = $this->getStruktur2('Your event calendar');
+        $data['show_calendar_and_event'] = true;
         $this->load->view('includes/template', $data);
     }
 
