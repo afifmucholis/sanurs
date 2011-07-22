@@ -38,3 +38,18 @@
 #info_wrapper #nickname{
     padding: 3px 5px 5px 5px;  
 }
+
+#friend_profpic img{
+    min-height: 70px;
+    min-width: 70px;
+    max-height: 75px;
+    max-width: 75px;
+    float : left;
+}
+
+#show_info_wrapper {
+    float : left;
+    padding: 3px 5px 5px 5px;  
+}
+
+
