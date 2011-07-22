@@ -51,7 +51,7 @@ class show_all_friends extends CI_Controller {
         $total_friends = count($friends_list_result['friends']);
 
         $this->load->library('pagination');
-        $per_page = 5;
+        $per_page = 1;
         $offset = $this->input->post('offsetval');
 
         $friends_pagin_result = $this->getAllFriendListPaginate($per_page, $offset, $friends_list_result);
@@ -81,6 +81,7 @@ class show_all_friends extends CI_Controller {
         $data['pagination'] = $this->pagination->create_links();
 
         if ($this->input->post('ajax')) {
+            $data['view'] = 'profile/list_all_friends_view';
             $text = $this->load->view($data['view'], $data, true);
             $this->output
                     ->set_content_type('application/json')
