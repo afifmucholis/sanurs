@@ -61,18 +61,18 @@
     <div class="header">
         <div class="top-menu">
                <ul class="navigation">
-                <li><a href="<?php echo site_url('home')?>">Home</a></li>
-                <li><a href="<?php echo site_url('about_us')?>">About Us</a></li>
-                <li><a href="<?php echo site_url('event')?>">Event</a></li>
-                <li><a href="<?php echo site_url('news/show')?>">News</a></li>
+                <li><a href="<?php echo site_url('home')?>">HOME</a></li>
+                <li><a href="<?php echo site_url('about_us')?>">ABOUT US</a></li>
+                <li><a href="<?php echo site_url('event')?>">EVENT</a></li>
+                <li><a href="<?php echo site_url('news/show')?>">NEWS</a></li>
                 <?php if ($this->session->userdata('name')==null) { ?>
-                    <li><a href="<?php echo site_url('sign_in')?>">Sign In</a></li>
-                    <li><a href="<?php echo site_url('sign_up')?>">Sign Up</a></li>
-                    <li><a href="<?php echo site_url('sign_in')?>">Find A Friend</a></li>
+                    <li><a href="<?php echo site_url('sign_in')?>">SIGN IN</a></li>
+                    <li><a href="<?php echo site_url('sign_up')?>">SIGN UP</a></li>
+                    <li><a href="<?php echo site_url('sign_in')?>">FIND FRIEND</a></li>
                 <?php } else { ?>
-                    <li><a href="<?php echo site_url('profile')?>">My Profile</a></li>
-                    <li><a href="<?php echo site_url('message')?>">Message</a></li>
-                    <li><a href="<?php echo site_url('friend')?>">Find A Friend</a></li>
+                    <li><a href="<?php echo site_url('profile')?>">MY PROFILE</a></li>
+                    <li><a href="<?php echo site_url('message')?>">MESSAGE</a></li>
+                    <li><a href="<?php echo site_url('friend')?>">FIND FRIEND</a></li>
                 <?php } ?>
             </ul>
             
