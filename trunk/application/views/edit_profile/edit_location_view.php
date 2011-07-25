@@ -2,7 +2,7 @@
 <?php
 echo form_open('profile/submitLocation');
 ?>
-<p>Input your current city : </p>
+<p>Input your current location : </p>
 <?php
 echo form_input('location', '', 'id="location"');
 $js_search = 'onClick="geocodeLocation()"';

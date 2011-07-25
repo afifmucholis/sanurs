@@ -37,9 +37,76 @@ function initmap(page) {
                 clearOverlays();
                 showOverlay();
                 setInfoWindow(markersArray[0], markersArray[0].title);
+                
+                
+                
+                /*google.maps.event.addListener(markersArray[0], 'dragend', function(event) {
+                    geocoder.geocode({
+                        'latLng' : event.latLng},
+                        function(results, status) {
+                            status = google.maps.GeocoderStatus.OK;
+                            if (status) {
+                                if (results[0]) {
+                                    var found = false;
+                                    var i = 0;
+                                    while (!found) {
+                                        if (results[0].address_components[i].types[0] == 'country') {
+                                            found = true;
+                                        } else {
+                                            i++;
+                                        }
+                                    }
+                                    if (markersArray.length > 0) {
+                                        // pin cuma bisa 1 lokasi
+                                        deleteOverlays();
+                                        addMarker('my location', event.latLng, true);
+                                        clearOverlays();
+                                        showOverlay();
+                                        setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
+                                        setLocation();
+                                    }
+
+                                    name = results[0].address_components[i].long_name;
+                                    if (areaLocation.length==0 || areaLocation[0]!=name) {
+                                        var geocoder2 = new google.maps.Geocoder();
+
+                                        geocoder2.geocode({
+                                            'address' : name},
+                                            function(results2,status2) {
+                                                if (status2 = google.maps.GeocoderStatus.OK) {
+                                                    posisi = results2[0].geometry.location;
+                                                    posisi = posisi.toString();
+                                                    posisi = posisi.substring(1,posisi.length-1);
+                                                    posisi = posisi.split(",", 2);
+                                                    area_lat = parseFloat(posisi[0]);
+                                                    area_lng = parseFloat(posisi[1]);
+                                                    deleteArea();
+                                                    addArea(name);
+                                                    addArea(area_lat);
+                                                    addArea(area_lng);
+
+                                                    $('input[name=area_name]').attr('value', areaLocation[0]);
+                                                    $('input[name=area_lat]').attr('value', areaLocation[1]);
+                                                    $('input[name=area_lng]').attr('value', areaLocation[2]);
+                                                }
+                                            }
+                                        );
+                                    }
+                                } else {
+                                    alert("daerah tidak terdefinisi, jangan pilih laut, dsb");
+                                }
+                            } else {
+                                alert("Geocode was not successfull for the following reason : " + status);
+                            }
+                        }
+                    );
+                });*/
             }
         });
-        // bisa create pin
+        
+        //alert(markersArray[0].title);
+        
+        // bisa create pin kalo mapnya diclick
         google.maps.event.addListener(map, 'click', function(event) {
             geocoder.geocode({
                 'latLng' : event.latLng},
@@ -69,10 +136,12 @@ function initmap(page) {
                             name = results[0].address_components[i].long_name;
                             if (areaLocation.length==0 || areaLocation[0]!=name) {
                                 var geocoder2 = new google.maps.Geocoder();
+                                
                                 geocoder2.geocode({
                                     'address' : name},
                                     function(results2,status2) {
-                                        if (status2 = google.maps.GeocoderStatus.OK) {
+                                        status2 = google.maps.GeocoderStatus.OK;
+                                        if (status2) {
                                             posisi = results2[0].geometry.location;
                                             posisi = posisi.toString();
                                             posisi = posisi.substring(1,posisi.length-1);
@@ -83,7 +152,6 @@ function initmap(page) {
                                             addArea(name);
                                             addArea(area_lat);
                                             addArea(area_lng);
-                                            //alert(areaLocation[0]);
                                             
                                             $('input[name=area_name]').attr('value', areaLocation[0]);
                                             $('input[name=area_lat]').attr('value', areaLocation[1]);
@@ -91,7 +159,6 @@ function initmap(page) {
                                         }
                                     }
                                 );
-                                //alert(areaLocation[0]);
                             }
                         } else {
                             alert("daerah tidak terdefinisi, jangan pilih laut, dsb");
@@ -144,7 +211,7 @@ function addMarker(title, location, draggable) {
         position : location,
         title : title,
         draggable : draggable
-    });    
+    });
     markersArray.push(marker);
 }
 
