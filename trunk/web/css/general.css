@@ -64,6 +64,11 @@ root {
     display:inline;
 }
 
+#welcome_user {
+    font-family: 'Times New Roman',Times,serif;
+    font-size: 12px;
+    text-align: right;
+}
 
 .search_site_box {
     float : right;
@@ -119,6 +124,10 @@ root {
 
 .clearboth {
     clear: both;
+}
+
+.display_none {
+    display: none;
 }
 
 /* Ids */

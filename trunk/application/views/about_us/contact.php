@@ -15,27 +15,3 @@
     echo form_close();
     
 ?>
-
-<script type="text/javascript">
-//$('#submit').click(function() {
-//        
-//	var form_data = {
-//		email: $('#email').val(),
-//                subject: $('#subject').val(),
-//		message: $('#isi').val()
-//	};
-//	
-//	$.ajax({
-//		url: "",
-//		type: 'POST',
-//		data: form_data,
-//		success: function(msg) {
-//			$('#content').html(msg);
-//		}
-//	});
-//	
-//	return false;
-//});
-	
-	
-</script>
