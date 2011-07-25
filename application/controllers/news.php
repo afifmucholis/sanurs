@@ -74,7 +74,6 @@ class news extends CI_Controller {
         
         // load helper
         $this->load->helper('simple_html_dom');
-        $this->load->helper('text');
         
         if ($this->input->post('ajax')) {
             $text = $this->load->view('news/list_news',$data, true);

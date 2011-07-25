@@ -57,6 +57,7 @@ if (isset($categories) && $categories != "") {
 </div>
 
 <script>
+    var data_categories;
     $(document).ready(function() {
         data = [];
         $.ajax({
@@ -78,31 +79,38 @@ if (isset($categories) && $categories != "") {
             }
         });
         
+        // get all categories
+        getCategories();
+        // set function click categories
         $('#categories_click').click(function (){
             return categories_click();
         });
     });
     
+    function getCategories() {
+        $.ajax({
+            url : '<?php echo site_url('event/show_categories'); ?>',
+            type : 'POST',
+            data : {},
+            success : function (msg) {
+                var txt = "";
+                jQuery.each(msg.text, function(key, value){
+                    txt += '&nbsp;&nbsp;&nbsp;<a href="';
+                    txt += value.link;
+                    txt += '">- ';
+                    txt += value.label;
+                    txt += '</a>';
+                    txt += '<br/>';
+                });
+                data_categories = txt;
+            }
+        });
+    }
+    
     function categories_click() {
         var text = $('#tree_categories').html();
         if (text=='') {
-            $.ajax({
-                url : '<?php echo site_url('event/show_categories'); ?>',
-                type : 'POST',
-                data : {},
-                success : function (msg) {
-                    var txt = "";
-                    jQuery.each(msg.text, function(key, value){
-                        txt += '&nbsp;&nbsp;&nbsp;<a href="';
-                        txt += value.link;
-                        txt += '">- ';
-                        txt += value.label;
-                        txt += '</a>';
-                        txt += '<br/>';
-                    });
-                    $('#tree_categories').html(txt);
-                }
-            });
+            $('#tree_categories').html(data_categories);
         } else {
             $('#tree_categories').html('');
         }

@@ -71,15 +71,19 @@
                     <li><a href="<?php echo site_url('sign_in')?>">Find A Friend</a></li>
                 <?php } else { ?>
                     <li><a href="<?php echo site_url('profile')?>">My Profile</a></li>
-                    <li><a href="<?php echo site_url('sign_in/sign_out')?>">Sign Out</a></li>
                     <li><a href="<?php echo site_url('message')?>">Message</a></li>
                     <li><a href="<?php echo site_url('friend')?>">Find A Friend</a></li>
                 <?php } ?>
             </ul>
-
+            
             <div class="search_site_box">
-                <input></input>
+                <input style="height:23px;"></input>
             </div>
+            <?php if ($this->session->userdata('name')!=null) { ?>
+            <div id="welcome_user">
+                <?php echo character_limiter($this->session->userdata('name'),20).br(1).' ('.anchor('sign_in/sign_out','Sign Out').')';?>
+            </div>
+            <?php } ?>
         </div>
         
         <div class="banner"> 
