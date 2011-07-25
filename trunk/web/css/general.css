@@ -40,6 +40,7 @@ root {
     display:  inline;
     padding:0;
     margin:0;
+    
 }
 
 .navigation a {
@@ -62,6 +63,8 @@ root {
 
 .navigation li{
     display:inline;
+    font-family: Impact;
+    font-size: 25px;
 }
 
 #welcome_user {
@@ -104,6 +107,8 @@ root {
 
 #footer {
     padding: 0px 0px 0px 30px;
+    font-family: Arial;
+    font-size: 10px;
     color: rgb(130,130,130);
 }
 
