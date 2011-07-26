@@ -425,6 +425,7 @@ class Event extends CI_Controller {
         $data['main_content'] = 'event/my_calendar_view';
         $data['struktur'] = $this->getStruktur2('Your event calendar');
         $data['show_calendar_and_event'] = true;
+        $data['body_id'] = 'event_body';
         $this->load->view('includes/template', $data);
     }
 

@@ -29,6 +29,7 @@ root {
     height: 45px;
 }
 
+
 .navigation {
     padding: 0px 0px 0px 10px;
 }
@@ -56,7 +57,53 @@ root {
     text-align: center;
 }
 
-.navigation a:hover {
+
+ .navigation a:hover {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#home_body .navigation #home-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#about_body .navigation #about-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#event_body .navigation #event-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#news_body .navigation #news-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#sign_in_body .navigation #signin-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#sign_up_body .navigation #signup-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#profile_body .navigation #profile-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#message_body .navigation #message-nav a {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
+#find_friend_body .navigation #findfriend-nav a {
     background-color: rgb(0,0,0) ;
     color : rgb(255,255,255);
 }
@@ -64,7 +111,7 @@ root {
 .navigation li{
     display:inline;
     font-family: Impact;
-    font-size: 24px;
+    font-size: 22px;
 }
 
 #welcome_user {

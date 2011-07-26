@@ -69,18 +69,18 @@
     <div class="header">
         <div class="top-menu">
                <ul class="navigation">
-                <li><a href="<?php echo site_url('home')?>">HOME</a></li>
-                <li><a href="<?php echo site_url('about_us')?>">ABOUT US</a></li>
-                <li><a href="<?php echo site_url('event')?>">EVENT</a></li>
-                <li><a href="<?php echo site_url('news/show')?>">NEWS</a></li>
+                <li id="home-nav"><a href="<?php echo site_url('home')?>">HOME</a></li>
+                <li id="about-nav"><a href="<?php echo site_url('about_us')?>">ABOUT US</a></li>
+                <li id="event-nav"><a href="<?php echo site_url('event')?>">EVENT</a></li>
+                <li id="news-nav"><a href="<?php echo site_url('news/show')?>">NEWS</a></li>
                 <?php if ($this->session->userdata('name')==null) { ?>
-                    <li><a href="<?php echo site_url('sign_in')?>">SIGN IN</a></li>
-                    <li><a href="<?php echo site_url('sign_up')?>">SIGN UP</a></li>
-                    <li><a href="<?php echo site_url('sign_in')?>">FIND FRIEND</a></li>
+                    <li id="signin-nav"><a href="<?php echo site_url('sign_in')?>">SIGN IN</a></li>
+                    <li id="signup-nav"><a href="<?php echo site_url('sign_up')?>">SIGN UP</a></li>
+                    <li id="findfriend-nav"><a href="<?php echo site_url('sign_in')?>">FIND FRIEND</a></li>
                 <?php } else { ?>
-                    <li><a href="<?php echo site_url('profile')?>">MY PROFILE</a></li>
-                    <li><a href="<?php echo site_url('message')?>">MESSAGE</a></li>
-                    <li><a href="<?php echo site_url('friend')?>">FIND FRIEND</a></li>
+                    <li id="profile-nav"><a href="<?php echo site_url('profile')?>">MY PROFILE</a></li>
+                    <li id="message-nav"><a href="<?php echo site_url('message')?>">MESSAGE</a></li>
+                    <li id="findfriend-nav"><a href="<?php echo site_url('friend')?>">FIND FRIEND</a></li>
                 <?php } ?>
             </ul>
             
