@@ -49,8 +49,8 @@
     }
 ?>
 
-<div id ="link_pagination"> 
+<ul id="link_pagination"> 
     <?php echo $pagination; ?>
-</div>
+</ul>
 <div id="clearboth">
 </div>

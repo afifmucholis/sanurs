@@ -35,9 +35,9 @@
             </div>
         <?php }
         ?> 
-        <div id ="link_pagination"> 
+        <ul id="link_pagination"> 
             <?php echo $pagination; ?>
-        </div>
+        </ul>
     <?php } ?>
 
     <div class="clearboth">

@@ -44,9 +44,9 @@ if ($request_friend == 0) {
 }
 ?>
 
-
-<div id ="link_pagination"> 
+<ul id="link_pagination"> 
     <?php echo $pagination; ?>
-</div>
+</ul>
+
 <div class="clearboth">
 </div>
