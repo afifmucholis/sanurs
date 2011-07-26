@@ -10,12 +10,14 @@
    TODO customize this sample style
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
-
+/* 
 #link_pagination {
     padding : 5px 20px 5px 20px;
     margin : 5px 30px 5px 30px
 }
 
+*/
+/* 
 #num_link {
     text-decoration: none;
     float : left;
@@ -103,3 +105,65 @@
     color: rgb(0,0,0); 
 }
 
+
+*/
+
+#link_pagination{
+    float:left;
+    width:100%;
+    list-style-type:none;
+    display:  inline;
+    padding : 5px 20px 5px 20px;
+    margin : 5px 30px 5px 30px
+    
+}
+
+#link_pagination #num_link a {
+    text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(255,255,255);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: black;
+    border: 2px solid rgb(255,255,255);
+}
+
+
+ #link_pagination #num_link a:hover {
+     text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(0,0,0);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: rgb(255,255,255);
+    border: 2px solid rgb(195,195,195);
+}
+
+#link_pagination #cur_link{
+  text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(0,0,0);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: rgb(255,255,255);
+    border: 2px solid rgb(0,0,0);
+}
+
+
+#link_pagination #cur_link:hover {
+     text-decoration: none;
+    float : left;
+    font: 16px console;
+    font-weight: bold;
+    color : rgb(0,0,0);
+    padding: 5px 10px 5px 10px;
+    margin: 4px 2px 4px 2px;
+    background-color: rgb(255,255,255);
+    border: 2px solid rgb(0,0,0);
+}
