@@ -1,60 +1,82 @@
-<div id="notify">    
-    <div class="popup_title">
-        Sign Up
-    </div>
+<div class="popup_title">
+    Verification
+</div>
 
-    <div class="popup_main_content">
-        Welcome to our online community! Signing up is the first step to start connecting, attending and making events, and get better deals!
-        <?php
-        //echo "Welcome ".$alumni_id;
-        echo br(2);
-        echo "Hi, " . $name;
+<?php
+if (!isset($falseref) || (isset($falseref) && $falseref)) {
+    ?> 
+    Welcome <?php
+        echo $alumni['name'] . '!';
         echo br(1);
-        echo "Please enter your birthdate to verify (YYYY-MM-DD) :";
-        echo form_open('sign_up/verify_birthdate');
-        echo form_input('birthdate', '', 'id="datepicker"') . "<br/>";
-        echo form_hidden('id', $alumni_id);
-        echo form_hidden('name', $name);
+    ?> s
+    You have to fill form below to verify your registration as alumni. Please enter your e-mail and password that you want to use to sign in next time:
+    <?php
+    echo validation_errors();
+    echo form_open('sign_up/verify', array('id' => 'signupform'));
+    ?>
+    <div class="popup_main_content">
+        <table>
+            <tr>
+                <td> <?php echo form_label('Email', 'email') . "   "; ?></td>
+                <td> <?php echo form_input('email', '', 'id="email"') . "<br/>"; ?></td>
+            </tr>
+            <tr>
+                <td> <?php echo form_label('Password', 'password') . "  "; ?></td>
+                <td> <?php echo form_password('password', '', 'id="password"') . "<br/>"; ?></td>
+                </td>
+            <tr>
+                <td> <?php echo form_label('Retype Password', 'repassword') . "  "; ?></td>
+                <td> <?php echo form_password('repassword', '', 'id="repassword"') . "<br/>"; ?></td>
+            <tr>
+        </table>
+        
+        <?php
+        $hidden = array(
+            'id' => $alumni['id'],
+            'name' => $alumni['name']
+        );
+        echo form_hidden($hidden);
         ?>
-        <br/>
-    </div>
-    
-    <div class="popup_footer">
-        <?php 
+        <?php
         echo form_submit('submit', 'Submit', 'id="submit"');
         $js = 'onClick="disablePopup()"';
         echo form_button('cancel', 'Cancel', $js);
         echo form_close();
         ?>
     </div>
-</div>
-<script> 
-    $(function() {
-        //getter
-        $( "#datepicker" ).datepicker({changeMonth: true,changeYear: true,dateFormat: 'yy-mm-dd'});
-    });
-    
-    $('#submit').click(function(){
-        var link = '<?php echo site_url('sign_up/verify_birthdate'); ?>';
-        var form_data = {
-            id : $('input[name=id]').val(),
-            name : $('input[name=name]').val(),
-            birthdate : $('input[name=birthdate]').val(),
-            ajax: '1'		
-        };
 
-        $.ajax({
-            url: link,
-            type: 'POST',
-            data: form_data,
-            success: function(msg) {
-                if (msg.success)
-                    $("#notify").html(msg.text);
-                else
-                    alert('Lupa tanggal lahir ya?fuuu');
+    <div class="popup_footer">
+        
+    </div>
+    <?php
+}
+?>
+<script>
+    $(document).ready(function() {   
+        $("#signupform").validate({
+            rules : {
+                email : {
+                    required : true,
+                    email : true
+                },
+                password : {
+                    required : true,
+                    minlength : 6
+                },
+                repassword : {
+                    equalTo : password
+                }  
+                
+                
+            },
+            messages : {
+                email : "Please enter a valid email",
+                password : {
+                    required : "Please fill the password",
+                    minlength : "Your password at least 6 character"
+                },
+                repassword : "This field need to be match with password"
             }
-        });	
-        return false;
+        });  
     });
-    
-</script> 
+</script>
