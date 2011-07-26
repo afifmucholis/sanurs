@@ -23,21 +23,7 @@ root {
     width:100%;
     top:0;
     left:0;
-    /* background:#000000; */
-    background:rgb(100,100,100);
-    border:1px solid #cecece;
-    z-index:1;
-}
-
-#backgroundPopupresult{
-    display:none;
-    position:fixed;
-    _position:absolute; /* hack for internet explorer 6*/
-    height:100%;
-    width:100%;
-    top:0;
-    left:0;
-    background:#000000;
+    /* background:rgb(100,100,100); */
     border:1px solid #cecece;
     z-index:1;
 }
@@ -46,12 +32,15 @@ root {
     display:none;
     position:fixed;
     _position:absolute; /* hack for internet explorer 6*/
-    height:400px;
-    width:558px;
-    background:#FFFFFF;
-    border:2px solid #cecece;
+    /* height:300px; */
+    min-height: 100px;
+    width:500px;
+    /* background:#FFFFFF; */
+    background : none repeat scroll 0 0 rgba(235,235,235,0.92);
+    border-radius : 8px 8px 8px 8px;
+    border:15px solid rgba(120,120,120, 0.7);
     z-index:2;
-    padding:12px;
+    /* padding:12px; */
     font-size:13px;
 }
 .popup h1{
@@ -74,7 +63,7 @@ root {
     padding-bottom:2px;
     margin-bottom:20px;
 }
-
+/* 
 .popupContactClose{
     font-size:14px;
     line-height:14px;
@@ -84,4 +73,24 @@ root {
     color:#6fa5fd;
     font-weight:700;
     display:block;
+} */
+
+.popup_title {
+    background-color: rgb(16,77,17);
+    height: 35px;
+    font-family: impact;
+    font-size : 20px;
+    color: rgb(255,255,255);
+    padding: 10px 0px 0px 10px;
 }
+
+.popup_main_content {
+    padding: 20px 10px 30px 10px;
+}
+
+.popup_footer {
+    border-top: 1px solid rgb(160,160,160);
+    background-color: #F2F2F2;
+    padding: 10px 50px 10px 10px;
+}
+
