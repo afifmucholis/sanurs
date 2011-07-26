@@ -67,7 +67,6 @@ class profile extends CI_Controller {
         $data['title'] = 'Profile - ' . $data['user_data']['name'];
         $data['main_content'] = 'profile/show_profile_view';
         $data['struktur'] = $this->getStruktur($data['user_data']['name']);
-        $data['body_id'] = 'profile_body';
         // cek apakah bisa add friend
         $data['add_as_friend'] = 1;
         if ($this->session->userdata('user_id') == null) {   // belum sign in
