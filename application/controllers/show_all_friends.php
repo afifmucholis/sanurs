@@ -67,17 +67,18 @@ class show_all_friends extends CI_Controller {
         $config['cur_page'] = $offset;
 
         $config['first_link'] = 'First';
-        $config['first_tag_open'] = '<div  id="num_link">';
-        $config['first_tag_close'] = '</div>';
+        $config['first_tag_open'] = '<li id="num_link">';
+        $config['first_tag_close'] = '</li>';
         $config['last_link'] = 'Last';
-        $config['last_tag_open'] = '<div id="num_link">';
-        $config['last_tag_close'] = '</div>';
+        $config['last_tag_open'] = '<li id="num_link">';
+        $config['last_tag_close'] = '</li>';
         $config['next_link'] = false;
         $config['prev_link'] = false;
-        $config['cur_tag_open'] = '<div id="cur_link">';
-        $config['cur_tag_close'] = '</div>';
-        $config['num_tag_open'] = '<div id="num_link">';
-        $config['num_tag_close'] = '</div>';
+        $config['cur_tag_open'] = '<li id="cur_link">';
+        $config['cur_tag_close'] = '</li>';
+        $config['num_tag_open'] = '<li id="num_link">';
+        $config['num_tag_close'] = '</li>';
+
 
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
