@@ -11,7 +11,7 @@
         echo "Hi, " . $name;
         echo br(1);
         echo "Please enter your birthdate to verify (YYYY-MM-DD) :";
-        //echo form_open('sign_up/verify_birthdate');
+        echo form_open('sign_up/verify_birthdate');
         echo "<form action=#>";
         echo form_input('birthdate', '', 'id="datepicker"') . "<br/>";
         echo form_hidden('id', $alumni_id);
