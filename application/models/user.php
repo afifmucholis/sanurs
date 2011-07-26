@@ -108,8 +108,8 @@ class User extends CI_Model {
                 $this->db->set($field, $options[$field]);
             }
         }
-        //Jangan lupa password di md5 :
-        $this->db->set($this->password, md5($options[$this->password]));
+        //Jangan lupa password di md5 : -> sudah di md 5 pas sign up gan
+        $this->db->set($this->password, $options[$this->password]);
 
         //Jalankan query :
         $this->db->insert($this->table);
