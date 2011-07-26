@@ -137,7 +137,7 @@ class sign_up extends CI_Controller {
                 $text = $this->load->view('sign_up/verification',$data,true);
                 $success = 1;
             } else {
-                $text = 'Coba Lagi';
+                $text = 'Please try to remember your birthdate';
                 $success=0;
             }
         }
@@ -188,40 +188,31 @@ class sign_up extends CI_Controller {
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
+            $hash_password = md5($password);
+            $batas = $email.'</email>'.$hash_password;
+            $url_encrypt = urlencode(base64_encode($batas));
+            $message = 'Dear '.$name.', '.br(1);
+            $message .= 'Thanks for becoming our member. To finish your registration process please click the link below.'.br(1);
+            $message .= anchor(site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt));
             
-            //Load model :
-            $this->load->model('alumni', 'alumniModel');
-            $this->load->model('user', 'userModel');
-            
-            //Update tabel alumni (status register)
-            $optionsUpdate = array('id'=>$alumni['id'], 'is_registered'=>1);
-            $getReturnUpdate = $this->alumniModel->updateAlumni($optionsUpdate);
-            
-            //Ambil semua data dari tabel alumni ke tabel user :
-            $optionsGetUser = array('id'=>$alumni['id']);
-            $getUser = $this->alumniModel->getAlumnis($optionsGetUser);
-            
-            //Insert ke tabel user
-            $optionsInsert = array(
-                                    'name'=>$getUser[0]->name, 'email'=>$email,
-                                    'password'=>$password, 'birthdate'=>$getUser[0]->birthdate,
-                                    'graduate_year' =>$getUser[0]->graduate_year, 'last_unit_id'=>$getUser[0]->last_unit_id);
-            $getReturnInsert = $this->userModel->addUser($optionsInsert);
-            
-            /*** Insert inisialisasi ke tabel visibility ***/
-            $this->load->model('visibility_status', 'visibilityModel');
-            $option = array(
-                'user_id' => $getReturnInsert
-            );
-            $getVisibilityInsert = $this->visibilityModel->addVisibilityStatus($option);
-            /******/
-            
-            /*** redirect ke halaman login ***/
-            redirect('/sign_in', 'refresh');
-            /******/
-            
-            //$this->load->view('sign_up/signup_success');
+            // send verification email to her/his mail
+//            $this->load->library('email');
+//
+//            $this->email->from('admin@adminsanur.com', 'Admin web sanur');
+//            $this->email->to($email);
+//            $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
+//            $this->email->message($message);
+            echo $message;
         }
+    }
+    
+    function verify_mail($msg='') {
+        $array = $this->uri->uri_to_assoc(2);
+        $id = $array['verify_mail'];
+        $array = $this->uri->uri_to_assoc(3);
+        $msg = $array[$id];
+        echo 'id : '.$id.br(2);
+        echo 'msg : '.base64_decode(urldecode($msg)).br(2);
     }
     
     function form_birthdate() {

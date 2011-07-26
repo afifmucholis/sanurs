@@ -1,4 +1,4 @@
-<div id="notify">    
+<div id="notify"> 
     <div class="popup_title">
         Sign Up
     </div>
@@ -6,7 +6,6 @@
     <div class="popup_main_content">
         Welcome to our online community! Signing up is the first step to start connecting, attending and making events, and get better deals!
         <?php
-        //echo "Welcome ".$alumni_id;
         echo br(2);
         echo "Hi, " . $name;
         echo br(1);
@@ -18,9 +17,9 @@
         ?>
         <br/>
     </div>
-    
+
     <div class="popup_footer">
-        <?php 
+        <?php
         echo form_submit('submit', 'Submit', 'id="submit"');
         $js = 'onClick="disablePopup()"';
         echo form_button('cancel', 'Cancel', $js);
@@ -34,13 +33,18 @@
         $( "#datepicker" ).datepicker({changeMonth: true,changeYear: true,dateFormat: 'yy-mm-dd'});
     });
     
+    $( "#datepicker" ).focus(function(){
+        $( "#datepicker" ).removeAttr('class');
+        $('.error').remove();
+    });
+
     $('#submit').click(function(){
         var link = '<?php echo site_url('sign_up/verify_birthdate'); ?>';
         var form_data = {
             id : $('input[name=id]').val(),
             name : $('input[name=name]').val(),
             birthdate : $('input[name=birthdate]').val(),
-            ajax: '1'		
+            ajax: '1'	
         };
 
         $.ajax({
@@ -50,11 +54,13 @@
             success: function(msg) {
                 if (msg.success)
                     $("#notify").html(msg.text);
-                else
-                    alert('Lupa tanggal lahir ya?fuuu');
+                else {
+                    $('#datepicker').attr('class','error');
+                    $('#datepicker').after('<label for="error" class="error">'+msg.text+'</label>');
+                }
             }
         });	
         return false;
     });
-    
-</script> 
+
+</script>
