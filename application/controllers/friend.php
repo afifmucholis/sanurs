@@ -325,13 +325,15 @@ class friend extends CI_Controller {
         
     
     function search() {
+        $user_id = $this->session->userdata('user_id');
+        
         // get data from form
         $search_name = $this->input->post('name');
         $search_year = $this->input->post('year');
         $interest = $this->input->post('interest');
         $major = $this->input->post('major');
         
-        // load database
+        /*// load database
         $this->load->model('user', 'userModel');
         $this->load->model('unit', 'unitModel');
         $this->load->model('interested_in', 'interested_inModel');
@@ -519,7 +521,10 @@ class friend extends CI_Controller {
                 );
                 $data['search_results'][] = $elmt;
             }
-        }
+        }*/
+        
+        $data['search_results'] = $this->search_result($user_id, $search_name, $search_year, $interest, $major);
+        
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
         $data['struktur'] = $this->getStruktur2('Your Profile');
@@ -532,6 +537,202 @@ class friend extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
+    function search_result($user_id, $search_name, $search_year, $interest, $major) {
+        // load database
+        $this->load->model('user', 'userModel');
+        $this->load->model('unit', 'unitModel');
+        $this->load->model('interested_in', 'interested_inModel');
+        $this->load->model('interest', 'interestModel');
+        $this->load->model('education', 'educationModel');
+        $this->load->model('major', 'majorModel');
+        
+        //array untuk menyimpan user_id
+        $userByMajor = array();
+        $userByInterest = array();
+        $userByNameAndYear = array();
+        
+        //get all user_id
+        $option = array('columnSelect' => 'id');
+        $getAllUser = $this->userModel->getUsers($option);
+        
+        //cari berdasarkan education
+        if ($major == 'all') {
+            //get all user_id
+            $getUserByMajor = $getAllUser;
+            if ($getUserByMajor) {
+                $i = 0;
+                while ($i < count($getUserByMajor)) {
+                    $userByMajor[] = $getUserByMajor[$i]->id;
+                    $i++;
+                }
+            }
+        } else {
+            //get major id
+            $option = array(
+                'major' => $major,
+                'columnSelect' => 'id'
+            );
+            $getMajorId = $this->majorModel->getMajors($option);
+            $major_id = $getMajorId[0]->id;
+            
+            //cari id dengan major_id seperti yang ditemukan
+            $option = array(
+                'major_id' => $major_id,
+                'columnSelect' => 'user_id'
+            );
+            $getUserByMajor = $this->educationModel->getEducations($option);
+            if ($getUserByMajor) {
+                $i = 0;
+                while ($i < count($getUserByMajor)) {
+                    $userByMajor[] = $getUserByMajor[$i]->user_id;
+                    $i++;
+                }
+            }
+        }
+        
+        //cari berdasarkan interest
+        if ($interest == 'all') {
+            //get all user_id
+            $getUserByInterest = $getAllUser;
+            if ($getUserByInterest) {
+                $i = 0;
+                while ($i < count($getUserByInterest)) {
+                    $userByInterest[] = $getUserByInterest[$i]->id;
+                    $i++;
+                }
+            }
+        } else {
+            //get interest id
+            $option = array(
+                'interest' => $interest,
+                'columnSelect' => 'id'
+            );
+            $getInterestId = $this->interestModel->getInterests($option);
+            $interest_id = $getInterestId[0]->id;
+            
+            //cari id dengan interest_id seperti yang ditemukan
+            $option = array(
+                'interest_id' => $interest_id,
+                'columnSelect' => 'user_id'
+            );
+            $getUserByInterest = $this->interested_inModel->getInterestedIn($option);
+            if ($getUserByInterest) {
+                $i = 0;
+                while ($i < count($getUserByInterest)) {
+                    $userByInterest[] = $getUserByInterest[$i]->user_id;
+                    $i++;
+                }
+            }
+        }
+        
+        //cari berdasarkan nama dan tahun
+        if ($search_name == "") {
+            //kolom nama gak diisi, langsung cari berdasarkan tahun kalo ada
+            if ($search_year == "") {
+                //get semua user
+                $getUserByNameAndYear = $getAllUser;
+            } else {
+                //cari berdasarkan tahun saja
+                $option = array(
+                    'graduate_year' => $search_year,
+                    'columnSelect' => 'id'
+                );
+                $getUserByNameAndYear = $this->userModel->getUsers($option);
+            }
+        } else {
+            if ($search_year == "") {
+                //cari berdasarkan nama saja
+                $option = array(
+                    'name LIKE' => $search_name,
+                    'columnSelect' => 'id'
+                );
+                $getUserByNameAndYear = $this->userModel->getUsers($option);
+            } else {
+                //cari berdasarkan nama dan tahun
+                $option = array(
+                    'name LIKE' => $search_name,
+                    'graduate_year' => $search_year,                    
+                    'columnSelect' => 'id'
+                );
+                $getUserByNameAndYear = $this->userModel->getUsers($option);
+            }
+        }
+        if ($getUserByNameAndYear) {
+            $i = 0;
+            while ($i < count($getUserByNameAndYear)) {
+                $userByNameAndYear[] = $getUserByNameAndYear[$i]->id;
+                $i++;
+            }
+        }
+        
+        $temp = array();
+        $results = array();
+        
+        if (count($userByInterest) > 0) {
+            //cek userByMajor
+            if (count($userByMajor) > 0) {
+                //cocokkin userByInterest sama userByMajor
+                foreach ($userByInterest as $uInterest) {
+                    $i = 0;
+                    $found = FALSE;
+                    while (!$found && $i<count($userByMajor)) {
+                        if ($uInterest == $userByMajor[$i]) {
+                            $temp[] = $uInterest;
+                            $found = TRUE;
+                        }
+                        $i++;
+                    }
+                }
+                
+                if (count($temp) > 0) {
+                    if (count($userByNameAndYear) > 0) {
+                        //cocokkin hasil pencocokan dengan userByNameAndYear
+                        foreach ($temp as $t) {
+                            $i = 0;
+                            $found = FALSE;
+                            while (!$found && $i < count($userByNameAndYear)) {
+                                if ($t == $userByNameAndYear[$i]) {
+                                    $results[] = $t;
+                                    $found = TRUE;
+                                }
+                                $i++;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        
+        //$data['search_results'] = array();
+        $search_results = array();
+        
+        if (count($results) > 0) {
+            foreach ($results as $res) {
+                $option = array('id' => $res);
+                $getUser = $this->userModel->getUsers($option);
+                
+                $unit_id = $getUser[0]->last_unit_id;
+                $option = array(
+                    'id' => $unit_id,
+                    'columnSelect' => 'label'
+                );
+                $getUnit = $this->unitModel->getUnits($option);
+                
+                $elmt = array(
+                    'id' => $getUser[0]->id,
+                    'name' => $getUser[0]->name,
+                    'profpict_url' => $getUser[0]->profpict_url,
+                    'graduate_year' => $getUser[0]->graduate_year,
+                    'unit' => $getUnit[0]->label
+                );
+                //$data['search_results'][] = $elmt;
+                $search_results[] = $elmt;
+            }
+        }
+        return $search_results;
+        //echo json_encode($search_results);
+    }
+
     function getStruktur($name) {
         $struktur = array (
             array (
