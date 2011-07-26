@@ -70,9 +70,9 @@ echo form_open('sign_up/verify', array('id' => 'signupform'));
                 
             },
             messages : {
-                email : "Please enter a valid email",
+                email : "Please enter a valid email address",
                 password : {
-                    required : "Please fill the password",
+                    required : "Please fill this password field",
                     minlength : "Your password at least 6 character"
                 },
                 repassword : "This field need to be match with password"
