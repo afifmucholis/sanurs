@@ -86,6 +86,9 @@ root {
 
 .popup_main_content {
     padding: 20px 10px 30px 10px;
+    font-family: georgia;
+    font-size: 14px;
+    background-color: rgb(255,255,255);
 }
 
 .popup_footer {
