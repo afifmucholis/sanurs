@@ -166,7 +166,7 @@ root {
 
 .right-menu {
     float:left;
-    width: 280px;
+    width: 260px;
 }
 
 .work-menu{
@@ -193,7 +193,7 @@ root {
 
 #main_content {
     min-height: 600px;
-    padding: 5px 10px 5px 10px;
+    padding: 10px 20px 10px 20px;
 }
 
 #history{
