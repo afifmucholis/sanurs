@@ -28,17 +28,21 @@ echo br(1);
 // ngambil search result
 foreach ($search_results as $result) {
     ?>
-    <div id="result">
-        <?php
-        echo $result['profpict_url'];
-        echo br(1);
-        ?>
-        <a href="../profile/user/<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a>
-        <?php
-        echo br(1);
-        echo $result['unit'] . ' (' . $result['graduate_year'] . ')';
-        echo br(2);
-        ?>
+    <div id="show_friends_wrapper">
+        <div id='friend_profpic'>
+            <?php echo "<img src =' " . base_url() . $result['profpict_url'] . "' />"; ?>
+        </div>
+        <div id="show_info_wrapper">
+            <div id ='friend_name'>
+                <a href="../profile/user/<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a>
+            </div>
+            <div id ='friend_unityear'>
+                <?php echo $result['unit'] . ' (' . $result['graduate_year'] . ')'; ?>
+            </div>                
+        </div>
+        <div class="clearboth">
+        </div>
+        <hr/>
     </div>
     <?php
 }
