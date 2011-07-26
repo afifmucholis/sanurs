@@ -127,6 +127,7 @@ $config['subclass_prefix'] = 'MY_';
 |
 */
 $config['permitted_uri_chars'] = 'a-z 0-9~%.:_\-';
+//$config['permitted_uri_chars'] = '+=\a-z 0-9~%.:_-';
 
 
 /*
@@ -224,7 +225,7 @@ $config['cache_path'] = '';
 | MUST set an encryption key.  See the user guide for info.
 |
 */
-$config['encryption_key'] = 'danangakbarpudy';
+$config['encryption_key'] = 'pUdy047daNaNg051AkBar106saNuR11';
 
 /*
 |--------------------------------------------------------------------------
