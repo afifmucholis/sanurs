@@ -26,16 +26,15 @@
         <?php }
         ?>
         <?php
-        if (isset($show_calendar) && $show_calendar) {?>     
+        if (isset($show_calendar) && $show_calendar==1) {?>     
             <script src="<?php echo base_url(); ?>js/jquery/jquery-ui-timepicker-addon.js"></script>
             <script> 
                 $(function() {
                     //getter
-                    $( "#datepickers" ).datetimepicker({dateFormat: 'yy-mm-dd',timeFormat: 'hh:mm:ss'});
+                    $( "#datepickers" ).datetimepicker({changeMonth: true,changeYear: true,dateFormat: 'yy-mm-dd',timeFormat: 'hh:mm:ss'});
                 });
             </script> 
-        <?php }
-        ?>
+        <?php }?>
         <?php
             if (isset($show_editor) && $show_editor) {?>
                 <script src="<?php echo base_url();?>js/nicEdit.js"></script>

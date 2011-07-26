@@ -11,11 +11,9 @@
     //echo "Welcome ".$alumni_id;
     echo "Welcome, " . $name;
     echo br(1);
-    echo "Please enter your birth date to verify.";
+    echo "Please enter your birth date to verify. (yyyy-mm-dd)";
     //echo form_open('sign_up/verify_birthdate');
-    ?>
-    <form action="#">
-    <?php
+    echo "<form action=#>";
     echo form_input('birthdate', '', 'id="datepicker"') . "<br/>";
     echo form_hidden('id',$alumni_id);
     echo form_hidden('name',$name);
@@ -27,7 +25,7 @@
 <script> 
     $(function() {
         //getter
-        $( "#datepicker" ).datepicker({dateFormat: 'yy-mm-dd'});
+        $( "#datepicker" ).datepicker({changeMonth: true,changeYear: true,dateFormat: 'yy-mm-dd'});
     });
     
     $('#submit').click(function(){
@@ -44,7 +42,10 @@
 		type: 'POST',
                 data: form_data,
 		success: function(msg) {
-                    $("#notify").html(msg.text);
+                    if (msg.success)
+                        $("#notify").html(msg.text);
+                    else
+                        alert('Lupa tanggal lahir ya?fuuu');
 		}
 	});	
 	return false;

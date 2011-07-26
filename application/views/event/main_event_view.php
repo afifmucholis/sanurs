@@ -1,7 +1,6 @@
 <h3>Event</h3>
 <div class="left-menu">
     <div id="slide_show_event">
-        slide show event here<br/>
         <div id="gallery-event">
         </div>
         Click Picture in Slide Show to view the event
