@@ -13,6 +13,7 @@ class sign_up extends CI_Controller {
         $data['main_content'] = 'sign_up/sign_up_view';
         $data['struktur'] = $this->getStruktur();
         $data['show_calendar'] = 1;
+        $data['body_id'] = 'sign_up_body';
         
         /*** get list of unit (education) ***/
         $this->load->model('unit', 'unitModel');

@@ -56,7 +56,15 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/error-validation.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/popup.css" />
 </head>
+<?php
+    if (isset($body_id)) {
+?>
+<body id="<?php echo $body_id; ?>">
+<?php
+    } else {
+?>
 <body>
+<?php } ?>
   <div id="content">
     <div class="header">
         <div class="top-menu">

@@ -4,6 +4,7 @@
     } else {
         foreach ($all_news as $news) :
 ?>
+        <div id="news_div">
             <div id="title_news">
                 <h4><?php echo anchor('news/show_news/'.$news->id,$news->title); ?></h4>
             </div>
@@ -18,32 +19,31 @@
             <div id="publishing_date">
                 <?php echo $news->publishing_date;?>
             </div>
-            <div id="content">
+            <div id="content_news">
                 <?php 
                     $content = str_get_html($news->content);
                     $array_img = $content->find('img');
                     if (count($array_img)!=0) {
                         $array_img[0]->width=100;
                         $array_img[0]->height=100;
-                        ?>
-                <div id="img_news" style="float:left;">
-                <?php
-                        echo $array_img[0];
+                        $array_img[0]->style="float:left";
                     }
-                    $text = word_limiter($content->plaintext,50);
-                    ?>
-                </div>
-                <div id="text_news" style="float:left; display: inline;">
+                ?>
+                <div id="text_news" style="float:left;">
                     <?php
-                    echo $text;
-                ;?>
+                        $text = word_limiter($content->plaintext,50);
+                        echo $array_img[0];
+                        echo $text;
+                    ?>
+                    <div id="link_show">
+                        <?php echo anchor('news/show_news/'.$news->id,'Read More');?>
+                    </div>
                 </div>
-                <div id="clearboth">
-                </div>
-                <div id="link_show">
-                    <?php echo anchor('news/show_news/'.$news->id,'Read More');?>
+                <div class="clearboth">
                 </div>
             </div>
+        </div>
+        <br/>
 <?php
         endforeach;
     }

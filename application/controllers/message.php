@@ -24,7 +24,7 @@ class Message extends CI_Controller {
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
         $data['struktur'] = $this->getStruktur('New Message');
-        
+        $data['body_id'] = 'message_body';
         $data['view'] = 'message/new_message_view';
         $this->load->view('includes/template', $data);
     }
@@ -40,7 +40,7 @@ class Message extends CI_Controller {
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
         $data['view'] = 'message/' . $array['view'];
-
+        $data['body_id'] = 'message_body';
         if ($array['view'] == 'new_message_view') {
             $data['struktur'] = $this->getStruktur('New Message');
             $data['friend_list'] = $this->getFriendList();

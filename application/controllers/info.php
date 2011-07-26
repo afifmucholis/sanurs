@@ -25,7 +25,7 @@ class info extends CI_Controller {
         $data['title'] = $fl['status'];
         $data['main_content'] = 'info/info_view';
         $data['struktur'] = $this->getStruktur($fl['page_before'],$fl['page_link'],$fl['status']);
-        
+        $data['body_id'] = 'info_body';
         $data['message'] = $fl['message'];
         $this->load->view('includes/template',$data);
     }

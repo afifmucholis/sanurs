@@ -58,6 +58,7 @@ class friend extends CI_Controller {
         $data['title'] = 'Find a friend';
         $data['main_content'] = 'friend/find_a_friend_view';
         $data['struktur'] = $this->getStruktur3();
+        $data['body_id'] = 'find_friend_body';
         $this->load->view('includes/template',$data);
     }
     
@@ -159,6 +160,7 @@ class friend extends CI_Controller {
         $data['title'] = 'View Friend Request';
         $data['main_content'] = 'friend/friend_request_view';
         $data['struktur'] = $this->getStruktur('Friend Request');
+        $data['body_id'] = 'profile_body';
         $user_id = $this->session->userdata('user_id');
         $this->load->library('pagination');
         $per_page = 10;
@@ -525,6 +527,7 @@ class friend extends CI_Controller {
         $data['search_year'] = $search_year;
         $data['interest'] = $interest;
         $data['major'] = $major;
+        $data['body_id'] = 'find_friend_body';
         
         $this->load->view('includes/template',$data);
     }

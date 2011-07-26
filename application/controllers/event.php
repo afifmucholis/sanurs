@@ -36,6 +36,7 @@ class Event extends CI_Controller {
         $data['struktur'] = $this->getStruktur();
         $data['sortby'] = 'categories';
         $data['show_calendar_and_event'] = true;
+        $data['body_id'] = 'event_body';
         $this->load->view('includes/template', $data);
     }
 
@@ -54,6 +55,7 @@ class Event extends CI_Controller {
         $data['sortby'] = $array['sortby'];
         $data['categories'] = "";
         $data['show_calendar_and_event'] = true;
+        $data['body_id'] = 'event_body';
         if ($array['sortby'] == 'categories') {
             $array2 = $this->uri->uri_to_assoc(3);
             $data['categories'] = $this->get_categories_exist();
@@ -210,7 +212,7 @@ class Event extends CI_Controller {
         $data['title'] = 'Event - ' . $title;
         $data['main_content'] = 'event/show_event_view';
         $data['struktur'] = $this->getStruktur2($title);
-
+        $data['body_id'] = 'event_body';
         $this->load->view('includes/template', $data);
     }
 
@@ -280,7 +282,8 @@ class Event extends CI_Controller {
         $data['main_content'] = 'event/host_event_view';
         $data['struktur'] = $this->getStruktur3();
         $data['category_list'] = array();
-
+        $data['body_id'] = 'event_body';
+        
         // show calendar
         $data['show_calendar'] = 1;
 
@@ -291,7 +294,7 @@ class Event extends CI_Controller {
             $data['category_list'][$category->id] = $category->category_event;
             $count++;
         endforeach;
-
+        
         $this->load->view('includes/template', $data);
     }
 
