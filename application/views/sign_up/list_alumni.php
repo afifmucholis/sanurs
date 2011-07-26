@@ -12,7 +12,6 @@ endforeach;
 ?>
 
 <div id="upload_popup" class ="popup">
-    <a href="#" class="popupContactClose">x</a>
     <div id="form_birthdate">
     </div>
 </div>
