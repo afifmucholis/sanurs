@@ -196,13 +196,13 @@ class sign_up extends CI_Controller {
             $message .= anchor(site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt));
             
             // send verification email to her/his mail
-//            $this->load->library('email');
-//
-//            $this->email->from('admin@adminsanur.com', 'Admin web sanur');
-//            $this->email->to($email);
-//            $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
-//            $this->email->message($message);
-            echo $message;
+            $this->load->library('email');
+
+            $this->email->from('admin@adminsanur.com', 'Admin web sanur');
+            $this->email->to($email);
+            $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
+            $this->email->message($message);
+            //echo $message;
         }
     }
     
