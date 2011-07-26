@@ -13,7 +13,7 @@
     <div id="publishing_date">
         <?php echo $date;?>
     </div>
-    <div id="content">
+    <div id="content_news">
         <?php echo $content;?>
     </div>
 </div>

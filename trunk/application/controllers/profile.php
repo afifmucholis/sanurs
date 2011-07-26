@@ -16,6 +16,7 @@ class profile extends CI_Controller {
         $data['title'] = 'Profile';
         $data['main_content'] = 'profile/my_profile_view';
         $data['struktur'] = $this->getStruktur('Your Profile');
+        $data['body_id'] = 'profile_body';
         // get user profile info
         $user_id = $this->session->userdata('user_id');
 
@@ -66,6 +67,7 @@ class profile extends CI_Controller {
         $data['title'] = 'Profile - ' . $data['user_data']['name'];
         $data['main_content'] = 'profile/show_profile_view';
         $data['struktur'] = $this->getStruktur($data['user_data']['name']);
+        $data['body_id'] = 'profile_body';
         // cek apakah bisa add friend
         $data['add_as_friend'] = 1;
         if ($this->session->userdata('user_id') == null) {   // belum sign in
@@ -119,7 +121,7 @@ class profile extends CI_Controller {
         $data['title'] = 'Edit your profile ';
         $data['main_content'] = 'edit_profile/edit_profile_view';
         $data['struktur'] = $this->getStruktur2('Basic Info');
-
+        $data['body_id'] = 'profile_body';
         // get uri to check default view edit exist
         $array = $this->uri->uri_to_assoc(2);
         if ($array['editProfile'] != '')

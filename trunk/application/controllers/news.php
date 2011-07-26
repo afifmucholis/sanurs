@@ -28,6 +28,7 @@ class news extends CI_Controller {
         $data['title'] = 'News';
         $data['main_content'] = 'news/show_all_news';
         $data['struktur'] = $this->getStruktur('News');
+        $data['body_id'] = 'news_body';
         // cek admin
         $data['isadmin'] = $this->session->userdata('isadmin');
         
@@ -90,7 +91,7 @@ class news extends CI_Controller {
         $data['isadmin'] = $this->session->userdata('isadmin');
         $array = $this->uri->uri_to_assoc(2);
         $data['id_news'] = $array['show_news'];
-        
+        $data['body_id'] = 'news_body';
         // get content
         $this->load->model('news_model','newsModel');
         $options = array('id'=>$data['id_news']);
@@ -122,6 +123,7 @@ class news extends CI_Controller {
         $data['title'] = 'News';
         $data['main_content'] = 'news/add_news_view';
         $data['struktur'] = $this->getStruktur2('Add News');
+        $data['body_id'] = 'news_body';
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 300;
@@ -156,6 +158,7 @@ class news extends CI_Controller {
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 300;
+        $data['body_id'] = 'news_body';
         
         $this->load->view('includes/template',$data);
     }

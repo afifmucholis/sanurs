@@ -25,7 +25,7 @@ class notification extends CI_Controller {
         $data['title'] = 'Your Notification';
         $data['main_content'] = 'profile/notification_view';
         $data['struktur'] = $this->getStruktur('Your Notification');
-        
+        $data['body_id'] = 'profile_body';
         $user_id = $this->session->userdata('user_id');
         // load model notification
         $this->load->model('notification_model', 'notificationModel');

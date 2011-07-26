@@ -31,7 +31,7 @@ class show_all_friends extends CI_Controller {
         $data['title'] = 'All Friends';
         $data['main_content'] = 'profile/show_all_friends_view';
         $data['struktur'] = $this->getStruktur('Show All Friend');
-
+        $data['body_id'] = 'profile_body';
         $user_id = $this->session->userdata('user_id');
 
         $this->load->view('includes/template', $data);
@@ -44,6 +44,7 @@ class show_all_friends extends CI_Controller {
         $data['title'] = 'Show All Friends';
         $data['main_content'] = 'profile/show_all_friends_view';
         $data['struktur'] = $this->getStruktur($this->getName($user_id), $user_id);
+        $data['body_id'] = 'profile_body';
         $data['view'] = 'profile/show_all_friends_view';
         $data['userid_viewed'] = $user_id;
         $data['userid_login'] = $this->session->userdata('user_id');

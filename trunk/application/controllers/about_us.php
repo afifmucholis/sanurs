@@ -23,6 +23,8 @@ class About_us extends CI_Controller {
         $data['main_content'] = 'about_us/about_us_view';
         $data['struktur'] = $this->getStruktur('History');
         $data['view'] = 'about_us/history';
+        $data['view_awal'] = 'history';
+        $data['body_id'] = 'about_body';
         $this->load->view('includes/template',$data);
     }
     
@@ -37,6 +39,8 @@ class About_us extends CI_Controller {
         $data['title'] = 'About Us';
         $data['main_content'] = 'about_us/about_us_view';
         $data['view'] = 'about_us/'.$array['view'];
+        $data['view_awal'] = $array['view'];
+        $data['body_id'] = 'about_body';
         if ($array['view']=='history')
             $data['struktur'] = $this->getStruktur('History');
         else if ($array['view']=='visimisi')

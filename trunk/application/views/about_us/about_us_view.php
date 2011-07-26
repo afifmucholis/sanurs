@@ -25,7 +25,7 @@
     
     $(document).ready(function(){
         about_us_nav_binding();
-        about_us_nav('history');
+        about_us_nav('<?php echo $view_awal; ?>');
     });
  
     function about_us_nav_binding() {
