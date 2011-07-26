@@ -1,20 +1,21 @@
 <div class="popup_title">
     Verification
 </div>
-
 <?php
-if (!isset($falseref) || (isset($falseref) && $falseref)) {
-    ?> 
-    Welcome <?php
-        echo $alumni['name'] . '!';
-        echo br(1);
-    ?> s
-    You have to fill form below to verify your registration as alumni. Please enter your e-mail and password that you want to use to sign in next time:
+echo validation_errors();
+echo form_open('sign_up/verify', array('id' => 'signupform'));
+?>
+
+<div class="popup_main_content">        
     <?php
-    echo validation_errors();
-    echo form_open('sign_up/verify', array('id' => 'signupform'));
-    ?>
-    <div class="popup_main_content">
+    if (!isset($falseref) || (isset($falseref) && $falseref)) {
+        ?> 
+        Welcome <?php
+    echo $alumni['name'] . '!';
+    echo br(1);
+        ?> s
+        You have to fill form below to verify your registration as alumni. Please enter your e-mail and password that you want to use to sign in next time:
+
         <table>
             <tr>
                 <td> <?php echo form_label('Email', 'email') . "   "; ?></td>
@@ -29,7 +30,7 @@ if (!isset($falseref) || (isset($falseref) && $falseref)) {
                 <td> <?php echo form_password('repassword', '', 'id="repassword"') . "<br/>"; ?></td>
             <tr>
         </table>
-        
+
         <?php
         $hidden = array(
             'id' => $alumni['id'],
@@ -37,16 +38,15 @@ if (!isset($falseref) || (isset($falseref) && $falseref)) {
         );
         echo form_hidden($hidden);
         ?>
+    </div>
+
+    <div class="popup_footer">
         <?php
         echo form_submit('submit', 'Submit', 'id="submit"');
         $js = 'onClick="disablePopup()"';
         echo form_button('cancel', 'Cancel', $js);
         echo form_close();
         ?>
-    </div>
-
-    <div class="popup_footer">
-        
     </div>
     <?php
 }
@@ -64,7 +64,7 @@ if (!isset($falseref) || (isset($falseref) && $falseref)) {
                     minlength : 6
                 },
                 repassword : {
-                    equalTo : password
+                    equalTo : "#password"
                 }  
                 
                 
