@@ -172,7 +172,7 @@ class sign_up extends CI_Controller {
         $name = $this->input->post('name');
         
         //Set Rule dari email dan password :
-        $this->form_validation->set_rules('email','Email', 'required|valid_email');
+        $this->form_validation->set_rules('email','Email', 'required|valid_email|callback_email_check');
         $this->form_validation->set_rules('password','Password', 'required');
         $this->form_validation->set_rules('repassword','Retype Password', 'required|matches[password]');
         
@@ -181,7 +181,7 @@ class sign_up extends CI_Controller {
             'name'=>$name
         );
         
-        if ($this->form_validation->run()== false) {
+        if ($this->form_validation->run($this)== false) {
             $data['alumni']=$alumni;
             $data['falseref']=true;
             $this->load->view('sign_up/verification', $data);
@@ -206,13 +206,70 @@ class sign_up extends CI_Controller {
         }
     }
     
-    function verify_mail($msg='') {
+    function email_check($str) {
+        $this->load->model('user','userModel');
+        $options = array('email'=>$str);
+        $getUser = $this->userModel->getUsers($options);
+        if (is_bool($getUser)) {
+            return true;
+        } else {
+            $this->form_validation->set_message('email_check', 'Email %s already used.');
+            return false;
+        }
+            
+    }
+    
+    function verify_mail() {
         $array = $this->uri->uri_to_assoc(2);
         $id = $array['verify_mail'];
         $array = $this->uri->uri_to_assoc(3);
-        $msg = $array[$id];
-        echo 'id : '.$id.br(2);
-        echo 'msg : '.base64_decode(urldecode($msg)).br(2);
+        $msg = base64_decode(urldecode($array[$id]));
+        $input = explode('</email>', $msg);
+        if (count($input)!=2)
+            show_404 ();
+        $email = $input[0];
+        $password = $input[1];
+        //Load model :
+        $this->load->model('alumni', 'alumniModel');
+        $this->load->model('user', 'userModel');
+
+        //Update tabel alumni (status register)
+        $optionsUpdate = array('id'=>$id, 'is_registered'=>1);
+        $getReturnUpdate = $this->alumniModel->updateAlumni($optionsUpdate);
+        if (is_bool($getReturnUpdate))
+            show_404 ();
+        //Ambil semua data dari tabel alumni ke tabel user :
+        $optionsGetUser = array('id'=>$id);
+        $getUser = $this->alumniModel->getAlumnis($optionsGetUser);
+
+        //Insert ke tabel user
+        $optionsInsert = array(
+                                'name'=>$getUser[0]->name, 'email'=>$email,
+                                'password'=>$password, 'birthdate'=>$getUser[0]->birthdate,
+                                'graduate_year' =>$getUser[0]->graduate_year, 'last_unit_id'=>$getUser[0]->last_unit_id);
+        $getReturnInsert = $this->userModel->addUser($optionsInsert);
+        if (is_bool($getReturnInsert))
+            show_404 ();
+        /*** Insert inisialisasi ke tabel visibility ***/
+        $this->load->model('visibility_status', 'visibilityModel');
+        $option = array(
+            'user_id' => $getReturnInsert
+        );
+        $getVisibilityInsert = $this->visibilityModel->addVisibilityStatus($option);
+        if (is_bool($getVisibilityInsert))
+            show_404 ();
+        /******/
+        
+        // send message success
+        $message['status'] = 'Success';
+        $message['message'] = 'Registration is completed.'.br(1).'Click '.anchor('sign_in','here').' to sign in.';
+        $message['page_before'] = 'Sign up';
+        $message['page_link'] = 'sign_up';
+
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show','refresh');
+        
     }
     
     function form_birthdate() {
