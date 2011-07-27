@@ -24,10 +24,11 @@
     function clickPagination(val) {
         var offset = $(val).attr('href').split('/');
         var link = '<?php echo site_url('site_searching/search') ?>';
+        var term = '<?php echo $term; ?>';
         $.ajax({
             type: "POST",
             url: link,
-            data : {offsetval:offset[offset.length-1], ajax : 1},
+            data : {offsetval:offset[offset.length-1], ajax : 1, term : term},
             success: function(msg){
                 $("#searching_site").html(msg["text"]);
                 bindPagination();
