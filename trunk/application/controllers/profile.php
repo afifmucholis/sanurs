@@ -387,7 +387,37 @@ class profile extends CI_Controller {
     }
 
     function get_all_location() {
+        $user_id = $this->session->userdata('user_id');
+        
         // load model user
+        $this->load->model('user', 'userModel');
+        $option = array();
+        $getUser = $this->userModel->getUsers($option); //ini berisi semua data user yang ada di database
+        
+        // get location
+        if ($getUser) {
+            $count = 0;
+            $userArray = array();
+            foreach ($getUser as $user) {
+                if ($user->location_latitude != NULL) {
+                    $userArray[$count] = array(
+                        'id' => $user->id,
+                        'name' => $user->name,
+                        'year' => $user->graduate_year,
+                        'lat' => $user->location_latitude,
+                        'lng' => $user->location_longitude
+                    );
+                    $count++;
+                }
+            }
+        }
+
+        $this->output
+                ->set_content_type('application/json')
+                ->set_output(json_encode($userArray));
+        
+        
+        /*// load model user
         $this->load->model('user', 'userModel');
         //$option = array('id' => $user_id);
         $option = array();
@@ -412,7 +442,7 @@ class profile extends CI_Controller {
 
         $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode($userArray));
+                ->set_output(json_encode($userArray));*/
     }
 
     /**
