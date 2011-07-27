@@ -8,6 +8,7 @@
         echo form_password('password', '', 'id="password"')."<br/>";
         echo form_submit('submit', 'Submit', 'id="submit"');
         echo form_close();
+        echo anchor('sign_in/forget','Forget Password');
     ?>
 </div>
 

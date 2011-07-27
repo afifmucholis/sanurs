@@ -44,7 +44,7 @@ if (isset($categories) && $categories != "") {
         <?php echo br(3); ?>
         <?php if ($this->session->userdata('name') == null) { ?>
             <p>Sign in first to view your personal calendar</p>
-            <?php $this->load->view('sign_in_view'); ?>
+            <?php $this->load->view('sign_in/sign_in_view'); ?>
             <?php
         } else {
             echo anchor('event/mycalendar', 'Click here to view my calendar');

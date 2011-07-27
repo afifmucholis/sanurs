@@ -20,7 +20,7 @@
 class Sign_in extends CI_Controller {
     function index() {
         $data['title'] = 'Sign In';
-        $data['main_content'] = 'sign_in_view';
+        $data['main_content'] = 'sign_in/sign_in_view';
         $data['struktur'] = $this->getStruktur();
         $data['body_id'] = 'sign_in_body';
         $this->load->view('includes/template',$data);
@@ -77,6 +77,10 @@ class Sign_in extends CI_Controller {
         );
         $this->session->unset_userdata($session_data);
         redirect('/home', 'refresh');
+    }
+    
+    function forget(){
+        echo 'forget';
     }
     
     function getStruktur() {
