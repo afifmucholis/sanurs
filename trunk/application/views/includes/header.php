@@ -84,7 +84,11 @@
             </ul>
             
             <div class="search_site_box">
-                <input style="height:23px;"></input>
+                <?php 
+                    echo form_open('site_searching/search');
+                    echo form_input('term', '');
+                    echo form_submit('submit', 'Submit', 'id="submit"');
+                ?>
             </div>
             <?php if ($this->session->userdata('name')!=null) { ?>
             <div id="welcome_user">
