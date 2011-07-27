@@ -26,7 +26,7 @@ class site_searching extends CI_Controller {
         $term = $this->input->post('term');
         
         $this->load->library('pagination');
-        $per_page = 1;
+        $per_page = 3;
         $offset = $this->input->post('offsetval');
 
         $search_result = $this->search_all($term);
@@ -55,6 +55,9 @@ class site_searching extends CI_Controller {
         $config['num_tag_close'] = '</li>';
         
         $data['term'] = $term;
+         // load helper
+        $this->load->helper('simple_html_dom');
+        
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
 
@@ -96,8 +99,9 @@ class site_searching extends CI_Controller {
             for ($i = 0; $i < $numresultquery1; ++$i) {
                 //Isi ke $result :
                 $search = array();
-                $search['category'] = 'news';
+                $search['category'] = 'News';
                 $search['title'] = $getNews1[$i]->title;
+                $search['content'] = $getNews1[$i]->content;
                 $search['link'] = 'news/show_news/' . $getNews1[$i]->id;
                 $result[$i] = $search;
             }
@@ -110,8 +114,9 @@ class site_searching extends CI_Controller {
             for ($i = $start_index; $i < $end_index; ++$i) {
                 //Isi ke $result :
                 $search = array();
-                $search['category'] = 'news';
+                $search['category'] = 'News';
                 $search['title'] = $getNews2[$i-$start_index]->title;
+                $search['content'] = $getNews2[$i-$start_index]->content;
                 $search['link'] = 'news/show_news/' . $getNews2[$i - $start_index]->id;
                 $result[$i] = $search;
             }
@@ -124,8 +129,9 @@ class site_searching extends CI_Controller {
             for ($i = $start_index; $i < $end_index; ++$i) {
                 //Isi ke $result :
                 $search = array();
-                $search['category'] = 'event';
+                $search['category'] = 'Event';
                 $search['title'] = $getEvent1[$i-$start_index]->title;
+                $search['content'] = $getEvent1[$i-$start_index]->description;
                 $search['link'] = 'event/show_event/' . $getEvent1[$i - $start_index]->id;
                 $result[$i] = $search;
             }
@@ -138,8 +144,9 @@ class site_searching extends CI_Controller {
             for ($i = $start_index; $i < $end_index; ++$i) {
                 //Isi ke $result :
                 $search = array();
-                $search['category'] = 'event';
+                $search['category'] = 'Event';
                 $search['title'] = $getEvent2[$i-$start_index]->title;
+                $search['content'] = $getEvent2[$i-$start_index]->description;
                 $search['link'] = 'event/show_event/' . $getEvent2[$i - $start_index]->id;
                 $result[$i] = $search;
             }
@@ -164,6 +171,7 @@ class site_searching extends CI_Controller {
                     $news = array();
                     $news['category'] = $news_list[$i-1]['category'];
                     $news['title'] = $news_list[$i-1]['title'];
+                    $news['content'] = $news_list[$i-1]['content'];
                     $news['link'] = $news_list[$i-1]['link'];
 
                     $news_paginate[$iterator] = $news;
