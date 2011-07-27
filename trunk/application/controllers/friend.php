@@ -420,7 +420,8 @@ class friend extends CI_Controller {
         //get all user_id
         $option = array(
             'columnSelect' => 'id',
-            'id !=' => $user_id
+            'id !=' => $user_id,
+            'status_admin' => 0
         );
         $getAllUser = $this->userModel->getUsers($option);
         
@@ -448,7 +449,8 @@ class friend extends CI_Controller {
             $option = array(
                 'major_id' => $major_id,
                 'columnSelect' => 'user_id',
-                'user_id !=' => $user_id
+                'user_id !=' => $user_id,
+                'status_admin' => 0
             );
             $getUserByMajor = $this->educationModel->getEducations($option);
             if ($getUserByMajor) {
@@ -484,7 +486,8 @@ class friend extends CI_Controller {
             $option = array(
                 'interest_id' => $interest_id,
                 'columnSelect' => 'user_id',
-                'user_id !=' => $user_id
+                'user_id !=' => $user_id,
+                'status_admin' => 0
             );
             $getUserByInterest = $this->interested_inModel->getInterestedIn($option);
             if ($getUserByInterest) {
@@ -507,7 +510,8 @@ class friend extends CI_Controller {
                 $option = array(
                     'graduate_year' => $search_year,
                     'columnSelect' => 'id',
-                    'id !=' => $user_id
+                    'id !=' => $user_id,
+                    'status_admin' => 0
                 );
                 $getUserByNameAndYear = $this->userModel->getUsers($option);
             }
@@ -517,7 +521,8 @@ class friend extends CI_Controller {
                 $option = array(
                     'name LIKE' => $search_name,
                     'columnSelect' => 'id',
-                    'id !=' => $user_id
+                    'id !=' => $user_id,
+                    'status_admin' => 0
                 );
                 $getUserByNameAndYear = $this->userModel->getUsers($option);
             } else {
@@ -526,7 +531,8 @@ class friend extends CI_Controller {
                     'name LIKE' => $search_name,
                     'graduate_year' => $search_year,                    
                     'columnSelect' => 'id',
-                    'id !=' => $user_id
+                    'id !=' => $user_id,
+                    'status_admin' => 0
                 );
                 $getUserByNameAndYear = $this->userModel->getUsers($option);
             }

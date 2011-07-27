@@ -1,15 +1,24 @@
-<h3>Find a Friend - Search Results : 
-    <?php
-    $num = $search_total;
-    echo $num;
+<h3 style="font-family: IMPACT; font-size: 30px; color: #565555">Find a Friend - Search Results : 
+<!--<p>Your search for people -->
+<?php
+/*if ($search_name != "") {
+    echo 'whose name contains "' . $search_name . '", ';
+}
+if ($search_year != "") {
+    echo 'who graduated in ' . $search_year . ', ';
     echo br(1);
-    echo $offset;
-    if ($num > 1) {
-        echo ' results';
-    } else {
-        echo ' result';
-    }
-    ?></h3>
+    
+}*/
+?><!--</p>-->
+<?php
+$num = $search_total;
+echo $num;
+if ($num > 1) {
+    echo ' results';
+} else {
+    echo ' result';
+}
+?></h3>
 Category : <br/>
 <?php
 if ($search_name != "") {
@@ -41,11 +50,11 @@ echo br(1);
     
     function bindPagination() {
         $('#show_all_search_results')
-            .find('#link_pagination a')
-            .unbind('click.page')
-            .bind('click.page',function(){
-                return clickPagination(this);
-            });
+        .find('#link_pagination a')
+        .unbind('click.page')
+        .bind('click.page',function(){
+            return clickPagination(this);
+        });
     }
    
     function clickPagination(val) {
