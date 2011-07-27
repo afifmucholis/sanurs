@@ -11,12 +11,12 @@
                         <div id='profpict_sender'>
                             <?php echo "<img src =' " . base_url() . $message['from_profpict'] . "'/>"; ?>
                         </div>
-                        <div id ='subject'>
-                            <?php echo $message['subject'] . '<br/>'; ?>
-                        </div>
                         <div id ='sender'>
                             <?php echo $message['from_name'] . ' ('; ?>
                             <?php echo $message['from_nickname'] . ' )<br/>'; ?>
+                        </div>
+                        <div id ='subject'>
+                            <?php echo $message['subject'] . '<br/>'; ?>
                         </div>
                         <div id ='date'>
                             <?php echo $message['date']; ?>

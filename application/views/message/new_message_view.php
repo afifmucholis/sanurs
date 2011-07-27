@@ -1,4 +1,3 @@
-<h3>New Message</h3>
 <div id="new_message_form">
     <?php
     echo form_open('message/submit', array('id' => 'new_message'));

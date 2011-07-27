@@ -1,4 +1,7 @@
-<h3>Sign In</h3>
+<div class="signin_title">
+    Member Sign In
+</div>
+
 <div id="signin_form">
     <?php
         echo form_open('sign_in/submit', array('id' => 'signin'));
@@ -6,9 +9,9 @@
         echo form_input('email', '', 'id="email"')."<br/>";
         echo form_label('Password : ','password')."<br/>";
         echo form_password('password', '', 'id="password"')."<br/>";
-        echo form_submit('submit', 'Submit', 'id="submit"');
+        echo anchor('sign_in/forget','Forgot Password','class="forget_links"')."<br/>";
+        echo form_submit('submit', 'Login', 'id="submit"');
         echo form_close();
-        echo anchor('sign_in/forget','Forget Password','class="forget_links"');
     ?>
 </div>
 

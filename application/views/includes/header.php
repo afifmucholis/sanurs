@@ -87,7 +87,7 @@
                 <?php 
                     echo form_open('site_searching/search');
                     echo form_input('term', '');
-                    echo form_submit('search', 'Submit', 'id="search"');
+                    echo form_submit('search', '', 'id="search_button"');
                     echo form_close();
                 ?>
             </div>
