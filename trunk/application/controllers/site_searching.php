@@ -102,6 +102,7 @@ class site_searching extends CI_Controller {
                 $search['category'] = 'News';
                 $search['title'] = $getNews1[$i]->title;
                 $search['content'] = $getNews1[$i]->content;
+                $search['image'] = '';
                 $search['link'] = 'news/show_news/' . $getNews1[$i]->id;
                 $result[$i] = $search;
             }
@@ -117,6 +118,7 @@ class site_searching extends CI_Controller {
                 $search['category'] = 'News';
                 $search['title'] = $getNews2[$i-$start_index]->title;
                 $search['content'] = $getNews2[$i-$start_index]->content;
+                $search['image'] = '';
                 $search['link'] = 'news/show_news/' . $getNews2[$i - $start_index]->id;
                 $result[$i] = $search;
             }
@@ -132,7 +134,7 @@ class site_searching extends CI_Controller {
                 $search['category'] = 'Event';
                 $search['title'] = $getEvent1[$i-$start_index]->title;
                 $search['content'] = $getEvent1[$i-$start_index]->description;
-                $search['content'] = $getEvent1[$i-$start_index]->description;
+                $search['image'] = $getEvent1[$i-$start_index]->image_url;
                 $search['link'] = 'event/show_event/' . $getEvent1[$i - $start_index]->id;
                 $result[$i] = $search;
             }
@@ -148,6 +150,7 @@ class site_searching extends CI_Controller {
                 $search['category'] = 'Event';
                 $search['title'] = $getEvent2[$i-$start_index]->title;
                 $search['content'] = $getEvent2[$i-$start_index]->description;
+                $search['image'] = $getEvent2[$i-$start_index]->image_url;
                 $search['link'] = 'event/show_event/' . $getEvent2[$i - $start_index]->id;
                 $result[$i] = $search;
             }
@@ -173,6 +176,7 @@ class site_searching extends CI_Controller {
                     $news['category'] = $news_list[$i-1]['category'];
                     $news['title'] = $news_list[$i-1]['title'];
                     $news['content'] = $news_list[$i-1]['content'];
+                    $news['image']  = $news_list[$i-1]['image'];
                     $news['link'] = $news_list[$i-1]['link'];
 
                     $news_paginate[$iterator] = $news;

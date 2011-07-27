@@ -39,6 +39,9 @@ if (count($search_result) == 0) {
                     } else {
                         ?>
                     <div id="content_search">
+                        <div id="image_event_search">
+                            <img src="<?php echo base_url().$result['image'];?>" style="float: left">
+                        </div>
                             <?php 
                               echo $result['content'];  
                             ?>
