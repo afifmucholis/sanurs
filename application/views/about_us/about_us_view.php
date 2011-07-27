@@ -1,9 +1,9 @@
 <h3>About Us</h3>
 <div id="link">
-    <label><a href="history" class="ajax-links">History</a></label>
-    <label><a href="visimisi" class="ajax-links">Vision and Mission</a></label>
-    <label><a href="contact" class="ajax-links">Contact Us</a></label>
-    <label><a href="link_web" class="ajax-links">Santa Ursula Website</a></label>
+    <label><a href="history" class="about_links">History</a></label>
+    <label><a href="visimisi" class="about_links">Vision and Mission</a></label>
+    <label><a href="contact" class="about_links">Contact Us</a></label>
+    <label><a href="link_web" class="about_links">Santa Ursula Website</a></label>
 </div>
 <div id="content_about">
 </div>
@@ -29,8 +29,8 @@
     });
  
     function about_us_nav_binding() {
-        $('#link')
-            .find('a.ajax-links')
+        $('.navigation_2')
+            .find('a.about_links')
             .unbind('click.nav')
             .bind('click.nav', function(){
                 return about_us_nav($(this).attr('href'));

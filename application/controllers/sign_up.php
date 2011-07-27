@@ -232,8 +232,7 @@ class sign_up extends CI_Controller {
         } else {
             $this->form_validation->set_message('email_check', 'Email \''.$str.'\' already used.');
             return false;
-        }
-            
+        }  
     }
     
     function verify_mail() {

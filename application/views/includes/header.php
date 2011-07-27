@@ -69,7 +69,14 @@
         <div class="top-menu">
                <ul class="navigation">
                 <li id="home-nav"><a href="<?php echo site_url('home')?>">HOME</a></li>
-                <li id="about-nav"><a href="<?php echo site_url('about_us')?>">ABOUT US</a></li>
+                <li id="about-nav"><a href="<?php echo site_url('about_us')?>" class="about_parent">ABOUT US</a>
+                    <ul class="navigation_2">
+                        <li><div class="arrow-right"></div><a href="history" class="about_links">HISTORY</a></li>
+                        <li><div class="arrow-right"></div><a href="visimisi" class="about_links">VISION AND MISSION</a></li>
+                        <li><div class="arrow-right"></div><a href="contact" class="about_links">CONTACT US</a></li>
+                        <li><div class="arrow-right"></div><a href="link_web" id="link_web" class="about_links">SANTA URSULA WEB</a></li>
+                    </ul>
+                </li>
                 <li id="event-nav"><a href="<?php echo site_url('event')?>">EVENT</a></li>
                 <li id="news-nav"><a href="<?php echo site_url('news/show')?>">NEWS</a></li>
                 <?php if ($this->session->userdata('name')==null) { ?>
