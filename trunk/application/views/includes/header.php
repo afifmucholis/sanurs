@@ -87,7 +87,8 @@
                 <?php 
                     echo form_open('site_searching/search');
                     echo form_input('term', '');
-                    echo form_submit('submit', 'Submit', 'id="submit"');
+                    echo form_submit('search', 'Submit', 'id="search"');
+                    echo form_close();
                 ?>
             </div>
             <?php if ($this->session->userdata('name')!=null) { ?>
