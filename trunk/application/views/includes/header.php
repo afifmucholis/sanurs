@@ -99,7 +99,14 @@
         </div>
         
         <div class="banner">
-            <img src="<?php echo base_url().'res/desain/header1.png'?>">
+            <?php 
+                if ($body_id=='home_body') {
+                    ?> <img src="<?php echo base_url().'res/desain/header1.png'?>">
+                <?php } else {
+                    ?> <img src="<?php echo base_url().'res/desain/header2.png'?>">
+                <?php }
+            ?>
+            
         </div>
      
         <div id="history">
