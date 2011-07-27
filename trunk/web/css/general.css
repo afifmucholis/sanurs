@@ -124,6 +124,11 @@ root {
     float : right;
 }
 
+#left-banner {
+    width:300px;
+    float:left;
+}
+
 #right-banner {
     padding-top: 20px;
     padding-right: 15px;

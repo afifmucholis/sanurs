@@ -79,8 +79,20 @@ class Sign_in extends CI_Controller {
         redirect('/home', 'refresh');
     }
     
+    function show_forget() {
+        
+    }
+    
     function forget(){
-        echo 'forget';
+        $message2['status'] = 'Forget Password';
+        $message2['message'] = 'We have send a random generated password to your email, please check your email';
+        
+        $message2['page_before'] = 'Sign In';
+        $message2['page_link'] = 'sign_in';
+
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message2);
+        redirect('info/show','refresh');
     }
     
     function getStruktur() {
