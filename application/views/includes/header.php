@@ -101,7 +101,7 @@
         <div class="banner"> 
             <div id="left-banner">
                 <?php if (isset($body_id) && $body_id=='home_body') {?>
-                <div id="deskripsi">
+                <div id="deskripsi_home">
                     <p>We are the alumni association of <?php echo anchor('about_us/view/link_web','SMA St. Ursula'); ?>. Dedicated to humanity and service to others (SERVIAM), we create our family as an extension of St. Ursula high school. We welcome home those of our own, and those who <?php echo anchor('about_us/view/visimisi','share our vision and passion'); ?>.  Questions? <?php echo anchor('about_us/view/contact','Contact us.');?> </p>
                 </div>
                 <?php } ?>
