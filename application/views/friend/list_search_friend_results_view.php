@@ -6,7 +6,9 @@ if ($search_total == 0) {
 foreach ($search_results as $result) {
     ?>
     <div id="show_friends_wrapper">
-        <?php echo $result['num']; ?>
+        <div id="search_result_num">
+            <?php echo $result['num']; ?>
+        </div>
         <div id='friend_profpic'>
             <?php echo "<img src =' " . base_url() . $result['profpict_url'] . "' />"; ?>
         </div>

@@ -3,6 +3,7 @@
     <?php
     echo form_open('friend/search');
     ?>
+    <p style="font-family: ARIAL; font-size: 12px; color: #565555">Search by keywords</p>
     <div>
         <table>
             <tr>
@@ -48,7 +49,7 @@
     
     echo form_close();
     ?>
-    <p style="font-family: ARIAL; font-size: 12px; color: #565555">Click on one of the blinking spots to select a location</p>
+    <p style="font-family: ARIAL; font-size: 12px; color: #565555">or Click on one of the blinking spots to select a location</p>
 </div>
 <?php echo br(10); ?>
 <div id="map">
