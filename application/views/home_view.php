@@ -1,3 +1,6 @@
+<div class="home-menu">
+
+</div>
 <div class="left-menu">
     <div id="news_feed" >
         Slide show news event here
