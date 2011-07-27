@@ -78,9 +78,7 @@ class About_us extends CI_Controller {
             $this->email->message($message);
 
             if (!$this->email->send()) {
-                // error
-                $message2['status'] = 'An Error Occurred';
-                $message2['message'] = 'Your message is not successfully sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
+                show_error('Error sending email');
             } else {
                 // success
                 $message2['status'] = 'Success';

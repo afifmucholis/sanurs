@@ -164,7 +164,7 @@ class User extends CI_Model {
         }
         //Yang password jangan lupa :
         if (isset($options[$this->password])) {
-            $this->db->set($this->password, md5($options[$this->password]));
+            $this->db->set($this->password, $options[$this->password]);
         }
 
         $this->db->where($this->id, $options[$this->id]);
