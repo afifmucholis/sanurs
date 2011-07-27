@@ -53,13 +53,13 @@ class site_searching extends CI_Controller {
         $config['cur_tag_close'] = '</li>';
         $config['num_tag_open'] = '<li id="num_link">';
         $config['num_tag_close'] = '</li>';
-
-
+        
+        $data['term'] = $term;
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
 
         if ($this->input->post('ajax')) {
-             $data['view'] = 'site_searching/list_site_searching_view';
+             $data['view'] = 'site_searching/list_site_searching_view';     
             $text = $this->load->view($data['view'], $data, true);
             $this->output
                     ->set_content_type('application/json')
