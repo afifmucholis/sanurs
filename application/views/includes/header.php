@@ -100,7 +100,7 @@
         
         <div class="banner">
             <?php 
-                if ($body_id=='home_body') {
+                if (isset($body_id) && $body_id=='home_body') {
                     ?> <img src="<?php echo base_url().'res/desain/header1.png'?>">
                 <?php } else {
                     ?> <img src="<?php echo base_url().'res/desain/header2.png'?>">

@@ -271,3 +271,10 @@ root {
 #single_search_wrapper:hover{
     background-color: rgb(240,240,240);
 }
+
+#image_event_search img{
+    min-height: 90px;
+    max-height: 90px;
+    min-width : 120px;
+    max-width : 120px;
+}
