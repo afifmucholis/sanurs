@@ -1,7 +1,11 @@
-<h3>Message</h3>
-<div id="link">
-    <label><a href="new_message_view" class="ajax-links">New Message</a></label>
-    <label><a href="inbox_view" class="ajax-links">Inbox</a></label>
+<div id="title-menu">
+    Message
+</div>
+<ul class="navigation-message">
+    <li><a href="new_message_view" class="ajax-links">NEW MESSAGE</a></li>
+    <li><a href="inbox_view" class="ajax-links">INBOX</a></li>
+</ul>
+<div class="clearboth">
 </div>
 <div id="content_message">
 </div>

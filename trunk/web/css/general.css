@@ -289,3 +289,62 @@ img.event_images {
 .home-menu {
     height: 700px;
 }
+
+#search_site_box #search_button {
+    width: 5px;
+    
+}
+
+.home-menu img{
+    float: left;
+    margin-left: -20px;
+    margin-top: -20px;
+}
+
+.recent-news-home{
+    height: 345px;
+}
+
+.login-box-home {
+    margin-top: -400px;
+    margin-right: -10px;
+    z-index: 4;
+    float : right;
+    width: 179px;
+    height: 285px;
+    background : rgba(255,255,255,0.6);
+}
+
+.signin_title {
+    font-family: impact;
+    font-size:  19px;
+    padding : 5px 0px 10px 15px;
+}
+
+#signin_form {
+    font-family: Arial;
+    font-size: 12px;
+    padding : 5px 0px 10px 15px;
+    font-weight: bold
+}
+
+.login-description {
+    padding : 5px 0px 10px 15px;
+}
+
+#signin_form a{
+    color: black;
+}
+
+.login-description {
+    font-family: arial;
+    color: black;
+}
+.login-description a{
+    color: black;
+}
+.link-new-member {
+    font-family: arial;
+    color: black;
+    font-size: 11px;
+}
