@@ -1,7 +1,9 @@
 <h3>Find a Friend - Search Results : 
     <?php
-    $num = count($search_results);
+    $num = $search_total;
     echo $num;
+    echo br(1);
+    echo $offset;
     if ($num > 1) {
         echo ' results';
     } else {
@@ -24,26 +26,45 @@ echo 'major : ' . $major;
 echo br(1);
 echo br(1);
 ?>
-<?php
-// ngambil search result
-foreach ($search_results as $result) {
-    ?>
-    <div id="show_friends_wrapper">
-        <div id='friend_profpic'>
-            <?php echo "<img src =' " . base_url() . $result['profpict_url'] . "' />"; ?>
-        </div>
-        <div id="show_info_wrapper">
-            <div id ='friend_name'>
-                <a href="../profile/user/<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a>
-            </div>
-            <div id ='friend_unityear'>
-                <?php echo $result['unit'] . ' (' . $result['graduate_year'] . ')'; ?>
-            </div>                
-        </div>
-        <div class="clearboth">
-        </div>
-        <hr/>
-    </div>
+<div id="show_all_search_results">
     <?php
-}
-?>
+    $data['search_results'] = $search_results;
+    $data['pagination'] = $pagination;
+    $this->load->view('friend/list_search_friend_results_view', $data);
+    ?>
+</div>
+
+<script type="text/javascript">
+    $(document).ready(function(){
+        bindPagination();
+    });
+    
+    function bindPagination() {
+        $('#show_all_search_results')
+            .find('#link_pagination a')
+            .unbind('click.page')
+            .bind('click.page',function(){
+                return clickPagination(this);
+            });
+    }
+   
+    function clickPagination(val) {
+        var offset = $(val).attr('href').split('/');
+        var link = '<?php echo site_url('friend/search') ?>';
+        var search_name = '<?php echo $search_name ?>';
+        var search_year = '<?php echo $search_year ?>';
+        var interest = '<?php echo $interest ?>';
+        var major = '<?php echo $major ?>';
+        
+        $.ajax({
+            type: 'POST',
+            url: link,
+            data : {offsetval:offset[offset.length-1], ajax : 1, name : search_name, year: search_year, interest : interest, major : major},
+            success: function(msg){
+                $('#show_all_search_results').html(msg['text']);
+                bindPagination();
+            }
+        });               
+        return false;
+    }
+</script>
