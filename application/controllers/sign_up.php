@@ -9,6 +9,12 @@
 class sign_up extends CI_Controller {
 
     function index() {
+        $fl = $this->session->flashdata('message');
+        if ($fl!='') {
+            $data['alumni']=$fl['alumni'];
+            $data['falseref']=$fl['falseref'];
+            $data['replace'] = $fl['replace'];
+        }
         $data['title'] = 'Sign Up';
         $data['main_content'] = 'sign_up/sign_up_view';
         $data['struktur'] = $this->getStruktur();
@@ -17,14 +23,13 @@ class sign_up extends CI_Controller {
         
         /*** get list of unit (education) ***/
         $this->load->model('unit', 'unitModel');
-        $option = array('columnSelect'=>'label');
-        $getUnit = $this->unitModel->getUnits($option);
+        $getUnit = $this->unitModel->getUnits();
         $unit_list = array(
             '-' => '-'
         );
         if ($getUnit) {
             foreach ($getUnit as $unit) {
-                $unit_list[$unit->label] = $unit->label;
+                $unit_list[$unit->id] = $unit->label;
             }
         }
         $data['unit_list'] = $unit_list;
@@ -33,18 +38,6 @@ class sign_up extends CI_Controller {
         $this->load->view('includes/template', $data);
     }
 
-    function submit() {
-        $array = $this->uri->uri_to_assoc(3);
-        if (isset($array['jenjang']) && !isset($array['tahun'])) {
-            $data['jenjang'] = $array['jenjang'];
-            $data['title'] = 'Sign Up';
-            $data['main_content'] = 'sign_up/sign_up_view';
-            $data['struktur'] = $this->getStruktur();
-            $this->load->view('includes/template', $data);
-        } else if (isset($array['jenjang']) && isset($array['tahun'])) {
-            
-        }
-    }
 
     function daftar_tahun() {
         $jenjang = $this->input->get('jenjang');
@@ -54,9 +47,9 @@ class sign_up extends CI_Controller {
         $this->load->model('alumni', 'alumniModel');
 
         //Get Id dari unit
-        $optionsUnit = array('label' => $jenjang);
-        $getReturnLevel = $this->unitModel->getUnits($optionsUnit);
-        $idUnit = $getReturnLevel[0]->id;
+//        $optionsUnit = array('label' => $jenjang);
+//        $getReturnLevel = $this->unitModel->getUnits($optionsUnit);
+        $idUnit = $jenjang;
 
         //Get Distinct 
         $optionsTahun = array('last_unit_id' => $idUnit, 'columnSelect' => 'graduate_year', 'distinct' => true, 'sortBy' => 'graduate_year', 'sortDirection' => 'desc');
@@ -85,9 +78,9 @@ class sign_up extends CI_Controller {
         $this->load->model('alumni', 'alumniModel');
 
         //Get Id dari unit
-        $optionsUnit = array('label' => $jenjang);
-        $getReturnLevel = $this->unitModel->getUnits($optionsUnit);
-        $idUnit = $getReturnLevel[0]->id;
+//        $optionsUnit = array('label' => $jenjang);
+//        $getReturnLevel = $this->unitModel->getUnits($optionsUnit);
+        $idUnit = $jenjang;
 
         //Get daftar nama dengan last_unit_id=$idUnit dan graduate_year=$tahun
         $optionsNama = array('last_unit_id' => $idUnit, 'graduate_year' => $tahun, 'sortBy' => 'name');
@@ -182,27 +175,53 @@ class sign_up extends CI_Controller {
         );
         
         if ($this->form_validation->run($this)== false) {
+            // get jenjang dan pendidikan terahir from alumni
+            $this->load->model('alumni','alumniModel');
+            $options = array('id'=>$alumni['id']);
+            $getAlumni = $this->alumniModel->getAlumnis($options);
+            $alumni['jenjang'] = $getAlumni[0]->last_unit_id;
+            $alumni['tahun'] = $getAlumni[0]->graduate_year;
+            
             $data['alumni']=$alumni;
             $data['falseref']=true;
-            $this->load->view('sign_up/verification', $data);
+            $text = $this->load->view('sign_up/verification',$data,true);
+            $data['replace'] = $text;
+            
+             // redirect ke info view
+            $this->session->set_flashdata('message', $data);
+            redirect('sign_up','refresh');
         } else {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
             $hash_password = md5($password);
             $batas = $email.'</email>'.$hash_password;
             $url_encrypt = urlencode(base64_encode($batas));
-            $message = 'Dear '.$name.', '.br(1);
-            $message .= 'Thanks for becoming our member. To finish your registration process please click the link below.'.br(1);
-            $message .= anchor(site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt));
+            $message = 'Dear '.$name.', \n';
+            $message .= 'Thanks for becoming our member. To finish your registration process please click the link below.\n';
+            $message .= site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt);
             
             // send verification email to her/his mail
             $this->load->library('email');
 
-            $this->email->from('admin@adminsanur.com', 'Admin web sanur');
+            $this->email->from('no-reply', 'Admin web sanur');
             $this->email->to($email);
             $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
             $this->email->message($message);
-            //echo $message;
+            if (!$this->email->send()) {
+                // error
+                $message2['status'] = 'An Error Occurred';
+                $message2['message'] = 'Verification email is not successfully sent.'.br(1).'Click '.anchor('sign_up','here').' to try again.';
+            } else {
+                // success
+                $message2['status'] = 'Success';
+                $message2['message'] = 'Success'.br(1).'Please check your email for email verification.'.br(1).'Click link on the email to complete registration process.';
+            }
+            $message2['page_before'] = 'Sign Up';
+            $message2['page_link'] = 'sign_up';
+
+            // redirect ke info view
+            $this->session->set_flashdata('message', $message2);
+            redirect('info/show','refresh');
         }
     }
     
@@ -213,7 +232,7 @@ class sign_up extends CI_Controller {
         if (is_bool($getUser)) {
             return true;
         } else {
-            $this->form_validation->set_message('email_check', 'Email %s already used.');
+            $this->form_validation->set_message('email_check', 'Email \''.$str.'\' already used.');
             return false;
         }
             

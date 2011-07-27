@@ -13,7 +13,7 @@ echo form_open('sign_up/verify', array('id' => 'signupform'));
         Welcome <?php
     echo $alumni['name'] . '!';
     echo br(1);
-        ?> s
+        ?>
         You have to fill form below to verify your registration as alumni. Please enter your e-mail and password that you want to use to sign in next time:
 
         <table>
@@ -51,32 +51,3 @@ echo form_open('sign_up/verify', array('id' => 'signupform'));
     <?php
 }
 ?>
-<script>
-    $(document).ready(function() {   
-        $("#signupform").validate({
-            rules : {
-                email : {
-                    required : true,
-                    email : true
-                },
-                password : {
-                    required : true,
-                    minlength : 6
-                },
-                repassword : {
-                    equalTo : "#password"
-                }  
-                
-                
-            },
-            messages : {
-                email : "Please enter a valid email address",
-                password : {
-                    required : "Please fill this password field",
-                    minlength : "Your password at least 6 character"
-                },
-                repassword : "This field need to be match with password"
-            }
-        });  
-    });
-</script>
