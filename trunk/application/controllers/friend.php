@@ -341,7 +341,7 @@ class friend extends CI_Controller {
         /*** buat pagination ***/
         $this->load->library('pagination');
         
-        $per_page = 5;
+        $per_page = 10;
         $offset = $this->input->post('offsetval');
         $data['offset'] = $offset;
         $search_pagin_result = $this->getSearchResultsPaginate($per_page, $offset, $allSearchResults);
@@ -569,7 +569,6 @@ class friend extends CI_Controller {
             }
         }
         
-        //$data['search_results'] = array();
         $search_results = array();
         
         if (count($results) > 0) {
@@ -591,12 +590,10 @@ class friend extends CI_Controller {
                     'graduate_year' => $getUser[0]->graduate_year,
                     'unit' => $getUnit[0]->label
                 );
-                //$data['search_results'][] = $elmt;
                 $search_results[] = $elmt;
             }
         }
         return $search_results;
-        //echo json_encode($search_results);
     }
     
     /**
