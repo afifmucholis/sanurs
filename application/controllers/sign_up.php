@@ -208,9 +208,7 @@ class sign_up extends CI_Controller {
             $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
             $this->email->message($message);
             if (!$this->email->send()) {
-                // error
-                $message2['status'] = 'An Error Occurred';
-                $message2['message'] = 'Verification email is not successfully sent.'.br(1).'Click '.anchor('sign_up','here').' to try again.';
+                show_error('Error sending email');
             } else {
                 // success
                 $message2['status'] = 'Success';
