@@ -14,7 +14,16 @@ if (!defined('BASEPATH')) exit('No direct script access allowed');
 class TestModel extends CI_Controller {
 
     function index() {
-        $this->load->model('alumni', 'tes');
+        $user_id = $this->session->userdata('user_id');
+        $this->load->model('user', 'userModel');
+        $option = array(
+            'columnSelect' => 'name',
+            'id !=' => $user_id
+        );
+        $getUser = $this->userModel->getUsers($option);
+        print_r($getUser);
+        
+        /*$this->load->model('alumni', 'tes');
         $alumni = array(
             'id' => 1,
             'name' => 'Akbar Gumbira',
@@ -22,7 +31,7 @@ class TestModel extends CI_Controller {
             'last_unit_id' => 3,
             'graduate_year' => 2011,
             'is_registered' => 0,
-        );
+        );*/
         /* Tes addAlumni :
           $get = $this->tes->addAlumni($alumni);
           if (is_bool($get)) {
@@ -78,7 +87,7 @@ class TestModel extends CI_Controller {
           }
          */
 
-        $this->load->model('event_model', 'eventModel');
+        /*$this->load->model('event_model', 'eventModel');
 
         $today = time();
         $mysqldatetoday = date( 'Y-m-d H:i:s', $today);
@@ -98,7 +107,7 @@ class TestModel extends CI_Controller {
                 echo $getReturn[$i]->venue . "<br>";
                 echo "<hr>";
             }
-        }
+        }*/
     }
 
 }
