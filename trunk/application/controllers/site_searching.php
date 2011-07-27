@@ -132,6 +132,7 @@ class site_searching extends CI_Controller {
                 $search['category'] = 'Event';
                 $search['title'] = $getEvent1[$i-$start_index]->title;
                 $search['content'] = $getEvent1[$i-$start_index]->description;
+                $search['content'] = $getEvent1[$i-$start_index]->description;
                 $search['link'] = 'event/show_event/' . $getEvent1[$i - $start_index]->id;
                 $result[$i] = $search;
             }

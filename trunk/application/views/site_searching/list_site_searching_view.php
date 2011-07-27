@@ -5,7 +5,7 @@ if (count($search_result) == 0) {
     foreach ($search_result as $result) :
         ?>
         <a href="<?php echo base_url().'/index.php/'. $result['link']; ?>">
-            <div id="single_news_wrapper">
+            <div id="single_search_wrapper">
                 <div id="category_search">
                     <?php echo $result['category']; ?>
                 </div>
@@ -36,6 +36,16 @@ if (count($search_result) == 0) {
                             </div>
                         </div> 
                 <?php
+                    } else {
+                        ?>
+                    <div id="content_search">
+                            <?php 
+                              echo $result['content'];  
+                            ?>
+                            <div class="clearboth">
+                            </div>
+                        </div>
+                    <?php
                     }
                 ?>
             </div>

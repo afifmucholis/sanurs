@@ -98,34 +98,8 @@
             <?php } ?>
         </div>
         
-        <div class="banner"> 
-            <div id="left-banner">
-                <?php if (isset($body_id) && $body_id=='home_body') {?>
-                <div id="deskripsi_home">
-                    <p>We are the alumni association of <?php echo anchor('about_us/view/link_web','SMA St. Ursula'); ?>. Dedicated to humanity and service to others (SERVIAM), we create our family as an extension of St. Ursula high school. We welcome home those of our own, and those who <?php echo anchor('about_us/view/visimisi','share our vision and passion'); ?>.  Questions? <?php echo anchor('about_us/view/contact','Contact us.');?> </p>
-                </div>
-                <?php } ?>
-            </div>
-            <div id="right-banner">
-                <div id="sanur_title">
-                    <div id="grouper1">
-                        <div id="right-logo">
-                        </div>
-                        <div class="heading">
-                            IKATAN ALUMNI
-                        </div>
-                        <div class="heading">
-                           SANTA URSULA
-                        </div>
-                    </div>
-                    <div class="heading">
-                        JALAN POS JAKARTA 
-                    </div>
-                    <div class="heading2">
-                        Ini Sanur Posta - <b><i>Servira non Servari</i></b>
-                    </div>
-                </div>
-            </div>
+        <div class="banner">
+            <img src="<?php echo base_url().'res/desain/header1.png'?>">
         </div>
      
         <div id="history">
