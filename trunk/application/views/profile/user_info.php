@@ -128,22 +128,22 @@
 <br/>
 <?php if($user_data['visibility']->home_address) { ?>
 <div id="home_address" class="general_text">
-    <?php if (isset($user_data['home_address'])) echo "Home address : ".$user_data['home_address'];?>
+    <?php if (isset($user_data['home_address']) &&($user_data['home_address']!='') ) echo "Home address : ".$user_data['home_address'];?>
 </div>
 <?php } ?>
 <?php if ($user_data['visibility']->home_telephone) { ?>
 <div id="home_telephone" class="general_text">
-    <?php if (isset($user_data['home_telephone'])) echo "Home telephone : ".$user_data['home_telephone'];?>
+    <?php if (isset($user_data['home_telephone']) &&($user_data['home_telephone']!='') ) echo "Home telephone : ".$user_data['home_telephone'];?>
 </div>
 <?php } ?>
 <?php if ($user_data['visibility']->handphone) { ?>
 <div id="handphone" class="general_text">
-    <?php if (isset($user_data['handphone'])) echo "Handphone : ".$user_data['handphone'];?>
+    <?php if (isset($user_data['handphone']) &&($user_data['handphone']!='')) echo "Handphone : ".$user_data['handphone'];?>
 </div>
 <?php } ?>
 <?php if ($user_data['visibility']->email) { ?>
 <div id="email" class="general_text">
-    <?php if (isset($user_data['email'])) echo "Email : ".$user_data['email'];?>
+    <?php if (isset($user_data['email']) &&($user_data['email']!='') ) echo "Email : ".$user_data['email'];?>
 </div>
 <?php } ?>
 
