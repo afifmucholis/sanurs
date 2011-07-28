@@ -40,7 +40,7 @@ echo form_open('profile/submitPendidikan');
     </div>
 </div>
 <br/>
-<div id="history_edu">
+<div id="history_edu" class="general_text">
     <div id="highest_edu">
         Highest degree of education: (Choose one)
         <?php

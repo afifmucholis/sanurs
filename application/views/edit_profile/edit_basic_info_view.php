@@ -19,34 +19,49 @@
 </div>
 
 <div class="right-menu">
-
     <?php
     echo form_open('profile/submitProfile');
     echo form_hidden('url_img', base_url() . $content_edit['img_url']);
     echo br(1);
-    echo form_label('Nick Name: ');
-    echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"');
-    echo br(1);
-    echo form_label('Gender: ');
-    echo form_dropdown('gender', $gender_list, $content_edit['gender']);
-    echo br(1);
-    echo form_label('Home Address: ');
-    echo form_input('home_address', $content_edit['home_address'], 'id="home_address"');
-    echo br(1);
-    echo form_label('Home Telephone: ');
-    echo form_input('home_telephone', $content_edit['home_telephone'], 'id="home_telephone"');
-    echo br(1);
-    echo form_label('Handphone:');
-    echo form_input('handphone', $content_edit['handphone'], 'id="handphone"');
+    ?>
+    <table>
+        <tr>
+            <td> <?php echo form_label('Nick Name '); ?> </td>
+            <td> <?php echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"'); ?> </td>
+        </tr>
+        <tr>
+            <td> <?php echo form_label('Gender '); ?> </td>
+            <td> <?php echo form_dropdown('gender', $gender_list, $content_edit['gender']); ?> </td>
+        </tr>
+        <tr>
+            <td> <?php echo form_label('Home Address '); ?> </td>
+            <td> <?php echo form_input('home_address', $content_edit['home_address'], 'id="home_address"'); ?> </td>
+        </tr>
+        <tr>
+            <td> <?php echo form_label('Home Telephone '); ?> </td>
+            <td> <?php echo form_input('home_telephone', $content_edit['home_telephone'], 'id="home_telephone"'); ?> </td>
+        </tr>
+        <tr>
+            <td> <?php echo form_label('Handphone '); ?> </td>
+            <td> <?php echo form_input('handphone', $content_edit['handphone'], 'id="handphone"'); ?> </td>
+        </tr>
+    </table>
+    <?php
     echo br(2);
-    echo 'Select area of interest (you can choose more than one) : ';
+    ?>
+    <div class="general_text">
+        <?php
+        echo 'Select area of interest (you can choose more than one) : ';
+        ?>
+    </div>
+    <?php
     echo br(1);
     foreach ($interest_list as $interest) {
         $status = FALSE;
         if ($user_interest) {
             $i = 0;
             $found = FALSE;
-            while (!$found && $i<count($user_interest)) {
+            while (!$found && $i < count($user_interest)) {
                 if ($interest->id == $user_interest[$i]->interest_id) {
                     $found = TRUE;
                     $status = TRUE;
