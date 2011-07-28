@@ -191,7 +191,7 @@ function initmap(page) {
                 clearOverlays();
                 showOverlay();
                 for (i=0; i<markersArray.length; i++) {
-                    var contentString = '<a href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +' ('+ userArray[i][2] +')</a>';
+                    var contentString = '<a class="link" href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +' ('+ userArray[i][2] +')</a>';
                     setInfoWindow(markersArray[i], contentString);
                 }
                 var mcOptions = {gridSize: 50, maxZoom: 15};
