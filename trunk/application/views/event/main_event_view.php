@@ -1,4 +1,4 @@
-<h3>Event</h3>
+<div id="title-menu">Event</div>
 <div class="left-menu">
     <div id="slide_show_event">
         <div id="gallery-event">
