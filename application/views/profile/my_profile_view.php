@@ -53,13 +53,16 @@
     <div id="calendar">
         No upcoming event<br/>
         <?php echo $user_data['calendar']; ?><br/>
-        <?php echo anchor('event/mycalendar', 'Go to your calendar'); ?>
+        <?php echo anchor('event/mycalendar', 'Go to your calendar',"class='link'"); ?>
     </div>
     <div id="friend_list_sidebar">
-        <?php echo anchor('show_all_friends/user/' . $user_data['user_id'], 'Friends (' . $count_friends . ')') ?>
+        <div id="title-menu">
+            <?php echo anchor('show_all_friends/user/' . $user_data['user_id'], 'FRIENDS (' . $count_friends . ')') ?>
+        </div>
+        
         <?php
         if (count($friend_list_sidebar) == 0) {
-            echo "You don't have any friends.";
+            echo "<label class='general_text'>You don't have any friends.</label>";
         } else {
             foreach ($friend_list_sidebar as $friend) {
                 ?>
@@ -75,8 +78,6 @@
                             <?php echo $friend['nickname']; ?>
                         </div>
                     </div>
-                </div>
-                <div class="clearboth">
                 </div>
             <?php }
         } ?>
