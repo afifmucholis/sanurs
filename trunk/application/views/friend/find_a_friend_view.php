@@ -1,5 +1,5 @@
 <div id="col_left" style="float: left">
-    <h3 style="color: #565555">Find A Friend</h3>
+    <div id="title-menu">Find A Friend</div>
     <?php
     echo form_open('friend/search');
     ?>

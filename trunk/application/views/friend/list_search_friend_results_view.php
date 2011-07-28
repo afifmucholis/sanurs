@@ -12,9 +12,9 @@ foreach ($search_results as $result) {
         <div id='friend_profpic'>
             <?php echo "<img src =' " . base_url() . $result['profpict_url'] . "' />"; ?>
         </div>
-        <div id="show_info_wrapper">
+        <div id="show_info_wrapper" class="general_text">
             <div id ='friend_name'>
-                <a href="../profile/user/<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a>
+                <a class="link" href="../profile/user/<?php echo $result['id']; ?>"><?php echo $result['name']; ?></a>
             </div>
             <div id ='friend_unityear'>
                 <?php echo $result['unit'] . ' (' . $result['graduate_year'] . ')'; ?>

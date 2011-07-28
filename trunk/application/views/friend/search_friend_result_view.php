@@ -1,4 +1,4 @@
-<h3 style="font-family: IMPACT; font-size: 30px; color: #565555">Find a Friend - Search Results : 
+<div id="title-menu">Find a Friend - Search Results : 
 <!--<p>Your search for people -->
 <?php
 /*if ($search_name != "") {
@@ -18,7 +18,7 @@ if ($num > 1) {
 } else {
     echo ' result';
 }
-?></h3>
+?></div>
 Category : <br/>
 <?php
 if ($search_name != "") {
