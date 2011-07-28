@@ -3,8 +3,8 @@
     <div id="slide_show_event">
         <div id="gallery-event">
         </div>
-        Click Picture in Slide Show to view the event
-    </div>
+        <p>Click Picture in Slide Show to view the event</p>
+    </div
 </div>
 
 <div class="right-menu">
