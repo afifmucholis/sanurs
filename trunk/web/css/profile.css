@@ -91,8 +91,11 @@ img.profpic_images{
     margin-bottom: 20px;
 }
 
+
 #friend_wrapper {
     margin: 10px 10px 10px 10px;
+    display: inline-block;
+    float: left;
 }
 
 #friend_wrapper #profpic img{
@@ -100,18 +103,23 @@ img.profpic_images{
     min-width: 50px;
     max-height: 55px;
     max-width: 55px;
-    float : left;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 #info_wrapper {
-    float : left;
+    /* float : left; */
 }
 #info_wrapper #name{
     padding: 3px 5px 5px 5px;
+    display: block;
+    text-align: center;
 }
 
 #info_wrapper #nickname{
     padding: 3px 5px 5px 5px;  
+    text-align: center;
 }
 
 #friend_profpic img{

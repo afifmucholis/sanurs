@@ -42,7 +42,7 @@ class profile extends CI_Controller {
         }
 
         //Get friend list for sidebar:
-        $friends = $this->getAllFriendListLimited($user_id, 5);
+        $friends = $this->getAllFriendListLimited($user_id, 12);
         $data['friend_list_sidebar'] = $friends['friends'];
         $data['count_friends'] = $friends['total_friends'];
 
@@ -100,7 +100,7 @@ class profile extends CI_Controller {
         }
 
         //Get friend list :
-        $friends = $this->getAllFriendListLimited($user_id, 5);
+        $friends = $this->getAllFriendListLimited($user_id, 12);
         $data['friend_list_sidebar'] = $friends['friends'];
         $data['count_friends'] = $friends['total_friends'];
 
