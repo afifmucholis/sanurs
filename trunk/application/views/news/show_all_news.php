@@ -1,4 +1,4 @@
-<h3>News</h3>
+<div id="title-menu">News</div>
 <br/>
 <?php
     if ($isadmin) {
