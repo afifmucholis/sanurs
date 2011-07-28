@@ -479,7 +479,7 @@ select option{
 #content p {
     font-family: ARIAL;
     font-size: 12px;
-    padding-bottom: 10px;
+    padding-bottom: 0px;
 }
 
 .general_text {
