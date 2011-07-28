@@ -116,10 +116,10 @@
         var link_add = '<a href="#" class="popup_link">Add as friend</a>';
         var link_block = '<a href="#" onclick="javascript:unfriend(\'<?php echo $user_data['user_id']; ?>\')";>Block from friend</a>';
         if (val) {
-            message = 'Are you sure to confirm his friend request?';
+            message = 'Are you sure to confirm this friend request?';
             link = '<?php echo site_url('friend/confirm_request');?>';
         } else {
-            message = 'Are you sure to reject his friend request?';
+            message = 'Are you sure to reject this friend request?';
             link = '<?php echo site_url('friend/confirm_request');?>';
         }
         if (confirm(message)) {

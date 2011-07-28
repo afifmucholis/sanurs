@@ -138,9 +138,9 @@ class Message extends CI_Controller {
                         if ($countfriend == 1) {
                             $idto = $friendid;
                         } else if ($countfriend == 0) {
-                            throw new Exception("No friends of you have name " . $to);
+                            throw new Exception("Your message is not succesfully sent. Recipient is not your friend");
                         } else {
-                            throw new Exception("More than 1 of your friends that have name " . $to);
+                            throw new Exception("More than 1 of your friends that have name " . $to."<br/> Use autocomplete to spesify your friend.");
                         }
                     }
                 }
@@ -167,7 +167,7 @@ class Message extends CI_Controller {
                     'message' => $message);
                 $rowId = $this->messageModel->addMessage($optionInsertMessage);
                 if (is_bool($rowId)) {
-                    throw new Exception("Kirim message gagal");
+                    show_error("Kirim message gagal");
                 } else {
                     // load model notification
                     $this->load->model('notification_model', 'notifModel');

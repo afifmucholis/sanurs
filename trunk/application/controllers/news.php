@@ -89,7 +89,9 @@ class news extends CI_Controller {
     
     function show_news() {
         // cek admin
-        $data['isadmin'] = $this->session->userdata('isadmin');
+        $data['isadmin'] = 0;
+        if ($this->session->userdata('isadmin')==1)
+                $data['isadmin'] = 1;
         $array = $this->uri->uri_to_assoc(2);
         $data['id_news'] = $array['show_news'];
         $data['body_id'] = 'news_body';
@@ -98,14 +100,15 @@ class news extends CI_Controller {
         $options = array('id'=>$data['id_news']);
         $getNews = $this->newsModel->getNews($options);
         if (is_bool($getNews)) {
-            $message['status'] = 'An Error Occurred';
-            $message['message'] = 'No news with id '.$data['id_news'];
-            $message['page_before'] = 'News';
-            $message['page_link'] = 'news/show';
-            
-            // redirect ke info view
-            $this->session->set_flashdata('message', $message);
-            redirect('info/show','refresh');
+            show_error('No news with id '.$data['id_news']);
+//            $message['status'] = 'An Error Occurred';
+//            $message['message'] = 'No news with id '.$data['id_news'];
+//            $message['page_before'] = 'News';
+//            $message['page_link'] = 'news/show';
+//            
+//            // redirect ke info view
+//            $this->session->set_flashdata('message', $message);
+//            redirect('info/show','refresh');
         }
         $data['content'] = $getNews[0]->content;
         $data['date'] = $getNews[0]->publishing_date;
@@ -117,7 +120,7 @@ class news extends CI_Controller {
     }
     
     function add_news() {
-        if ($this->session->userdata('isadmin')=='' || $this->session->userdata('isadmin')!=1) {
+        if ($this->session->userdata('name')=='' || $this->session->userdata('isadmin')!=1) {
             redirect('home','refresh');
         }
             
@@ -142,14 +145,15 @@ class news extends CI_Controller {
         $options = array('id'=>$data['id_news']);
         $getNews = $this->newsModel->getNews($options);
         if (is_bool($getNews)) {
-            $message['status'] = 'An Error Occurred';
-            $message['message'] = 'No news with id '.$data['id_news'];
-            $message['page_before'] = 'News';
-            $message['page_link'] = 'news/show';
-            
-            // redirect ke info view
-            $this->session->set_flashdata('message', $message);
-            redirect('info/show','refresh');
+            show_error('No news with id '.$data['id_news']);
+//            $message['status'] = 'An Error Occurred';
+//            $message['message'] = 'No news with id '.$data['id_news'];
+//            $message['page_before'] = 'News';
+//            $message['page_link'] = 'news/show';
+//            
+//            // redirect ke info view
+//            $this->session->set_flashdata('message', $message);
+//            redirect('info/show','refresh');
         }
         $data['old_title'] = $getNews[0]->title;
         $data['old_news'] = $getNews[0]->content;
@@ -179,8 +183,9 @@ class news extends CI_Controller {
             $message['status'] = 'Success';
             $message['message'] = 'News is successfully deleted.'.br(1).'Click '.anchor('news/show','here').' to back to news.';
         } catch (Exception $e) {
-            $message['status'] = 'An Error Occurred';
-            $message['message'] = $e->getMessage().br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to try again.';
+            show_error($e->getMessage());
+            //$message['status'] = 'An Error Occurred';
+            //$message['message'] = $e->getMessage().br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to try again.';
         }
         $message['page_before'] = 'News';
         $message['page_link'] = 'news/show/';
@@ -396,7 +401,7 @@ class news extends CI_Controller {
                 $options = array('id'=>$id_news,'content'=>$text, 'title'=>$title);
                 $updateNews = $this->newsModel->updateNews($options);
                 if (is_bool($updateNews))
-                    throw new Exception('Error update news on database.'.br(1).'Click '.anchor('news/edit_news/'.$id_news,'here').' to try again.');
+                    show_error('Error update news on database.');
                 $message['status'] = 'Success';
                 $message['message'] = 'News is successfully updated.'.br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to view this news.';
             } else {
@@ -408,7 +413,7 @@ class news extends CI_Controller {
                 $options = array('content'=>$text, 'title'=>$title);
                 $insertNews = $this->newsModel->addNews($options);
                 if (is_bool($insertNews))
-                    throw new Exception('Error insert news on database.'.br(1).'Click '.anchor('news/add_news','here').' to try again.');
+                    show_error('Error insert news on database.');
                 $message['status'] = 'Success';
                 $message['message'] = 'News is successfully added.'.br(1).'Click '.anchor('news/show_news/'.$insertNews,'here').' to view this news.';
             }

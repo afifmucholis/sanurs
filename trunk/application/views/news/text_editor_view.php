@@ -1,5 +1,5 @@
 <?php
-    echo form_open('news/submit_news');
+    echo form_open('news/submit_news','id="editor_text_news"');
     if (isset($id_news) && $id_news!='')
         echo form_hidden('id_news',$id_news);
 ?>
@@ -29,3 +29,22 @@
 <?php
     echo form_close();
 ?>
+
+<script>
+    $('#editor_text_news').validate(
+        {
+            rules : {
+                title : {
+                    required : true
+                },
+                area1 : {
+                    required : true
+                }
+            },
+            messages : {
+                title : "Please enter a title for this news",
+                area1 : "Please insert the content"
+            }
+        }
+    );
+</script>
