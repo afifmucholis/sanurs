@@ -353,9 +353,22 @@ img.event_images {
     height: 700px;
 }
 
-#search_site_box #search_button {
-    width: 5px;
-    
+input#search_button {
+    background-image: url('../../web/res/desain/search.png');
+    background-color: transparent;
+    background-repeat: no-repeat;
+    border: none;
+    cursor: pointer;
+    height: 36px;
+    padding-left: 31px;
+    margin-top: 5px;
+    vertical-align: middle;
+
+}
+
+input#search_input{
+    border-radius : 5px 5px 5px 5px;
+    border:2px solid rgba(120,120,120, 0.7);;
 }
 
 .home-menu img{
