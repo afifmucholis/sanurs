@@ -22,7 +22,7 @@ if ($search_total == 0) {
                     </div>                
                 </div>
                 <div class="clearboth"></div>
-                
+                <hr/>
             </div>
         </a>
         <?php
