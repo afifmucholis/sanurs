@@ -121,7 +121,7 @@
                 if (isset($struktur)) {
                     foreach ($struktur as $h) :
                         if ($h['islink'])
-                            echo anchor($h['link'],$h['label'],'class="link"');
+                            echo " ".anchor($h['link'],$h['label'],'class="link"');
                         else
                             echo "<label class='general_text'>".$h['label']."</label>";
                         if ($c!=count($struktur)-1)
