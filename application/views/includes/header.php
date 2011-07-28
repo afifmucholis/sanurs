@@ -93,7 +93,7 @@
             <div class="search_site_box">
                 <?php 
                     echo form_open('site_searching/search');
-                    echo form_input('term', '');
+                    echo form_input('term', '','id="search_input"');
                     echo form_submit('search', '', 'id="search_button"');
                     echo form_close();
                 ?>
