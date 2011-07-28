@@ -2,7 +2,7 @@
 echo form_open('profile/submitPendidikan');
 ?>
 <div id="edu_now">
-    <div id="question_1">
+    <div id="question_1" class="general_text">
         Are you still in education? 
         <?php
         $options_1 = array('no' => 'No', 'yes' => 'Yes');
@@ -12,7 +12,7 @@ echo form_open('profile/submitPendidikan');
         ?>
     </div>
     <br/>
-    <div id="current_edu" style="<?php if ($is_current_edu=='no') { ?>display:none;<?php } else { ?>display:inherit;<?php } ?>">
+    <div id="current_edu" class="general_text" style="<?php if ($is_current_edu=='no') { ?>display:none;<?php } else { ?>display:inherit;<?php } ?>">
         <div id="select_degree_current">
             Select your current education degree (Choose one) : 
             <?php
