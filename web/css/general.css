@@ -492,4 +492,10 @@ select option{
 label {
     font-family: ARIAL;
     font-size: 12px;
+    padding : 5px 5px 5px 5px;
+}
+
+.editvisibility_col_left {
+    float: left;
+    padding : 20px 25px 20px 25px;
 }
