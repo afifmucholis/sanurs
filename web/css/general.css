@@ -366,7 +366,13 @@ input#search_button {
 
 }
 
-input#search_input{
+input[type=text]{
+    border-radius : 5px 5px 5px 5px;
+    border:2px solid rgba(120,120,120, 0.7);;
+}
+
+input[type=password]{
+    font-family: arial;
     border-radius : 5px 5px 5px 5px;
     border:2px solid rgba(120,120,120, 0.7);;
 }
