@@ -276,14 +276,11 @@ img.event_images {
 
 #main_content {
     min-height: 600px;
-    padding: 10px 20px 10px 20px;
+    padding: 10px 20px 10px 25px;
 }
 
 #history{
-    width: 240px;
-    display: block; 
-    margin-left: auto; 
-    margin-right: auto;
+    padding: 10px 20px 10px 25px;
 }
 
 
@@ -427,8 +424,8 @@ select option{
 
 .home-menu img{
     float: left;
-    margin-left: -20px;
-    margin-top: -20px;
+    margin-left: -25px;
+    margin-top: -38px;
 }
 
 .recent-news-home{
