@@ -203,7 +203,7 @@ class sign_up extends CI_Controller {
             // send verification email to her/his mail
             $this->load->library('email');
 
-            $this->email->from('no-reply', 'Admin web sanur');
+            $this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
             $this->email->to($email);
             $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
             $this->email->message($message);

@@ -50,7 +50,9 @@ class Sign_in extends CI_Controller {
         $getReturn = $this->userModel->getUsers($options);
         if (is_bool($getReturn) && !$getReturn) {
             //Login gagal, gak ada user yang memenuhi
-            redirect('/home', 'refresh');
+            $message = 'Email and password doesn\'t match.';
+            $this->session->set_flashdata('message', $message);
+            redirect('/sign_in', 'refresh');
         } else {
             //Authenticate success
             //Cek, kali aja ada yang 1 imel buat banyak akun:
@@ -66,7 +68,7 @@ class Sign_in extends CI_Controller {
                 redirect('/home', 'refresh');
             } else {
                 //Sign In Not OK, ada 1 imel yang daftarin lebih dari 1 akun
-                redirect('/home', 'refresh');
+                show_error('More than 1 user with the same email.');
             }      
         }
 
@@ -107,16 +109,16 @@ class Sign_in extends CI_Controller {
                 // send email to user
                 $this->load->library('email');
 
-                $this->email->from('no-reply', 'Admin web sanur');
+                $this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
                 $this->email->to($email);
-                $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
+                $this->email->subject('Santa Ursula Alumni WebSite - Generated Password');
                 $message = 'Dear '.$getUsers[0]->name.', \n'.'You have requested password reset. Now you can login using the password below.\n'.'Password : '.$new_password.'\n'.'Note : please change this random password to protect your security.';
                 
                 $this->email->message($message);
 
                 if (!$this->email->send()) {
                    $message2['status'] = 'Reset Password - Error';
-                   $message2['message'] = 'Email can\'t be sent to your email.'.br(1).'Click '.anchor('sign_in','here').' to try sign in again.';
+                   $message2['message'] = 'Email can\'t be sent to your email.'.br(1).'Click '.anchor('sign_in','here').' to try reset password again.';
                 } else {
                     $message2['status'] = 'Reset Password - Success';
                     $message2['message'] = 'We have send a random generated password to '.$email.', please check your email and sign in again using that password.'.$new_password;

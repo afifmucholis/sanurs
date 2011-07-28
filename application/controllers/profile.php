@@ -1006,9 +1006,9 @@ class profile extends CI_Controller {
                     } else {
                         // cek dulu yang harus ada apa *required
                         if ($company=='' && $i != 0)
-                            throw new Exception('Error on input data : Field company must be not blank '.$year);
+                            throw new Exception('Error on input data : Field company must be not blank.');
                         else if ($i==0 && $company=='' && ($year!='' || $position!='' || $address!='' || $telephone!='' || $fax!='' || $work_hp!='' || $work_email!='')) {
-                            throw new Exception('Error on input data : Field company on current working must be not blank '.$year);
+                            throw new Exception('Error on input data : Field company on current working must be not blank.');
                         }
                         $options['id'] = $work_id;
                         $add_update_Work = $this->workModel->updateWorkExperience($options);
