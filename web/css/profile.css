@@ -16,7 +16,7 @@
     background-color: black;
     width: 434px;
     height: 516px;
-    line-height: 516px;
+    position: relative;
 }
 
 .profile-right-menu {
@@ -27,19 +27,52 @@
     color: white;
 }
 
-.profile-navigation {
-    float: right;
-    z-index: 2;
-    float : right;
-    background : rgba(255,255,255,0.8);
-    margin: 188px 5px 10px 5px;
-    padding: 4px 4px 4px 4px;
+#link {
+    position: absolute;
+    bottom: 0;
+    left: 2%;
+    display: block;
+    width: 434px;
+    text-align:center;
 }
 
-.profile-navigation a{
-    color: black;
-    text-align: center;
+.profile-navigation {
+    padding: 0px 0px 0px 0px;
 }
+
+.profile-navigation ul {
+    float:left;
+    width:100%;
+    list-style-type:none;
+    padding:0;
+}
+
+.profile-navigation li{
+    display:inline;
+    font-family: Arial Black;
+    font-size: 13px;
+}
+
+.profile-navigation a {
+    min-width: 2.5em;
+    float:left;
+    text-decoration: underline;
+    color: rgb(40,40,40);
+    background-color: rgba(250,250,250,0.8);
+    padding:0.2em 0.35em 0.2em 0.35em;
+    margin-left: 2px;
+    margin-right: 2px;
+    display: inline;
+    text-align: center;
+    border-radius : 5px 5px 0px 0px;
+}
+
+
+ .profile-navigation a:hover {
+    background-color: rgb(0,0,0) ;
+    color : rgb(255,255,255);
+}
+
 
 #profpic {
     vertical-align : middle;
@@ -51,6 +84,15 @@ img.profpic_images{
     display: block;
 }
 
+#profile-info {
+    padding: 30px 10px 20px 40px;
+}
+
+#profile-info #name {
+    font-family: impact;
+    font-size: 25px;
+    margin-bottom: 20px;
+}
 
 #friend_wrapper {
     margin: 10px 10px 10px 10px;

@@ -352,7 +352,7 @@ img.event_images {
 }
 
 input#search_button {
-    background-image: url('../../web/res/desain/search.png');
+    background-image: url('../res/desain/search.png');
     background-color: transparent;
     background-repeat: no-repeat;
     border: none;
@@ -490,7 +490,7 @@ select option{
 
 .general_text {
     font-family: ARIAL;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 label {
