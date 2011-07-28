@@ -184,6 +184,7 @@ root {
     font-family: 'Times New Roman',Times,serif;
     font-size: 12px;
     text-align: right;
+    padding: 5px 200px 0px 0px;
 }
 
 .search_site_box {
