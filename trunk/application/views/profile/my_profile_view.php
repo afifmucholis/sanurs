@@ -9,43 +9,39 @@
             );
             echo img($image_properties);
             ?>
-        </div>    
+        </div>
+    <div class="clearboth">
+    </div>
     <div id="link">
-        <div class="profile-navigation">
-            <?php echo anchor('profile/editProfile', ' EDIT PROFILE'); ?>
-        </div>
+        <ul class="profile-navigation">
+            <li>
+                <?php echo anchor('profile/editProfile', ' EDIT PROFILE'); ?>
+            </li>
 
-        <div class="profile-navigation">
-            <?php
-            if ($new_notification == 0) {
-                echo anchor('notification', 'NOTIFICATION');
-            } else {
-                echo anchor('notification', 'NOTIFICATION (' . $new_notification . ')');
-            }
-            ?>
-        </div>
-        <div class="profile-navigation">
-            <?php
-            if ($request_friend == 0)
-                echo anchor('friend/friend_request', 'FRIEND REQUEST');
-            else
-                echo anchor('friend/friend_request', 'FRIEND REQUEST(' . $request_friend . ')');
-            ?>
-        </div>
+            <li>
+                <?php
+                if ($new_notification == 0) {
+                    echo anchor('notification', 'NOTIFICATION');
+                } else {
+                    echo anchor('notification', 'NOTIFICATION (' . $new_notification . ')');
+                }
+                ?>
+            </li>
+            <li>
+                <?php
+                if ($request_friend == 0)
+                    echo anchor('friend/friend_request', 'FRIEND REQUEST');
+                else
+                    echo anchor('friend/friend_request', 'FRIEND REQUEST(' . $request_friend . ')');
+                ?>
+            </li>
+        </ul>
     </div>
-
-
-    <br/><br/><br/><br/><br/><br/><br/>
-    <div id="calendar">
-        No upcoming event<br/>
-        <?php echo $user_data['calendar']; ?><br/>
-        <?php echo anchor('event/mycalendar', 'Go to your calendar'); ?>
-    </div>
+    
 </div>
 
 <div class="profile-right-menu">
-    <div id="info">
-        Info :
+    <div id="profile-info">
         <?php $this->load->view('profile/user_info', $user_data); ?>
     </div>
 </div>
@@ -54,6 +50,11 @@
 </div>
 
 <div class="profile-button-menu">
+    <div id="calendar">
+        No upcoming event<br/>
+        <?php echo $user_data['calendar']; ?><br/>
+        <?php echo anchor('event/mycalendar', 'Go to your calendar'); ?>
+    </div>
     <div id="friend_list_sidebar">
         <?php echo anchor('show_all_friends/user/' . $user_data['user_id'], 'Friends (' . $count_friends . ')') ?>
         <?php

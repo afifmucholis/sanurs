@@ -1,31 +1,11 @@
 <div id="name">
-    <?php echo $user_data['name'];
+    <?php echo  strtoupper($user_data['name']);
     if ($user_data['nickname']!='') echo ' ('.$user_data['nickname'].')';?>
 </div>
-<div id="alumni">
+<div id="alumni" class="general_text">
     <?php echo "Alumni of ".$user_data['kelulusan'].", ".$user_data['tahun_kelulusan'];?>
 </div>
-<?php if($user_data['visibility']->home_address) { ?>
-<div id="home_address">
-    <?php echo "Home address : "; if (isset($user_data['home_address'])) echo $user_data['home_address']; else echo "-";?>
-</div>
-<?php } ?>
-<?php if ($user_data['visibility']->home_telephone) { ?>
-<div id="home_telephone">
-    <?php echo "Home telephone : "; if (isset($user_data['home_telephone'])) echo $user_data['home_telephone']; else "-";?>
-</div>
-<?php } ?>
-<?php if ($user_data['visibility']->handphone) { ?>
-<div id="handphone">
-    <?php echo "Handphone : "; if (isset($user_data['handphone'])) echo $user_data['handphone']; else echo "-";?>
-</div>
-<?php } ?>
-<?php if ($user_data['visibility']->email) { ?>
-<div id="email">
-    <?php echo "Email : "; if (isset($user_data['email'])) echo $user_data['email']; else echo "-";?>
-</div>
-<?php } ?>
-<div id="pendidikan">
+<div id="pendidikan" class="general_text">
     <?php
         $tampil = true;
         foreach($user_data['pendidikan'] as $pendidikan) :
@@ -41,34 +21,44 @@
             if ($tampil) {
                 if ($pendidikan['current']) {
                     echo "Pursuing a ".$pendidikan['degree']." degree in ".$pendidikan['where']."<br/>";
-                    echo "Majoring in ".$pendidikan['major']."<br/>";
-                    echo "Minoring in ".$pendidikan['minor']."<br/>";
+                    if ($pendidikan['major'] != 'none') {
+                        echo "Majoring in ".$pendidikan['major']."<br/>";
+                    }
+                    if ($pendidikan['minor'] != 'none') {
+                        echo "Minoring in ".$pendidikan['minor']."<br/>";
+                    }
                 } else {
                     echo "Graduated a ".$pendidikan['degree']." degree in ".$pendidikan['where']."<br/>";
-                    echo "Majoring in ".$pendidikan['major']."<br/>";
-                    echo "Minoring in ".$pendidikan['minor']."<br/>";
+                    if ($pendidikan['major']!='none') {
+                        echo "Majoring in ".$pendidikan['major']."<br/>";
+                    }
+                    if ($pendidikan['minor']!='none') {
+                        echo "Minoring in ".$pendidikan['minor']."<br/>";
+                    }
                 }
             }
         endforeach;
     ?>
 </div>
+<br/>
 <?php if ($user_data['visibility']->interest) { ?>
 <div id="interest">
     <?php
         if (count($user_data['interest'])==0) {
-            echo "Areas of interest : ";
-            echo "None";
+            //don't write anythings
         } else {
             echo "Areas of interest : ";
             $attributes = array(
                 'id'    => 'interestlist'
             );
             echo ul($user_data['interest'], $attributes);
+            echo "<br/>";
         }
     ?>
 </div>
-<?php } ?>
-<div id="working_experience">
+<?php } ?>        
+
+<div id="working_experience" class="general_text">
     <?php
         if (count($user_data['working_experience'])==0) {
             echo "Working Experience : ";
@@ -91,25 +81,42 @@
                 
                 if ($tampil) {
                     if ($working['is_current_work']) {
-                        echo "Company : ".$working['company']." (Current)";
+                        if ($working['company']!='') {
+                            echo "Company : ".$working['company']." (Current)";
+                            echo "<br/>";
+                        }
                     } else {
                         echo "Company : ".$working['company'];
+                        echo "<br/>";
                     }
-                    echo "<br/>";
-                    echo "Year : ".$working['year'];
-                    echo "<br/>";
-                    echo "Position : ".$working['position'];
-                    echo "<br/>";
-                    echo "Address : ".$working['address'];
-                    echo "<br/>";
-                    echo "Telephone : ".$working['telephone'];
-                    echo "<br/>";
-                    echo "Fax : ".$working['fax'];
-                    echo "<br/>";
-                    echo "HP : ".$working['work_hp'];
-                    echo "<br/>";
-                    echo "Email : ".$working['work_email'];
-                    echo "<br/>";
+                    if ($working['year']!='') {
+                        echo "Year : ".$working['year'];
+                        echo "<br/>";
+                    }
+                    if ($working['position']!='') {
+                        echo "Position : ".$working['position'];
+                        echo "<br/>";
+                    }
+                    if  ($working['address']!='') {
+                        echo "Address : ".$working['address'];
+                        echo "<br/>";
+                    }
+                    if ($working['telephone']!='') {
+                        echo "Telephone : ".$working['telephone'];
+                        echo "<br/>";
+                    }
+                    if ($working['fax']!='') {
+                        echo "Fax : ".$working['fax'];
+                        echo "<br/>";
+                    }
+                    if ($working['work_hp']!='') {
+                        echo "HP : ".$working['work_hp'];
+                        echo "<br/>";
+                    }
+                    if ($working['work_email']!='') {
+                        echo "Email : ".$working['work_email'];
+                        echo "<br/>";
+                    }
                 }
             endforeach;
             if ($count_tampil==0) {
@@ -118,3 +125,25 @@
         }
     ?>
 </div>
+<br/>
+<?php if($user_data['visibility']->home_address) { ?>
+<div id="home_address" class="general_text">
+    <?php if (isset($user_data['home_address'])) echo "Home address : ".$user_data['home_address'];?>
+</div>
+<?php } ?>
+<?php if ($user_data['visibility']->home_telephone) { ?>
+<div id="home_telephone" class="general_text">
+    <?php if (isset($user_data['home_telephone'])) echo "Home telephone : ".$user_data['home_telephone'];?>
+</div>
+<?php } ?>
+<?php if ($user_data['visibility']->handphone) { ?>
+<div id="handphone" class="general_text">
+    <?php if (isset($user_data['handphone'])) echo "Handphone : ".$user_data['handphone'];?>
+</div>
+<?php } ?>
+<?php if ($user_data['visibility']->email) { ?>
+<div id="email" class="general_text">
+    <?php if (isset($user_data['email'])) echo "Email : ".$user_data['email'];?>
+</div>
+<?php } ?>
+
