@@ -123,9 +123,9 @@
                         if ($h['islink'])
                             echo anchor($h['link'],$h['label'],'class="link"');
                         else
-                            echo $h['label'];
+                            echo "<label class='general_text'>".$h['label']."</label>";
                         if ($c!=count($struktur)-1)
-                            echo ' >> ';
+                            echo ' >>';
                         $c++;
                     endforeach;
                 }
