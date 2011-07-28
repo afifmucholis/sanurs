@@ -503,3 +503,9 @@ label {
     float: left;
     padding : 20px 25px 20px 25px;
 }
+
+.impact25{
+    font-family: impact;
+    font-size: 25px;
+    letter-spacing: 1px;
+}

@@ -1,4 +1,4 @@
-<div id="name">
+<div id="name" class="impact25">
     <?php echo  strtoupper($user_data['name']);
     if ($user_data['nickname']!='') echo ' ('.$user_data['nickname'].')';?>
 </div>
@@ -61,10 +61,10 @@
 <div id="working_experience" class="general_text">
     <?php
         if (count($user_data['working_experience'])==0) {
-            echo "Working Experience : ";
+            echo "<b>Working Experience : </b>";
             echo "None";
         } else {
-            echo "Working Experience : ";
+            echo "<b>Working Experience : </b>";
             $tampil = true;
             $count_tampil = 0;
             foreach($user_data['working_experience'] as $working) :
