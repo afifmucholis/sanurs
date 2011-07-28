@@ -7,20 +7,20 @@
     <div>
         <table>
             <tr>
-                <td class="general_text"> <?php echo form_label('Name ', 'name'); ?> </td>
-                <td class="general_text"> <?php echo form_input('name', ''); ?> </td>
+                <td> <?php echo form_label('Name ', 'name'); ?> </td>
+                <td> <?php echo form_input('name', ''); ?> </td>
             </tr>
             <tr>
-                <td class="general_text"> <?php echo form_label('Year ', 'year'); ?> </td>
-                <td class="general_text"> <?php echo form_input('year', ''); ?> </td>
+                <td> <?php echo form_label('Year ', 'year'); ?> </td>
+                <td> <?php echo form_input('year', ''); ?> </td>
             </tr>
             <tr>
-                <td class="general_text"> <?php echo form_label('Area of interest ', 'interest'); ?> </td>
-                <td class="general_text"> <?php echo form_dropdown('interest', $interest_list, $interest_list['all']); ?> </td>
+                <td> <?php echo form_label('Area of interest ', 'interest'); ?> </td>
+                <td> <?php echo form_dropdown('interest', $interest_list, $interest_list['all']); ?> </td>
             </tr>
             <tr>
-                <td class="general_text"> <?php echo form_label('Major Education ', 'major'); ?> </td>
-                <td class="general_text"> <?php echo form_dropdown('major', $major_list, $major_list['all']); ?> </td>
+                <td> <?php echo form_label('Major Education ', 'major'); ?> </td>
+                <td> <?php echo form_dropdown('major', $major_list, $major_list['all']); ?> </td>
             </tr>
         </table>
     </div>
