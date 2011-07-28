@@ -440,3 +440,8 @@ input[type=password]{
     font-family: ARIAL;
     font-size: 12px;
 }
+
+label {
+    font-family: ARIAL;
+    font-size: 12px;
+}
