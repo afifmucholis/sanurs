@@ -373,6 +373,20 @@ input[type=text]{
     margin : 5px 0px 5px 0px;
 }
 
+input[type=password]{
+    width: 133px;
+    border-radius : 5px 5px 5px 5px;
+    border:2px solid rgba(120,120,120, 0.7);
+}
+
+textarea{
+    font-family: georgia;
+    border-radius : 5px 5px 5px 5px;
+    border:2px solid rgba(120,120,120, 0.7);
+    resize : none;
+}
+
+
 input[type=submit]{
     font: georgia;
     background-color: rgb(130,130,130);
@@ -395,6 +409,7 @@ button {
     padding : 4px 10px 4px 10px;
 }
 
+
 select{
     font-family: georgia;
     border-radius : 5px 5px 5px 5px;
@@ -403,13 +418,6 @@ select{
 
 select option{
     font-family: georgia;
-}
-
-
-input[type=password]{
-    width: 133px;
-    border-radius : 5px 5px 5px 5px;
-    border:2px solid rgba(120,120,120, 0.7);;
 }
 
 .home-menu img{
