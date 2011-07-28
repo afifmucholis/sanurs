@@ -1,40 +1,41 @@
 <div id="title-menu">Find a Friend - Search Results : 
-<!--<p>Your search for people -->
-<?php
-/*if ($search_name != "") {
-    echo 'whose name contains "' . $search_name . '", ';
+    <?php
+    $num = $search_total;
+    echo $num;
+    if ($num > 1) {
+        $res = ' results';
+    } else {
+        $res = ' result';
+    }
+    echo $res;
+    ?></div>
+<p>Your search for people <?php
+if ($search_name != "" || $search_year != "" || $interest != "all" || $major != "all") {
+    echo 'who';
+    if ($search_name != "") {
+        echo 'se name contains <b>"' . $search_name . '"</b> ';
+        if ($search_year != "" || $interest != "all" || $major != "all") {
+            echo 'and';
+        }
+    }
+    if ($search_year != "") {
+        echo ' graduated in <b>"'.$search_year.'"</b> ';
+        if ($interest!="all" || $major!="all") {
+            echo 'and';
+        }
+    }
+    if ($interest != "all") {
+        echo ' has interest in <b>"'.$interest.'"</b> ';
+        if ($major != "all") {
+            echo 'and';
+        }
+    }
+    if ($major != "all") {
+        echo ' has major in <b>"'.$major.'"</b> ';
+    }
 }
-if ($search_year != "") {
-    echo 'who graduated in ' . $search_year . ', ';
-    echo br(1);
-    
-}*/
-?><!--</p>-->
-<?php
-$num = $search_total;
-echo $num;
-if ($num > 1) {
-    echo ' results';
-} else {
-    echo ' result';
-}
-?></div>
-Category : <br/>
-<?php
-if ($search_name != "") {
-    echo 'name : ' . $search_name;
-    echo br(1);
-}
-if ($search_year != "") {
-    echo 'year : ' . $search_year;
-    echo br(1);
-}
-echo 'interest : ' . $interest;
-echo br(1);
-echo 'major : ' . $major;
-echo br(1);
-echo br(1);
-?>
+echo 'has matches <b>'.$num.'</b> '.$res;
+?></p>
 <div id="show_all_search_results">
     <?php
     $data['search_results'] = $search_results;

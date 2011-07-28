@@ -1,7 +1,7 @@
 <?php
 // ngambil search result
 if ($search_total == 0) {
-    echo "hasil pencarian kosong";
+    echo "No Result for your search.<br/>";
 } else {
     foreach ($search_results as $result) {
         ?>
