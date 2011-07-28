@@ -16,7 +16,9 @@ class friend extends CI_Controller {
      */
     function index() {
         if ($this->session->userdata('name')==null) {
-            redirect('/home', 'refresh');
+            $message = 'You must sign in first to find your friend.';
+            $this->session->set_flashdata('message', $message);
+            redirect('/sign_in', 'refresh');
         }
         // show map
         $data['show_map'] = 1;

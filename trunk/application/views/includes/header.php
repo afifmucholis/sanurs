@@ -82,12 +82,11 @@
                 <?php if ($this->session->userdata('name')==null) { ?>
                     <li id="signin-nav"><a href="<?php echo site_url('sign_in')?>">SIGN IN</a></li>
                     <li id="signup-nav"><a href="<?php echo site_url('sign_up')?>">SIGN UP</a></li>
-                    <li id="findfriend-nav"><a href="<?php echo site_url('sign_in')?>">FIND FRIEND</a></li>
                 <?php } else { ?>
                     <li id="profile-nav"><a href="<?php echo site_url('profile')?>">MY PROFILE</a></li>
                     <li id="message-nav"><a href="<?php echo site_url('message')?>">MESSAGE</a></li>
-                    <li id="findfriend-nav"><a href="<?php echo site_url('friend')?>">FIND FRIEND</a></li>
                 <?php } ?>
+                <li id="findfriend-nav"><a href="<?php echo site_url('friend')?>">FIND FRIEND</a></li>
             </ul>
             
             <div class="search_site_box">
