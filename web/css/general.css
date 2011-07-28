@@ -386,6 +386,11 @@ textarea{
     resize : none;
 }
 
+a.link {
+    color: black;
+    font-family: Arial;
+    font-size: 12px;
+}
 
 input[type=submit]{
     font: georgia;
