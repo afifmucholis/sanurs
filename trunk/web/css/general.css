@@ -361,18 +361,53 @@ input#search_button {
     cursor: pointer;
     height: 36px;
     padding-left: 31px;
-    margin-top: 5px;
+    margin-top: 10px;
     vertical-align: middle;
 
 }
 
 input[type=text]{
+    font-family: georgia;
     border-radius : 5px 5px 5px 5px;
-    border:2px solid rgba(120,120,120, 0.7);;
+    border:2px solid rgba(120,120,120, 0.7);
+    margin : 5px 0px 5px 0px;
 }
 
+input[type=submit]{
+    font: georgia;
+    background-color: rgb(130,130,130);
+    color : white;
+    border : none;
+    cursor: pointer;
+    margin: 4px 4px 4px 4px;
+    font-weight: bold;
+    padding : 4px 10px 4px 10px;
+}
+
+button {
+    font: georgia;
+    background-color: rgb(130,130,130);
+    color : white;
+    border : none;
+    cursor: pointer;
+    margin: 4px 4px 4px 4px;
+    font-weight: bold;
+    padding : 4px 10px 4px 10px;
+}
+
+select{
+    font-family: georgia;
+    border-radius : 5px 5px 5px 5px;
+    border:2px solid rgba(120,120,120, 0.7);
+}
+
+select option{
+    font-family: georgia;
+}
+
+
 input[type=password]{
-    font-family: arial;
+    width: 133px;
     border-radius : 5px 5px 5px 5px;
     border:2px solid rgba(120,120,120, 0.7);;
 }
