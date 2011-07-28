@@ -11,10 +11,46 @@
    Syntax recommendation http://www.w3.org/TR/REC-CSS2/
 */
 
-#profpic img{
-    max-height: 300px;
-    max-width: 300px;
+.profile-left-menu {
+    float : left;
+    background-color: black;
+    width: 434px;
+    height: 516px;
+    line-height: 516px;
 }
+
+.profile-right-menu {
+    float: right;
+    background-color: black;
+    width : 496px;
+    z-index: 3;
+    color: white;
+}
+
+.profile-navigation {
+    float: right;
+    z-index: 2;
+    float : right;
+    background : rgba(255,255,255,0.8);
+    margin: 188px 5px 10px 5px;
+    padding: 4px 4px 4px 4px;
+}
+
+.profile-navigation a{
+    color: black;
+    text-align: center;
+}
+
+#profpic {
+    vertical-align : middle;
+}
+img.profpic_images{
+    max-height: 410px;
+    max-width: 410px;
+    margin : auto;
+    display: block;
+}
+
 
 #friend_wrapper {
     margin: 10px 10px 10px 10px;
@@ -56,5 +92,3 @@
     float : left;
     padding: 3px 5px 5px 5px;  
 }
-
-
