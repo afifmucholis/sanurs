@@ -1,7 +1,7 @@
 <div id="inbox">    
     <?php
     if (count($inbox) == 0) {
-        echo "No message for you";
+        echo "<label class='general_text'>No message for you</label>";
     } else {
         foreach ($inbox as $message) {
             ?> 
@@ -12,8 +12,14 @@
                             <?php echo "<img src =' " . base_url() . $message['from_profpict'] . "'/>"; ?>
                         </div>
                         <div id ='sender'>
-                            <?php echo $message['from_name'] . ' ('; ?>
-                            <?php echo $message['from_nickname'] . ' )<br/>'; ?>
+                            <?php echo strtoupper($message['from_name'])?>
+                            <?php
+                                if ($message['from_nickname']!='')
+                                {
+                                   echo "( ".$message['from_nickname'] . " )".'<br/>';
+                                }
+                            ?>
+                            
                         </div>
                         <div id ='subject'>
                             <?php echo $message['subject'] . '<br/>'; ?>
