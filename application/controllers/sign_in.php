@@ -23,6 +23,9 @@ class Sign_in extends CI_Controller {
         $data['main_content'] = 'sign_in/sign_in_view';
         $data['struktur'] = $this->getStruktur();
         $data['body_id'] = 'sign_in_body';
+        $fl = $this->session->flashdata('message');
+        if ($fl!='')
+            $data['message'] = $fl;
         $this->load->view('includes/template',$data);
     }
     

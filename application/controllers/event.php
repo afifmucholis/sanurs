@@ -395,8 +395,9 @@ class Event extends CI_Controller {
                     }
                 }
             } catch (Exception $e) {
-                $message['status'] = 'An Error Occurred';
-                $message['message'] = $e->getMessage().''.br(1).'Click '.anchor('event/host','here').' to try again.';
+                //$message['status'] = 'An Error Occurred';
+                //$message['message'] = $e->getMessage().''.br(1).'Click '.anchor('event/host','here').' to try again.';
+                show_error($e->getMessage());
             }
             $message['page_before'] = 'Host an Event';
             $message['page_link'] = 'event/host';

@@ -4,6 +4,8 @@
 
 <div id="signin_form">
     <?php
+        if (isset($message))
+            echo $message;
         echo form_open('sign_in/submit', array('id' => 'signin'));
         echo form_label('Enter your email address : ','email')."<br/>";
         echo form_input('email', '', 'id="email"')."<br/>";
