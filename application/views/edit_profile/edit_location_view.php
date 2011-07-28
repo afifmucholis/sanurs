@@ -1,17 +1,23 @@
-<h3>Search Your Location</h3>
+<div id="title-menu">
+    Search Your Location
+</div>
 <?php
 echo form_open('profile/submitLocation');
 ?>
-<p>Input your current location : </p>
-<?php
-echo form_input('location', '', 'id="location"');
-$js_search = 'onClick="geocodeLocation()"';
-echo form_button('searchlocation', 'Submit', $js_search);
-?>
-<?php echo br(2); ?>
+<p>Input your current city : </p>
+<div class="general_text">
+    <?php
+    echo form_input('location', '', 'id="location"');
+    $js_search = 'onClick="geocodeLocation()"';
+    echo form_button('searchlocation', 'Search', $js_search);
+    ?>
+</div>
+<?php echo br(1); ?>
 <div id="map">
     Map disini
 </div>
+<?php echo br(1); ?>
+<div class="general_text">
 <?php
 echo form_submit('save', 'Save Changes');
 echo form_hidden('save_lat', 0);
@@ -21,3 +27,4 @@ echo form_hidden('area_lat', 0);
 echo form_hidden('area_lng', 0);
 echo form_close();
 ?>
+</div>
