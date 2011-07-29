@@ -1,5 +1,5 @@
 <div id="title-menu">Event</div>
-<div class="left-menu">
+<div class="event-left-menu">
     <div id="slide_show_event">
         <div id="gallery-event">
         </div>
@@ -7,7 +7,7 @@
     </div
 </div>
 
-<div class="right-menu">
+<div class="event-right-menu">
     <div id="col_right">
         <div id="sorting">
             <h4>Sort by : </h4>
