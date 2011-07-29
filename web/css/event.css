@@ -39,9 +39,15 @@
     padding: 60px 0px 20px 20px;
 }
 
-a.event-link{
+a.active-event-link{
     font-family: arial;
     color: white;
+    font-size: 15px;
+}
+
+a.notactive-event-link{
+    font-family: arial;
+    color: rgb(190,190,190);
     font-size: 14px;
 }
 
