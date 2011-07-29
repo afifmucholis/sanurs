@@ -632,7 +632,29 @@ label {
     display:block;
 }
 
+#three_photo ul.img_holder li .description_img {
+    display:none;
+    width:179px;
+    height:100px;
+    margin-top: -120px;
+    margin-left:124px;
+    border-radius : 10px 0px 0px 0px
+}
 
+/**********************************/
+
+
+/***** Teks description floating above image *****/
+.description_img {
+    width:179px;
+    height:100px;
+    position: absolute;
+    padding: 10px;
+    z-index: 4;
+    background : rgba(255,255,255,0.6);
+    font-family: Arial,Helvetica,sans-serif;
+    font-size: 12px;
+}
 /**********************************/
 
 /*** buat edit profile ***/
