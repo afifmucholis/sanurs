@@ -1,4 +1,4 @@
-<label id="title-menu">Calendar Events</label>
+<label id="title-menu">Events Calendar</label>
 <br/>
 <br/>
 <div class="calendar-left-menu">
@@ -10,9 +10,9 @@
         <label class="impact20">VIEW BY : </label> <br/>
         <div class="sort-category">
             <?php if ($sortby == 'all_events') { ?>
-                <b>&raquo; <?php echo anchor('event/mycalendar/all_events', 'All Events', 'class="active-event-link"'); ?></b>
+                <b>&raquo; <?php echo anchor('event/mycalendar/all_events', 'All Events By Your Friends', 'class="active-event-link"'); ?></b>
             <?php } else { ?>
-                &raquo; <?php echo anchor('event/mycalendar/all_events', 'All Events', 'class="notactive-event-link"'); ?>
+                &raquo; <?php echo anchor('event/mycalendar/all_events', 'All Events By Your Friends', 'class="notactive-event-link"'); ?>
             <?php } ?>
             <br/>
             <?php if ($sortby == 'attending_rsvp') { ?>
