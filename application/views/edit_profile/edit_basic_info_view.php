@@ -11,11 +11,15 @@
         );
         echo img($image_properties);
         ?>
+        <div class="edit_profpic_navig">
+            <a id="edit_profpic_navig"  href="#" class="popup_link">CHANGE PICTURE</a>
+        </div>
     </div>
-    <div class="clearboth"></div>
-    <div style="text-align: right; display: block">
-        <a id="link-menu" style="color: #000" href="#" class="popup_link">CHANGE PICTURE</a>
-    </div>
+
+    <!--    <div class="clearboth"></div>-->
+    <!--    <div style="position: absolute">
+        <a id="edit_profpic_navig" href="#" class="popup_link">CHANGE PICTURE</a>
+        </div>-->
 </div>
 <div class="edit_profile_right">
     <?php
