@@ -1,16 +1,16 @@
-<h3>Notification</h3>
+<div id="title-menu">Notification</div>
 <?php
     if (count($notification)==0) {
-        echo "No new notifications.";
+        echo "<label class='general_text'>No new notifications.</label>";
     } else {
         foreach($notification as $notif) :
-            echo $notif->date;
+            echo "<label class='general_text>".$notif->date."</label>";
             echo br(1);
-            echo $notif->message;
+            echo "<label class='general_text>".$notif->message."</label>";
             if ($notif->link!='') {
-                echo " ".anchor($notif->link,'Click Here');
+                echo " ".anchor($notif->link,'Click Here','class="link"');
             }
-            echo br(1);
+            echo br(2);
         endforeach;
     }
 ?>

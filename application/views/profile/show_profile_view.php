@@ -1,39 +1,69 @@
 <div class="profile-left-menu">
-    <div id="profpic">
-        <?php
-        $image_properties = array(
-            'src' => $user_data['image'],
-            'class' => 'profpic_images',
-            'id' => 'upload_image',
-            'rel' => 'lightbox',
-        );
-        echo img($image_properties);
-        ?>
+    <div class="profile-black-wrapper">
+        <div id="profpic">
+            <?php
+            $image_properties = array(
+                'src' => $user_data['image'],
+                'class' => 'profpic_images',
+                'id' => 'upload_image',
+                'rel' => 'lightbox',
+            );
+            echo img($image_properties);
+            ?>
+        </div>
+        <div class="clearboth">
+        </div>
+        <div class="add_friend_link">
+            <?php if ($add_as_friend == 1) { ?>
+                <div id="add_as_friend">
+                    <a href="#" class="popup_link">Add as friend</a>
+                </div>
+            <?php } else if ($add_as_friend == 2) { ?>
+                <div id="add_as_friend">
+                    Request has been sent.
+                </div>
+            <?php } else if ($add_as_friend == 3) { ?>
+                <div id="add_as_friend">
+                    <a href="#" onclick="javascript:unfriend('<?php echo $user_data['user_id']; ?>')";>Block from friend</a>
+                </div>
+            <?php } else if ($add_as_friend == 4) { ?>
+                <div id="add_as_friend">
+                    <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', true)";>Confirm</a> &nbsp;&nbsp;
+                    <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', false)";>Reject</a>
+                </div>
+            <?php } ?>
+        </div>
     </div>
-    <div class="clearboth">
-    </div>
-    <?php if ($add_as_friend == 1) { ?>
-        <div id="add_as_friend">
-            <a href="#" class="popup_link">Add as friend</a>
-        </div>
-    <?php } else if ($add_as_friend == 2) { ?>
-        <div id="add_as_friend">
-            Request has been sent.
-        </div>
-    <?php } else if ($add_as_friend == 3) { ?>
-        <div id="add_as_friend">
-            <a href="#" onclick="javascript:unfriend('<?php echo $user_data['user_id']; ?>')";>Block from friend</a>
-        </div>
-    <?php } else if ($add_as_friend == 4) { ?>
-        <div id="add_as_friend">
-            <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', true)";>Confirm</a> &nbsp;&nbsp;
-            <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', false)";>Reject</a>
-        </div>
-    <?php } ?>
 
-    <div id="news">
-        Levana is hosting “A Night of Neglect” this Saturday, 8 October 2011. Check it out
+    <div class="profile-bottom-menu">
+        <div id="friend_list_sidebar">
+            <div id="title-menu">
+                <?php echo anchor('show_all_friends/user/' . $user_data['user_id'], 'Friends (' . $count_friends . ')') ?>
+            </div>
+            <?php
+            if (count($friend_list_sidebar) == 0) {
+                echo "<label class='general_text'>He/she doesn't have any friends.</label>";
+            } else {
+                foreach ($friend_list_sidebar as $friend) {
+                    ?>
+                    <div id ="friend_wrapper">
+                        <div id="profpic">
+                            <?php echo "<img src ='" . base_url() . $friend['profpict_url'] . "'/>"; ?>
+                        </div>
+                        <div id="info_wrapper">
+                            <div id="name">
+                                <a href="profile/user/<?php echo $friend['id']; ?>" class="link"><?php echo $friend['name']; ?></a>
+                            </div>
+                            <div id="nickname" class="general_text">
+                                <?php echo $friend['nickname']; ?>
+                            </div>
+                        </div>
+                    </div>
+                <?php }
+            } ?>
+        </div>
     </div>
+    
 </div>
 
 <div class="profile-right-menu">
@@ -45,34 +75,6 @@
 <div class="clearboth">
 </div>
 
-<div class="profile-button-menu">
-    <div id="friend_list_sidebar">
-        <div id="title-menu">
-            <?php echo anchor('show_all_friends/user/' . $user_data['user_id'], 'Friends (' . $count_friends . ')') ?>
-        </div>
-        <?php
-        if (count($friend_list_sidebar) == 0) {
-            echo "<label class='general_text'>He/she doesn't have any friends.</label>";
-        } else {
-            foreach ($friend_list_sidebar as $friend) {
-                ?>
-                <div id ="friend_wrapper">
-                    <div id="profpic">
-                        <?php echo "<img src ='" . base_url() . $friend['profpict_url'] . "'/>"; ?>
-                    </div>
-                    <div id="info_wrapper">
-                        <div id="name">
-                            <a href="profile/user/<?php echo $friend['id']; ?>"><?php echo $friend['name']; ?></a>
-                        </div>
-                        <div id="nickname">
-                            <?php echo $friend['nickname']; ?>
-                        </div>
-                    </div>
-                </div>
-            <?php }
-        } ?>
-    </div>
-</div>
 <div class="clearboth">
 </div>
 <?php $this->load->view('popup/add_as_friend_form', $user_data); ?>

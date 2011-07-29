@@ -1,6 +1,6 @@
 <?php
 if ($request_friend == 0) {
-    echo "No Friend Request.<br/>";
+    echo "<label class='general_text'>No Friend Request.<br/></label>";
 } else {
     foreach ($request_friend as $request) :
         ?>
@@ -18,18 +18,19 @@ if ($request_friend == 0) {
             <div id="info_request"  style="float:left; padding-left: 10px;">
                 <div id="user_link">
                     <?php
-                    echo anchor('profile/user/' . $request['user_requester'], $request['name']);
+                    echo anchor('profile/user/' . $request['user_requester'], $request['name'], 'class="link"');
                     ?>
                 </div>
-                <div id="message_request"><?php
+                <div id="message_request" class="general_text"><?php
             echo br(1);
             if ($request['message'] != '') {
                 echo $request['message'];
+                echo br(1);
             } else {
                 echo br(2);
             }
                     ?></div>
-                <div id="button_approve_<?php echo $request['id_request']; ?>">
+                <div id="button_approve_<?php echo $request['id_request']; ?>" class="general_text">
                     <?php
                     echo form_button('confirm', 'Confirm', 'onclick="javascript:confirmRequest(\'' . $request['id_request'] . '\', \'true\');"');
                     echo form_button('reject', 'Reject', 'onclick="javascript:confirmRequest(\'' . $request['id_request'] . '\', \'false\');"');
