@@ -127,7 +127,7 @@
                         else
                             echo "<label class='general_text'>".$h['label']."</label>";
                         if ($c!=count($struktur)-1)
-                            echo ' &raquo;';
+                            echo ' &raquo; ';
                         $c++;
                     endforeach;
                 }
