@@ -1,0 +1,60 @@
+/* 
+    Document   : event
+    Created on : 29 Jul 11, 10:45:03
+    Author     : Akbar
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/* 
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+
+.event-left-menu {
+    float: left;
+    width: 630px;
+}
+
+.event-right-menu {
+    background-color: black;
+    float:left;
+    width: 260px;
+    color: white;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+
+#slide_show_event {
+    margin:auto;
+    margin-right: 20px;
+    margin-left: 0px;
+    margin-bottom: 20px;
+    background-color: black;
+    height: 500px;
+}
+
+#sorting {
+    padding: 60px 0px 20px 20px;
+}
+
+a.event-link{
+    font-family: arial;
+    color: white;
+    font-size: 14px;
+}
+
+.sort-category {
+    margin-top: 5px;
+}
+
+.link_arialblack17 {
+    font-family: Arial Black;
+    font-size: 17px;
+    color: white;
+}
+
+.link-other-event {
+    padding: 0px 0px 0px 20px;
+}
