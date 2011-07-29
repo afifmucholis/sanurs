@@ -246,7 +246,11 @@ class Message extends CI_Controller {
         }
 
         $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
-        $numfriends2 = count($getFriend2);
+        if (!(is_bool($getFriend2))) {
+            $numfriends2 = count($getFriend2);
+        } else {
+            $numfriends2 = 0;
+        }
         $numAllfriends = $numfriends1 + $numfriends2;
 
         if (!is_bool($getFriend2)) {

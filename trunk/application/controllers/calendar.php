@@ -29,75 +29,77 @@ class Calendar extends CI_Controller {
         if ($sortby == 'all_events') {
             //Disini ngehasilin semua event yang dibuat oleh semua temennya dan juga admin :
             //Dapetin list admin : 
-            //Disini ngehasilin semua event yang dibuat oleh semua temennya dan juga admin :
-        //Dapetin list admin : 
-        $getAdminList = $this->_getAdminList();
-        //Load host_event :
-        $this->load->model('host_event', 'hostEventModel');
-        //Dapetin semua event yang diaplot admin :
-        $iteratorevent = 0;
-        for ($i = 0; $i < count($getAdminList); ++$i) {
-            $admin_id = $getAdminList[$i]->id;
-            $optionHost = array('user_id' => $admin_id, 'columnSelect' => 'event_id');
-            $getAllEventByThisAdmin = $this->hostEventModel->getHostEvents($optionHost);
-            //Iterasi 1-1 eventnya :
-            $numEventByThisAdmin = 0;
-            if (!is_bool($getAllEventByThisAdmin)) {
-                $numEventByThisAdmin = count($getAllEventByThisAdmin);
+            $getAdminList = $this->_getAdminList();
+            //Load host_event :
+            $this->load->model('host_event', 'hostEventModel');
+            //Dapetin semua event yang diaplot admin :
+            $iteratorevent = 0;
+            $num_admin = 0;
+            if (!is_bool($getAdminList)) {
+                $num_admin = count($getAdminList);
             }
-            for ($j = 0; $j < $numEventByThisAdmin; ++$j) {
-                $event_id = $getAllEventByThisAdmin[$j]->event_id;
-                //Dapetin detail event dengan id=$event_id
-                $optionsEventDetail = array('id' => $event_id);
-                $getEventDetail = $this->eventModel->getEvents($optionsEvent);
-                $event = array();
-                $event['id'] = $getEventDetail[0]->id;
-                $event['title'] = $getEventDetail[0]->title;
-                $event['description'] = $getEventDetail[0]->description;
-                $event['start'] = $getEventDetail[0]->start_time;
-                $event['where'] = $getEventDetail[0]->venue;
-                $event['category_event_id'] = $getEventDetail[0]->category_event_id;
-                $event['image_url'] = $getEventDetail[0]->image_url;
-                $event['url'] = site_url('event/show_event/' . $event['id']);
-                $result[$iteratorevent] = $event;
-                ++$iteratorevent;
+            for ($i = 0; $i < $num_admin; ++$i) {
+                $admin_id = $getAdminList[$i]->id;
+                $optionHost = array('user_id' => $admin_id, 'columnSelect' => 'event_id');
+                $getAllEventByThisAdmin = $this->hostEventModel->getHostEvents($optionHost);
+                //Iterasi 1-1 eventnya :
+                $numEventByThisAdmin = 0;
+                if (!is_bool($getAllEventByThisAdmin)) {
+                    $numEventByThisAdmin = count($getAllEventByThisAdmin);
+                }
+                for ($j = 0; $j < $numEventByThisAdmin; ++$j) {
+                    $event_id = $getAllEventByThisAdmin[$j]->event_id;
+                    //Dapetin detail event dengan id=$event_id
+                    $optionsEventDetail = array('id' => $event_id);
+                    $getEventDetail = $this->eventModel->getEvents($optionsEventDetail);
+                    $event = array();
+                    $event['id'] = $getEventDetail[0]->id;
+                    $event['title'] = $getEventDetail[0]->title;
+                    $event['description'] = $getEventDetail[0]->description;
+                    $event['start'] = $getEventDetail[0]->start_time;
+                    $event['where'] = $getEventDetail[0]->venue;
+                    $event['category_event_id'] = $getEventDetail[0]->category_event_id;
+                    $event['image_url'] = $getEventDetail[0]->image_url;
+                    $event['url'] = site_url('event/show_event/' . $event['id']);
+                    $result[$iteratorevent] = $event;
+                    ++$iteratorevent;
+                }
             }
-        }
-        $numevent_admin = $iteratorevent;
+            $numevent_admin = $iteratorevent;
 
 
-        //Dapetin list friend : 
-        $getFriendList = $this->_getFriendList();
-        //Load host_event :
-        $this->load->model('host_event', 'hostEventModel');
-        //Dapetin semua event yang diaplot friend :
-        for ($i = 0; $i < count($getFriendList); ++$i) {
-            $friend_id = $getFriendList[$i];
-            $optionHost = array('user_id' => $friend_id, 'columnSelect' => 'event_id');
-            $getAllEventByThisFriend = $this->hostEventModel->getHostEvents($optionHost);
-            //Iterasi 1-1 eventnya :
-            $numEventByThisFriend = 0;
-            if (!is_bool($getAllEventByThisFriend)) {
-                $numEventByThisFriend = count($getAllEventByThisFriend);
+            //Dapetin list friend : 
+            $getFriendList = $this->_getFriendList();
+            //Load host_event :
+            $this->load->model('host_event', 'hostEventModel');
+            //Dapetin semua event yang diaplot friend :
+            for ($i = 0; $i < count($getFriendList); ++$i) {
+                $friend_id = $getFriendList[$i];
+                $optionHost = array('user_id' => $friend_id, 'columnSelect' => 'event_id');
+                $getAllEventByThisFriend = $this->hostEventModel->getHostEvents($optionHost);
+                //Iterasi 1-1 eventnya :
+                $numEventByThisFriend = 0;
+                if (!is_bool($getAllEventByThisFriend)) {
+                    $numEventByThisFriend = count($getAllEventByThisFriend);
+                }
+                for ($j = 0; $j < $numEventByThisFriend; ++$j) {
+                    $event_id = $getAllEventByThisFriend[$j]->event_id;
+                    //Dapetin detail event dengan id=$event_id
+                    $optionsEventDetail = array('id' => $event_id);
+                    $getEventDetail = $this->eventModel->getEvents($optionsEventDetail);
+                    $event = array();
+                    $event['id'] = $getEventDetail[0]->id;
+                    $event['title'] = $getEventDetail[0]->title;
+                    $event['description'] = $getEventDetail[0]->description;
+                    $event['start'] = $getEventDetail[0]->start_time;
+                    $event['where'] = $getEventDetail[0]->venue;
+                    $event['category_event_id'] = $getEventDetail[0]->category_event_id;
+                    $event['image_url'] = $getEventDetail[0]->image_url;
+                    $event['url'] = site_url('event/show_event/' . $event['id']);
+                    $result[$numevent_admin] = $event;
+                    ++$numevent_admin;
+                }
             }
-            for ($j = 0; $j < $numEventByThisFriend; ++$j) {
-                $event_id = $getAllEventByThisFriend[$j]->event_id;
-                //Dapetin detail event dengan id=$event_id
-                $optionsEventDetail = array('id' => $event_id);
-                $getEventDetail = $this->eventModel->getEvents($optionsEventDetail);
-                $event = array();
-                $event['id'] = $getEventDetail[0]->id;
-                $event['title'] = $getEventDetail[0]->title;
-                $event['description'] = $getEventDetail[0]->description;
-                $event['start'] = $getEventDetail[0]->start_time;
-                $event['where'] = $getEventDetail[0]->venue;
-                $event['category_event_id'] = $getEventDetail[0]->category_event_id;
-                $event['image_url'] = $getEventDetail[0]->image_url;
-                $event['url'] = site_url('event/show_event/' . $event['id']);
-                $result[$numevent_admin] = $event;
-                ++$numevent_admin;
-            }
-        }
 
 
             /*
@@ -210,18 +212,18 @@ class Calendar extends CI_Controller {
         $option2 = array('userid_2' => $userid);
 
         $getFriend1 = $this->friendRelationshipModel->getFriendRelationships($option1);
-        
+
         $numfriends1 = 0;
         if (!is_bool($getFriend1)) {
             $numfriends1 = count($getFriend1);
         }
-        
+
         $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
-        $numfriends2 = 0; 
+        $numfriends2 = 0;
         if (!is_bool($getFriend2)) {
             $numfriends2 = count($getFriend2);
         }
-        
+
         $friends = array();
         $numAllfriends = $numfriends1 + $numfriends2;
 
@@ -245,9 +247,9 @@ class Calendar extends CI_Controller {
         $this->load->model('user', 'userModel');
         $option = array('status_admin' => 1, 'columnSelect' => 'id');
         $getAdmin = $this->userModel->getUsers($option);
-
         return $getAdmin;
     }
+
 }
 
 ?>
