@@ -54,6 +54,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/autocomplete.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/error-validation.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url();?>css/popup.css" />
+        <link rel="icon" href="<?php echo base_url()?>favicon.png" type="image/png" />
 </head>
 <?php
     if (isset($body_id)) {
