@@ -1,31 +1,36 @@
-<h3>Events</h3>
+<label id="title-menu">Calendar Events</label>
 <br/>
 <br/>
-<div class="left-menu">
+<div class="calendar-left-menu">
     <div id='calendar'>
     </div>
 </div>
-<div class="right-menu">
-    <?php if ($sortby == 'all_events') { ?>
-        <b><?php echo anchor('event/mycalendar/all_events', 'View all events'); ?></b>
-    <?php } else { ?>
-        <?php echo anchor('event/mycalendar/all_events', 'View all events'); ?>
-    <?php } ?>
-    <br/>
-    <?php if ($sortby == 'attending_rsvp') { ?>
-        <b><?php echo anchor('event/mycalendar/attending_rsvp', 'View all your attending-RSVP event'); ?></b>
-    <?php } else { ?>
-        <?php echo anchor('event/mycalendar/attending_rsvp', 'View all your attending-RSVP event'); ?>
-    <?php } ?>
-    <br/>
-    <?php if ($sortby == 'not_attending_rsvp') { ?>
-        <b><?php echo anchor('event/mycalendar/not_attending_rsvp', 'View all your not-attending-RSVP event'); ?></b>
-    <?php } else { ?>
-        <?php echo anchor('event/mycalendar/not_attending_rsvp', 'View all your not-attending-RSVP event'); ?>
-    <?php } ?>
-    <?php echo br(10); ?>
-    <p>Boxes in orange are events not hosted by alumni.</p>
-    <p>Events in yellow are hosted by us.</p>
+<div class="calendar-right-menu">
+    <div id="sorting">
+        <label class="impact20">VIEW BY : </label> <br/>
+        <div class="sort-category">
+            <?php if ($sortby == 'all_events') { ?>
+                <b>&raquo; <?php echo anchor('event/mycalendar/all_events', 'All Events', 'class="active-event-link"'); ?></b>
+            <?php } else { ?>
+                &raquo; <?php echo anchor('event/mycalendar/all_events', 'All Events', 'class="notactive-event-link"'); ?>
+            <?php } ?>
+            <br/>
+            <?php if ($sortby == 'attending_rsvp') { ?>
+                &raquo; <b><?php echo anchor('event/mycalendar/attending_rsvp', 'Your attending-RSVP Events', 'class="active-event-link"'); ?></b>
+            <?php } else { ?>
+                &raquo; <?php echo anchor('event/mycalendar/attending_rsvp', 'Your attending-RSVP Events', 'class="notactive-event-link"'); ?>
+            <?php } ?>
+            <br/>
+            <?php if ($sortby == 'not_attending_rsvp') { ?>
+                &raquo; <b><?php echo anchor('event/mycalendar/not_attending_rsvp', 'Your not-attending-RSVP Events', 'class="active-event-link"'); ?></b>
+            <?php } else { ?>
+                &raquo; <?php echo anchor('event/mycalendar/not_attending_rsvp', 'Your not-attending-RSVP Events', 'class="notactive-event-link"'); ?>
+            <?php } ?>
+            <?php echo br(5); ?>
+            <p>Boxes in orange are events not hosted by alumni.</p>
+            <p>Events in yellow are hosted by us.</p>
+        </div>
+    </div>
 </div>
 
 <div class="clearboth"></div>
@@ -52,7 +57,10 @@
             },
             
             eventClick: function(calEvent, jsEvent) {
-                return false;
+                if (calEvent.url) {
+                    window.open(calEvent.url);
+                    return false;
+                }                
             },
             
             eventDragStart: function(calEvent, jsEvent, ui) {
