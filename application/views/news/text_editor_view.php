@@ -31,12 +31,6 @@
 ?>
 
 <script>
-    $('input[type=submit]').bind('click', function () {
-        alert(bkLib.nicEditor.nicInstances.length);
-        for(var i=0;i<nicEditor.nicInstances.length;i++){
-            nicEditor.nicInstances[i].saveContent();
-        }
-    });
     $('#editor_text_news').validate(
         {
             rules : {
