@@ -34,8 +34,17 @@ class Friend_List extends CI_Controller {
         $getFriend2 = $this->friendRelationshipModel->getFriendRelationships($option2);
         $friends = array();
 
-        $numfriends1 = count($getFriend1);
-        $numfriends2 = count($getFriend2);
+        if (!is_bool($getFriend1)) {
+            $numfriends1 = count($getFriend1);
+        } else {
+            $numfriends1 = 0;
+        }
+        
+        if ($is_bool($getFriend2)) {
+            $numfriends2 = count($getFriend2);
+        } else {
+            $numfriends2 = 0;
+        }
         $numAllfriends = $numfriends1 + $numfriends2;
 
 
