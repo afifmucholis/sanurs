@@ -115,7 +115,7 @@
             ?>
             
         </div>
-     
+        
         <div id="history">
             <?php
                 $c=0;

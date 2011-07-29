@@ -1,4 +1,3 @@
-<h3>About Us</h3>
 <div id="content_about">
 </div>
 
@@ -20,6 +19,7 @@
     $(document).ready(function(){
         about_us_nav_binding();
         about_us_nav('<?php echo $view_awal; ?>');
+        about_us_input_hint();
     });
  
     function about_us_nav_binding() {
@@ -34,28 +34,55 @@
     function about_us_nav(val) {
         var href=val;
         var his2 = '';
-
+        var clone_his = $('#history').clone(true);
         if (href=='history')
             his2='History';
-        else if (href=='visimisi')
+        else if (href=='visimisi') {
             his2='Vision and Mission';
-        else if (href=='contact')
+        } else if (href=='contact') {
             his2='Contact Us';
-        else if (href=='link_web')
+        } else if (href=='link_web')
             his2='Santa Ursula Website';
         var content=$('#content_'+href).html();
-
         $('#content_about').html(content);
-        var his = $('#history').html().split('/');
-        var his_new = "";
-        var count=0;
-        while (count<his.length-1) {
-           his_new+=his[count];count++;
-           his_new+="/";
+        $('#history').remove();
+        $('#content_about #content_about_top').after(clone_his);
+        if (href=='contact')
+            about_us_input_hint();   
+        var history = $('#history').html();
+        if (history!=null) {
+            var his = history.split(' &gt;&gt; ');
+            var his_new = "";
+            var count=0;
+            while (count<his.length-1) {
+               his_new+=his[count];
+               count++;
+               his_new+=" >> ";
+            }
+            $('#history').html(his_new+his2);
         }
-        $('#history').html(his_new+his2);
 
         return false;
+    }
+    
+    function about_us_input_hint() {
+        $('#contact_us_form :input').focus(function()
+        {
+            if ($(this).val() == $(this)[0].title)
+            {
+                $(this).removeClass("defaultTextActive");
+                $(this).val("");
+            }
+        });
+        $('#contact_us_form :input').blur(function(srcc)
+        {
+            if ($(this).val() == "")
+            {
+                $(this).addClass("defaultTextActive");
+                $(this).val($(this)[0].title);
+            }
+        });
+        $('#contact_us_form :input').blur();
     }
 	
 </script>
