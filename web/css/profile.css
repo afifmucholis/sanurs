@@ -26,6 +26,10 @@
     color: white;
 }
 
+.profile-bottom-menu {
+    margin-top: 30px;
+}
+
 #link {
     position: absolute;
     bottom: 0;
@@ -138,4 +142,23 @@ img.profpic_images{
 #search_result_num {
     float : left;
     padding: 3px 5px 5px 5px;  
+}
+
+.link_arialblack22{
+    padding-left: 7px;
+    font-family: Arial Black;
+    font-size: 22px;
+    color: white;
+}
+
+.add_friend_link {
+    padding: 10px 0px 10px 40px;
+    font-family: Arial Black;
+    font-size: 14px;
+    color: white;
+}
+.add_friend_link a{
+    font-family: Arial Black;
+    font-size: 18px;
+    color: white;
 }
