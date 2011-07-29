@@ -13,11 +13,13 @@
 
 .profile-left-menu {
     float : left;
-    background-color: black;
     width: 434px;
-    position: relative;
 }
 
+.profile-black-wrapper {
+    background-color: black;
+    position: relative;
+}
 .profile-right-menu {
     float: right;
     background-color: black;

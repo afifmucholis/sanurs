@@ -1,4 +1,4 @@
-<h3>Friend Request</h3>
+<div id="title-menu">Friend Request</h3></div>
 <br/>
 <div id="friend_request">
     <?php
