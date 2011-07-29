@@ -1,9 +1,6 @@
 <div class="edit_profile_left">
-    <div id="profpic">
-        <a href="#" class="popup_link">Click to change Picture</a>
+    <div class="edit_profpic">
         <?php
-        //echo anchor('#','Click to change Picture','class="popup_link"');
-        echo br(1);
         $image_properties = array(
             'src' => $content_edit['img_url'],
             'class' => 'upload_images',
@@ -13,11 +10,13 @@
             'rel' => 'lightbox',
         );
         echo img($image_properties);
-        echo br(2);
         ?>
     </div>
+    <div class="clearboth"></div>
+    <div style="text-align: right; display: block">
+        <a id="link-menu" style="color: #000" href="#" class="popup_link">CHANGE PICTURE</a>
+    </div>
 </div>
-
 <div class="edit_profile_right">
     <?php
     echo form_open('profile/submitProfile');
@@ -28,32 +27,31 @@
         <div class="subtitle">BASIC INFORMATION</div>
         <table>
             <tr>
-                <td> <?php echo form_label('Nick Name '); ?> </td>
-                <td> <?php echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"'); ?> </td>
+                <td class="left-table"> <?php echo form_label('Nick Name '); ?> </td>
+                <td class="right-table"> <?php echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"'); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Gender '); ?> </td>
-                <td> <?php echo form_dropdown('gender', $gender_list, $content_edit['gender']); ?> </td>
+                <td class="left-table"> <?php echo form_label('Gender '); ?> </td>
+                <td class="right-table"> <?php echo form_dropdown('gender', $gender_list, $content_edit['gender']); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Home Address '); ?> </td>
-                <td> <?php echo form_input('home_address', $content_edit['home_address'], 'id="home_address"'); ?> </td>
+                <td class="left-table"> <?php echo form_label('Home Address '); ?> </td>
+                <td class="right-table"> <?php echo form_input('home_address', $content_edit['home_address'], 'id="home_address"'); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Home Telephone '); ?> </td>
-                <td> <?php echo form_input('home_telephone', $content_edit['home_telephone'], 'id="home_telephone"'); ?> </td>
+                <td class="left-table"> <?php echo form_label('Home Telephone '); ?> </td>
+                <td class="right-table"> <?php echo form_input('home_telephone', $content_edit['home_telephone'], 'id="home_telephone"'); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Handphone '); ?> </td>
-                <td> <?php echo form_input('handphone', $content_edit['handphone'], 'id="handphone"'); ?> </td>
+                <td class="left-table"> <?php echo form_label('Handphone '); ?> </td>
+                <td class="right-table"> <?php echo form_input('handphone', $content_edit['handphone'], 'id="handphone"'); ?> </td>
             </tr>
         </table>
     </div>
-
     <div>
         <div>
             <div class="subtitle">AREA OF INTEREST</div>
-            <div class="general_text" style="width: 201px">(you can choose more than one) :</div>
+            <div class="general_text" style="width: 200px; color: #ffffff; padding-left: 10px; text-align: right">(you can choose more than one) :</div>
         </div>
         <?php
         echo br(1);
@@ -70,17 +68,27 @@
                     $i++;
                 }
             }
-            echo form_checkbox('interest[]', $interest->id, $status);
-            echo form_label($interest->interest);
+            ?>
+            <div class="left_checkbox">
+                <?php echo form_checkbox('interest[]', $interest->id, $status); ?>
+            </div>
+            <div class="right_checkbox">
+                <?php echo form_label($interest->interest); ?>
+            </div>
+            <div class="clearboth"></div>
+            <?php
             echo br(1);
         }
         ?>
     </div>
+    <div style="text-align: right; padding: 0px 20px 15px 0px">
+        <?php echo form_submit('save', 'Save Changes'); ?>
+    </div>
     <?php
-    echo form_submit('save', 'Save Changes');
     echo form_close();
     ?>
 </div>
 <div class="clearboth"></div>
 <?php
-//$this->load->view('popup/upload_image'); ?>
+$this->load->view('popup/upload_image');
+?>
