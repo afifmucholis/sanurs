@@ -315,13 +315,6 @@ img.event_images {
     margin-bottom: 30px;
 }
 
-#slide_show_event {
-    margin:auto;
-    margin-right: 20px;
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
 
 .ui-corner-all {
     font-size: 90%;
@@ -521,6 +514,12 @@ label {
 .impact25{
     font-family: impact;
     font-size: 25px;
+    letter-spacing: 1px;
+}
+
+.impact20{
+    font-family: impact;
+    font-size: 20px;
     letter-spacing: 1px;
 }
 
