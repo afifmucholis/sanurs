@@ -1,17 +1,12 @@
-<div id="left" style="float: left">
-    <div id="link">
-        <a href="basic_info" class="ajax-links">Basic Info</a>
-        <a href="location" class="ajax-links">Location</a>
-        <a href="education" class="ajax-links">Education</a>
-        <a href="working" class="ajax-links">Working</a>
-        <a href="visibility" class="ajax-links">Visibility</a>
-    </div>
+<div class="edit_profile_menu">
+    <a id="link-menu" href="basic_info" class="ajax-links">BASIC INFO</a>
+    <a id="link-menu" href="location" class="ajax-links">LOCATION</a>
+    <a id="link-menu" href="education" class="ajax-links">EDUCATION</a>
+    <a id="link-menu" href="working" class="ajax-links">WORKING</a>
+    <a id="link-menu" href="visibility" class="ajax-links">VISIBILITY</a>
 </div>
-<div class="clearboth">
-</div>
-
-<div id="content_edit">
-</div>
+<div class="clearboth"></div>
+<div id="content_edit"></div>
 
 <script type="text/javascript">
 var _isDirty = false;   // cek form input sudah diubah2 atau belum
