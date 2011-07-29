@@ -4,8 +4,7 @@
         <div id="gallery-event">
         </div>
         <label class="general_text">Click Picture in Slide Show to view the event</label>
-    </div
-</div>
+    </div>
 </div>
 
 <div class="event-right-menu">

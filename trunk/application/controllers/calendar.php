@@ -22,13 +22,13 @@ class Calendar extends CI_Controller {
 
     function index() {
         $this->load->model('event_model', 'eventModel');
-        $options = array();
-        $getAllEvents = $this->eventModel->getEvents($options);
 
         $sortby = $this->input->post('sortby');
         $result = array();
 
         if ($sortby == 'all_events') {
+            $options = array();
+            $getAllEvents = $this->eventModel->getEvents($options);
             for ($i = 0; $i < count($getAllEvents); ++$i) {
                 $event = array();
                 $event['id'] = $getAllEvents[$i]->id;
@@ -38,6 +38,7 @@ class Calendar extends CI_Controller {
                 $event['where'] = $getAllEvents[$i]->venue;
                 $event['category_event_id'] = $getAllEvents[$i]->category_event_id;
                 $event['image_url'] = $getAllEvents[$i]->image_url;
+                $event['url'] = site_url('event/show_event/'.$event['id']);
                 $result[$i] = $event;
             }
             echo json_encode($result);
@@ -74,6 +75,7 @@ class Calendar extends CI_Controller {
                     $event['where'] = $getEventDetail[0]->venue;
                     $event['category_event_id'] = $getEventDetail[0]->category_event_id;
                     $event['image_url'] = $getEventDetail[0]->image_url;
+                    $event['url'] = site_url('event/show_event/'.$event['id']);
                     $result[$i] = $event;
                 }
             } else {
@@ -113,6 +115,7 @@ class Calendar extends CI_Controller {
                     $event['where'] = $getEventDetail[0]->venue;
                     $event['category_event_id'] = $getEventDetail[0]->category_event_id;
                     $event['image_url'] = $getEventDetail[0]->image_url;
+                    $event['url'] = site_url('event/show_event/'.$event['id']);
                     $result[$i] = $event;
                 }
             } else {
