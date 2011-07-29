@@ -21,9 +21,9 @@ class About_us extends CI_Controller {
     function index() {
         $data['title'] = 'About Us';
         $data['main_content'] = 'about_us/about_us_view';
-        $data['struktur'] = $this->getStruktur('History');
+        $data['struktur'] = $this->getStruktur('Contact Us');
         $data['view'] = 'about_us/history';
-        $data['view_awal'] = 'history';
+        $data['view_awal'] = 'link_web';
         $data['body_id'] = 'about_body';
         $this->load->view('includes/template',$data);
     }
