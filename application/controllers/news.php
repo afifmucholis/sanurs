@@ -40,7 +40,7 @@ class news extends CI_Controller {
         else
             $total_news = count($getNewsAll);
         
-        $per_page = 3;
+        $per_page = 12;
         $offset = $this->input->post('offsetval');
         $options = array('sortBy'=>'publishing_date','sortDirection'=>'desc','limit'=>$per_page,'offset'=>$offset);
         $news_result = $this->newsModel->getNews($options);
@@ -385,7 +385,7 @@ class news extends CI_Controller {
         // load model news
         $this->load->model('news_model','newsModel');
         
-        $text = $this->input->post('area1');
+        $text = $this->input->post('area1_text');
         $id_news='';
         if ($this->input->post('id_news')!='')
             $id_news = $this->input->post('id_news');

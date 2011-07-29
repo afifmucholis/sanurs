@@ -14,7 +14,7 @@
     </div>
     
     <div id="text_editor">
-        <textarea rows="18" cols="100" id="area1" name="area1">
+        <textarea rows="18" cols="100" id="area1" name="area1_text">
             <?php
                 if (isset($old_news) && $old_news!='')
                     echo $old_news;
@@ -31,19 +31,25 @@
 ?>
 
 <script>
+    $('input[type=submit]').bind('click', function () {
+        alert(bkLib.nicEditor.nicInstances.length);
+        for(var i=0;i<nicEditor.nicInstances.length;i++){
+            nicEditor.nicInstances[i].saveContent();
+        }
+    });
     $('#editor_text_news').validate(
         {
             rules : {
                 title : {
                     required : true
                 },
-                area1 : {
+                area1_text : {
                     required : true
                 }
             },
             messages : {
                 title : "Please enter a title for this news",
-                area1 : "Please insert the content"
+                area1_text : "Please insert the content"
             }
         }
     );
