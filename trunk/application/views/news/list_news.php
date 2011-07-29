@@ -5,9 +5,6 @@
         foreach ($all_news as $news) :
 ?>
         <div id="news_div">
-            <div id="title_news">
-                <h4><?php echo anchor('news/show_news/'.$news->id,$news->title); ?></h4>
-            </div>
             <?php
                 if ($isadmin) {
                     echo anchor('news/edit_news/'.$news->id, 'Edit News');
@@ -16,23 +13,23 @@
                     echo br(1);
                 }
             ?>
-            <div id="publishing_date">
-                <?php echo $news->publishing_date;?>
-            </div>
+            <?php 
+                $content = str_get_html($news->content);
+                $array_img = $content->find('img');
+                if (count($array_img)!=0) {
+                    $array_img[0]->width=100;
+                    $array_img[0]->height=100;
+                    $array_img[0]->style="float:left";
+                    echo $array_img[0];
+                }
+            ?>
             <div id="content_news">
-                <?php 
-                    $content = str_get_html($news->content);
-                    $array_img = $content->find('img');
-                    if (count($array_img)!=0) {
-                        $array_img[0]->width=100;
-                        $array_img[0]->height=100;
-                        $array_img[0]->style="float:left";
-                    }
-                ?>
+                <div id="title_news">
+                    <h4><?php echo anchor('news/show_news/'.$news->id,$news->title); ?></h4>
+                </div>
                 <div id="text_news" style="float:left;">
                     <?php
-                        $text = word_limiter($content->plaintext,50);
-                        echo $array_img[0];
+                        $text = word_limiter($content->plaintext,15);
                         echo $text;
                     ?>
                     <div id="link_show">
