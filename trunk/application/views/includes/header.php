@@ -101,7 +101,7 @@
             </div>
             <?php if ($this->session->userdata('name')!=null) { ?>
             <div id="welcome_user">
-                <?php echo character_limiter($this->session->userdata('name'),20).br(1).' ('.anchor('sign_in/sign_out','Sign Out').')';?>
+                <?php echo "<label class='general_text'>".character_limiter($this->session->userdata('name'),20).'</label>'.br(1).' ('.anchor('sign_in/sign_out','Sign Out','class="link"').')';?>
             </div>
             <?php } ?>
         </div>
