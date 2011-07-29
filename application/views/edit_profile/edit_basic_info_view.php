@@ -15,11 +15,6 @@
             <a id="edit_profpic_navig"  href="#" class="popup_link">CHANGE PICTURE</a>
         </div>
     </div>
-
-    <!--    <div class="clearboth"></div>-->
-    <!--    <div style="position: absolute">
-        <a id="edit_profpic_navig" href="#" class="popup_link">CHANGE PICTURE</a>
-        </div>-->
 </div>
 <div class="edit_profile_right">
     <?php
