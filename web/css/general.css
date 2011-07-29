@@ -634,3 +634,21 @@ label {
 
 
 /**********************************/
+
+/*** buat edit profile ***/
+.edit_profile_menu {
+    width: 551px;
+    height: 25px;
+    float: right;
+    background-color: #000000;
+    color: #ffffff;
+    text-align: center;
+}
+
+#link-menu {
+    padding: 0px 10px 0px 10px;
+    color: white;
+    font-family: Arial Black;
+    font-size: 14px;
+}
+/*** end of buat edit profile ***/
