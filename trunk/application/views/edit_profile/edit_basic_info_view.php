@@ -50,7 +50,7 @@
     <div>
         <div>
             <div class="subtitle">AREA OF INTEREST</div>
-            <div class="general_text" style="width: 200px; color: #ffffff; padding-left: 10px; text-align: right">(you can choose more than one) :</div>
+            <div class="general_text" style="width: 200px; color: #ffffff; padding-left: 25px; text-align: right">(you can choose more than one) :</div>
         </div>
         <?php
         echo br(1);

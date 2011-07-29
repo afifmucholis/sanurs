@@ -492,12 +492,6 @@ label {
     padding : 5px 5px 5px 5px;
 }
 
-.editvisibility_col_left {
-    float: left;
-    padding : 20px 25px 20px 25px;
-}
-
-
 #title-menu {
     font-family: impact;
     font-size: 30px;
@@ -693,18 +687,18 @@ label {
 }
 
 .subtitle {
-    width: 190px;
+    width: 219px;
     font-family: Impact;
     font-size: 24px;
-    padding: 30px 0px 0px 20px;
-    display: inline-block;
+    margin: 30px 0px 5px 5px;
+    /*display: inline-block;*/
     text-align: right;
     color: #ffffff;
 }
 
 .left-table {
     text-align: right;
-    width: 200px;
+    width: 225px;
 }
 
 .left-table label {
@@ -723,7 +717,7 @@ label {
 }
 
 .left_checkbox {
-    width: 200px;
+    width: 225px;
     text-align: right;
     float: left;
 }
@@ -769,5 +763,13 @@ label {
     bottom: 0;
     right: 0;
     display: block;
+}
+
+.editvisibility_col {
+    float: left;
+    padding : 0px 25px 20px 25px;
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
 }
 /*** end of buat edit profile ***/
