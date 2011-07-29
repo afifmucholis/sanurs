@@ -1,4 +1,4 @@
-<div class="left-menu" style="width: 500px">
+<div class="edit_profile_left">
     <div id="profpic">
         <a href="#" class="popup_link">Click to change Picture</a>
         <?php
@@ -18,65 +18,69 @@
     </div>
 </div>
 
-<div class="right-menu">
+<div class="edit_profile_right">
     <?php
     echo form_open('profile/submitProfile');
     echo form_hidden('url_img', base_url() . $content_edit['img_url']);
     echo br(1);
     ?>
-    <table>
-        <tr>
-            <td> <?php echo form_label('Nick Name '); ?> </td>
-            <td> <?php echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"'); ?> </td>
-        </tr>
-        <tr>
-            <td> <?php echo form_label('Gender '); ?> </td>
-            <td> <?php echo form_dropdown('gender', $gender_list, $content_edit['gender']); ?> </td>
-        </tr>
-        <tr>
-            <td> <?php echo form_label('Home Address '); ?> </td>
-            <td> <?php echo form_input('home_address', $content_edit['home_address'], 'id="home_address"'); ?> </td>
-        </tr>
-        <tr>
-            <td> <?php echo form_label('Home Telephone '); ?> </td>
-            <td> <?php echo form_input('home_telephone', $content_edit['home_telephone'], 'id="home_telephone"'); ?> </td>
-        </tr>
-        <tr>
-            <td> <?php echo form_label('Handphone '); ?> </td>
-            <td> <?php echo form_input('handphone', $content_edit['handphone'], 'id="handphone"'); ?> </td>
-        </tr>
-    </table>
-    <?php
-    echo br(2);
-    ?>
-    <div class="general_text">
+    <div>
+        <div class="subtitle">BASIC INFORMATION</div>
+        <table>
+            <tr>
+                <td> <?php echo form_label('Nick Name '); ?> </td>
+                <td> <?php echo form_input('nick_name', $content_edit['nickname'], 'id="nick_name"'); ?> </td>
+            </tr>
+            <tr>
+                <td> <?php echo form_label('Gender '); ?> </td>
+                <td> <?php echo form_dropdown('gender', $gender_list, $content_edit['gender']); ?> </td>
+            </tr>
+            <tr>
+                <td> <?php echo form_label('Home Address '); ?> </td>
+                <td> <?php echo form_input('home_address', $content_edit['home_address'], 'id="home_address"'); ?> </td>
+            </tr>
+            <tr>
+                <td> <?php echo form_label('Home Telephone '); ?> </td>
+                <td> <?php echo form_input('home_telephone', $content_edit['home_telephone'], 'id="home_telephone"'); ?> </td>
+            </tr>
+            <tr>
+                <td> <?php echo form_label('Handphone '); ?> </td>
+                <td> <?php echo form_input('handphone', $content_edit['handphone'], 'id="handphone"'); ?> </td>
+            </tr>
+        </table>
+    </div>
+
+    <div>
+        <div>
+            <div class="subtitle">AREA OF INTEREST</div>
+            <div class="general_text" style="width: 201px">(you can choose more than one) :</div>
+        </div>
         <?php
-        echo 'Select area of interest (you can choose more than one) : ';
+        echo br(1);
+        foreach ($interest_list as $interest) {
+            $status = FALSE;
+            if ($user_interest) {
+                $i = 0;
+                $found = FALSE;
+                while (!$found && $i < count($user_interest)) {
+                    if ($interest->id == $user_interest[$i]->interest_id) {
+                        $found = TRUE;
+                        $status = TRUE;
+                    }
+                    $i++;
+                }
+            }
+            echo form_checkbox('interest[]', $interest->id, $status);
+            echo form_label($interest->interest);
+            echo br(1);
+        }
         ?>
     </div>
     <?php
-    echo br(1);
-    foreach ($interest_list as $interest) {
-        $status = FALSE;
-        if ($user_interest) {
-            $i = 0;
-            $found = FALSE;
-            while (!$found && $i < count($user_interest)) {
-                if ($interest->id == $user_interest[$i]->interest_id) {
-                    $found = TRUE;
-                    $status = TRUE;
-                }
-                $i++;
-            }
-        }
-        echo form_checkbox('interest[]', $interest->id, $status);
-        echo form_label($interest->interest);
-        echo br(1);
-    }
     echo form_submit('save', 'Save Changes');
     echo form_close();
     ?>
 </div>
-<div class="clearboth">
-</div>
-<?php $this->load->view('popup/upload_image'); ?>
+<div class="clearboth"></div>
+<?php
+//$this->load->view('popup/upload_image'); ?>
