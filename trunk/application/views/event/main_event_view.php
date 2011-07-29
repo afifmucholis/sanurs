@@ -12,32 +12,34 @@
     <div id="sorting">
         <label class="impact20">SORT BY : </label> <br/>
         <div class="sort-category">
-            <a href="#" id="categories_click" class="event-link">- Categories</a>
+            &raquo; <a href="#" id="categories_click" class="notactive-event-link">Categories</a>
             <div id="tree_categories">
                 <?php
                 //echo anchor('event/sortby/categories', '- Categories');
                 if (isset($categories) && $categories != "") {
                     foreach ($categories as $cat) :
                         if ($current_categories != $cat['label'])
-                            echo '&nbsp;&nbsp;&nbsp;<a class="event-link" href="' . $cat['link'] . '">- ' . $cat['label'] . '</a>';
+                            echo '&nbsp;&nbsp;&nbsp;&raquo; <a class="notactive-event-link" href="' . $cat['link'] . '">' . $cat['label'] . '</a>';
                         else
-                            echo '&nbsp;&nbsp;&nbsp;<a class="event-link" href="' . $cat['link'] . '"><b>- ' . $cat['label'] . '</b></a>';
+                            echo '&nbsp;&nbsp;&nbsp;&raquo; <a class="active-event-link" href="' . $cat['link'] . '"><b>' . $cat['label'] . '</b></a>';
                         echo br(1);
                     endforeach;
                 }
                 ?>
             </div>
             <?php
-            if ($sortby == 'number')
-                echo '<b>'; echo anchor('event/sortby/number', '- Number of people Attending', 'class="event-link"');
-            if ($sortby == 'number')
-                echo '</b>';
+            if ($sortby == 'number') {
+                echo "<b>&raquo ".anchor('event/sortby/number', 'Number of people Attending', 'class="active-event-link"')."</b>";
+            } else {
+                echo '&raquo '.anchor('event/sortby/number', 'Number of people Attending', 'class="notactive-event-link"');
+            }
             ?><br/>
             <?php
-            if ($sortby == 'upcoming')
-                echo '<b>'; echo anchor('event/sortby/upcoming', '- Upcoming Events', 'class="event-link"');
-            if ($sortby == 'upcoming')
-                echo '</b>';
+            if ($sortby == 'upcoming') {
+                echo '<b>&raquo '.anchor('event/sortby/upcoming', 'Upcoming Events', 'class="active-event-link"').'</b>';
+            } else {
+                echo '&raquo '.anchor('event/sortby/upcoming', 'Upcoming Events', 'class="notactive-event-link"');
+            }
             ?><br/>
         </div>
     </div>
@@ -101,9 +103,9 @@
                         success : function (msg) {
                             var txt = "";
                             jQuery.each(msg.text, function(key, value){
-                                txt += '&nbsp;&nbsp;&nbsp;<a class="event-link" href="';
+                                txt += '&nbsp;&nbsp;&nbsp;&raquo; <a class="notactive-event-link" href="';
                                 txt += value.link;
-                                txt += '">- ';
+                                txt += '">';
                                 txt += value.label;
                                 txt += '</a>';
                                 txt += '<br/>';
