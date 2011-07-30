@@ -360,6 +360,8 @@ input#search_button {
 input[type=text]{
     font-family: georgia;
     border-radius : 5px 5px 5px 5px;
+    /* kalo gak dukung transparan */
+    border:2px solid rgb(120,120,120);
     border:2px solid rgba(120,120,120, 0.7);
     margin : 5px 0px 5px 0px;
 }
@@ -367,6 +369,8 @@ input[type=text]{
 input[type=password]{
     width: 133px;
     border-radius : 5px 5px 5px 5px;
+    /* kalo gak dukung transparan */
+    border:2px solid rgb(120,120,120);
     border:2px solid rgba(120,120,120, 0.7);
 }
 
@@ -378,6 +382,8 @@ dropdown {
 textarea{
     font-family: georgia;
     border-radius : 5px 5px 5px 5px;
+    /* kalo gak dukung transparan */
+    border:2px solid rgb(120,120,120);
     border:2px solid rgba(120,120,120, 0.7);
     resize : none;
 }
@@ -416,6 +422,8 @@ button {
 select{
     font-family: georgia;
     border-radius : 5px 5px 5px 5px;
+    /* kalo gak dukung transparan */
+    border:2px solid rgb(120,120,120);
     border:2px solid rgba(120,120,120, 0.7);
 }
 
@@ -440,6 +448,8 @@ select option{
     float : right;
     width: 179px;
     height: 285px;
+    /* Kalo gak support transparan */
+    background: rgb(255,255,255);
     background : rgba(255,255,255,0.6);
 }
 
@@ -650,6 +660,8 @@ label {
     position: absolute;
     padding: 10px;
     z-index: 4;
+    /* Kalo gak dukung transparan */
+    background : rgb(255,255,255);
     background : rgba(255,255,255,0.6);
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;
@@ -747,6 +759,8 @@ label {
 }
 
 #edit_profpic_navig {
+    /* Kalo gak dukung rgba */
+    background-color: rgb(250,250,250);
     background-color: rgba(250,250,250,0.7);
     padding: 0px 10px 0px 10px;
     color: #000000;
@@ -783,4 +797,10 @@ label {
     margin-top: 5px;
     margin-left: 6px;
     margin-bottom: 5px;
+}
+
+a.people_links {
+    color: black;
+    font-family: Arial;
+    font-size: 13px;   
 }
