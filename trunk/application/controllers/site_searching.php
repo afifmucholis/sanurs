@@ -1,5 +1,4 @@
 <?php
-
 /** * @property CI_Loader $load
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
@@ -157,7 +156,8 @@ class site_searching extends CI_Controller {
         }
         
         //print_r($result);
-        return $result;
+        //return $result;
+        return (array_unique($result, SORT_REGULAR));
     }
     
     function searchAllNewsPaginate($limit, $offset, $news_result) {
