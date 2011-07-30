@@ -14,10 +14,11 @@
 .error{
     font: normal 11px arial;
     padding: 4px;
-    margin: 2px;
+    margin: 3px;
     background-color: #ffc;
-    border: 1px solid #c00;
-    display : inline;
+    border: 2px solid green;
+    border-radius : 4px 4px 4px 4px;
+    display : inline-block;
     width: auto;
 }
 
