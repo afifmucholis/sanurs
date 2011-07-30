@@ -30,6 +30,7 @@
 </div>
 <div id="backgroundPopup"></div>
 
+</div>
 <script>
     $(document).ready(function() {   
         $("#signin").validate({
