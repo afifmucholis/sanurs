@@ -1,67 +1,69 @@
-<div id="title-menu">Event</div>
-<div class="event-left-menu">
-    <div id="slide_show_event">
-        <div id="gallery-event">
-        </div>
-        <label class="general_text">Click Picture in Slide Show to view the event</label>
-    </div>
-</div>
-
-<div class="event-right-menu">
-    <div id="sorting">
-        <label class="impact20">SORT BY : </label> <br/>
-        <div class="sort-category">
-            &raquo; <a href="#" id="categories_click" class="notactive-event-link">Categories</a>
-            <div id="tree_categories">
-                <?php
-                //echo anchor('event/sortby/categories', '- Categories');
-                if (isset($categories) && $categories != "") {
-                    foreach ($categories as $cat) :
-                        if ($current_categories != $cat['label'])
-                            echo '&nbsp;&nbsp;&nbsp;&raquo; <a class="notactive-event-link" href="' . $cat['link'] . '">' . $cat['label'] . '</a>';
-                        else
-                            echo '&nbsp;&nbsp;&nbsp;&raquo; <a class="active-event-link" href="' . $cat['link'] . '"><b>' . $cat['label'] . '</b></a>';
-                        echo br(1);
-                    endforeach;
-                }
-                ?>
+<div>
+    <div id="title-menu">Event</div>
+    <div class="event-left-menu">
+        <div id="slide_show_event">
+            <div id="gallery-event">
             </div>
-            <?php
-            if ($sortby == 'number') {
-                echo "<b>&raquo ".anchor('event/sortby/number', 'Number of people Attending', 'class="active-event-link"')."</b>";
-            } else {
-                echo '&raquo '.anchor('event/sortby/number', 'Number of people Attending', 'class="notactive-event-link"');
-            }
-            ?><br/>
-            <?php
-            if ($sortby == 'upcoming') {
-                echo '<b>&raquo '.anchor('event/sortby/upcoming', 'Upcoming Events', 'class="active-event-link"').'</b>';
-            } else {
-                echo '&raquo '.anchor('event/sortby/upcoming', 'Upcoming Events', 'class="notactive-event-link"');
-            }
-            ?><br/>
+            <label class="general_text">Click Picture in Slide Show to view the event</label>
         </div>
     </div>
 
-    <?php echo br(1); ?>
-    <div class="link-other-event">
-        <div id="link_host_event">
-            <?php echo anchor('event/host', 'HOST AN EVENT', "class='link_arialblack17'") . "&nbsp;&nbsp;&nbsp;"; ?>
+    <div class="event-right-menu">
+        <div id="sorting">
+            <label class="impact20">SORT BY : </label> <br/>
+            <div class="sort-category">
+                &raquo; <a href="#" id="categories_click" class="notactive-event-link">Categories</a>
+                <div id="tree_categories">
+                    <?php
+                    //echo anchor('event/sortby/categories', '- Categories');
+                    if (isset($categories) && $categories != "") {
+                        foreach ($categories as $cat) :
+                            if ($current_categories != $cat['label'])
+                                echo '&nbsp;&nbsp;&nbsp;&raquo; <a class="notactive-event-link" href="' . $cat['link'] . '">' . $cat['label'] . '</a>';
+                            else
+                                echo '&nbsp;&nbsp;&nbsp;&raquo; <a class="active-event-link" href="' . $cat['link'] . '"><b>' . $cat['label'] . '</b></a>';
+                            echo br(1);
+                        endforeach;
+                    }
+                    ?>
+                </div>
+                <?php
+                if ($sortby == 'number') {
+                    echo "<b>&raquo ".anchor('event/sortby/number', 'Number of people Attending', 'class="active-event-link"')."</b>";
+                } else {
+                    echo '&raquo '.anchor('event/sortby/number', 'Number of people Attending', 'class="notactive-event-link"');
+                }
+                ?><br/>
+                <?php
+                if ($sortby == 'upcoming') {
+                    echo '<b>&raquo '.anchor('event/sortby/upcoming', 'Upcoming Events', 'class="active-event-link"').'</b>';
+                } else {
+                    echo '&raquo '.anchor('event/sortby/upcoming', 'Upcoming Events', 'class="notactive-event-link"');
+                }
+                ?><br/>
+            </div>
         </div>
+
         <?php echo br(1); ?>
-        <?php if ($this->session->userdata('name') == null) { ?>
-            <p>Sign in first to view your personal calendar</p>
-            <?php $this->load->view('sign_in/sign_in_view'); ?>
-            <?php
-        } else {
-            echo anchor('event/mycalendar', 'VIEW YOUR CALENDAR', "class='link_arialblack17'");
-        }
-    ?>
+        <div class="link-other-event">
+            <div id="link_host_event">
+                <?php echo anchor('event/host', 'HOST AN EVENT', "class='link_arialblack17'") . "&nbsp;&nbsp;&nbsp;"; ?>
+            </div>
+            <?php echo br(1); ?>
+            <?php if ($this->session->userdata('name') == null) { ?>
+                <p>Sign in first to view your personal calendar</p>
+                    <div class="login-box-home-event">
+                        <?php $this->load->view('sign_in/sign_in_view'); ?>
+                    </div>
+                <?php
+            } else {
+                echo anchor('event/mycalendar', 'VIEW YOUR CALENDAR', "class='link_arialblack17'");
+            }
+        ?>
+        </div>
     </div>
 </div>
-
-<div class="clearboth">
-</div>
+<div class="clearboth"> </div>
 
 <script>
     var data_categories;
