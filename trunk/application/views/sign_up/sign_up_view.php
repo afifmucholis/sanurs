@@ -1,27 +1,48 @@
-<h3>Sign Up</h3>
-<p>Welcome to our online community! Signing up is the first step to start connecting, attending and making events, and  get better deals!</p>
-<p>Please choose the last level of education achieved in St. Ursula</p>
-<div id="divjenjang">
-    <?php
-    echo form_label('Select last level education : ', 'jenjang');
-    $js = 'id="jenjang" onChange="showTahun();"';
-    echo form_dropdown('jenjang', $unit_list, '-', $js);
-    echo br(1);
-    ?>
-</div>
-<div id="divtahun" style="display: none;">
-    <?php
-    $opsi = array(
-        'id' => 'label_tahun',
-    );
-    echo form_label('Select graduation year : ', 'tahun', $opsi);
-    $tahun = array(
-        '-' => '-'
-    );
-    $js = 'id="tahun" onChange="showNama();"';
-    echo form_dropdown('tahun', $tahun, '-', $js);
-    ?>
-</div>
+<label id="title-menu">Sign Up</label>
+<p><label class="general_text">Welcome to our online community! Signing up is the first step to start connecting, attending and making events, and  get better deals!</label></p>
+<p><label class="general_text">Please choose the last level of education achieved in St. Ursula</label></p>
+<table style="margin-left: -4px; padding-left: 0px;">
+    <tr>
+        <div id="divjenjang">
+            <td>
+                <?php
+                    $attrgeneraltext = array('class'=>'general_text');
+                    echo form_label('Select Last Level Education', 'jenjang', $attrgeneraltext);
+                ?>
+            </td>
+            <td>
+            <?php 
+                $js = 'id="jenjang" onChange="showTahun();"';
+                echo '  :&nbsp;&nbsp;&nbsp;'.form_dropdown('jenjang', $unit_list, '-', $js); 
+            ?>    
+            </td>
+        </div>
+    </tr>
+    <tr>
+        <div id="divtahun" style="display: none;">
+            <?php
+            $opsi = array(
+                'id' => 'label_tahun',
+                'class'=>'general_text'
+            );
+            ?>
+            <td>
+            <?php
+            echo form_label('Select Graduation Year', 'tahun', $opsi);
+            $tahun = array(
+                '-' => '-'
+            );
+            ?>
+            </td>
+            <td>
+                <?php
+                $js = 'id="tahun" onChange="showNama();"';
+                echo ':&nbsp;&nbsp;&nbsp;'.form_dropdown('tahun', $tahun, '-', $js);
+                ?>
+            </td>
+        </div>
+    </tr>
+</table>
 
 <div id="name">
 </div>

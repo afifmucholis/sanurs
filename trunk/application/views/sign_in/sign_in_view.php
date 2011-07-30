@@ -11,7 +11,13 @@
         echo form_input('email', '', 'id="email"')."<br/>";
         echo form_label('Password : ','password')."<br/>";
         echo form_password('password', '', 'id="password"')."<br/>";
+        ?>
+        <div class='margintop'>
+        <?php 
         echo anchor('sign_in/forget','Forgot Password','class="forget_links"')."<br/>";
+        ?>
+        </span>
+        <?php
         echo form_submit('submit', 'Login', 'id="submit"');
         echo form_close();
     ?>

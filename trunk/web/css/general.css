@@ -394,9 +394,10 @@ input[type=submit]{
     color : white;
     border : none;
     cursor: pointer;
-    margin: 4px 4px 4px 4px;
+    margin: 6px 3px 3px 0px;
     font-weight: bold;
     padding : 4px 10px 4px 10px;
+    border-radius : 5px 5px 5px 5px;
 }
 
 button {
@@ -405,9 +406,10 @@ button {
     color : white;
     border : none;
     cursor: pointer;
-    margin: 4px 4px 4px 4px;
+    margin: 6px 3px 3px 0px;
     font-weight: bold;
     padding : 4px 10px 4px 10px;
+    border-radius : 5px 5px 5px 5px;
 }
 
 
@@ -455,7 +457,7 @@ select option{
 }
 
 .login-description {
-    padding : 5px 0px 10px 15px;
+    padding : 5px 0px 10px 5px;
 }
 
 #signin_form a{
@@ -475,6 +477,9 @@ select option{
     font-size: 11px;
 }
 
+.margintop {
+    margin: 6px 5px 5px 5px;
+}
 #content p {
     font-family: ARIAL;
     font-size: 12px;
@@ -773,3 +778,9 @@ label {
     margin-right: auto;
 }
 /*** end of buat edit profile ***/
+
+#list_alumni {
+    margin-top: 5px;
+    margin-left: 6px;
+    margin-bottom: 5px;
+}
