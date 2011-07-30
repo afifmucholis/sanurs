@@ -61,6 +61,7 @@ class Calendar extends CI_Controller {
                     $event['category_event_id'] = $getEventDetail[0]->category_event_id;
                     $event['image_url'] = $getEventDetail[0]->image_url;
                     $event['url'] = site_url('event/show_event/' . $event['id']);
+                    $event['backgroundColor'] = 'green';
                     $result[$iteratorevent] = $event;
                     ++$iteratorevent;
                 }
@@ -100,23 +101,6 @@ class Calendar extends CI_Controller {
                     ++$numevent_admin;
                 }
             }
-
-
-            /*
-              $options = array();
-              $getAllEvents = $this->eventModel->getEvents($options);
-              for ($i = 0; $i < count($getAllEvents); ++$i) {
-              $event = array();
-              $event['id'] = $getAllEvents[$i]->id;
-              $event['title'] = $getAllEvents[$i]->title;
-              $event['description'] = $getAllEvents[$i]->description;
-              $event['start'] = $getAllEvents[$i]->start_time;
-              $event['where'] = $getAllEvents[$i]->venue;
-              $event['category_event_id'] = $getAllEvents[$i]->category_event_id;
-              $event['image_url'] = $getAllEvents[$i]->image_url;
-              $event['url'] = site_url('event/show_event/'.$event['id']);
-              $result[$i] = $event;
-              } */
             echo json_encode($result);
         } else if ($sortby == 'attending_rsvp') {
             //Dapetin userid :
@@ -152,6 +136,9 @@ class Calendar extends CI_Controller {
                     $event['category_event_id'] = $getEventDetail[0]->category_event_id;
                     $event['image_url'] = $getEventDetail[0]->image_url;
                     $event['url'] = site_url('event/show_event/' . $event['id']);
+                    if ($this->_isEventByAdmin($eventid)) {
+                        $event['backgroundColor'] = 'green';
+                    }
                     $result[$i] = $event;
                 }
             } else {
@@ -192,6 +179,9 @@ class Calendar extends CI_Controller {
                     $event['category_event_id'] = $getEventDetail[0]->category_event_id;
                     $event['image_url'] = $getEventDetail[0]->image_url;
                     $event['url'] = site_url('event/show_event/' . $event['id']);
+                    if ($this->_isEventByAdmin($eventid)) {
+                        $event['backgroundColor'] = 'green';
+                    }
                     $result[$i] = $event;
                 }
             } else {
@@ -249,7 +239,27 @@ class Calendar extends CI_Controller {
         $getAdmin = $this->userModel->getUsers($option);
         return $getAdmin;
     }
-
+    
+    function _isEventByAdmin($eventid){
+        //Dapetin user_id dari yang host event ini
+        $this->load->model('host_event', 'hostEventModel');
+        $optionHost = array('event_id'=>$eventid,'columSelect'=>'user_id');
+        $getUserid = $this->hostEventModel->getHostEvents($optionHost);
+        if (!is_bool($getUserid)) {
+            $userid = $getUserid[0]->user_id;
+            //Cek  userid ini admin bukan :
+            $this->load->model('user','userModel');
+            $optionUser = array('id'=>$userid,'columnSelect'=>'status_admin');
+            $getUser = $this->userModel->getUsers($optionUser);
+            if (($getUser[0]->status_admin)=='1') {
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            return false;
+        }
+    }
 }
 
 ?>
