@@ -10,6 +10,8 @@
         <link href="<?php echo base_url(); ?>css/jquery-ui.css" rel="stylesheet" type="text/css"/>
         <script type='text/javascript' src="<?php echo base_url(); ?>js/jquery/jquery.validate.min.js"></script>
         <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/cupertino-jquery-theme/theme.css" />
+        <!-- <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/trontastic/theme.css" /> -->
+        <!-- <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/ui-darkness/theme.css" /> -->
         <?php
         if (isset($show_calendar_and_event) && $show_calendar_and_event) {?>
             <link rel='stylesheet' type='text/css' href="<?php echo base_url(); ?>css/fullcalendar.css" />

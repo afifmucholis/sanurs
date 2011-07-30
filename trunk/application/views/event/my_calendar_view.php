@@ -27,8 +27,8 @@
                 &raquo; <?php echo anchor('event/mycalendar/not_attending_rsvp', 'Your not-attending-RSVP Events', 'class="notactive-event-link"'); ?>
             <?php } ?>
             <?php echo br(5); ?>
-            <p>Boxes in orange are events not hosted by alumni.</p>
-            <p>Events in yellow are hosted by us.</p>
+            <p>Boxes in BLUE are events not hosted by Alumni.</p>
+            <p>Events in GREEN officially are hosted by Alumni.</p>
         </div>
     </div>
 </div>
@@ -40,7 +40,7 @@
         // page is now ready, initialize the calendar...
 
         $('#calendar').fullCalendar({
-            // put your options and callbacks here
+            // put your options and callbacks here            
             theme :true,
             header: {
                 left: 'prev,next today',
