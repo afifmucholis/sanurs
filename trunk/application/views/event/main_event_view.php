@@ -44,20 +44,20 @@
             </div>
         </div>
 
-        <?php echo br(1); ?>
         <div class="link-other-event">
-            <div id="link_host_event">
-                <?php echo anchor('event/host', 'HOST AN EVENT', "class='link_arialblack17'") . "&nbsp;&nbsp;&nbsp;"; ?>
-            </div>
             <?php echo br(1); ?>
             <?php if ($this->session->userdata('name') == null) { ?>
-                <p>Sign in first to view your personal calendar</p>
+                <p style="padding-right: 10px">Sign in first to view your personal calendar and host an event</p>
                     <div class="login-box-home-event">
                         <?php $this->load->view('sign_in/sign_in_view'); ?>
                     </div>
                 <?php
             } else {
-                echo anchor('event/mycalendar', 'VIEW YOUR CALENDAR', "class='link_arialblack17'");
+                ?> 
+                <div id="link_host_event">
+                    <?php echo anchor('event/host', 'HOST AN EVENT', "class='link_arialblack17'") . "&nbsp;&nbsp;&nbsp;"; ?>
+                </div>
+                <?php echo anchor('event/mycalendar', 'VIEW YOUR CALENDAR', "class='link_arialblack17'");
             }
         ?>
         </div>
