@@ -36,7 +36,7 @@ function disablePopup(){
 		popupStatus = 0;
 	}
 }
-
+ 
 //centering popup
 function centerPopup(){
 	//request data for centering
@@ -56,7 +56,7 @@ function centerPopup(){
 		"height": windowHeight
 	});
 }
-
+ 
 //CONTROLLING EVENTS IN jQuery
 $(document).ready(function(){
 	
