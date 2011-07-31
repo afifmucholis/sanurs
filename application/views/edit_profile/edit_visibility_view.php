@@ -1,5 +1,5 @@
-<div style="width: 800px; background-color: #000000">
-    <p style="color: white">Please choose the information that you want other people than you to see.</p>
+<div style="width: inherit; background-color: #000000">
+    <p style="color: white; padding: 30px 0px 0px 30px">Please choose the information that you want other people than you to see.</p>
     <?php
     echo form_open('profile/submitVisibility');
     ?>
