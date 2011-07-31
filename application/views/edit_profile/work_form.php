@@ -37,36 +37,36 @@
     <br/>
     <table>
         <tr>
-            <td> <?php echo form_label('Company/ Association'); ?> </td>
-            <td> <?php echo form_input('company'.$id, $def_company, 'id="company"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Company/ Association'); ?> </td>
+            <td class="right-table"> <?php echo form_input('company'.$id, $def_company, 'id="company"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Year'); ?> </td>
-            <td> <?php echo form_input('year'.$id, $def_year, 'id="year"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Year'); ?> </td>
+            <td class="right-table"> <?php echo form_input('year'.$id, $def_year, 'id="year"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Position'); ?> </td>
-            <td> <?php echo form_input('position'.$id, $def_position, 'id="position"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Position'); ?> </td>
+            <td class="right-table"> <?php echo form_input('position'.$id, $def_position, 'id="position"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Address'); ?> </td>
-            <td> <?php echo form_input('address'.$id, $def_address, 'id="address"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Address'); ?> </td>
+            <td class="right-table"> <?php echo form_input('address'.$id, $def_address, 'id="address"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Telephone'); ?> </td>
-            <td> <?php echo form_input('telephone'.$id, $def_telephone, 'id="telephone"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Telephone'); ?> </td>
+            <td class="right-table"> <?php echo form_input('telephone'.$id, $def_telephone, 'id="telephone"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Fax'); ?> </td>
-            <td> <?php echo form_input('fax'.$id, $def_fax, 'id="fax"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Fax'); ?> </td>
+            <td class="right-table"> <?php echo form_input('fax'.$id, $def_fax, 'id="fax"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Work HP'); ?> </td>
-            <td> <?php echo form_input('work_hp'.$id, $def_work_hp, 'id="work_hp"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Work HP'); ?> </td>
+            <td class="right-table"> <?php echo form_input('work_hp'.$id, $def_work_hp, 'id="work_hp"');?> </td>
         </tr>
         <tr>
-            <td> <?php echo form_label('Work Email'); ?> </td>
-            <td> <?php echo form_input('work_email'.$id, $def_work_email, 'id="work_email"');?> </td>
+            <td class="left-table-black"> <?php echo form_label('Work Email'); ?> </td>
+            <td class="right-table"> <?php echo form_input('work_email'.$id, $def_work_email, 'id="work_email"');?> </td>
         </tr>
     </table>
     <?php if ($counter!=0) { ?>
