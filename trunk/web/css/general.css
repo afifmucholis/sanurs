@@ -815,6 +815,16 @@ label {
     margin-left: auto;
     margin-right: auto;
 }
+
+.left-table-black {
+    text-align: right;
+    width: 225px;
+}
+
+.left-table-black label {
+    font-size: 14px;
+    font-family: Arial;
+}
 /*** end of buat edit profile ***/
 
 #list_alumni {
