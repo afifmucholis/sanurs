@@ -71,6 +71,8 @@
     margin-right: 2px;
     display: inline;
     text-align: center;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-radius: 5px 5px 0px 0px;
     border-radius : 5px 5px 0px 0px;
 }
 

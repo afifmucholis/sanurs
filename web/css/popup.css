@@ -38,6 +38,8 @@ root {
     /* Kalo gak support transparan */
     background : none repeat scroll 0 0 rgb(235,235,235);
     background : none repeat scroll 0 0 rgba(235,235,235,0.92);
+    -moz-border-radius: 8px;
+    -webkit-border-radius: 8px;
     border-radius : 8px 8px 8px 8px;
     /* Kalo gak support transparan */
     border:15px solid rgb(120,120,120);
