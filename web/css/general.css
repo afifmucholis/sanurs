@@ -749,6 +749,7 @@ label {
 
 .right-table {
     text-align: left;
+    width: 222px;
 }
 
 .right-table input {
@@ -816,16 +817,6 @@ label {
     margin-right: auto;
 }
 
-.left-table-black {
-    text-align: right;
-    width: 225px;
-}
-
-.left-table-black label {
-    font-size: 14px;
-    font-family: Arial;
-}
-
 .work-subtitle {
     padding: 30px 0px 0px 20px;
     font-family: Arial Black;
@@ -849,6 +840,12 @@ label {
     width: 218px;
     height: 26px;
 }
+
+.edu_table {
+    float: right;
+    padding: 2px 0px 2px 0px;
+}
+
 /*** end of buat edit profile ***/
 
 #list_alumni {
