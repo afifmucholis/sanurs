@@ -730,7 +730,7 @@ label {
     width: 219px;
     font-family: Impact;
     font-size: 24px;
-    margin: 30px 0px 5px 5px;
+    padding: 30px 0px 5px 5px;
     /*display: inline-block;*/
     text-align: right;
     color: #ffffff;
@@ -824,6 +824,12 @@ label {
 .left-table-black label {
     font-size: 14px;
     font-family: Arial;
+}
+
+.work-subtitle {
+    padding: 30px 0px 0px 20px;
+    font-family: Arial Black;
+    font-size: 14px;
 }
 /*** end of buat edit profile ***/
 
