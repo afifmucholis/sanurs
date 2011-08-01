@@ -177,21 +177,37 @@ function initmap(page) {
             success: function(msg) {
                 if (msg.length > 0) {
                     for (i=0; i<msg.length; i++) {
-                        id = msg[i]['id'];
-                        name = msg[i]['name'];
-                        year = msg[i]['year'];
+//                        id = msg[i]['listUser'][0]['id'];
+//                        name = msg[i]['listUser'][0]['name'];
+//                        year = msg[i]['listUser'][0]['year'];
                         lat = msg[i]['lat'];
                         lng = msg[i]['lng'];
+                        listUser = msg[i]['listUser'];
                         latlng = new google.maps.LatLng(lat,lng);
-                        addMarker(name, latlng, false);
-                        var usertemp = [id, name, year];
-                        userArray.push(usertemp);
+//                        addMarker(name, latlng, false);
+                        if (listUser.length>1) {
+                            addMarker(listUser.length+' people', latlng, false);
+                        } else {
+                            addMarker(listUser[0]['name'], latlng, false);
+                        }
+//                        var usertemp = [id, name, year];
+                        for(j=0; j<listUser.length; j++) {
+                            var usertemp = [listUser.length, listUser[j]['id'], listUser[j]['name'], listUser[j]['year']];
+                            userArray.push(usertemp);
+                        }
+//                        var usertemp = [listUser[0]['id'], listUser[0]['name'], listUser[0]['year']];
+//                        userArray.push(usertemp);
                     }
                 }
                 clearOverlays();
                 showOverlay();
                 for (i=0; i<markersArray.length; i++) {
-                    var contentString = '<a class="link" href="profile/user/'+ userArray[i][0] +'">'+ userArray[i][1] +' ('+ userArray[i][2] +')</a>';
+                    var contentString = '';
+//                    var awal = i+(userArray[i-1][0])-1;
+                    for (j=i; j<i+userArray[i][0]; j++) {
+                        contentString += '<a class="link" href="profile/user/'+ userArray[j][1] +'">'+ userArray[j][2] +' ('+ userArray[j][3] +')</a><br/>';
+                    }
+//                    contentString = '<a class="link" href="profile/user/'+ userArray[i][1] +'">'+ userArray[i][2] +' ('+ userArray[i][3] +')</a>';
                     setInfoWindow(markersArray[i], contentString);
                 }
                 var mcOptions = {gridSize: 50, maxZoom: 15};
