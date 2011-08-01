@@ -1,8 +1,8 @@
 <div style="width: inherit; background-color: #000000">
-    <p style="color: white; padding: 30px 0px 0px 30px">Please choose the information that you want other people than you to see.</p>
-    <?php
-    echo form_open('profile/submitVisibility');
-    ?>
+    <div class="general_text" style="color: rgb(255,255,255); padding: 30px 0px 0px 30px">
+        Please choose the information that you want other people than you to see.
+    </div>
+    <?php echo form_open('profile/submitVisibility'); ?>
     <div class="editvisibility_col">
         <div class="subtitle">BASIC INFORMATION</div>
         <div class="clearboth"></div>
