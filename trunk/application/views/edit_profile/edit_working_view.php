@@ -7,7 +7,7 @@
         <div style="background-color: #ffffff; width: 387px">
             <div class="subtitle" style="color: #000000">WORK EXPERIENCE</div>
             <div class="work-subtitle">(CURRENT WORK)</div>
-            <div id="work_cur" style="width: 382px">
+            <div id="work_cur" class="work_cur">
                 <?php
                 $data = array(
                     'counter' => 0
@@ -43,10 +43,9 @@
             ?>
         </div>
         <a href="#" class="add_links" style="font-family: Arial Black; font-size: 12px; color: rgb(255,255,255); padding: 10px 0px 5px 30px">ADD FIELD</a>
-        <?php
-        echo br(2);
-        echo form_submit('save', 'Save Changes');
-        ?>
+        <div style="text-align: right; padding: 0px 20px 15px 0px">
+            <?php echo form_submit('save', 'Save Changes'); ?>
+        </div>
     </div>
     <div class="clearboth"></div>
     <?php echo form_close(); ?>
