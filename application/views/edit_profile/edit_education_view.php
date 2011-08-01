@@ -1,5 +1,5 @@
 <div style="width: inherit; background-color: #000000">
-    <div class="subtitle" style="width: 200px; margin: auto">EDUCATION</div>
+    <div class="subtitle" style="width: 200px; margin: auto; padding-left: 270px">EDUCATION</div>
     <?php echo form_open('profile/submitPendidikan'); ?>
     <div id="edu_now" style="float: right; padding: 5px 0px 30px 0px">
         <div id="question_1" class="general_text">
