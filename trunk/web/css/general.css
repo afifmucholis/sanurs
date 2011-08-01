@@ -507,7 +507,7 @@ select option{
 }
 #content p {
     font-family: ARIAL;
-    font-size: 12px;
+    font-size: 13px;
 }
 
 .general_text {
@@ -840,8 +840,14 @@ label {
     float: right;
     padding: 2px 0px 2px 0px;
 }
-
 /*** end of buat edit profile ***/
+.search_friend_table .left-table {
+    width: auto;
+}
+
+.search_friend_table label {
+    color: #000000;
+}
 
 #list_alumni {
     margin-top: 5px;

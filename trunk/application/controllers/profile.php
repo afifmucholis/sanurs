@@ -410,39 +410,54 @@ class profile extends CI_Controller {
                     $count++;
                 }
             }
-        }
-
-        $this->output
-                ->set_content_type('application/json')
-                ->set_output(json_encode($userArray));
-        
-        
-        /*// load model user
-        $this->load->model('user', 'userModel');
-        //$option = array('id' => $user_id);
-        $option = array();
-        $getUser = $this->userModel->getUsers($option); //ini berisi semua data user yang ada di database
-        // get location
-        if ($getUser) {
-            $count = 0;
-            $userArray = array();
-            foreach ($getUser as $user) {
-                if ($user->location_latitude != NULL) {
-                    $userArray[$count] = array(
-                        'id' => $user->id,
-                        'name' => $user->name,
-                        'year' => $user->graduate_year,
-                        'lat' => $user->location_latitude,
-                        'lng' => $user->location_longitude
-                    );
-                    $count++;
+            
+            $markerArray = array();
+            $i = 0;
+            
+            foreach ($userArray as $user) {
+                //cari lat lng di markerArray
+                $found = false;
+                $idx = 0;
+                while (!$found && $idx<count($markerArray)) {
+                    if ($user['lat']==$markerArray[$idx]['lat'] && $user['lng']==$markerArray[$idx]['lng']) {
+                        $found = true;
+                    } else {
+                        $idx++;
+                    }
+                }
+                if ($found) {
+                    //Do nothing
+                } else {
+                    $markerArray[$i]['lat'] = $user['lat'];
+                    $markerArray[$i]['lng'] = $user['lng'];
+                    $markerArray[$i]['listUser'] = array();
+                    $i++;
                 }
             }
+            
+            foreach ($markerArray as $key => $value) {
+                $idx = 0;
+                $listUser = array();
+                $i = 0;
+                $limit = count($userArray);
+                while ($idx<$limit) {
+                    if ($userArray[$idx]['lat']==$value['lat'] && $userArray[$idx]['lng']==$value['lng']) {
+                        $listUser[$i]['id'] = $userArray[$idx]['id'];
+                        $listUser[$i]['name'] = $userArray[$idx]['name'];
+                        $listUser[$i]['year'] = $userArray[$idx]['year'];
+                        unset($userArray[$idx]);
+                        $i++;
+                    }
+                    $idx++;
+                }
+                $markerArray[$key]['listUser'] = $listUser;
+                $userArray = array_values($userArray);
+            }
         }
-
+        
         $this->output
                 ->set_content_type('application/json')
-                ->set_output(json_encode($userArray));*/
+                ->set_output(json_encode($markerArray));
     }
 
     /**
