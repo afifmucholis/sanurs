@@ -3,28 +3,30 @@
     <?php
     echo form_open('friend/search');
     ?>
+    <div style="padding: 5px 0px 0px 10px">
     <p style="color: #565555">Search by keywords</p>
-    <div>
+    </div>
+    <div class="search_friend_table">
         <table>
             <tr>
-                <td> <?php echo form_label('Name ', 'name'); ?> </td>
-                <td> <?php echo form_input('name', ''); ?> </td>
+                <td class="left-table"> <?php echo form_label('Name ', 'name'); ?> </td>
+                <td class="right-table"> <?php echo form_input('name', ''); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Year ', 'year'); ?> </td>
-                <td> <?php echo form_input('year', ''); ?> </td>
+                <td class="left-table"> <?php echo form_label('Year ', 'year'); ?> </td>
+                <td class="right-table"> <?php echo form_input('year', ''); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Area of interest ', 'interest'); ?> </td>
-                <td> <?php echo form_dropdown('interest', $interest_list, $interest_list['all']); ?> </td>
+                <td class="left-table"> <?php echo form_label('Area of interest ', 'interest'); ?> </td>
+                <td class="right-table"> <?php echo form_dropdown('interest', $interest_list, $interest_list['all']); ?> </td>
             </tr>
             <tr>
-                <td> <?php echo form_label('Major Education ', 'major'); ?> </td>
-                <td> <?php echo form_dropdown('major', $major_list, $major_list['all']); ?> </td>
+                <td class="left-table"> <?php echo form_label('Major Education ', 'major'); ?> </td>
+                <td class="right-table"> <?php echo form_dropdown('major', $major_list, $major_list['all']); ?> </td>
             </tr>
         </table>
     </div>
-    <div class="general_text">
+    <div class="general_text" style="padding: 5px 0px 20px 10px">
         <?php echo form_submit('search', 'Search'); ?>
     </div>
     <?php
