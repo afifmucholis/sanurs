@@ -831,6 +831,24 @@ label {
     font-family: Arial Black;
     font-size: 14px;
 }
+
+.work_cur {
+    width: 382px;
+}
+
+.work_cur label {
+    color: #000000;
+}
+
+.edit_profile_form {
+    padding: 5px 0px 5px 20px;
+    float: left;
+}
+
+.edit_profile_form input{
+    width: 218px;
+    height: 26px;
+}
 /*** end of buat edit profile ***/
 
 #list_alumni {
