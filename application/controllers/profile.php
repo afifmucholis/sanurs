@@ -213,138 +213,162 @@ class profile extends CI_Controller {
      */
     function submitProfile() {
         $user_id = $this->session->userdata('user_id');
-
-        /*         * * update area of interest ** */
-        $myInterests = $this->input->post('interest');
-        $this->load->model('interested_in', 'interestedInModel');
-        if ($myInterests) {
-            //hapus dulu yg di database tapi gak ada di array
-            $itemDel = array();
-            $option = array('user_id' => $user_id);
-            $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
-            if ($getAllMyInterest) {
-                foreach ($getAllMyInterest as $item) {
-                    $i = 0;
-                    $found = FALSE;
-                    while (!$found && $i < count($myInterests)) {
-                        if ($item->interest_id == $myInterests[$i]) {
-                            $found = TRUE;
-                        } else {
+        
+        $this->load->model('user', 'userModel');
+        
+        $old_password = $this->input->post('old_password');
+        $new_password = $this->input->post('new_password');
+        $confirm_password = $this->input->post('confirm_password');
+        
+        $option = array(
+            'id' => $user_id,
+            'password' => $old_password
+        );
+        $getReturn = $this->userModel->getUsers($option);
+        
+        if (($getReturn && $new_password==$confirm_password && $new_password!="") || ($old_password=="" && $new_password=="" && $confirm_password=="")) {
+            if ($new_password != "") {
+                $hash_password = md5($new_password);
+                $option = array(
+                    'id' => $user_id,
+                    'password' => $hash_password
+                );
+                $retUpdate = $this->userModel->updateUser($option);
+            } else if ($new_password == "") {
+                $retUpdate = true;
+            }
+            /* update area of interest */
+            $myInterests = $this->input->post('interest');
+            $this->load->model('interested_in', 'interestedInModel');
+            if ($myInterests) {
+                //hapus dulu yg di database tapi gak ada di array
+                $itemDel = array();
+                $option = array('user_id' => $user_id);
+                $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
+                if ($getAllMyInterest) {
+                    foreach ($getAllMyInterest as $item) {
+                        $i = 0;
+                        $found = FALSE;
+                        while (!$found && $i < count($myInterests)) {
+                            if ($item->interest_id == $myInterests[$i]) {
+                                $found = TRUE;
+                            } else {
+                                $i++;
+                            }
+                        }
+                        if (!$found) {
+                            $itemDel[] = $item->id;
+                        }
+                    }
+                }
+                if ($itemDel) {
+                    foreach ($itemDel as $del) {
+                        $option = array('id' => $del);
+                        $returnDel = $this->interestedInModel->deleteInterestedIn($option);
+                    }
+                }
+                //cocokkin yg di myInterests, kalo ada di database gak usah update, kalo gak ada tambahin
+                $option = array('user_id' => $user_id);
+                $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
+                foreach ($myInterests as $itemUpdate) {
+                    if ($getAllMyInterest) {
+                        $i = 0;
+                        $found = FALSE;
+                        while (!$found && $i < count($getAllMyInterest)) {
+                            if ($itemUpdate == $getAllMyInterest[$i]->interest_id) {
+                                $found = TRUE;
+                            }
                             $i++;
                         }
-                    }
-                    if (!$found) {
-                        $itemDel[] = $item->id;
-                    }
-                }
-            }
-            if ($itemDel) {
-                foreach ($itemDel as $del) {
-                    $option = array('id' => $del);
-                    $returnDel = $this->interestedInModel->deleteInterestedIn($option);
-                }
-            }
-            //cocokkin yg di myInterests, kalo ada di database gak usah update, kalo gak ada tambahin
-            $option = array('user_id' => $user_id);
-            $getAllMyInterest = $this->interestedInModel->getInterestedIn($option);
-            foreach ($myInterests as $itemUpdate) {
-                if ($getAllMyInterest) {
-                    $i = 0;
-                    $found = FALSE;
-                    while (!$found && $i < count($getAllMyInterest)) {
-                        if ($itemUpdate == $getAllMyInterest[$i]->interest_id) {
-                            $found = TRUE;
+                        if (!$found) {
+                            $option = array(
+                                'user_id' => $user_id,
+                                'interest_id' => $itemUpdate
+                            );
+                            $returnAdd = $this->interestedInModel->addInterestedIn($option);
                         }
-                        $i++;
-                    }
-                    if (!$found) {
+                    } else {
                         $option = array(
                             'user_id' => $user_id,
                             'interest_id' => $itemUpdate
                         );
                         $returnAdd = $this->interestedInModel->addInterestedIn($option);
                     }
-                } else {
-                    $option = array(
-                        'user_id' => $user_id,
-                        'interest_id' => $itemUpdate
-                    );
-                    $returnAdd = $this->interestedInModel->addInterestedIn($option);
-                }
-            }
-        } else {
-            //hapus semua yg ada di database interested_in
-            $option = array(
-                'user_id' => $user_id,
-                'columnSelect' => 'id'
-            );
-            $getDelId = $this->interestedInModel->getInterestedIn($option);
-            if ($getDelId) {
-                foreach ($getDelId as $delId) {
-                    $option = array('id' => $delId->id);
-                    $returnDel = $this->interestedInModel->deleteInterestedIn($option);
-                }
-
-               
-            }
-        }
-         /*                 * * selesai update area of interest ** */
-        $this->load->model('user', 'userModel');
-        $nickname = $this->input->post('nick_name');
-        $gender = $this->input->post('gender');
-
-        $home_address = $this->input->post('home_address');
-        $home_telephone = $this->input->post('home_telephone');
-        $handphone = $this->input->post('handphone');
-        // proses data disini
-        $image_url = substr($this->input->post('url_img'), strlen(base_url()));
-
-        $options = array(
-            'id' => $user_id,
-            'nickname' => $nickname,
-            'gender_id' => $gender,
-            'home_address' => $home_address,
-            'home_telephone' => $home_telephone,
-            'handphone' => $handphone
-        );
-        $error_rename_img = false;
-        $dir = explode("/", $image_url);
-        $ext = explode(".", $image_url);
-        if (count($dir) == 2) {
-            // $image_url still null
-        } else {
-            // cek apakah $default image atau image upload baru
-            if ($dir[1] == "temp") {
-                // cek file lama kalau ada
-                $options2 = array('id' => $user_id);
-                $getReturn = $this->userModel->getUsers($options2);
-                $img_lama = $getReturn[0]->profpict_url;
-                if ($img_lama != "") {
-                    // delete file yang lama
-                    unlink('./' . $img_lama);
-                }
-                // image baru ada di folder temp
-                $new_imgurl = 'res/user/user_' . $user_id . '.' . $ext[count($ext) - 1];
-                if (rename('./' . $image_url, './' . $new_imgurl)) {
-                    $options['profpict_url'] = $new_imgurl;
-                } else {
-                    $error_rename_img = true;
                 }
             } else {
-                // image lama tidak perlu diupdate
+                //hapus semua yg ada di database interested_in
+                $option = array(
+                    'user_id' => $user_id,
+                    'columnSelect' => 'id'
+                );
+                $getDelId = $this->interestedInModel->getInterestedIn($option);
+                if ($getDelId) {
+                    foreach ($getDelId as $delId) {
+                        $option = array('id' => $delId->id);
+                        $returnDel = $this->interestedInModel->deleteInterestedIn($option);
+                    }
+                }
             }
-        }
-        // update database dengan opsi $options
-        $cek_bol = $this->userModel->updateUser($options);
-        if (is_bool($cek_bol) || count($cek_bol) != 1 || $error_rename_img) {
-            // update gagal
+            /* selesai update area of interest */
+            
+            $nickname = $this->input->post('nick_name');
+            $gender = $this->input->post('gender');
+
+            $home_address = $this->input->post('home_address');
+            $home_telephone = $this->input->post('home_telephone');
+            $handphone = $this->input->post('handphone');
+            // proses data disini
+            $image_url = substr($this->input->post('url_img'), strlen(base_url()));
+
+            $options = array(
+                'id' => $user_id,
+                'nickname' => $nickname,
+                'gender_id' => $gender,
+                'home_address' => $home_address,
+                'home_telephone' => $home_telephone,
+                'handphone' => $handphone
+            );
+            $error_rename_img = false;
+            $dir = explode("/", $image_url);
+            $ext = explode(".", $image_url);
+            if (count($dir) == 2) {
+                // $image_url still null
+            } else {
+                // cek apakah $default image atau image upload baru
+                if ($dir[1] == "temp") {
+                    // cek file lama kalau ada
+                    $options2 = array('id' => $user_id);
+                    $getReturn = $this->userModel->getUsers($options2);
+                    $img_lama = $getReturn[0]->profpict_url;
+                    if ($img_lama != "") {
+                        // delete file yang lama
+                        unlink('./' . $img_lama);
+                    }
+                    // image baru ada di folder temp
+                    $new_imgurl = 'res/user/user_' . $user_id . '.' . $ext[count($ext) - 1];
+                    if (rename('./' . $image_url, './' . $new_imgurl)) {
+                        $options['profpict_url'] = $new_imgurl;
+                    } else {
+                        $error_rename_img = true;
+                    }
+                } else {
+                    // image lama tidak perlu diupdate
+                }
+            }
+            // update database dengan opsi $options
+            $cek_bol = $this->userModel->updateUser($options);
+            
+            if ($cek_bol || $error_rename_img || $retUpdate) {
+                // update berhasil
+                $message['status'] = 'Update success';
+                $message['message'] = 'Your Basic Info has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+            }
+        } else {
+            // ada kesalahan input
             $message['status'] = 'An error occurred';
             $message['message'] = 'An Error occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
-        } else {
-            // update berhasil
-            $message['status'] = 'Update success';
-            $message['message'] = 'Your Basic Info has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
         }
+        
         $message['page_before'] = 'Edit Your Profile';
         $message['page_link'] = 'profile/editProfile';
         // redirect ke info view
@@ -702,7 +726,7 @@ class profile extends CI_Controller {
      * @param string post->s1_year graduation year
      */
     function submitPendidikan() {
-         $user_id = $this->session->userdata('user_id');
+        $user_id = $this->session->userdata('user_id');
         $in_education = $this->input->post('in_education');
         $highest_edu = $this->input->post('highest_edu');
         // load model education
