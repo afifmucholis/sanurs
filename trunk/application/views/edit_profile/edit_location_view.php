@@ -24,20 +24,17 @@
         Map di sini
     </div>
 
-<!--    <div class="edit_profile_form">
-        <div class="general_text">-->
-<div style="padding: 3px 0px 3px 18px">
-            <?php
-            echo form_submit('save', 'Save Changes');
-            echo form_hidden('save_lat', 0);
-            echo form_hidden('save_lng', 0);
-            echo form_hidden('area_name', '');
-            echo form_hidden('area_lat', 0);
-            echo form_hidden('area_lng', 0);
-            echo form_close();
-            ?>
+    <div style="padding: 3px 0px 3px 18px">
+        <?php
+        echo form_submit('save', 'Save Changes');
+        echo form_hidden('save_lat', 0);
+        echo form_hidden('save_lng', 0);
+        echo form_hidden('area_name', '');
+        echo form_hidden('area_lat', 0);
+        echo form_hidden('area_lng', 0);
+        echo form_close();
+        ?>
     </div>
-<!--        </div>
-    </div>-->
+    
     <div class="clearboth"></div>
 </div>

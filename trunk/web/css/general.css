@@ -439,6 +439,12 @@ input[type=submit]{
     border-radius : 5px 5px 5px 5px;
 }
 
+input[type=submit]:hover {
+    background-color: rgb(200,200,200);
+    color : black;
+    font-weight: bolder;
+}
+
 button {
     font: georgia;
     background-color: rgb(130,130,130);
@@ -453,6 +459,11 @@ button {
     border-radius : 5px 5px 5px 5px;
 }
 
+button:hover {
+    background-color: rgb(200,200,200);
+    color : black;
+    font-weight: bolder;
+}
 
 select{
     font-family: georgia;

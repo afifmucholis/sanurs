@@ -49,6 +49,23 @@
         </table>
     </div>
     <div>
+        <div class="subtitle">CHANGE PASSWORD</div>
+        <table>
+            <tr>
+                <td class="left-table"> <?php echo form_label('Old Password '); ?> </td>
+                <td class="right-table"> <?php echo form_input('old_password', '', 'id="old_password"'); ?> </td>
+            </tr>
+            <tr>
+                <td class="left-table"> <?php echo form_label('New Password '); ?> </td>
+                <td class="right-table"> <?php echo form_input('new_password', '', 'id="new_password"'); ?> </td>
+            </tr>
+            <tr>
+                <td class="left-table"> <?php echo form_label('New Password (again)'); ?> </td>
+                <td class="right-table"> <?php echo form_input('confirm_password', '', 'id="confirm_password"'); ?> </td>
+            </tr>
+        </table>
+    </div>
+    <div>
         <div>
             <div class="subtitle">AREA OF INTEREST</div>
             <div class="general_text" style="width: 200px; color: #ffffff; padding-left: 25px; text-align: right">(you can choose more than one) :</div>
