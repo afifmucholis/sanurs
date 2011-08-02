@@ -22,15 +22,13 @@
         echo form_close();
     ?>
 </div>
-
+</div>
 <div id="upload_popup" class ="popup">
     <div id="form_forget_password">
         <?php $this->load->view('popup/forget_password_view');?>
     </div>
 </div>
 <div id="backgroundPopup"></div>
-
-</div>
 <script>
     $(document).ready(function() {   
         $("#signin").validate({

@@ -1,25 +1,29 @@
-<div id="title-menu">News</div>
-<br/>
 <?php
     if ($isadmin) {
         echo anchor('news/add_news', 'Add News');
         echo br(1);
     }
 ?>
-<div id="news_holder_left">
-    <?php
+<div id="news_holder">
+    <div id="news_holder_left">
+        <?php
         $data['all_news'] = $all_news;
-        $this->load->view('news/list_news',$data);
-    ?>
+        $this->load->view('news/list_news', $data);
+        ?>
+    </div>
+    
+    <div id="news_holder_right">
+        <?php echo br(10);?>
+        <div id="latest">LATEST NEWS</div>
+        <div id="title_sanur_news">SANTA URSULA</div>
+        <p>NHA is a leading International partnership practicing architecture and urban planning. Our buildings around the world insist on clever forms while inventing new options for everyday use and content.</p>
+    </div>
+    
+    <div class="clearboth"></div>
+    <ul id="link_pagination"> 
+        <?php echo $pagination; ?>
+    </ul>
 </div>
-
-<div id="news_holder_right">
-</div>
-
-<div class="clearboth"></div>
-<ul id="link_pagination"> 
-    <?php echo $pagination; ?>
-</ul>
 
 <script type="text/javascript">
     $(document).ready(function(){
