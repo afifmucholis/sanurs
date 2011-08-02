@@ -54,6 +54,7 @@ class site_searching extends CI_Controller {
         $config['num_tag_close'] = '</li>';
         
         $data['term'] = $term;
+        $data['total_search'] = $total_search;
          // load helper
         $this->load->helper('simple_html_dom');
         

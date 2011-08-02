@@ -1,21 +1,21 @@
 <?php
 // ngambil search result
 if ($search_total == 0) {
-    echo "No Result for your search.<br/>";
+    echo "<div id='title-menu'>No Result for your search.<br/></div>";
 } else {
     foreach ($search_results as $result) {
         ?>
-        <a href="../profile/user/<?php echo $result['id']; ?>">
+        <a class="search_result_divlink" href="../profile/user/<?php echo $result['id']; ?>">
             <div id="single_search_wrapper" class="general_text">
-                <div id="search_result_num">
+                <div id="search_result_num" style="color:black; text-decoration: none;">
                     <?php echo $result['num']; ?>
                 </div>
                 <div id='friend_profpic'>
                     <?php echo "<img src =' " . base_url() . $result['profpict_url'] . "' />"; ?>
                 </div>
-                <div id="show_info_wrapper">
+                <div id="show_info_wrapper" style="color:black;">
                     <div id ='friend_name'>
-                        <?php echo $result['name']; ?>
+                        <b><?php echo $result['name']; ?></b>
                     </div>
                     <div id ='friend_unityear'>
                         <?php echo $result['unit'] . ' (' . $result['graduate_year'] . ')'; ?>

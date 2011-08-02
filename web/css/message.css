@@ -12,8 +12,7 @@
 */
 
 #message_wrapper {
-    padding : 5px 20px 5px 20px;
-    margin : 5px 30px 5px 30px
+    padding : 5px;
 }
 
 #message_summary:hover {
@@ -22,6 +21,8 @@
 
 
 #message_summary #profpict_sender img{
+    min-height: 70px;    
+    min-width: 70px;
     max-height: 80px;    
     max-width: 80px;
     float : left;
@@ -37,7 +38,7 @@
 
 #message_summary #sender {
     font-family: arial-black;
-    font-size: 15px;
+    font-size: 14px;
     color: black;
     font-weight: bold;
 }

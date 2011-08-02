@@ -328,21 +328,42 @@ img.event_images {
 }
 
 #single_search_wrapper {
-    padding : 5px 20px 5px 20px;
-    margin : 5px 30px 5px 30px
+    padding : 5px 10px 5px 10px;
+    margin : 5px;
 }
 
 #single_search_wrapper:hover{
     background-color: rgb(240,240,240);
 }
 
-#image_event_search img{
+#category_search {
+    font-family : georgia;
+    font-size : 16px;
+    color : rgb(100,100,100);
+}
+
+#title_search {
+    font-family : impact;
+    font-size : 17px;
+}
+#content_search img{
     min-height: 90px;
     max-height: 90px;
     min-width : 120px;
     max-width : 120px;
+    margin-right: 10px;
 }
 
+a.search_result_divlink {
+    text-decoration: none;
+    font-family: Arial;
+    font-size : 13px;
+    color: black;
+}
+
+#content_search #text_search {
+    text-align: justify;
+}
 .home-menu {
     height: 700px;
 }
