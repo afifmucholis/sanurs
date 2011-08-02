@@ -31,6 +31,11 @@
 ?>
 
 <script>
+    $('input[type=submit]').bind('click', function () {
+       for (var i = 0; i < nicEditors.editors.length; i++) {
+           nicEditors.editors[i].nicInstances[0].saveContent(); 
+       }
+    });
     $('#editor_text_news').validate(
         {
             rules : {

@@ -81,7 +81,7 @@ class news extends CI_Controller {
             $text = $this->load->view('news/list_news',$data, true);
             $this->output
                     ->set_content_type('application/json')
-                    ->set_output(json_encode(array('text' => $text, 'struktur' => $data['struktur'])));
+                    ->set_output(json_encode(array('text' => $text, 'pagination'=>$data['pagination'], 'struktur' => $data['struktur'])));
         } else {
             $this->load->view('includes/template', $data);
         }
