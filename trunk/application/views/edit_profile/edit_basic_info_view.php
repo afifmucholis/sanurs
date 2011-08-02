@@ -24,6 +24,23 @@
     echo br(1);
     ?>
     <div>
+        <div class="subtitle">CHANGE PASSWORD</div>
+        <table>
+            <tr>
+                <td class="left-table"> <?php echo form_label('Old Password '); ?> </td>
+                <td class="right-table"> <?php echo form_input('old_password', '', 'id="old_password"'); ?> </td>
+            </tr>
+            <tr>
+                <td class="left-table"> <?php echo form_label('New Password '); ?> </td>
+                <td class="right-table"> <?php echo form_input('new_password', '', 'id="new_password"'); ?> </td>
+            </tr>
+            <tr>
+                <td class="left-table"> <?php echo form_label('New Password (again)'); ?> </td>
+                <td class="right-table"> <?php echo form_input('confirm_password', '', 'id="confirm_password"'); ?> </td>
+            </tr>
+        </table>
+    </div>
+    <div>
         <div class="subtitle">BASIC INFORMATION</div>
         <table>
             <tr>
@@ -45,23 +62,6 @@
             <tr>
                 <td class="left-table"> <?php echo form_label('Handphone '); ?> </td>
                 <td class="right-table"> <?php echo form_input('handphone', $content_edit['handphone'], 'id="handphone"'); ?> </td>
-            </tr>
-        </table>
-    </div>
-    <div>
-        <div class="subtitle">CHANGE PASSWORD</div>
-        <table>
-            <tr>
-                <td class="left-table"> <?php echo form_label('Old Password '); ?> </td>
-                <td class="right-table"> <?php echo form_input('old_password', '', 'id="old_password"'); ?> </td>
-            </tr>
-            <tr>
-                <td class="left-table"> <?php echo form_label('New Password '); ?> </td>
-                <td class="right-table"> <?php echo form_input('new_password', '', 'id="new_password"'); ?> </td>
-            </tr>
-            <tr>
-                <td class="left-table"> <?php echo form_label('New Password (again)'); ?> </td>
-                <td class="right-table"> <?php echo form_input('confirm_password', '', 'id="confirm_password"'); ?> </td>
             </tr>
         </table>
     </div>
