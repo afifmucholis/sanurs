@@ -30,6 +30,9 @@
     margin: 4px 2px 4px 2px;
     background-color: black;
     border: 2px solid rgb(255,255,255);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius : 5px 5px 5px 5px;
 }
 
 
@@ -55,6 +58,9 @@
     margin: 4px 2px 4px 2px;
     background-color: rgb(255,255,255);
     border: 2px solid rgb(0,0,0);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius : 5px 5px 5px 5px;
 }
 
 
