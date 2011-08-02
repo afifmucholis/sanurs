@@ -2,19 +2,20 @@
     <?php
     echo form_open('message/submit', array('id' => 'new_message'));
     echo form_label('Subject : ', 'subject') . "<br/>";
-    echo form_input('subject', '', 'id="subject"') . "<br/>";
+    echo form_input('subject', '', 'id="subject" title="Subject"') . "<br/>";
     echo form_label('To : ', 'to') . "<br/>";
-    echo form_input('to', '', 'id="to"');
+    echo form_input('to', '', 'id="to" title="Recipient"');
     echo form_hidden('idto', '') . "<br/>";
     echo form_label('Message', 'message') . "<br/>";
-    echo form_textarea('message', 'Type your message here....') . "<br/>";
+    echo form_textarea('message','' ,'title="Type your message here..."') . "<br/>";
     echo form_submit('submit', 'Submit', 'id="submit"');
     echo form_close();
     ?>
 </div>
 
 <script>
-    $(document).ready(function() {   
+    $(document).ready(function() {
+        message_input_hint();
         $("#new_message").validate({
             rules : {
                 to : {
@@ -55,4 +56,24 @@ $(function() {
         .appendTo( ul );
     };
 });
+
+function message_input_hint() {
+        $('#new_message_form :input').focus(function()
+        {
+            if ($(this).val() == $(this)[0].title)
+            {
+                $(this).removeClass("defaultTextActive");
+                $(this).val("");
+            }
+        });
+        $('#new_message_form :input').blur(function(srcc)
+        {
+            if ($(this).val() == "")
+            {
+                $(this).addClass("defaultTextActive");
+                $(this).val($(this)[0].title);
+            }
+        });
+        $('#new_message_form :input').blur();
+    }
 </script>
