@@ -23,25 +23,25 @@
 //                    echo $array_img[0];
                 }
             ?>
-            <div id="content_news">
+            <div id="content_news" class="description_img">
                 <div id="title_news">
-                    <h4><?php 
-//                    echo anchor('news/show_news/'.$news->id,$news->title); 
-                    ?></h4>
+                    <?php 
+                        echo anchor('news/show_news/'.$news->id,$news->title); 
+                    ?>
                 </div>
-                <div id="text_news" class="description_img">
+                <div id="text_news">
                     <?php
-                        $text = word_limiter($content->plaintext,10);
+                        $text = character_limiter($content->plaintext,80);
                         echo $text;
                     ?>
-                    <div id="link_show">
-                        <?php 
-//                        echo anchor('news/show_news/'.$news->id,'Read More');
-                        ?>
-                    </div>
                 </div>
-                <div class="clearboth">
+                <div id="link_show">
+                    <?php 
+                         echo anchor('news/show_news/'.$news->id,'See More');
+                    ?>
                 </div>
+            </div>
+            <div class="clearboth">
             </div>
         </div>
 <?php
