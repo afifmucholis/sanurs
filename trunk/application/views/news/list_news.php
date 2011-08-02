@@ -7,10 +7,10 @@
         <div id="news_div">
             <?php
                 if ($isadmin) {
-                    echo anchor('news/edit_news/'.$news->id, 'Edit News');
-                    echo '&nbsp;&nbsp;';
-                    echo anchor('news/delete_news/'.$news->id, 'Delete News', 'class="remove_news"');
-                    echo br(1);
+//                    echo anchor('news/edit_news/'.$news->id, 'Edit News');
+//                    echo '&nbsp;&nbsp;';
+//                    echo anchor('news/delete_news/'.$news->id, 'Delete News', 'class="remove_news"');
+//                    echo br(1);
                 }
             ?>
             <?php 
@@ -20,34 +20,34 @@
                     $array_img[0]->width=100;
                     $array_img[0]->height=100;
                     $array_img[0]->style="float:left";
-                    echo $array_img[0];
+//                    echo $array_img[0];
                 }
             ?>
             <div id="content_news">
                 <div id="title_news">
-                    <h4><?php echo anchor('news/show_news/'.$news->id,$news->title); ?></h4>
+                    <h4><?php 
+//                    echo anchor('news/show_news/'.$news->id,$news->title); 
+                    ?></h4>
                 </div>
-                <div id="text_news" style="float:left;">
+                <div id="text_news" class="description_img">
                     <?php
-                        $text = word_limiter($content->plaintext,15);
+                        $text = word_limiter($content->plaintext,10);
                         echo $text;
                     ?>
                     <div id="link_show">
-                        <?php echo anchor('news/show_news/'.$news->id,'Read More');?>
+                        <?php 
+//                        echo anchor('news/show_news/'.$news->id,'Read More');
+                        ?>
                     </div>
                 </div>
                 <div class="clearboth">
                 </div>
             </div>
         </div>
-        <br/>
 <?php
         endforeach;
     }
 ?>
 
-<ul id="link_pagination"> 
-    <?php echo $pagination; ?>
-</ul>
-<div id="clearboth">
+<div class="clearboth">
 </div>

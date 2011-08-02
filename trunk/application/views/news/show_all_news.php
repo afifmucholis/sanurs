@@ -6,12 +6,20 @@
         echo br(1);
     }
 ?>
-<div id="news_holder">
+<div id="news_holder_left">
     <?php
         $data['all_news'] = $all_news;
         $this->load->view('news/list_news',$data);
     ?>
 </div>
+
+<div id="news_holder_right">
+</div>
+
+<div class="clearboth"></div>
+<ul id="link_pagination"> 
+    <?php echo $pagination; ?>
+</ul>
 
 <script type="text/javascript">
     $(document).ready(function(){
@@ -20,8 +28,7 @@
     });
     
     function bindPagination() {
-        $('#news_holder')
-            .find('#link_pagination a')
+        $('#link_pagination a')
             .unbind('click.page')
             .bind('click.page',function(){
                 return clickPagination(this);    
@@ -36,7 +43,8 @@
             url: link,
             data : {offsetval:offset[offset.length-1], ajax : 1},
             success: function(msg){
-                $("#news_holder").html(msg["text"]);
+                $("#news_holder_left").html(msg["text"]);
+                $("#link_pagination").html(msg["pagination"]);
                 bindPagination();
                 bindDeleteConfirm();
             }
