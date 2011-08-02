@@ -450,6 +450,26 @@ input[type=submit]:hover {
     font-weight: bolder;
 }
 
+input[type=button]{
+    font: georgia;
+    background-color: rgb(130,130,130);
+    color : white;
+    border : none;
+    cursor: pointer;
+    margin: 6px 3px 3px 0px;
+    font-weight: bold;
+    padding : 4px 10px 4px 10px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius : 5px 5px 5px 5px;
+}
+
+input[type=button]:hover {
+    background-color: rgb(200,200,200);
+    color : black;
+    font-weight: bolder;
+}
+
 button {
     font: georgia;
     background-color: rgb(130,130,130);
