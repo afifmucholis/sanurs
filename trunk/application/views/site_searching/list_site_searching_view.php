@@ -1,16 +1,18 @@
 <?php
 if (count($search_result) == 0) {
-    echo "No Result for your search.<br/>";
+    echo "<div id='general_text'>No Result for your search.</div>";
 } else {
+    ?>
+    <?php
     foreach ($search_result as $result) :
         ?>
-        <a href="<?php echo base_url().'/index.php/'. $result['link']; ?>">
+        <a class="search_result_divlink" href="<?php echo base_url().'/index.php/'. $result['link']; ?>">
             <div id="single_search_wrapper">
                 <div id="category_search">
-                    <?php echo $result['category']; ?>
+                    Category : <?php echo $result['category']; ?>
                 </div>
                 <div id="title_search">
-                    <?php echo $result['title']; ?>     
+                    Title : <?php echo $result['title']; ?>     
                 </div>
                 <?php 
                     if ($result['category']=='News') {
@@ -42,9 +44,11 @@ if (count($search_result) == 0) {
                         <div id="image_event_search">
                             <img src="<?php echo base_url().$result['image'];?>" style="float: left">
                         </div>
+                        <div id="text_search">
                             <?php 
                               echo $result['content'];  
                             ?>
+                        </div>
                             <div class="clearboth">
                             </div>
                         </div>

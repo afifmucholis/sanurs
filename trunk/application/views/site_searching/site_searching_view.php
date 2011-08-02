@@ -1,4 +1,4 @@
-<h3>Searching Result</h3>
+<div id="title-menu">Search Results</div>
 <br/>
 <div id="searching_site">
     <?php
