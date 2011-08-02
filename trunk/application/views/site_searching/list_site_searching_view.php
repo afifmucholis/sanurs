@@ -24,7 +24,7 @@ if (count($search_result) == 0) {
                                 if (count($array_img)!=0) {
                                     $array_img[0]->width=100;
                                     $array_img[0]->height=100;
-                                    $array_img[0]->style="float:left";
+                                    $array_img[0]->style="float:left;";
                                 }
                             ?>
                             <div id="text_search" style="float:left;">
@@ -42,7 +42,7 @@ if (count($search_result) == 0) {
                         ?>
                     <div id="content_search">
                         <div id="image_event_search">
-                            <img src="<?php echo base_url().$result['image'];?>" style="float: left">
+                            <img src="<?php echo base_url().$result['image'];?>" style="float: left;min-height: 90px;min-width: 90px; max-height: 100px; max-width: 100px">
                         </div>
                         <div id="text_search">
                             <?php 

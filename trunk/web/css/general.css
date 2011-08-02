@@ -350,6 +350,7 @@ img.event_images {
 #title_search {
     font-family : impact;
     font-size : 17px;
+    letter-spacing: 1px;
 }
 #content_search img{
     min-height: 90px;
