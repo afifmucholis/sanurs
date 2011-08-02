@@ -137,10 +137,11 @@ root {
     position:absolute; 
     top:35px; 
     left:0px;
+    background:rgb(0,0,0); /* Adding a background makes the dropdown work properly in IE7+. Make this as close to your page's background as possible (i.e. white page == white background). */
+    background:rgba(255,255,255,0); /* But! Let's make the background fully transparent where we can, we don't actually want to see it if we can help it... */
 }
 
 #about_body .navigation li:hover ul.navigation_2 li a {
-    display:block;
     color:#ffffff;
     text-align: center;
     width: 200px;
@@ -614,8 +615,8 @@ label {
 #about_photo_deskripsi {
     margin-left: 67.8%;
     width: 30%;
-    min-height: 427px;
     padding-right: 42px;
+    min-height: 427px;
     color: white;
     background-color: black;
 }
@@ -631,11 +632,12 @@ label {
 
 #three_photo ul.img_holder li {
     float: left;
+    position: relative;
 }
 
 #three_photo ul.img_holder li.pad_left {
-    padding-left: 8px;
-    padding-right: 8px;
+    margin-left: 8px;
+    margin-right: 8px;
 }
 
 #three_photo ul.img_holder li .thumb {
@@ -644,7 +646,7 @@ label {
 }
 
 #three_photo ul.img_holder li .thumb:hover {
-	background: #333;
+    background: #333;
 }
 
 
@@ -659,15 +661,14 @@ label {
     display:none;
     width:179px;
     height:100px;
-    margin-top: -120px;
-    margin-left:124px;
+    bottom: 0px;
+    right:0px;
     -moz-border-radius: 10px 0px 0px 0px;
     -webkit-border-top-left-radius : 10px;
     border-radius : 10px 0px 0px 0px;
 }
 
 /**********************************/
-
 
 /***** Teks description floating above image *****/
 .description_img {
@@ -682,6 +683,47 @@ label {
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;
 }
+/**********************************/
+
+/***** News *****/
+#news_holder_left {
+    float:left;
+    min-height: 600px;
+    width:70%;
+    margin-left: -25px;
+}
+
+#news_holder_right {
+    margin-left: 67.2%;
+    width: 30%;
+    padding-right: 13px;
+    padding-left: 35px;
+    min-height: 450px; /* 3 kali news_div*/
+    background-color: black;
+    color: white;
+}
+
+#news_holder_left #news_div {
+    position: relative;
+    float:left;
+    width: 325px;
+    height: 150px;
+    padding: 0;
+    background-color: black;
+    color: white;
+    margin-right: 1px;
+    margin-bottom: 1px;
+}
+
+#news_holder_left #news_div .description_img {
+    margin-top: -1px;
+    margin-left:126px;
+    height:110px;
+    /* Kalo gak dukung transparan */
+    background : rgb(0,0,0);
+    background : rgba(255,255,255,0.6);
+}
+
 /**********************************/
 
 /*** buat edit profile ***/
