@@ -51,13 +51,13 @@
             about_us_input_hint();   
         var history = $('#history').html();
         if (history!=null) {
-            var his = history.split(' &gt;&gt; ');
+            var his = history.split(' » ');
             var his_new = "";
             var count=0;
             while (count<his.length-1) {
                his_new+=his[count];
                count++;
-               his_new+=" >> ";
+               his_new+=" &raquo; ";
             }
             $('#history').html(his_new+his2);
         }

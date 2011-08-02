@@ -38,12 +38,12 @@
             data: form_data,
             success: function(msg) {
                 $('#content_message').html(msg["text"]);
-                var his = $('#history').html().split(' &gt;&gt; ');
+                var his = $('#history').html().split(' » ');
                 var his2 = "";
                 var count=0;
                 while (count<his.length-1) {
                     his2+=his[count];count++;
-                    his2+=" >> ";
+                    his2+=" &raquo; ";
                 }
                 $('#history').html(his2+msg["struktur"][2]["label"]);
             }
