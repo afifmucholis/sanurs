@@ -1,4 +1,4 @@
-<div class="edit_profile_left">
+<div class="edit_profile_left" style="background-color: #ffffff">
     <div class="edit_profpic">
         <?php
         $image_properties = array(
