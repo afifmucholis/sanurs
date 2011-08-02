@@ -24,23 +24,6 @@
     echo br(1);
     ?>
     <div>
-        <div class="subtitle">CHANGE PASSWORD</div>
-        <table>
-            <tr>
-                <td class="left-table"> <?php echo form_label('Old Password '); ?> </td>
-                <td class="right-table"> <?php echo form_input('old_password', '', 'id="old_password"'); ?> </td>
-            </tr>
-            <tr>
-                <td class="left-table"> <?php echo form_label('New Password '); ?> </td>
-                <td class="right-table"> <?php echo form_input('new_password', '', 'id="new_password"'); ?> </td>
-            </tr>
-            <tr>
-                <td class="left-table"> <?php echo form_label('New Password (again)'); ?> </td>
-                <td class="right-table"> <?php echo form_input('confirm_password', '', 'id="confirm_password"'); ?> </td>
-            </tr>
-        </table>
-    </div>
-    <div>
         <div class="subtitle">BASIC INFORMATION</div>
         <table>
             <tr>
@@ -97,6 +80,23 @@
             echo br(1);
         }
         ?>
+    </div>
+    <div style="padding-bottom: 10px">
+        <div class="subtitle">CHANGE PASSWORD</div>
+        <table>
+            <tr>
+                <td class="left-table"> <?php echo form_label('Old Password '); ?> </td>
+                <td class="right-table"> <?php echo form_password('old_password', '', 'id="old_password"'); ?> </td>
+            </tr>
+            <tr>
+                <td class="left-table"> <?php echo form_label('New Password '); ?> </td>
+                <td class="right-table"> <?php echo form_password('new_password', '', 'id="new_password"'); ?> </td>
+            </tr>
+            <tr>
+                <td class="left-table"> <?php echo form_label('New Password (again)'); ?> </td>
+                <td class="right-table"> <?php echo form_password('confirm_password', '', 'id="confirm_password"'); ?> </td>
+            </tr>
+        </table>
     </div>
     <div style="text-align: right; padding: 0px 20px 15px 0px">
         <?php echo form_submit('save', 'Save Changes'); ?>
