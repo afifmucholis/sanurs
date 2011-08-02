@@ -1,9 +1,3 @@
-<?php
-    if ($isadmin) {
-        echo anchor('news/add_news', 'Add News');
-        echo br(1);
-    }
-?>
 <div id="news_holder">
     <div id="news_holder_left">
         <?php

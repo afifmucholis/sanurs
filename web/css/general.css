@@ -1010,3 +1010,9 @@ a.people_links {
     font-family: Arial;
     font-size: 13px;   
 }
+
+/***** Datepicker *****/
+#ui-datepicker-div {
+    display:none;
+}
+/**********************/
