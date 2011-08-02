@@ -9,7 +9,7 @@
             $title='';
             if (isset($old_title) && $old_title!='')
                 $title = $old_title;
-            echo form_input('title',$title,'id="title_field" size=124');
+            echo form_input('title',$title,'id="title_field" style="width:575px;"');
         ?>
     </div>
     
