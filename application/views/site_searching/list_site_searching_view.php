@@ -58,7 +58,6 @@ if (count($search_result) == 0) {
             </div>
         </a>
         <?php
-        echo br(1);
         echo '<hr>';
     endforeach;
 }

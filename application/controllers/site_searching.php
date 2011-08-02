@@ -25,7 +25,7 @@ class site_searching extends CI_Controller {
         $term = $this->input->post('term');
         
         $this->load->library('pagination');
-        $per_page = 3;
+        $per_page = 10;
         $offset = $this->input->post('offsetval');
 
         $search_result = $this->search_all($term);
