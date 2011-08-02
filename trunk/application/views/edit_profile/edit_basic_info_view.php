@@ -8,6 +8,7 @@
             'alt' => $content_edit['name'],
             'title' => $content_edit['name'],
             'rel' => 'lightbox',
+            'style' => 'max-width:365px'
         );
         echo img($image_properties);
         ?>
