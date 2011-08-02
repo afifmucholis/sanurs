@@ -76,10 +76,19 @@
     font-style: italic;
 }
 
+#message_info {
+    border: 1px solid;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    border-radius : 10px 10px 10px 10px;
+    padding: 10px;
+    min-height: 200px;
+}
 #message_info #profpict_sender img{
-    max-height: 80px;
-    max-width : 80px;
+    max-height: 200px;
+    max-width : 200px;
     float : left;
+    margin-right: 20px;
 }
 
 
