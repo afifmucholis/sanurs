@@ -21,7 +21,6 @@
     <?php
     echo form_open('profile/submitProfile');
     echo form_hidden('url_img', base_url() . $content_edit['img_url']);
-    echo br(1);
     ?>
     <div>
         <div class="subtitle">BASIC INFORMATION</div>
@@ -77,7 +76,6 @@
             </div>
             <div class="clearboth"></div>
             <?php
-            echo br(1);
         }
         ?>
     </div>
