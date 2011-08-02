@@ -82,6 +82,7 @@
 
 #message_info {
     border: 1px solid;
+    border-color: rgb(100,100,100);
     -moz-border-radius: 10px;
     -webkit-border-radius: 10px;
     border-radius : 10px 10px 10px 10px;
