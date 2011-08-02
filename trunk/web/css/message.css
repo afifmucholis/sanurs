@@ -15,12 +15,6 @@
     padding : 5px 20px 5px 20px;
     margin : 5px 30px 5px 30px
 }
-/* 
-#message_wrapper:hover {
-    padding : 10px 40px 10px 40px;
-    margin : 10px 5px 10px 5px;
-    background-color: rgb(240,240,240);
-} */
 
 #message_summary:hover {
     background-color: rgb(240,240,240);
@@ -121,6 +115,10 @@
     border-right:1px solid white;
     display: inline;
     text-align: center;
+}
+
+a.ajax-links-inbox {
+    text-decoration: none;
 }
 
 

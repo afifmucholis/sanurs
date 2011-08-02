@@ -2,3 +2,4 @@
 2. TOmbol login entah kenapa di Safari gak jalan. Padahal input type sumbit laen (misal search site) jalan
 3. Transparansi di IE gak dukung (udah diatasi dengan cara ngasih background)
 4. Semua input type=text di Safari panjangnya beda. Jadi mending dikasih width.
+5. Opera belum dicoba
