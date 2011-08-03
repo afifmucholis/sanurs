@@ -19,14 +19,6 @@
             </div>
         </div>
         <div class="clearboth"></div>
-        <div style="padding: 15px 0px 0px 0px">
-            <div class="general_text">
-                Special invitations will be sent through e-mail to all the members of the group, but the event will still show on the homepage.
-            </div>
-            <div class="general_text">
-                You can check attendance to your event in your <?php echo anchor('profile', 'profile page'); ?>.
-            </div>
-        </div>
     </div>
     <div class="hostevent_right">
         <?php
