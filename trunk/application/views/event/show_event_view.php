@@ -25,9 +25,9 @@
             echo "   ";
             echo form_button('not_attending', 'Not Attending', 'id="not_attending" onclick="javascript:RSVPEvent(\''.$data_event['event_id'].'\',\'2\')"');
         } else if ($data_event['rsvp']==2) {
-            echo "RSVP-ed for Attending";
+            echo "RSVP: Attending";
         } else if ($data_event['rsvp']==3) {
-            echo "RSVP-ed for Not Attending";
+            echo "RSVP: Not Attending";
         }
         ?></div>
 </div>

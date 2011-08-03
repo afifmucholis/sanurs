@@ -24,7 +24,7 @@
                     if ($new_notification == 0) {
                         echo anchor('notification', 'NOTIFICATION');
                     } else {
-                        echo anchor('notification', 'NOTIFICATION (' . $new_notification . ')');
+                        echo anchor('notification', 'NOTIFICATIONS (' . $new_notification . ')');
                     }
                     ?>
                 </li>
@@ -33,7 +33,7 @@
                     if ($request_friend == 0)
                         echo anchor('friend/friend_request', 'FRIEND REQUEST');
                     else
-                        echo anchor('friend/friend_request', 'FRIEND REQUEST(' . $request_friend . ')');
+                        echo anchor('friend/friend_request', 'FRIEND REQUESTS(' . $request_friend . ')');
                     ?>
                 </li>
             </ul>
@@ -49,7 +49,8 @@
 
             <?php
             if (count($friend_list_sidebar) == 0) {
-                echo "<label class='general_text'>You don't have any friends.</label>";
+                echo "<label class='general_text'>You do not have any friends yet.</label><br/>";
+                echo anchor('friend','Start Looking', 'class="link" style="padding-left:5px;"');
             } else {
                 foreach ($friend_list_sidebar as $friend) {
                     ?>

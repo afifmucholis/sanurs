@@ -45,7 +45,7 @@
             data: form_data,
             success: function(msg) {
                 if (msg==1) {
-                    $('#add_as_friend').html('Request has been sent.');
+                    $('#add_as_friend').html('Your friend request has been sent.');
                 } else {
                     alert('Error');
                 }
