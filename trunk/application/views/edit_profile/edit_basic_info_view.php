@@ -1,3 +1,4 @@
+<div id="editbasic_bg">
 <div class="edit_profile_left" style="background-color: #ffffff">
     <div class="edit_profpic">
         <?php
@@ -107,3 +108,4 @@
 <?php
 $this->load->view('popup/upload_image');
 ?>
+</div>
