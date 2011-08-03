@@ -20,7 +20,7 @@
     </div>
     <div class="edit_profile_right">
         <?php
-        echo form_open('profile/submitProfile');
+        echo form_open('profile/submitProfile',array('id' => 'submitprofile_form'));
         echo form_hidden('url_img', base_url() . $content_edit['img_url']);
         ?>
         <div>
@@ -109,3 +109,18 @@
     $this->load->view('popup/upload_image');
     ?>
 </div>
+
+<script>
+    $(document).ready(function() {   
+        $("#submitprofile_form").validate({
+            rules : { 
+                confirm_password : {
+                    equalTo : '#new_password'
+                }
+            },
+            messages : {
+                confirm_password : "This field doesn't match with new password"
+            }
+        });
+    });
+</script>

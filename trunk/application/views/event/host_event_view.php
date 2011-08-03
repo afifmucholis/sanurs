@@ -95,6 +95,5 @@
                 description : "The description of the event is required"
             }
         });
-        bind_forget_click();
     });
 </script>
