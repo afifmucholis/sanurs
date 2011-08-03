@@ -32,7 +32,7 @@ function initmap(page) {
                 lng = msg['lng'];
                 if (lat!=null && lng!=null) {
                     latlng = new google.maps.LatLng(lat,lng);
-                    addMarker('my location', latlng, false);
+                    addMarker('my location', latlng, true);
                 }
                 clearOverlays();
                 showOverlay();
@@ -103,8 +103,6 @@ function initmap(page) {
                 });*/
             }
         });
-        
-        //alert(markersArray[0].title);
         
         // bisa create pin kalo mapnya diclick
         google.maps.event.addListener(map, 'click', function(event) {
@@ -225,6 +223,15 @@ function addMarker(title, location, draggable) {
         title : title,
         draggable : draggable
     });
+    
+    if (draggable) {
+        //kalo draggable=true, berarti marker bisa digeser (update posisi)
+        google.maps.event.addListener(marker, 'dragend', function(event){
+            marker.setPosition(event.latLng);
+            setLocation();
+        });
+    }
+    
     markersArray.push(marker);
 }
 
@@ -287,7 +294,7 @@ function geocodeLocation() {
                         } while (!found);
                         map.setCenter(results[0].geometry.location);
                         deleteOverlays();
-                        addMarker('my location', results[0].geometry.location, false);
+                        addMarker('my location', results[0].geometry.location, true);
                         clearOverlays();
                         showOverlay();
                         setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
@@ -310,7 +317,6 @@ function geocodeLocation() {
                                         addArea(name);
                                         addArea(area_lat);
                                         addArea(area_lng);
-                                        //alert(areaLocation[0]);
 
                                         $('input[name=area_name]').attr('value', areaLocation[0]);
                                         $('input[name=area_lat]').attr('value', areaLocation[1]);
@@ -318,7 +324,6 @@ function geocodeLocation() {
                                     }
                                 }
                             );
-                            //alert(areaLocation[0]);
                         }
                         
                     }
