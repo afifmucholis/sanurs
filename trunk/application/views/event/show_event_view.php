@@ -80,7 +80,7 @@
             data: form_data,
             success: function(msg) {
                 if (msg.success==1) {
-                    var href = '<a href="';
+                    var href = '<a class="people_links_white" href="';
                     href += msg.link;
                     href += '">';
                     href += msg.name;
