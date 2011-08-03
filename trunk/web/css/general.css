@@ -1001,7 +1001,20 @@ label {
     float:left;
     position:relative;
 }
+
+#editvis_bg {
+    margin-left: -25px;
+    margin-right: -20px;
+    margin-top: -45px;
+    width: inherit;
+    background-color: #000000;
+}
+
+#profile_body #history {
+    display:none;
+}
 /*** end of buat edit profile ***/
+
 .search_friend_table .left-table {
     width: auto;
 }
