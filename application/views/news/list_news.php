@@ -1,22 +1,34 @@
 <?php
+    if ($isadmin) {
+    ?>
+    <div id="news_div">
+        <div id="content_news" class="description_img">
+            <?php echo br(2);?>
+            <div id="title_news">
+                <?php 
+                    echo anchor('news/add_news', '+ Add News');
+                ?>
+            </div>
+        </div>
+        <div class="clearboth"></div>
+    </div>
+    <?php
+    }
     if (is_bool($all_news) || count($all_news) == 0) {
-        echo "No Any News.<br/>";
-    } else {
-        if ($isadmin) {
         ?>
         <div id="news_div">
             <div id="content_news" class="description_img">
                 <?php echo br(2);?>
                 <div id="title_news">
                     <?php 
-                        echo anchor('news/add_news', '+ Add News');
+                        echo "No news available";
                     ?>
                 </div>
             </div>
             <div class="clearboth"></div>
         </div>
-        <?php
-        }
+    <?php
+    } else {
         foreach ($all_news as $news) :
 ?>
         <div id="news_div">

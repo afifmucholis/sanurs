@@ -20,11 +20,11 @@
                 </div>
             <?php } else if ($add_as_friend == 2) { ?>
                 <div id="add_as_friend">
-                    Request has been sent.
+                    Your friend request has been sent.
                 </div>
             <?php } else if ($add_as_friend == 3) { ?>
                 <div id="add_as_friend">
-                    <a href="#" onclick="javascript:unfriend('<?php echo $user_data['user_id']; ?>')";>Block from friend</a>
+                    <a href="#" onclick="javascript:unfriend('<?php echo $user_data['user_id']; ?>', '<?php echo $user_data['name']; ?>')";>Block from friend</a>
                 </div>
             <?php } else if ($add_as_friend == 4) { ?>
                 <div id="add_as_friend">
@@ -80,8 +80,8 @@
 <?php $this->load->view('popup/add_as_friend_form', $user_data); ?>
 
 <script type="text/javascript">
-    function unfriend(val) {
-        if (confirm('Are you sure to remove this person from your friend?')) {
+    function unfriend(val, name) {
+        if (confirm('Are you sure you want to remove '+name+' as your friend?')) {
             var link = '<?php echo site_url('friend/unfriend'); ?>';
             var link_add = '<a href="#" class="popup_link">Add as friend</a>';
             var form_data = {
@@ -117,14 +117,19 @@
         var link = '';
         var link_add = '<a href="#" class="popup_link">Add as friend</a>';
         var link_block = '<a href="#" onclick="javascript:unfriend(\'<?php echo $user_data['user_id']; ?>\')";>Block from friend</a>';
+        var konfirm = false;
         if (val) {
             message = 'Are you sure to confirm this friend request?';
             link = '<?php echo site_url('friend/confirm_request'); ?>';
+            konfirm = true;
         } else {
-            message = 'Are you sure to reject this friend request?';
+            message = 'Are you sure you want to reject this friend request?';
             link = '<?php echo site_url('friend/confirm_request'); ?>';
+            if (confirm(message)) {
+                konfirm = true;
+            }
         }
-        if (confirm(message)) {
+        if (konfirm) {
             var form_data = {
                 id : id,
                 type : val,

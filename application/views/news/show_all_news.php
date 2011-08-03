@@ -60,7 +60,7 @@
     }
     
     function delete_news_confirm() {
-        return confirm('Are you sure to delete this news?');
+        return confirm('Are you sure you want to delete this news?');
     }
     
     

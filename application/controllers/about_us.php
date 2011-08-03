@@ -82,11 +82,11 @@ class About_us extends CI_Controller {
             } else {
                 // success
                 $message2['status'] = 'Success';
-                $message2['message'] = 'Your message is successfully sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
+                $message2['message'] = 'Your message is successfully sent.';
             }
         } catch (Exception $e) {
             $message2['status'] = 'An Error Occurred';
-            $message2['message'] = 'Your message is not successfully sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
+            $message2['message'] = 'Your message has not been sent.'.br(1).'Click '.anchor('about_us/view/contact','here').' to try again.';
         }
         
         $message2['page_before'] = 'Contact Us';

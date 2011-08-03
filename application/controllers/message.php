@@ -109,7 +109,7 @@ class Message extends CI_Controller {
                 $optionUser = array('name' => $to);
                 $getUsers = $this->userModel->getUsers($optionUser);
                 if (is_bool($getUsers)) {
-                    throw new Exception("No user has name " . $to);
+                    throw new Exception("There is no ".$to." listed in our database. Click here to send another message.");
                 } else {
                     //Cek ada 1 gak :
                     if (count($getUsers) == 1) {
@@ -137,10 +137,10 @@ class Message extends CI_Controller {
                         }
                         if ($countfriend == 1) {
                             $idto = $friendid;
-                        } else if ($countfriend == 0) {
-                            throw new Exception("Your message is not succesfully sent. Recipient is not your friend");
+                        //} else if ($countfriend == 0) {
+                            //throw new Exception("Your message has not been sent because ".$to." isn’t a friend yet.".br(1).anchor('profile/user/','Add '.$to, 'class="links"'));
                         } else {
-                            throw new Exception("More than 1 of your friends that have name " . $to."<br/> Use autocomplete to spesify your friend.");
+                            throw new Exception("There are ".$countfriend." people with the name ".$to.".<br/> Use autocomplete to spesify your friend.");
                         }
                     }
                 }
@@ -156,7 +156,7 @@ class Message extends CI_Controller {
             if (is_bool($getReturn1) && is_bool($getReturn2)) {
                 //to bukan friend dari pengirim
                 if ($idto != '') {
-                    throw new Exception("Your message is not succesfully sent. Recipient is not your friend");
+                    throw new Exception("Your message has not been sent because ".$to." isn’t a friend yet.".br(1).anchor('profile/user/'.$idto,'Add '.$to, 'class="links"'));
                 }
             } else {
                 //Isi ke database message :
@@ -171,7 +171,7 @@ class Message extends CI_Controller {
                 } else {
                     // load model notification
                     $this->load->model('notification_model', 'notifModel');
-                    $notify = $sender_name . " send you a new message.";
+                    $notify = 'You have 1 new message from '.$sender_name;
                     $link = 'message/view/inbox_view';
                     $options = array('userid_to' => $idto, 'message' => $notify, 'link' => $link);
                     $addNotify = $this->notifModel->addNotification($options);
@@ -181,7 +181,7 @@ class Message extends CI_Controller {
             }
         } catch (Exception $e) {
             $m['status'] = 'An Error Occurred';
-            $m['message'] = $e->getMessage().''.br(1).'Click '.anchor('message/view/new_message_view','here').' to send message again.';
+            $m['message'] = $e->getMessage().''.br(1).'Click '.anchor('message/view/new_message_view','here').' to send another message.';
         }
         $m['page_before'] = 'Message';
         $m['page_link'] = 'message/view/new_message_view';

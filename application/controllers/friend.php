@@ -16,7 +16,7 @@ class friend extends CI_Controller {
      */
     function index() {
         if ($this->session->userdata('name')==null) {
-            $message = 'You must sign in first to find your friend.';
+            $message = 'We’re sorry for the inconvenience, but you have to Sign In to find friends.';
             $this->session->set_flashdata('message', $message);
             redirect('/sign_in', 'refresh');
         }
@@ -136,13 +136,7 @@ class friend extends CI_Controller {
         if (is_bool($deleteFriend)) {
             $success = 0;
         } else {
-            // load model notification
-            $this->load->model('notification_model','notifModel');
-            // add notifi ada yg nge remove dari friend
-            $notify = $user_name." has removed you from being his friend.";
-            $link = 'profile/user/'.$user_id;
-            $options = array('userid_to'=>$user_removed,'message'=>$notify,'link'=>$link);
-            $addNotify = $this->notifModel->addNotification($options);
+            
         }
         $this->output
         ->set_content_type('application/json')
@@ -305,10 +299,6 @@ class friend extends CI_Controller {
                     $message = "You have accepted ".$getUser[0]->name."'s friend request.";
                 }
             } else {
-                // add notifi rejected ke user yang nge request
-                $notify = $user_name." has rejected your friend request.";
-                $options = array('userid_to'=>$user_requester,'message'=>$notify);
-                $addNotify = $this->notificationModel->addNotification($options);
                 $success = 1;
                 $message = "You have rejected ".$getUser[0]->name."'s friend request.";
             }

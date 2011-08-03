@@ -179,7 +179,7 @@ class news extends CI_Controller {
             $options = array('id'=>$id_news);
             $getNews = $this->newsModel->deleteNews($options);
             if (is_bool($getNews))
-                throw new Exception('Error on deleting news.');
+                throw new Exception('Error deleting news.');
             $message['status'] = 'Success';
             $message['message'] = 'News is successfully deleted.'.br(1).'Click '.anchor('news/show','here').' to back to news.';
         } catch (Exception $e) {
@@ -401,9 +401,9 @@ class news extends CI_Controller {
                 $options = array('id'=>$id_news,'content'=>$text, 'title'=>$title);
                 $updateNews = $this->newsModel->updateNews($options);
                 if (is_bool($updateNews))
-                    show_error('Error update news on database.');
+                    show_error('Error updating news on database.');
                 $message['status'] = 'Success';
-                $message['message'] = 'News is successfully updated.'.br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to view this news.';
+                $message['message'] = 'News is successful updated.'.br(1).'Click '.anchor('news/show','here').' to view news.';
             } else {
                 // insert baru
                 $message['page_before'] = 'Add News';
@@ -413,9 +413,9 @@ class news extends CI_Controller {
                 $options = array('content'=>$text, 'title'=>$title);
                 $insertNews = $this->newsModel->addNews($options);
                 if (is_bool($insertNews))
-                    show_error('Error insert news on database.');
+                    show_error('Error uploading news onto database.');
                 $message['status'] = 'Success';
-                $message['message'] = 'News is successfully added.'.br(1).'Click '.anchor('news/show_news/'.$insertNews,'here').' to view this news.';
+                $message['message'] = 'News is successfully uploaded.'.br(1).'Click '.anchor('news/show','here').' to view news.';
             }
         } catch (Exception $e) {
             $message['status'] = 'An Error Occurred';

@@ -47,8 +47,8 @@
                 }
             },
             messages : {
-                title : "Please enter a title for this news",
-                area1_text : "Please insert the content"
+                title : "Title cannot be blank.",
+                area1_text : "Please fill in the content"
             }
         }
     );
