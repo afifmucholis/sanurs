@@ -30,7 +30,8 @@ if (count($search_result) == 0) {
                             <div id="text_search" style="float:left;">
                                 <?php
                                     $text = word_limiter($content->plaintext,50);
-                                    echo $array_img[0];
+                                    if (count($array_img)!=0)
+                                        echo $array_img[0];
                                     echo $text;
                                 ?>
                             </div>
