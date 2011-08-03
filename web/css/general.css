@@ -1101,6 +1101,12 @@ a.people_links {
     font-size: 13px;   
 }
 
+a.people_links_white {
+    color: white;
+    font-family: Arial;
+    font-size: 13px;   
+}
+
 /***** Datepicker *****/
 #ui-datepicker-div {
     display:none;
