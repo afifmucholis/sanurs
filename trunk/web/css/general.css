@@ -1102,3 +1102,28 @@ a.people_links {
     display:none;
 }
 /**********************/
+
+/*** HOST EVENT ***/
+#hostevent_bg {
+    margin-left: -25px;
+    margin-right: -20px;
+    margin-top: -45px;
+    width: inherit;
+    padding-top: 50px;
+}
+
+.hostevent_left {
+    float:left;
+    width: 375px;
+    margin-left: 25px;
+    margin-top: -15px;
+}
+
+.hostevent_right {
+    float:right;
+    width: 550px;
+    background-color: #000000;
+    padding-right: 20px;
+    margin-top: -15px;
+}
+/*** END OF HOST EVENT ***/
