@@ -1190,3 +1190,9 @@ a.people_links_white {
 #event-info {
     padding: 30px 10px 20px 40px;
 }
+
+.title-information {
+    padding-right: 10px;
+    color : rgb(220,220,220);
+    font-weight: bold;
+}
