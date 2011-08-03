@@ -11,7 +11,7 @@ class site_searching extends CI_Controller {
     function index() {
         $data['title'] = 'Site Searching';
         $data['main_content'] = 'site_searching/site_searching_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->_getStruktur();
         
         $this->load->view('includes/template', $data);
     }
@@ -19,7 +19,7 @@ class site_searching extends CI_Controller {
     function search() {
         $data['title'] = 'Site Searching';
         $data['main_content'] = 'site_searching/site_searching_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->_getStruktur();
        
         
         $term = $this->input->post('term');
@@ -188,7 +188,7 @@ class site_searching extends CI_Controller {
         return $news_paginate;
     }
     
-    function getStruktur(){
+    function _getStruktur(){
        $struktur = array (
             array (
                 'islink'=>1,
