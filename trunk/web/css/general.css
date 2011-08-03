@@ -891,6 +891,7 @@ label {
 #link-menu:hover {
     color: #000000;
     background-color: #a1a1a1;
+    font-size: 14px;
 }
 
 #link-menu_select {
