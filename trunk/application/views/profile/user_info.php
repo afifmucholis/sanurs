@@ -151,7 +151,7 @@ if ($user_data['visibility']->home_address ||
     echo "<div class='impact20'>Personal Information : </div>";
 }
 ?>
-<div style="margin-left: 13px;margin-top: 10px;">
+<div class ="general_text" style="margin-left: 13px;margin-top: 10px;">
     <table>
     <?php if ($user_data['visibility']->home_address) { ?>
     <div id="home_address" class="general_text">
