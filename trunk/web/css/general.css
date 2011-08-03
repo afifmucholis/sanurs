@@ -197,48 +197,10 @@ root {
     float : right;
 }
 
-#left-banner {
-    width:300px;
-    float:left;
-}
-
-#deskripsi_home {
-    font-family: 'Times New Roman',Times,serif;
-    font-size: 12px;
-    color: white;
-}
-
-#deskripsi_home a {
-    color: white;
-}
-
-
-#right-banner {
-    padding-top: 20px;
-    padding-right: 15px;
-    float: right;
-}
-
-#grouper1{
-    float: right;
-}
 .banner {
     /* height: 217px;
     background-color : rgb(16,77,17); */
     margin-left: 0px;
-}
-
-.heading {
-    font-family: impact;
-    font-size: 45px;
-    color: rgb(255,255,255);
-}
-
-
-.heading2 {
-    font-family: georgia;
-    font-size: 18px;
-    color: rgb(255,255,255);
 }
 
 
@@ -249,15 +211,6 @@ root {
     color: rgb(150,150,150);
 }
 
-.left-menu {
-    float:left;
-    width: 680px;
-}
-
-.right-menu {
-    float:left;
-    width: 260px;
-}
 img.event_images {
     min-height: 300px;
     max-height: 350px;
@@ -279,8 +232,6 @@ img.event_images {
 }
 
 /* Ids */
-
-
 #main_content {
     min-height: 500px;
     padding: 10px 20px 10px 25px;
@@ -297,17 +248,6 @@ img.event_images {
     float: right;
     margin-right: 100px;
 }
-
-#sanur_title {
-    font-family: Arial,Helvetica,sans-serif;
-    font-size:18px;
-}
-
-#sanur_title_description {
-    font-family: Arial,Helvetica,sans-serif;
-    font-size: 10px;
-}
-
 
 #map {
     width: 900px;
