@@ -452,7 +452,7 @@ select option{
 }
 
 .recent-news-home{
-    height: 345px;
+    height: 245px;
 }
 
 .login-box-home {
@@ -742,24 +742,29 @@ label {
     bottom: 0;
     right: 0;
     padding:10px;
+    /* Kalo gak dukung transparan */
+    background : rgb(255,255,255);
+    background : rgba(255,255,255,0.8);
 }
 
-#news_holder_left #news_div #content_news.description_img #title_news {
+#news_div #content_news.description_img #title_news {
     font-family: Impact;
     font-size: 22px;
     margin-bottom: 5px;
+    text-transform: uppercase;
 }
 
-#news_holder_left #news_div #content_news.description_img #title_news a {
+#news_div #content_news.description_img #title_news a {
     text-decoration: none;
     color:#666666;
 }
 
-#news_holder_left #news_div #content_news.description_img #text_news {
+#news_div #content_news.description_img #text_news {
     margin-bottom: 5px;
+    text-align: justify;
 }
 
-#news_holder_left #news_div #content_news.description_img #link_show {
+#news_div #content_news.description_img #link_show {
     font-family: Arial,Helvetica,sans-serif;
     font-size: 12px;
     margin-bottom: 5px;
@@ -767,7 +772,7 @@ label {
     text-decoration: underline;
 }
 
-#news_holder_left #news_div #content_news.description_img #link_show a {
+#news_div #content_news.description_img #link_show a {
     text-decoration: none;
     color:#666666;
 }
@@ -796,6 +801,7 @@ label {
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+    text-align: justify;
 }
 
 /**********************************/
@@ -1147,15 +1153,13 @@ a.people_links_white {
 
 /********* RECENT NEWS HOME *****************/
 #news-slideshow-area, #news-slideshow-scroller {
-  width: 500px;
-  height: 345px;
+  height: 245px;
   position: relative;
   overflow: hidden;
-  margin: 0 auto;
 }
 
 #news-slideshow-area {
-  border: 1px solid #000;
+  
 }
 
 #news-slideshow-holder {
@@ -1163,7 +1167,15 @@ a.people_links_white {
 }
 
 .news-slideshow-content {
-  float: left;
+    min-width: 468px;
+    width: 468px;
+    float: left;
+    padding:5px;
+}
+
+.news-slideshow-content #news_div #content_news.description_img {
+    width:420px;
+    height:245px;
 }
 
 /********************************************/

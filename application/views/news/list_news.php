@@ -36,13 +36,16 @@
                 $content = str_get_html($news->content);
                 $array_img = $content->find('img');
                 if (count($array_img)!=0) {
-                    $array_img[0]->width=100;
-                    $array_img[0]->height=100;
-                    $array_img[0]->style="float:left";
-//                    echo $array_img[0];
+                    $array_img[0]->style="height: 150px; width: 325px; ";
                 }
             ?>
+            <?php
+                if (count($array_img)!=0) {
+                    echo $array_img[0];
+                }
+                ?>
             <div id="content_news" class="description_img">
+                
                 <div id="title_news">
                     <?php 
                         echo anchor('news/show_news/'.$news->id,$news->title); 
