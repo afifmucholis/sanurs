@@ -21,7 +21,7 @@ class Sign_in extends CI_Controller {
     function index() {
         $data['title'] = 'Sign In';
         $data['main_content'] = 'sign_in/sign_in_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->_getStruktur();
         $data['body_id'] = 'sign_in_body';
         $fl = $this->session->flashdata('message');
         if ($fl!='')
@@ -157,7 +157,7 @@ class Sign_in extends CI_Controller {
 
     }
     
-    function getStruktur() {
+    function _getStruktur() {
         $struktur = array (
             array (
                 'islink'=>1,

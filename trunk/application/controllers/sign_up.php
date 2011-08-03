@@ -17,7 +17,7 @@ class sign_up extends CI_Controller {
         }
         $data['title'] = 'Sign Up';
         $data['main_content'] = 'sign_up/sign_up_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->_getStruktur();
         $data['show_calendar'] = 1;
         $data['body_id'] = 'sign_up_body';
         
@@ -94,7 +94,7 @@ class sign_up extends CI_Controller {
         $this->load->view('sign_up/list_alumni', $data);
     }
 
-    function getStruktur() {
+    function _getStruktur() {
         $struktur = array(
             array(
                 'islink' => 1,

@@ -27,7 +27,7 @@ class news extends CI_Controller {
     function show() {
         $data['title'] = 'News';
         $data['main_content'] = 'news/show_all_news';
-        $data['struktur'] = $this->getStruktur('News');
+        $data['struktur'] = $this->_getStruktur('News');
         $data['body_id'] = 'news_body';
         // cek admin
         $data['isadmin'] = $this->session->userdata('isadmin');
@@ -115,7 +115,7 @@ class news extends CI_Controller {
         $data['title_news'] = $getNews[0]->title;
         $data['title'] = 'News - '.$data['title_news'];
         $data['main_content'] = 'news/show_news';
-        $data['struktur'] = $this->getStruktur2($data['title_news']);
+        $data['struktur'] = $this->_getStruktur2($data['title_news']);
         $this->load->view('includes/template',$data);
     }
     
@@ -126,7 +126,7 @@ class news extends CI_Controller {
             
         $data['title'] = 'News';
         $data['main_content'] = 'news/add_news_view';
-        $data['struktur'] = $this->getStruktur2('Add News');
+        $data['struktur'] = $this->_getStruktur2('Add News');
         $data['body_id'] = 'news_body';
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
@@ -159,7 +159,7 @@ class news extends CI_Controller {
         $data['old_news'] = $getNews[0]->content;
         $data['title'] = 'Edit News';
         $data['main_content'] = 'news/edit_news_view';
-        $data['struktur'] = $this->getStruktur2('Edit News');
+        $data['struktur'] = $this->_getStruktur2('Edit News');
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 500;
@@ -428,7 +428,7 @@ class news extends CI_Controller {
     }
     
     
-    function getStruktur($view) {
+    function _getStruktur($view) {
         $struktur = array (
             array (
                 'islink'=>1,
@@ -443,7 +443,7 @@ class news extends CI_Controller {
         return $struktur;
     }
     
-    function getStruktur2($view) {
+    function _getStruktur2($view) {
         $struktur = array (
             array (
                 'islink'=>1,

@@ -33,7 +33,7 @@ class Event extends CI_Controller {
     function index() {
         $data['title'] = 'Event';
         $data['main_content'] = 'event/main_event_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->_getStruktur();
         $data['sortby'] = 'categories';
         $data['show_calendar_and_event'] = true;
         $data['body_id'] = 'event_body';
@@ -51,7 +51,7 @@ class Event extends CI_Controller {
         $array = $this->uri->uri_to_assoc(2);
         $data['title'] = 'Event';
         $data['main_content'] = 'event/main_event_view';
-        $data['struktur'] = $this->getStruktur();
+        $data['struktur'] = $this->_getStruktur();
         $data['sortby'] = $array['sortby'];
         $data['categories'] = "";
         $data['show_calendar_and_event'] = true;
@@ -211,7 +211,7 @@ class Event extends CI_Controller {
 
         $data['title'] = 'Event - ' . $title;
         $data['main_content'] = 'event/show_event_view';
-        $data['struktur'] = $this->getStruktur2($title);
+        $data['struktur'] = $this->_getStruktur2($title);
         $data['body_id'] = 'event_body';
         $this->load->view('includes/template', $data);
     }
@@ -280,7 +280,7 @@ class Event extends CI_Controller {
         }
         $data['title'] = 'Host an Event';
         $data['main_content'] = 'event/host_event_view';
-        $data['struktur'] = $this->getStruktur3();
+        $data['struktur'] = $this->_getStruktur3();
         $data['category_list'] = array();
         $data['body_id'] = 'event_body';
         
@@ -424,13 +424,13 @@ class Event extends CI_Controller {
         }
         $data['title'] = 'Your event calendar';
         $data['main_content'] = 'event/my_calendar_view';
-        $data['struktur'] = $this->getStruktur2('Your event calendar');
+        $data['struktur'] = $this->_getStruktur2('Your event calendar');
         $data['show_calendar_and_event'] = true;
         $data['body_id'] = 'event_body';
         $this->load->view('includes/template', $data);
     }
 
-    function getStruktur() {
+    function _getStruktur() {
         $struktur = array(
             array(
                 'islink' => 1,
@@ -445,7 +445,7 @@ class Event extends CI_Controller {
         return $struktur;
     }
 
-    function getStruktur2($title) {
+    function _getStruktur2($title) {
         $struktur = array(
             array(
                 'islink' => 1,
@@ -465,7 +465,7 @@ class Event extends CI_Controller {
         return $struktur;
     }
 
-    function getStruktur3() {
+    function _getStruktur3() {
         $struktur = array(
             array(
                 'islink' => 1,

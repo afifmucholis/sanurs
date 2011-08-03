@@ -24,7 +24,7 @@ class notification extends CI_Controller {
         }
         $data['title'] = 'Your Notification';
         $data['main_content'] = 'profile/notification_view';
-        $data['struktur'] = $this->getStruktur('Your Notification');
+        $data['struktur'] = $this->_getStruktur('Your Notification');
         $data['body_id'] = 'profile_body';
         $user_id = $this->session->userdata('user_id');
         // load model notification
@@ -47,7 +47,7 @@ class notification extends CI_Controller {
         $this->load->view('includes/template',$data);
     }
     
-    function getStruktur($name) {
+    function _getStruktur($name) {
         $struktur = array (
             array (
                 'islink'=>1,

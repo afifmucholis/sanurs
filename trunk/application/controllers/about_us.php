@@ -21,7 +21,7 @@ class About_us extends CI_Controller {
     function index() {
         $data['title'] = 'About Us';
         $data['main_content'] = 'about_us/about_us_view';
-        $data['struktur'] = $this->getStruktur('Contact Us');
+        $data['struktur'] = $this->_getStruktur('Contact Us');
         $data['view'] = 'about_us/history';
         $data['view_awal'] = 'link_web';
         $data['body_id'] = 'about_body';
@@ -42,13 +42,13 @@ class About_us extends CI_Controller {
         $data['view_awal'] = $array['view'];
         $data['body_id'] = 'about_body';
         if ($array['view']=='history')
-            $data['struktur'] = $this->getStruktur('History');
+            $data['struktur'] = $this->_getStruktur('History');
         else if ($array['view']=='visimisi')
-            $data['struktur'] = $this->getStruktur('Vision and Mission');
+            $data['struktur'] = $this->_getStruktur('Vision and Mission');
         else if ($array['view']=='contact') {
-            $data['struktur'] = $this->getStruktur('Contact Us');
+            $data['struktur'] = $this->_getStruktur('Contact Us');
         } else if ($array['view']=='link_web')
-            $data['struktur'] = $this->getStruktur('Santa Ursula Website');
+            $data['struktur'] = $this->_getStruktur('Santa Ursula Website');
         if ($this->input->get('ajax')) {
             $text = $this->load->view($data['view'],"",true);
             $this->output
@@ -97,7 +97,7 @@ class About_us extends CI_Controller {
         redirect('info/show','refresh');
     }
     
-    function getStruktur($view) {
+    function _getStruktur($view) {
         $struktur = array (
             array (
                 'islink'=>1,

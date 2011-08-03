@@ -59,7 +59,7 @@ class friend extends CI_Controller {
         
         $data['title'] = 'Find a friend';
         $data['main_content'] = 'friend/find_a_friend_view';
-        $data['struktur'] = $this->getStruktur3();
+        $data['struktur'] = $this->_getStruktur3();
         $data['body_id'] = 'find_friend_body';
         $this->load->view('includes/template',$data);
     }
@@ -155,7 +155,7 @@ class friend extends CI_Controller {
         }
         $data['title'] = 'View Friend Request';
         $data['main_content'] = 'friend/friend_request_view';
-        $data['struktur'] = $this->getStruktur('Friend Request');
+        $data['struktur'] = $this->_getStruktur('Friend Request');
         $data['body_id'] = 'profile_body';
         $user_id = $this->session->userdata('user_id');
         $this->load->library('pagination');
@@ -367,7 +367,7 @@ class friend extends CI_Controller {
         
         $data['title'] = 'Profile';
         $data['main_content'] = 'friend/search_friend_result_view';
-        $data['struktur'] = $this->getStruktur2('Your Profile');
+        $data['struktur'] = $this->_getStruktur2('Your Profile');
         $data['search_name'] = $search_name;
         $data['search_year'] = $search_year;
         $data['interest'] = $interest;
@@ -638,7 +638,7 @@ class friend extends CI_Controller {
         return $searchResultsPaginate;
     }
     
-    function getStruktur($name) {
+    function _getStruktur($name) {
         $struktur = array (
             array (
                 'islink'=>1,
@@ -657,7 +657,7 @@ class friend extends CI_Controller {
         );
         return $struktur;
     }
-    function getStruktur2() {
+    function _getStruktur2() {
         $struktur = array (
             array('islink'=>1,
                 'link'=>'home',
@@ -675,7 +675,7 @@ class friend extends CI_Controller {
         return $struktur;
     }
     
-    function getStruktur3() {
+    function _getStruktur3() {
         $struktur = array (
             array('islink'=>1,
                 'link'=>'home',
