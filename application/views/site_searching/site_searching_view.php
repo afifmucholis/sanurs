@@ -1,4 +1,4 @@
-<div id="title-menu">Search Results</div>
+<div id="title-menu">Search results for '<?php echo $term ?>'</div>
 <br/>
 <div id="searching_site">
     <?php
