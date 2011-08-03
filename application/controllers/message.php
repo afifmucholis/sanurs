@@ -26,7 +26,7 @@ class Message extends CI_Controller {
         }
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
-        $data['struktur'] = $this->getStruktur('New Message');
+        $data['struktur'] = $this->_getStruktur('New Message');
         $data['body_id'] = 'message_body';
         $data['view'] = 'message/new_message_view';
         $this->load->view('includes/template', $data);
@@ -48,10 +48,10 @@ class Message extends CI_Controller {
         $data['view'] = 'message/' . $array['view'];
         $data['body_id'] = 'message_body';
         if ($array['view'] == 'new_message_view') {
-            $data['struktur'] = $this->getStruktur('New Message');
+            $data['struktur'] = $this->_getStruktur('New Message');
             $data['friend_list'] = $this->getFriendList();
         } else if ($array['view'] == 'inbox_view') {
-            $data['struktur'] = $this->getStruktur('Inbox');
+            $data['struktur'] = $this->_getStruktur('Inbox');
 
             $this->load->library('pagination');
             $per_page = 10;
@@ -82,7 +82,7 @@ class Message extends CI_Controller {
             $this->pagination->initialize($config);
             $data['pagination'] = $this->pagination->create_links();
         } else if ($array['view'] == 'inbox_detail_view') {
-            $data['struktur'] = $this->getStruktur('Inbox Detail');
+            $data['struktur'] = $this->_getStruktur('Inbox Detail');
             $messageid = $this->input->get('id');
             $data['inbox_detail'] = $this->getInboxDetail($messageid);
         }
@@ -200,7 +200,7 @@ class Message extends CI_Controller {
         redirect('info/show','refresh');
     }
 
-    function getStruktur($view) {
+    function _getStruktur($view) {
         $struktur = array(
             array(
                 'islink' => 1,
