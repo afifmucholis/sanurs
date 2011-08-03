@@ -952,6 +952,10 @@ label {
     padding-top: 50px;
 }
 
+#editbasic_bg .edit_profile_left {
+    margin-top: -50px;
+}
+
 .edit_profpic {
     text-align: center;
     background-color: #000;
