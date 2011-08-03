@@ -839,14 +839,13 @@ label {
 
 /**********************************/
 
-/*** buat edit profile ***/
+/*** EDIT PROFILE ***/
 #profile_body #history {
     /*    display:none;*/
 }
 
 .edit_profile_menu {
     width: 550px;
-    /*    height: 25px;*/
     float: right;
     background-color: #000000;
     text-align: center;
@@ -897,7 +896,6 @@ label {
     font-family: Impact;
     font-size: 24px;
     padding: 30px 0px 5px 5px;
-    /*display: inline-block;*/
     text-align: right;
     color: #ffffff;
 }
@@ -1034,7 +1032,6 @@ label {
     margin-right: -20px;
     margin-top: -45px;
     width: inherit;
-/*    min-height: 500px;*/
     background-color: #000000;
     padding-top: 50px;
     padding-left: 40px;
@@ -1078,7 +1075,7 @@ label {
     margin-right: auto;
     padding: 0px 0px 0px 100px;
 }
-/*** end of buat edit profile ***/
+/*** END OF EDIT PROFILE ***/
 
 .search_friend_table .left-table {
     width: auto;
