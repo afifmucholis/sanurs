@@ -21,6 +21,9 @@
 class Message extends CI_Controller {
 
     function index() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
         $data['struktur'] = $this->getStruktur('New Message');
@@ -36,6 +39,9 @@ class Message extends CI_Controller {
      * mengembalikan respon berdasarkan request dari ajax/url request
      */
     function view() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $array = $this->uri->uri_to_assoc(2);
         $data['title'] = 'Message';
         $data['main_content'] = 'message/main_message_view';
@@ -93,6 +99,9 @@ class Message extends CI_Controller {
     }
 
     function submit() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $subject = $this->input->post('subject');
         $to = $this->input->post('to'); //to ini nama $id user
         $idto = $this->input->post('idto'); //to ini nama $id user
