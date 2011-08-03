@@ -1,18 +1,19 @@
 <div id="news">
     <?php
         if ($isadmin) {
-            echo anchor('news/edit_news/'.$id_news, 'Edit this news');
+            echo anchor('news/edit_news/'.$id_news, 'Edit this news','class="link"');
             echo '&nbsp;&nbsp;';
-            echo anchor('news/delete_news/'.$id_news, 'Delete News', 'class="remove_news"');
+            echo anchor('news/delete_news/'.$id_news, 'Delete News', 'class="remove_news link"');
             echo br(1);
         }
     ?>
-    <div id="title_news">
-        <h3><?php echo $title_news; ?></h3>
+    <div id="title-menu">
+        <?php echo $title_news; ?>
     </div>
     <div id="publishing_date">
         <?php echo $date;?>
     </div>
+    <br/>
     <div id="content_news">
         <?php echo $content;?>
     </div>
