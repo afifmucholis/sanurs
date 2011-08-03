@@ -835,6 +835,10 @@ label {
 /**********************************/
 
 /*** buat edit profile ***/
+#profile_body #history {
+/*    display:none;*/
+}
+
 .edit_profile_menu {
     width: 550px;
     height: 25px;
@@ -852,6 +856,17 @@ label {
     -webkit-border-top-left-radius : 5px;
     -webkit-border-top-right-radius : 5px;
     border-radius : 5px 5px 0px 0px;
+}
+
+.edit_profile_navigation {
+    padding: 0px 0px 0px 10px;
+    list-style:none;
+    position:relative;
+}
+
+.edit_profile_navigation li{
+    float:left;
+    position:relative;
 }
 
 #link-menu:hover {
@@ -955,11 +970,33 @@ label {
     display: block;
 }
 
-.editvisibility_col {
-    width: 500px;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 0px 0px 0px 100px;
+.edit_profile_form {
+    padding: 0px 0px 5px 18px;
+    float: left;
+}
+
+.edit_profile_form input{
+    width: 218px;
+    height: 20px;
+}
+
+#editloc_bg {
+    margin-left: -25px;
+    margin-right: -20px;
+    margin-top: -45px;
+    width: inherit;
+    background-color: #000000;
+    padding-top: 50px;
+}
+
+.editloc_container {
+    width: 900px;
+    margin: auto;
+}
+
+.edu_table {
+    float: right;
+    padding: 2px 0px 2px 0px;
 }
 
 .work-subtitle {
@@ -976,42 +1013,20 @@ label {
     color: #000000;
 }
 
-.edit_profile_form {
-    padding: 0px 0px 5px 18px;
-    float: left;
-}
-
-.edit_profile_form input{
-    width: 218px;
-    height: 20px;
-}
-
-.edu_table {
-    float: right;
-    padding: 2px 0px 2px 0px;
-}
-
-.edit_profile_navigation {
-    padding: 0px 0px 0px 10px;
-    list-style:none;
-    position:relative;
-}
-
-.edit_profile_navigation li{
-    float:left;
-    position:relative;
-}
-
 #editvis_bg {
     margin-left: -25px;
     margin-right: -20px;
     margin-top: -45px;
     width: inherit;
     background-color: #000000;
+    padding-top: 100px;
 }
 
-#profile_body #history {
-    display:none;
+.editvisibility_col {
+    width: 500px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0px 0px 0px 100px;
 }
 /*** end of buat edit profile ***/
 

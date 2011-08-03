@@ -1,4 +1,5 @@
-<div style="background-color: #000000">
+<div id="editloc_bg">
+    <div class="editloc_container">
     <div class="subtitle">Search Your Location</div>
     <div class="general_text" style="padding: 10px 0px 0px 18px; color: #ffffff">
         Input your current city : 
@@ -24,7 +25,7 @@
         Map di sini
     </div>
 
-    <div style="padding: 3px 0px 3px 18px">
+    <div style="padding: 3px 0px 5px 18px">
         <?php
         echo form_submit('save', 'Save Changes');
         echo form_hidden('save_lat', 0);
@@ -37,4 +38,5 @@
     </div>
     
     <div class="clearboth"></div>
+    </div>
 </div>
