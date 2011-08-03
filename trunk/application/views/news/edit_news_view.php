@@ -1,4 +1,4 @@
-<h3>Edit News</h3>
+<div id="title-menu">Edit News</div>
 
 <div id="form_add_news">
     <?php 

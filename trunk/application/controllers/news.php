@@ -130,7 +130,7 @@ class news extends CI_Controller {
         $data['body_id'] = 'news_body';
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
-        $data['textarea_size'] = 300;
+        $data['textarea_size'] = 500;
         $this->load->view('includes/template',$data);
     }
     
@@ -162,7 +162,7 @@ class news extends CI_Controller {
         $data['struktur'] = $this->getStruktur2('Edit News');
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
-        $data['textarea_size'] = 300;
+        $data['textarea_size'] = 500;
         $data['body_id'] = 'news_body';
         
         $this->load->view('includes/template',$data);
