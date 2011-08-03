@@ -15,7 +15,7 @@ class profile extends CI_Controller {
         }
         $data['title'] = 'Profile';
         $data['main_content'] = 'profile/my_profile_view';
-        $data['struktur'] = $this->getStruktur('Your Profile');
+        $data['struktur'] = $this->_getStruktur('Your Profile');
         $data['body_id'] = 'profile_body';
         // get user profile info
         $user_id = $this->session->userdata('user_id');
@@ -69,7 +69,7 @@ class profile extends CI_Controller {
         $data['user_data'] = $this->setUserData($user_id);
         $data['title'] = 'Profile - ' . $data['user_data']['name'];
         $data['main_content'] = 'profile/show_profile_view';
-        $data['struktur'] = $this->getStruktur($data['user_data']['name']);
+        $data['struktur'] = $this->_getStruktur($data['user_data']['name']);
         // cek apakah bisa add friend
         $data['add_as_friend'] = 1;
         if ($this->session->userdata('user_id') == null) {   // belum sign in
@@ -125,7 +125,7 @@ class profile extends CI_Controller {
 
         $data['title'] = 'Edit your profile ';
         $data['main_content'] = 'edit_profile/edit_profile_view';
-        $data['struktur'] = $this->getStruktur2('Basic Info');
+        $data['struktur'] = $this->_getStruktur2('Basic Info');
         $data['body_id'] = 'profile_body';
         // get uri to check default view edit exist
         $array = $this->uri->uri_to_assoc(2);
@@ -147,7 +147,7 @@ class profile extends CI_Controller {
         if ($this->session->userdata('name') == null) {
             redirect('/home', 'refresh');
         }
-        $data['struktur'] = $this->getStruktur2('Basic Info');
+        $data['struktur'] = $this->_getStruktur2('Basic Info');
         $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
 
         //list area of interest
@@ -398,7 +398,7 @@ class profile extends CI_Controller {
         if ($this->session->userdata('name') == null) {
             redirect('/home', 'refresh');
         }
-        $data['struktur'] = $this->getStruktur2('Location');
+        $data['struktur'] = $this->_getStruktur2('Location');
         $data['content_edit_view'] = 'edit_profile/edit_location_view';
         $data['content_edit'] = array();
 
@@ -714,7 +714,7 @@ class profile extends CI_Controller {
         endforeach;
         $data['major_options'] = $major_options;
 
-        $data['struktur'] = $this->getStruktur2('Education');
+        $data['struktur'] = $this->_getStruktur2('Education');
         $data['content_edit_view'] = 'edit_profile/edit_education_view';
         $data['content_edit'] = array();
 
@@ -958,7 +958,7 @@ class profile extends CI_Controller {
             redirect('/home', 'refresh');
         }
         $user_id = $this->session->userdata('user_id');
-        $data['struktur'] = $this->getStruktur2('Working');
+        $data['struktur'] = $this->_getStruktur2('Working');
         $data['content_edit_view'] = 'edit_profile/edit_working_view';
         $data['content_edit'] = array();
         // load model work_experience
@@ -1139,7 +1139,7 @@ class profile extends CI_Controller {
         }
         $user_id = $this->session->userdata('user_id');
 
-        $data['struktur'] = $this->getStruktur2('Visibility');
+        $data['struktur'] = $this->_getStruktur2('Visibility');
         $data['content_edit_view'] = 'edit_profile/edit_visibility_view';
 
         // get visibility data from database
@@ -1437,7 +1437,7 @@ class profile extends CI_Controller {
         return $user_data;
     }
 
-    function getStruktur($name) {
+    function _getStruktur($name) {
         $struktur = array(
             array(
                 'islink' => 1,
@@ -1452,7 +1452,7 @@ class profile extends CI_Controller {
         return $struktur;
     }
 
-    function getStruktur2($name) {
+    function _getStruktur2($name) {
         $struktur = array(
             array(
                 'islink' => 1,
