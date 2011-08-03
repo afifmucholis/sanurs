@@ -1,4 +1,4 @@
-<div style="width: inherit; background-color: #000000">
+<div id="editedu_bg">
     <div class="subtitle" style="width: 200px; margin: auto; padding-left: 270px">EDUCATION</div>
     <?php echo form_open('profile/submitPendidikan'); ?>
     <div id="edu_now" style="float: right; padding: 5px 0px 30px 0px">

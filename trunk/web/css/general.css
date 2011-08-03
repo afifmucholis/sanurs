@@ -73,7 +73,7 @@ root {
     border-radius : 0px 0px 7px 7px;
 }
 
- .navigation li a:hover {
+.navigation li a:hover {
     background-color: rgb(0,0,0) ;
     color : rgb(255,255,255);
 }
@@ -160,7 +160,7 @@ root {
 }
 
 #about_body .navigation li:hover ul.navigation_2 li #link_web {
-    
+
     border-right-style: none;
     border-left-style: none;
     border-bottom-style: none;
@@ -841,12 +841,12 @@ label {
 
 /*** buat edit profile ***/
 #profile_body #history {
-/*    display:none;*/
+    /*    display:none;*/
 }
 
 .edit_profile_menu {
     width: 550px;
-/*    height: 25px;*/
+    /*    height: 25px;*/
     float: right;
     background-color: #000000;
     text-align: center;
@@ -946,7 +946,11 @@ label {
     margin-right: -20px;
     margin-top: -45px;
     width: inherit;
-/*    background-color: #000000;*/
+    padding-top: 50px;
+}
+
+#editbasic_bg .edit_profile_right {
+    margin-top: -50px;
     padding-top: 50px;
 }
 
@@ -1010,9 +1014,30 @@ label {
     margin: auto;
 }
 
+#editedu_bg {
+    margin-left: -25px;
+    margin-right: -20px;
+    margin-top: -45px;
+    width: inherit;
+    min-height: 500px;
+    background-color: #000000;
+    padding-top: 50px;
+}
+
 .edu_table {
     float: right;
     padding: 2px 0px 2px 0px;
+}
+
+#editwork_bg {
+    margin-left: -25px;
+    margin-right: -20px;
+    margin-top: -45px;
+    width: inherit;
+/*    min-height: 500px;*/
+    background-color: #000000;
+    padding-top: 50px;
+    padding-left: 40px;
 }
 
 .work-subtitle {
@@ -1027,6 +1052,15 @@ label {
 
 .work_cur label {
     color: #000000;
+}
+
+.curwork_container {
+    background-color: #ffffff;
+    width: 387px;
+    margin-top: -50px;
+    margin-left: -40px;
+    padding-left: 30px;
+    padding-top: 50px;
 }
 
 #editvis_bg {

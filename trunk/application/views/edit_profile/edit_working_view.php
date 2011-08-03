@@ -1,10 +1,10 @@
-<div style="width: inherit; background-color: #000000">
+<div id="editwork_bg">
     <?php
     echo form_open('profile/submitWorking', 'id="form_work"');
     echo form_hidden('counter', count($working_experience));
     ?>
-    <div class="work-menu" style="width: 410px; background-color: #000000">
-        <div style="background-color: #ffffff; width: 387px">
+    <div class="work-menu" style="width: 410px">
+        <div class="curwork_container">
             <div class="subtitle" style="color: #000000">WORK EXPERIENCE</div>
             <div class="work-subtitle">(CURRENT WORK)</div>
             <div id="work_cur" class="work_cur">
@@ -23,11 +23,11 @@
             </div>
         </div>
     </div>
-    <div class="work-menu" style="width: 410px; background-color: #000000">
+    <div class="work-menu" style="width: 410px">
         <div class="subtitle" style="color: #000000">WORK EXPERIENCE</div>
         <div class="work-subtitle" style="color: rgb(255,255,255)">(OTHER WORK EXPERIENCE)</div>
     </div>
-    <div class="work-menu" style="width: 410px; background-color: #000000">
+    <div class="work-menu" style="width: 410px">
         <div id="work_field" style="float: left">
             <?php
             $count = 1;
