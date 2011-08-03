@@ -39,11 +39,11 @@
                 <div id="text_news">
                     <?php
                         if ($isadmin) {
-                            $text = character_limiter($content->plaintext,50);
+                            $text = substr($content->plaintext,0,30);
                         } else {
-                            $text = character_limiter($content->plaintext,80);
+                            $text = substr($content->plaintext,0,70);
                         }
-                        echo $text;
+                        echo $text.'...';
                     ?>
                 </div>
                 <div id="link_show">

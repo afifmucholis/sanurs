@@ -81,7 +81,7 @@
                         <li><div class="arrow-right"></div><a href="link_web" id="link_web" class="about_links">SANTA URSULA WEB</a></li>
                     </ul>
                 </li>
-                <li id="event-nav"><a href="<?php echo site_url('event')?>">EVENT</a></li>
+                <li id="event-nav"><a href="<?php echo site_url('event')?>">EVENTS</a></li>
                 <li id="news-nav"><a href="<?php echo site_url('news/show')?>">NEWS</a></li>
                 <?php if ($this->session->userdata('name')==null) { ?>
                     <li id="signin-nav"><a href="<?php echo site_url('sign_in')?>">SIGN IN</a></li>
