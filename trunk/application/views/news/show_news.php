@@ -14,7 +14,7 @@
         <?php echo $date;?>
     </div>
     <br/>
-    <div id="content_news">
+    <div id="content_news" class="general_text">
         <?php echo $content;?>
     </div>
 </div>
