@@ -1108,6 +1108,9 @@ label {
     padding: 0px 0px 0px 100px;
 }
 /*** END OF EDIT PROFILE ***/
+.search_friend_table {
+    padding-left: 5px;
+}
 
 .search_friend_table .left-table {
     width: auto;

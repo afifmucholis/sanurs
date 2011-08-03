@@ -25,14 +25,14 @@
                 <td class="right-table"> <?php echo form_dropdown('major', $major_list, $major_list['all']); ?> </td>
             </tr>
         </table>
-    </div>
-    <div class="general_text" style="padding: 5px 0px 20px 10px">
+        <div class="general_text" style="padding: 5px 0px 20px 10px">
         <?php echo form_submit('search', 'Search'); ?>
+    </div>
     </div>
     <?php
     echo form_close();
     ?>
-    <p style="color: #565555">or Click on one of the blinking spots to select a location</p>
+    <p style="color: #565555; padding-left: 20px">or Click on one of the blinking spots to select a location</p>
 </div>
 <?php echo br(10); ?>
 <div id="map">
