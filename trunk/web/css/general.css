@@ -852,6 +852,12 @@ label {
     height: 500px;
 }
 
+#news {
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
 /**********************************/
 
 /*** EDIT PROFILE ***/

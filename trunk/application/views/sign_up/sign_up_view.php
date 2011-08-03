@@ -168,7 +168,7 @@
     /***** Verify bithdate muncul *****/
     
     function bindVerifyBithdate() {
-        $( "#datepicker" ).datepicker({changeMonth: true,changeYear: true,dateFormat: 'yy-mm-dd'});
+        $( "#datepicker" ).datepicker({changeMonth: true,changeYear: true,yearRange: 'c-81:c',dateFormat: 'yy-mm-dd'});
         $("#datepicker").unbind('focus.show');
         $("#datepicker").bind('focus.show', function(){
             birthdateFocus();
