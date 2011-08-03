@@ -1,5 +1,5 @@
 <div class="home-menu">
-    <img src="<?php echo base_url() . 'res/desain/homepage-photo.png' ?>">
+    <img src="<?php echo base_url() . 'res/desain/homepage-photo.jpg' ?>">
     <?php if ($this->session->userdata('name') == null) { ?>
         <div class="login-box-home">
 
