@@ -57,6 +57,9 @@ class profile extends CI_Controller {
      * @param int user User_id passing melalui url uri
      */
     function user() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $array = $this->uri->uri_to_assoc(2);
         $user_id = $array['user'];
         if ($this->session->userdata('user_id') == $user_id) { // cek apakah dia melihat profilnya sendiri
@@ -114,6 +117,9 @@ class profile extends CI_Controller {
      *
      */
     function editProfile() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         // show map
         $data['show_map'] = 1;
 
@@ -138,6 +144,9 @@ class profile extends CI_Controller {
      *
      */
     function edit_basic_info() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $data['struktur'] = $this->getStruktur2('Basic Info');
         $data['content_edit_view'] = 'edit_profile/edit_basic_info_view';
 
@@ -212,6 +221,9 @@ class profile extends CI_Controller {
      * @param string post->url_img url_img profpic
      */
     function submitProfile() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
         
         $this->load->model('user', 'userModel');
@@ -383,6 +395,9 @@ class profile extends CI_Controller {
      *
      */
     function edit_location() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $data['struktur'] = $this->getStruktur2('Location');
         $data['content_edit_view'] = 'edit_profile/edit_location_view';
         $data['content_edit'] = array();
@@ -492,6 +507,9 @@ class profile extends CI_Controller {
      * @param string post->location lokasi_user
      */
     function submitLocation() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
         
         /*** update user country ***/
@@ -618,6 +636,9 @@ class profile extends CI_Controller {
      *
      */
     function edit_education() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
         // load education model
         $this->load->model('education', 'eduModel');
@@ -726,6 +747,9 @@ class profile extends CI_Controller {
      * @param string post->s1_year graduation year
      */
     function submitPendidikan() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
         $in_education = $this->input->post('in_education');
         $highest_edu = $this->input->post('highest_edu');
@@ -930,6 +954,9 @@ class profile extends CI_Controller {
      *
      */
     function edit_working() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
         $data['struktur'] = $this->getStruktur2('Working');
         $data['content_edit_view'] = 'edit_profile/edit_working_view';
@@ -988,6 +1015,9 @@ class profile extends CI_Controller {
      * @param int post->counter jumlah field yang diisi
      */
     function submitWorking() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
         // load model work_experience
         $this->load->model('work_experience', 'workModel');
@@ -1104,6 +1134,9 @@ class profile extends CI_Controller {
      *
      */
     function edit_visibility() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
 
         $data['struktur'] = $this->getStruktur2('Visibility');
@@ -1142,6 +1175,9 @@ class profile extends CI_Controller {
      *
      */
     function submitVisibility() {
+        if ($this->session->userdata('name') == null) {
+            redirect('/home', 'refresh');
+        }
         $user_id = $this->session->userdata('user_id');
 
         if ($this->input->post('home_address')) {
