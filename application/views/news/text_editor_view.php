@@ -3,18 +3,18 @@
     if (isset($id_news) && $id_news!='')
         echo form_hidden('id_news',$id_news);
 ?>
-    <div id="title">
+    <div id="title_editor_news">
         <?php
             echo form_label('Title : ');
             $title='';
             if (isset($old_title) && $old_title!='')
                 $title = $old_title;
-            echo form_input('title',$title,'id="title_field" style="width:575px;"');
+            echo form_input('title',$title,'id="title_field"');
         ?>
     </div>
     
     <div id="text_editor">
-        <textarea rows="18" cols="100" id="area1" name="area1_text">
+        <textarea id="area1" name="area1_text">
             <?php
                 if (isset($old_news) && $old_news!='')
                     echo $old_news;

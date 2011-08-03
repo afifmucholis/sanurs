@@ -837,6 +837,21 @@ label {
     white-space: normal;
 }
 
+#form_add_news {
+    margin-left:auto;
+    margin-right:auto;
+    width:775px;
+}
+
+#form_add_news #title_editor_news #title_field {
+    width:771px;
+}
+
+#form_add_news #text_editor textarea {
+    width:775px;
+    height: 500px;
+}
+
 /**********************************/
 
 /*** EDIT PROFILE ***/
@@ -874,6 +889,18 @@ label {
 }
 
 #link-menu:hover {
+    color: #000000;
+    background-color: #a1a1a1;
+}
+
+#link-menu_select {
+    padding: 0px 10px 0px 10px;
+    font-family: Arial Black;
+    font-size: 14px;
+    -moz-border-radius: 5px 5px 0px 0px;
+    -webkit-border-top-left-radius : 5px;
+    -webkit-border-top-right-radius : 5px;
+    border-radius : 5px 5px 0px 0px;
     color: #000000;
     background-color: #a1a1a1;
 }

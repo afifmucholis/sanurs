@@ -34,14 +34,15 @@
     }
 
     /**** Fungsi untuk edit profile view ****/
-    var view_edit;
+    var view_edit='';
     // fungsi binding edit_profile awal
     function editProfileReady() {
         // bind sub-navigation event click
         $('a.ajax-links').click(function(){
             var hr = $(this).attr("href");
-            if (hr!=view_edit)
+            if (hr!=view_edit) {
                 return subNavEditProfileClick(hr);
+            }
             else
                 return false;
         });
@@ -51,7 +52,10 @@
 
     // function sub-navigation edit_profile
     function subNavEditProfileClick(link_click) {
+        if (view_edit!='')
+            $('a[href='+view_edit+']').attr('id','link-menu');
         view_edit = link_click;
+        $('a[href='+link_click+']').attr('id','link-menu_select');
         var ganti=true;
         if (_isDirty) {
             if (confirm("Are you sure you want to leave this page? You have unsaved changes to your profile.")) {
