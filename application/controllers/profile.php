@@ -84,7 +84,7 @@ class profile extends CI_Controller {
             $getFriendRequest = $this->friend_requestModel->getFriendRelationships($options);
             $options = array('userid_requester' => $user_id, 'userid_requested' => $user_view);
             $getFriendRequested = $this->friend_requestModel->getFriendRelationships($options);
-            
+
             $options = array('userid_1' => $user_view, 'userid_2' => $user_id);
             $getFriendRelationship = $this->friend_relationshipModel->getFriendRelationships($options);
             if (is_bool($getFriendRelationship)) {
@@ -164,7 +164,7 @@ class profile extends CI_Controller {
         $getUserInterests = $this->interestedInModel->getInterestedIn($option);
         $data['user_interest'] = $getUserInterests;
 
-        /*** get list of gender ***/
+        /*         * * get list of gender ** */
         $this->load->model('gender', 'genderModel');
         $option = array();
         $getGender = $this->genderModel->getGenders($option);
@@ -175,7 +175,7 @@ class profile extends CI_Controller {
             }
         }
         $data['gender_list'] = $gender_list;
-        /*** end of get list of gender ***/
+        /*         * * end of get list of gender ** */
 
         // load basic user info
         $this->load->model('user', 'userModel');
@@ -225,20 +225,20 @@ class profile extends CI_Controller {
             redirect('/home', 'refresh');
         }
         $user_id = $this->session->userdata('user_id');
-        
+
         $this->load->model('user', 'userModel');
-        
+
         $old_password = $this->input->post('old_password');
         $new_password = $this->input->post('new_password');
         $confirm_password = $this->input->post('confirm_password');
-        
+
         $option = array(
             'id' => $user_id,
             'password' => $old_password
         );
         $getReturn = $this->userModel->getUsers($option);
-        
-        if (($getReturn && $new_password==$confirm_password && $new_password!="") || ($old_password=="" && $new_password=="" && $confirm_password=="")) {
+
+        if (($getReturn && $new_password == $confirm_password && $new_password != "") || ($old_password == "" && $new_password == "" && $confirm_password == "")) {
             if ($new_password != "") {
                 $hash_password = md5($new_password);
                 $option = array(
@@ -322,7 +322,7 @@ class profile extends CI_Controller {
                 }
             }
             /* selesai update area of interest */
-            
+
             $nickname = $this->input->post('nick_name');
             $gender = $this->input->post('gender');
 
@@ -369,7 +369,7 @@ class profile extends CI_Controller {
             }
             // update database dengan opsi $options
             $cek_bol = $this->userModel->updateUser($options);
-            
+
             if ($cek_bol || $error_rename_img || $retUpdate) {
                 // update berhasil
                 $message['status'] = 'Update success';
@@ -380,7 +380,7 @@ class profile extends CI_Controller {
             $message['status'] = 'An error occurred';
             $message['message'] = 'An Error occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
         }
-        
+
         $message['page_before'] = 'Edit Your Profile';
         $message['page_link'] = 'profile/editProfile';
         // redirect ke info view
@@ -427,12 +427,11 @@ class profile extends CI_Controller {
 
     function get_all_location() {
         $user_id = $this->session->userdata('user_id');
-        
+
         // load model user
         $this->load->model('user', 'userModel');
         $option = array();
         $getUser = $this->userModel->getUsers($option); //ini berisi semua data user yang ada di database
-        
         // get location
         if ($getUser) {
             $count = 0;
@@ -449,16 +448,16 @@ class profile extends CI_Controller {
                     $count++;
                 }
             }
-            
+
             $markerArray = array();
             $i = 0;
-            
+
             foreach ($userArray as $user) {
                 //cari lat lng di markerArray
                 $found = false;
                 $idx = 0;
-                while (!$found && $idx<count($markerArray)) {
-                    if ($user['lat']==$markerArray[$idx]['lat'] && $user['lng']==$markerArray[$idx]['lng']) {
+                while (!$found && $idx < count($markerArray)) {
+                    if ($user['lat'] == $markerArray[$idx]['lat'] && $user['lng'] == $markerArray[$idx]['lng']) {
                         $found = true;
                     } else {
                         $idx++;
@@ -473,14 +472,14 @@ class profile extends CI_Controller {
                     $i++;
                 }
             }
-            
+
             foreach ($markerArray as $key => $value) {
                 $idx = 0;
                 $listUser = array();
                 $i = 0;
                 $limit = count($userArray);
-                while ($idx<$limit) {
-                    if ($userArray[$idx]['lat']==$value['lat'] && $userArray[$idx]['lng']==$value['lng']) {
+                while ($idx < $limit) {
+                    if ($userArray[$idx]['lat'] == $value['lat'] && $userArray[$idx]['lng'] == $value['lng']) {
                         $listUser[$i]['id'] = $userArray[$idx]['id'];
                         $listUser[$i]['name'] = $userArray[$idx]['name'];
                         $listUser[$i]['year'] = $userArray[$idx]['year'];
@@ -493,7 +492,7 @@ class profile extends CI_Controller {
                 $userArray = array_values($userArray);
             }
         }
-        
+
         $this->output
                 ->set_content_type('application/json')
                 ->set_output(json_encode($markerArray));
@@ -511,122 +510,124 @@ class profile extends CI_Controller {
             redirect('/home', 'refresh');
         }
         $user_id = $this->session->userdata('user_id');
-        
-        /*** update user country ***/
+
+        /*         * * update user country ** */
         $this->load->model('area_user', 'areaUserModel');
         $this->load->model('area', 'areaModel');
-        
+
         $area_name = $this->input->post('area_name');
         $area_lat = $this->input->post('area_lat');
         $area_lng = $this->input->post('area_lng');
-        
-        //ambil data user country yang lama
-        $option = array('user_id' => $user_id);
-        $getAreaUser = $this->areaUserModel->getAreaUser($option);
-        if ($getAreaUser) {
-            //ada di database, berarti update, trus update count di area
-            //update = cek nama country user dengan area_name
-            //kalo sama, gak usah update apa2
-            //kalo beda, update tabel area_user sama count di area (WTH)
-            $option = array('id' => $getAreaUser[0]->area_id);
-            $getArea = $this->areaModel->getAreas($option);
-            if ($getArea[0]->name != $area_name) {
-                //berarti namanya beda, nyari namanya ada di database ato nggak
-                //kalo ada, update countnya
-                //kalo belom, add country baru, trus country yg lama diupdate countnya
-                $option = array('name' => $area_name);
-                $getNewArea = $this->areaModel->getAreas($option);
-                if ($getNewArea) {
-                    //berarti countrynya udah ada, update count
+        if ($user_id > 0) {
+            //ambil data user country yang lama
+            $option = array('user_id' => $user_id);
+            $getAreaUser = $this->areaUserModel->getAreaUser($option);
+            if ($getAreaUser) {
+                //ada di database, berarti update, trus update count di area
+                //update = cek nama country user dengan area_name
+                //kalo sama, gak usah update apa2
+                //kalo beda, update tabel area_user sama count di area (WTH)
+                $option = array('id' => $getAreaUser[0]->area_id);
+                $getArea = $this->areaModel->getAreas($option);
+                if ($getArea[0]->name != $area_name) {
+                    //berarti namanya beda, nyari namanya ada di database ato nggak
+                    //kalo ada, update countnya
+                    //kalo belom, add country baru, trus country yg lama diupdate countnya
+                    $option = array('name' => $area_name);
+                    $getNewArea = $this->areaModel->getAreas($option);
+                    if ($getNewArea) {
+                        //berarti countrynya udah ada, update count
+                        $option = array(
+                            'id' => $getNewArea[0]->id,
+                            'count' => $getNewArea[0]->count + 1
+                        );
+                        $updateNewArea = $this->areaModel->updateArea($option);
+                        $new_area_id = $getNewArea[0]->id;
+                    } else {
+                        //berarti countrynya belom ada, add country baru
+                        $option = array(
+                            'name' => $area_name,
+                            'latitude' => $area_lat,
+                            'longitude' => $area_lng
+                        );
+                        $addNewArea = $this->areaModel->addArea($option);
+                        $new_area_id = $addNewArea;
+                    }
                     $option = array(
-                        'id' => $getNewArea[0]->id,
-                        'count' => $getNewArea[0]->count + 1
+                        'id' => $getArea[0]->id,
+                        'count' => $getArea[0]->count - 1
                     );
-                    $updateNewArea = $this->areaModel->updateArea($option);
-                    $new_area_id = $getNewArea[0]->id;
+                    $updateOldArea = $this->areaModel->updateArea($option);
+                    $option = array(
+                        'id' => $getAreaUser[0]->id,
+                        'area_id' => $new_area_id
+                    );
+                    $updateAreaUser = $this->areaUserModel->updateAreaUser($option);
+                }
+            } else {
+                //gak ada di database, berarti addAreaUser,
+                //trus cek di area, udah ada countrynya apa belom,
+                //kalo belom, addArea
+                //kalo udah, updateArea (nilai countnya)
+                $option = array(
+                    'name' => $area_name
+                );
+                $getArea = $this->areaModel->getAreas($option);
+                if ($getArea) {
+                    //country sudah ada di database, berarti tinggal update count
+                    $area_id = $getArea[0]->id;
+                    $count = $getArea[0]->count;
+                    $count++;
+                    $option = array(
+                        'id' => $area_id,
+                        'count' => $count
+                    );
+                    $this->areaModel->updateArea($option);
+                    $new_area_id = $area_id;
                 } else {
-                    //berarti countrynya belom ada, add country baru
+                    //country belum ada di database, berarti add record
                     $option = array(
                         'name' => $area_name,
                         'latitude' => $area_lat,
                         'longitude' => $area_lng
                     );
-                    $addNewArea = $this->areaModel->addArea($option);
-                    $new_area_id = $addNewArea;
+                    $returnUpdate = $this->areaModel->addArea($option);
+                    $new_area_id = $returnUpdate;
                 }
                 $option = array(
-                    'id' => $getArea[0]->id,
-                    'count' => $getArea[0]->count - 1
-                );
-                $updateOldArea = $this->areaModel->updateArea($option);
-                $option = array(
-                    'id' => $getAreaUser[0]->id,
+                    'user_id' => $user_id,
                     'area_id' => $new_area_id
                 );
-                $updateAreaUser = $this->areaUserModel->updateAreaUser($option);
-                }
-        } else {
-            //gak ada di database, berarti addAreaUser,
-            //trus cek di area, udah ada countrynya apa belom,
-            //kalo belom, addArea
-            //kalo udah, updateArea (nilai countnya)
-            $option = array(
-                'name' => $area_name
-            );
-            $getArea = $this->areaModel->getAreas($option);
-            if ($getArea) {
-                //country sudah ada di database, berarti tinggal update count
-                $area_id = $getArea[0]->id;
-                $count = $getArea[0]->count;
-                $count++;
-                $option = array(
-                    'id' => $area_id,
-                    'count' => $count
-                );
-                $this->areaModel->updateArea($option);
-                $new_area_id = $area_id;
-            } else {
-                //country belum ada di database, berarti add record
-                $option = array(
-                    'name' => $area_name,
-                    'latitude' => $area_lat,
-                    'longitude' => $area_lng
-                );
-                $returnUpdate = $this->areaModel->addArea($option);
-                $new_area_id = $returnUpdate;
+                $addNewAreaUser = $this->areaUserModel->addAreaUser($option);
             }
-            $option = array(
-                'user_id' => $user_id,
-                'area_id' => $new_area_id
-            );
-            $addNewAreaUser = $this->areaUserModel->addAreaUser($option);
-        }
-        /*** end of update user country ***/
-        
-        /*** update user exact location ***/
-        $lat = $this->input->post('save_lat');
-        $lng = $this->input->post('save_lng');
-        $options = array(
-            'id' => $user_id,
-            'location_latitude' => $lat,
-            'location_longitude' => $lng
-        );
-        $this->load->model('user', 'userModel');
-        $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
-        /*** end of update user exact location ***/
+            /*             * * end of update user country ** */
 
-        if (is_bool($update_location)) {
-            $message['status'] = 'An Error Occurred';
-            $message['message'] = 'Error updating your location.'.br(1).'Click '.anchor('profile/editProfile/location','here').' to try again.';
+            /*             * * update user exact location ** */
+            $lat = $this->input->post('save_lat');
+            $lng = $this->input->post('save_lng');
+            $options = array(
+                'id' => $user_id,
+                'location_latitude' => $lat,
+                'location_longitude' => $lng
+            );
+            $this->load->model('user', 'userModel');
+            $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
+            /*             * * end of update user exact location ** */
+            if (is_bool($update_location)) {
+                $message['status'] = 'An Error Occurred';
+                $message['message'] = 'Error updating your location.' . br(1) . 'Click ' . anchor('profile/editProfile/location', 'here') . ' to try again.';
+            } else {
+                $message['status'] = 'Update Success';
+                $message['message'] = 'Your location has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+                $message['page_before'] = 'Edit Your Profile';
+                $message['page_link'] = 'profile/editProfile/location';
+                // redirect ke info view
+                $this->session->set_flashdata('message', $message);
+                redirect('info/show', 'refresh');
+            }
         } else {
-            $message['status'] = 'Update Success';
-            $message['message'] = 'Your location has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+            redirect('/home', 'refresh');
         }
-        $message['page_before'] = 'Edit Your Profile';
-        $message['page_link'] = 'profile/editProfile/location';
-        // redirect ke info view
-        $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
     }
 
     /**
@@ -757,7 +758,7 @@ class profile extends CI_Controller {
         $this->load->model('education', 'eduModel');
         // load model user
         $this->load->model('user', 'userModel');
-        
+
         try {
             // cek SMA ada atau ga
             $options = array('id' => $user_id);
@@ -863,13 +864,13 @@ class profile extends CI_Controller {
                             $options = array('id' => $edu_id, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                             $cekUpdateEdu = $this->eduModel->updateEducation($options);
                             if (is_bool($cekUpdateEdu))
-                                throw new Exception('Error database : update an education with level id '.$i.'.');
+                                throw new Exception('Error database : update an education with level id ' . $i . '.');
                         } else {
                             // insert
                             $options = array('user_id' => $user_id, 'level_id' => $i, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                             $cekInsertEdu = $this->eduModel->addEducation($options);
                             if (is_bool($cekInsertEdu))
-                               throw new Exception('Error database : insert an education with level id '.$i.'.');
+                                throw new Exception('Error database : insert an education with level id ' . $i . '.');
                         }
                     }
                 }
@@ -909,29 +910,29 @@ class profile extends CI_Controller {
                             $options = array('id' => $edu_id, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
                             $cekUpdateEdu = $this->eduModel->updateEducation($options);
                             if (is_bool($cekUpdateEdu))
-                                throw new Exception('Error database : update an existing education with level id '.$i.'.');
+                                throw new Exception('Error database : update an existing education with level id ' . $i . '.');
                         }
                     } else {
                         // delete
                         $options = array('id' => $edu_id);
                         $cekDeleteEdu = $this->eduModel->deleteEducation($options);
                         if (is_bool($cekDeleteEdu))
-                            throw new Exception('Error database : delete an existing education with level id '.$i.'.');
+                            throw new Exception('Error database : delete an existing education with level id ' . $i . '.');
                     }
                 }
             }
             $message['status'] = 'Update Success';
-            $message['message'] = 'Your Education has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+            $message['message'] = 'Your Education has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
         } catch (Exception $e) {
             $message['status'] = 'An Error Occurred';
-            $message['message'] = $e->getMessage().''.br(1).'Click '.anchor('profile/editProfile/education','here').' to try again.';
+            $message['message'] = $e->getMessage() . '' . br(1) . 'Click ' . anchor('profile/editProfile/education', 'here') . ' to try again.';
         }
-        
+
         $message['page_before'] = 'Edit Your Profile';
         $message['page_link'] = 'profile/editProfile/education';
         // redirect ke info view
         $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
+        redirect('info/show', 'refresh');
     }
 
     /**
@@ -1065,7 +1066,7 @@ class profile extends CI_Controller {
                 $options['fax'] = $fax;
                 $options['work_hp'] = $work_hp;
                 $options['work_email'] = $work_email;
-                
+
                 if ($status == $old) {
                     // update isinya
                     if ($i == 0 && $company == "" && $year == "" && $position == "" && $address == "" && $telephone == "" && $fax == "" && $work_hp == "" && $work_email == "") {
@@ -1074,29 +1075,29 @@ class profile extends CI_Controller {
                         $add_update_Work = 2;
                     } else {
                         // cek dulu yang harus ada apa *required
-                        if ($company=='' && $i != 0)
+                        if ($company == '' && $i != 0)
                             throw new Exception('Error on input data : Field company must be not blank.');
-                        else if ($i==0 && $company=='' && ($year!='' || $position!='' || $address!='' || $telephone!='' || $fax!='' || $work_hp!='' || $work_email!='')) {
+                        else if ($i == 0 && $company == '' && ($year != '' || $position != '' || $address != '' || $telephone != '' || $fax != '' || $work_hp != '' || $work_email != '')) {
                             throw new Exception('Error on input data : Field company on current working must be not blank.');
                         }
                         $options['id'] = $work_id;
                         $add_update_Work = $this->workModel->updateWorkExperience($options);
                     }
-                } else if ($status==$new) {
+                } else if ($status == $new) {
                     // cek dulu yang harus ada apa *required
-                    if ($company=='' && $i!=0)
-                        throw new Exception('Error on input data : Field company must be not blank'.$year);
-                    else if ($i==0 && $company=='' && ($year!='' || $position!='' || $address!='' || $telephone!='' || $fax!='' || $work_hp!='' || $work_email!='')) {
-                        throw new Exception('Error on input data : Field company on current working must be not blank'.$year);
+                    if ($company == '' && $i != 0)
+                        throw new Exception('Error on input data : Field company must be not blank' . $year);
+                    else if ($i == 0 && $company == '' && ($year != '' || $position != '' || $address != '' || $telephone != '' || $fax != '' || $work_hp != '' || $work_email != '')) {
+                        throw new Exception('Error on input data : Field company on current working must be not blank' . $year);
                     }
                     // insert baru
                     if ($i == 0)
                         $options['is_current_work'] = 1;
-                    if ($company!='')
+                    if ($company != '')
                         $add_update_Work = $this->workModel->addWorkExperience($options);
                 }
                 if (isset($add_update_Work) && is_bool($add_update_Work)) {
-                    throw new Exception('Error on database : insert/update working experience for company : '.$company);
+                    throw new Exception('Error on database : insert/update working experience for company : ' . $company);
                 }
             }
             $options = array();
@@ -1114,17 +1115,17 @@ class profile extends CI_Controller {
                 }
             endforeach;
             $message['status'] = 'Update Success';
-            $message['message'] = 'Your Working Experience has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+            $message['message'] = 'Your Working Experience has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
         } catch (Exception $e) {
             $message['status'] = 'An Error Occurred';
-            $message['message'] = $e->getMessage().''.br(1).'Click '.anchor('profile/editProfile/working','here').' to try again.';
+            $message['message'] = $e->getMessage() . '' . br(1) . 'Click ' . anchor('profile/editProfile/working', 'here') . ' to try again.';
         }
-        
+
         $message['page_before'] = 'Edit Your Profile';
         $message['page_link'] = 'profile/editProfile/working';
         // redirect ke info view
         $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
+        redirect('info/show', 'refresh');
     }
 
     /**
@@ -1271,16 +1272,16 @@ class profile extends CI_Controller {
 
         if (is_bool($getReturnUpdate)) {
             $message['status'] = 'An Error Occurred';
-            $message['message'] = 'Error updating your visibility status.'.br(1).'Click '.anchor('profile/editProfile/visibility','here').' to try again.';
+            $message['message'] = 'Error updating your visibility status.' . br(1) . 'Click ' . anchor('profile/editProfile/visibility', 'here') . ' to try again.';
         } else {
             $message['status'] = 'Update Success';
-            $message['message'] = 'Your visibility status has been successfully updated.'.br(1).'Click '.anchor('profile','here').' to view your profile.';
+            $message['message'] = 'Your visibility status has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
         }
         $message['page_before'] = 'Edit Your Profile';
         $message['page_link'] = 'profile/editProfile/visibility';
         // redirect ke info view
         $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
+        redirect('info/show', 'refresh');
     }
 
     /**

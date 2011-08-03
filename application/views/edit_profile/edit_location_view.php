@@ -26,8 +26,17 @@
         </div>
 
         <div style="padding: 3px 0px 5px 18px">
-            <?php
-            echo form_submit('save', 'Save Changes');
+            <div style="width: 430px; float: left">
+                <?php
+                $js = 'onClick="deleteOverlays()"';
+                echo form_button('delete', 'Delete Location', $js);
+                ?>
+            </div>
+            <div style="width: 440px; float: left; text-align: right">
+                <?php echo form_submit('save', 'Save Changes'); ?>
+            </div>
+            <div class="clearboth"></div>
+            <?php       
             echo form_hidden('save_lat', 0);
             echo form_hidden('save_lng', 0);
             echo form_hidden('area_name', '');
