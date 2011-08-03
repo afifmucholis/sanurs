@@ -414,7 +414,11 @@ class profile extends CI_Controller {
     function get_user_location() {
         // load model user
         $this->load->model('user', 'userModel');
-        $option = array('id' => $this->session->userdata('user_id'));
+        $option = array(
+            'id' => $this->session->userdata('user_id'),
+            'location_latitude !=' => 0,
+            'location_longitude !=' => 0
+        );
         $getUser = $this->userModel->getUsers($option);
 
         // get location
@@ -430,7 +434,10 @@ class profile extends CI_Controller {
 
         // load model user
         $this->load->model('user', 'userModel');
-        $option = array();
+        $option = array(
+            'location_latitude !=' => 0,
+            'location_longitude !=' => 0
+        );
         $getUser = $this->userModel->getUsers($option); //ini berisi semua data user yang ada di database
         // get location
         if ($getUser) {
@@ -510,15 +517,15 @@ class profile extends CI_Controller {
             redirect('/home', 'refresh');
         }
         $user_id = $this->session->userdata('user_id');
-
-        /*         * * update user country ** */
-        $this->load->model('area_user', 'areaUserModel');
-        $this->load->model('area', 'areaModel');
-
-        $area_name = $this->input->post('area_name');
-        $area_lat = $this->input->post('area_lat');
-        $area_lng = $this->input->post('area_lng');
         if ($user_id > 0) {
+            /*             * * update user country ** */
+            $this->load->model('area_user', 'areaUserModel');
+            $this->load->model('area', 'areaModel');
+
+            $area_name = $this->input->post('area_name');
+            $area_lat = $this->input->post('area_lat');
+            $area_lng = $this->input->post('area_lng');
+            
             //ambil data user country yang lama
             $option = array('user_id' => $user_id);
             $getAreaUser = $this->areaUserModel->getAreaUser($option);
@@ -627,7 +634,7 @@ class profile extends CI_Controller {
             }
         } else {
             redirect('/home', 'refresh');
-        }
+        }        
     }
 
     /**

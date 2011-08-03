@@ -124,12 +124,13 @@ function initmap(page) {
                             if (markersArray.length > 0) {
                                 // pin cuma bisa 1 lokasi
                                 deleteOverlays();
-                                addMarker('my location', event.latLng, true);
-                                clearOverlays();
-                                showOverlay();
-                                setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
-                                setLocation();
                             }
+                            
+                            addMarker('my location', event.latLng, true);
+                            clearOverlays();
+                            showOverlay();
+                            setInfoWindow(markersArray[0], results[0].address_components[i].long_name);
+                            setLocation();
                             
                             name = results[0].address_components[i].long_name;
                             if (areaLocation.length==0 || areaLocation[0]!=name) {
@@ -360,11 +361,16 @@ function deleteLocation() {
  */
 function setLocation() {
     deleteLocation();
-    latlngStr = markersArray[0].position.toString();
-    latlngStr = latlngStr.substring(1,latlngStr.length-1);
-    latlngStr = latlngStr.split(",", 2);
-    lat = parseFloat(latlngStr[0]);
-    lng = parseFloat(latlngStr[1]);
+    if (markersArray.length > 0) {
+        latlngStr = markersArray[0].position.toString();
+        latlngStr = latlngStr.substring(1,latlngStr.length-1);
+        latlngStr = latlngStr.split(",", 2);
+        lat = parseFloat(latlngStr[0]);
+        lng = parseFloat(latlngStr[1]);
+    } else {
+        lat = 'null';
+        lng = 'null';
+    }
     addLocation(lat);
     addLocation(lng);
     sendLocation();
