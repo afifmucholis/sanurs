@@ -1,5 +1,5 @@
 <div id="content_about_top">
-<img src="<?php echo base_url() . 'res/desain/contact-photo.png' ?>" />
+<img src="<?php echo base_url() . 'res/desain/contact-photo.jpg' ?>" />
 <div class="clearboth"></div>
 </div>
 <div id="content_about_wrap">

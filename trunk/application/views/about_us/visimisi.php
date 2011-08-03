@@ -1,6 +1,6 @@
 <div id="content_about_top">
     <div id="about_photo">
-        <img src="<?php echo base_url() . 'res/desain/visimisi-photo.png' ?>" />
+        <img src="<?php echo base_url() . 'res/desain/visimisi-photo.jpg' ?>" />
     </div>
     <div id="about_photo_deskripsi">
         <?php echo br(13); ?>
