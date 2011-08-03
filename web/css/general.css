@@ -1196,3 +1196,26 @@ a.people_links_white {
     color : rgb(220,220,220);
     font-weight: bold;
 }
+
+/********* RECENT NEWS HOME *****************/
+#news-slideshow-area, #news-slideshow-scroller {
+  width: 500px;
+  height: 345px;
+  position: relative;
+  overflow: hidden;
+  margin: 0 auto;
+}
+
+#news-slideshow-area {
+  border: 1px solid #000;
+}
+
+#news-slideshow-holder {
+  height: 345px;
+}
+
+.news-slideshow-content {
+  float: left;
+}
+
+/********************************************/
