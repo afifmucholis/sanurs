@@ -159,7 +159,7 @@ if ($user_data['visibility']->home_address ||
         echo "<tr> <td class='title-information'>";
         echo "Home address" . "</td> <td>";
         echo $user_data['home_address'] . "</td></tr>";
-        //echo "Home address : " . $user_data['home_address']; ?>
+       ?>
     </div>
     <?php } ?>
     <?php if ($user_data['visibility']->home_telephone) { ?>
@@ -168,7 +168,7 @@ if ($user_data['visibility']->home_address ||
         echo "<tr> <td class='title-information'>";
         echo "Home telephone" . "</td> <td>";
         echo $user_data['home_telephone'] . "</td></tr>";
-        //echo "Home telephone : " . $user_data['home_telephone']; ?>
+    ?>
     </div>
     <?php } ?>
     <?php if ($user_data['visibility']->handphone) { ?>
@@ -177,7 +177,7 @@ if ($user_data['visibility']->home_address ||
         echo "<tr> <td class='title-information'>";
         echo "Handphone" . "</td> <td>";
         echo $user_data['handphone'] . "</td></tr>";
-        //echo "Handphone : " . $user_data['handphone']; ?>
+        ?>
     </div>
     <?php } ?>
     <?php if ($user_data['visibility']->email) { ?>
@@ -186,7 +186,7 @@ if ($user_data['visibility']->home_address ||
         echo "<tr> <td class='title-information'>";
         echo "Email" . "</td> <td>";
         echo $user_data['email'] . "</td></tr>";
-        //echo "Email : " . $user_data['email']; ?>
+     ?>
     </div>
 <?php } ?>
     </table>
