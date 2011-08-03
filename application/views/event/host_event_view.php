@@ -23,7 +23,7 @@
     <div class="hostevent_right">
         <?php
         echo validation_errors(); //menampilkan pesan error form
-        echo form_open('event/submit_event');
+        echo form_open('event/submit_event',array('id' => 'host_form'));
         echo form_hidden('url_img', base_url() . 'res/default.jpg');
         ?>
         <div>
@@ -70,3 +70,31 @@
     <div class="clearboth"></div>
     <?php $this->load->view('popup/upload_image'); ?>
 </div>
+
+<script>
+    $(document).ready(function() {   
+        $("#host_form").validate({
+            rules : {
+                title : {
+                    required : true
+                },
+                when : {
+                    required : true
+                },
+                where : {
+                    required : true
+                },
+                description : {
+                    required : true
+                }
+            },
+            messages : {
+                title : "The title of the event is required",
+                when  : "The time of the event is required",
+                where : "The location of the event is required",
+                description : "The description of the event is required"
+            }
+        });
+        bind_forget_click();
+    });
+</script>
