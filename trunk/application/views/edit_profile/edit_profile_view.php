@@ -34,11 +34,16 @@
     }
 
     /**** Fungsi untuk edit profile view ****/
+    var view_edit;
     // fungsi binding edit_profile awal
     function editProfileReady() {
         // bind sub-navigation event click
         $('a.ajax-links').click(function(){
-            return subNavEditProfileClick($(this).attr("href"));
+            var hr = $(this).attr("href");
+            if (hr!=view_edit)
+                return subNavEditProfileClick(hr);
+            else
+                return false;
         });
         // load menu awal basic_info
         subNavEditProfileClick('<?php echo $view; ?>');
@@ -46,6 +51,7 @@
 
     // function sub-navigation edit_profile
     function subNavEditProfileClick(link_click) {
+        view_edit = link_click;
         var ganti=true;
         if (_isDirty) {
             if (confirm("Are you sure you want to leave this page? You have unsaved changes to your profile.")) {
