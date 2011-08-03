@@ -163,7 +163,7 @@
             type: 'POST',
             data: form_data,
             success: function(msg) {
-                $('#work_field').append(msg['text']);
+                $('#work-container').append(msg['text']);
                 $('input[name=counter]').val(msg['counter']);
                 _WorkFieldBinding();
             }
@@ -171,7 +171,7 @@
     }
     // fungsi untuk binding event remove field working dan cek dirty field work
     function _WorkFieldBinding() {
-        $('#work_field')
+        $('#work-container')
         .find('a.remove_links')
         .unbind('click.removeit')
         .bind('click.removeit', function(){

@@ -1094,8 +1094,16 @@ label {
     width: 387px;
     margin-top: -50px;
     margin-left: -40px;
+    padding-bottom: 420px;
     padding-left: 30px;
     padding-top: 50px;
+}
+
+#div_work_form {
+    float: left;
+    margin-left: -10px;
+    margin-right: 30px;
+    width: 390px;
 }
 
 #editvis_bg {
