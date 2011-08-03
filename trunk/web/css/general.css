@@ -1131,3 +1131,19 @@ a.people_links {
     margin-top: -15px;
 }
 /*** END OF HOST EVENT ***/
+
+.showevent-left-menu {
+    float : left;
+    width: 430px;
+}
+
+.showevent-right-menu {
+    float: right;
+    background-color: black;
+    width : 500px;
+    color: white;
+}
+
+#event-info {
+    padding: 30px 10px 20px 40px;
+}
