@@ -832,6 +832,11 @@ label {
     color:#666666;
 }
 
+#content_news * {
+    word-wrap:break-word;
+    white-space: normal;
+}
+
 /**********************************/
 
 /*** buat edit profile ***/

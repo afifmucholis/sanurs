@@ -1,5 +1,5 @@
 <div>
-    <div id="title-menu">Event</div>
+    <div id="title-menu">Events</div>
     <div class="event-left-menu">
         <div id="slide_show_event">
             <div id="gallery-event">
@@ -13,8 +13,7 @@
             <label class="impact20">SORT BY : </label> <br/>
             <div class="sort-category">
                 &raquo; <a href="#" id="categories_click" class="notactive-event-link">Categories</a>
-                <div id="tree_categories">
-                    <?php
+                <div id="tree_categories"><?php
                     //echo anchor('event/sortby/categories', '- Categories');
                     if (isset($categories) && $categories != "") {
                         foreach ($categories as $cat) :
@@ -25,8 +24,7 @@
                             echo br(1);
                         endforeach;
                     }
-                    ?>
-                </div>
+                    ?></div>
                 <?php
                 if ($sortby == 'number') {
                     echo "<b>&raquo ".anchor('event/sortby/number', 'Number of people Attending', 'class="active-event-link"')."</b>";
@@ -68,6 +66,8 @@
 <script>
     var data_categories;
     $(document).ready(function() {
+        // get all categories
+        getCategories();
         data = [];
         $.ajax({
             url : '<?php echo site_url(); ?>/event_gallery',
@@ -88,8 +88,7 @@
                         }
                     });
         
-                    // get all categories
-                    getCategories();
+                    
                     // set function click categories
                     $('#categories_click').click(function (){
                         return categories_click();
