@@ -1,5 +1,5 @@
-<div style="width: inherit; background-color: #000000">
-    <div class="general_text" style="color: rgb(255,255,255); padding: 30px 0px 0px 67px">
+<div id="editvis_bg">
+    <div class="general_text" style="color: rgb(255,255,255); padding: 100px 0px 0px 67px">
         Please choose the information that you want other people than you to see.
     </div>
     <?php echo form_open('profile/submitVisibility'); ?>
