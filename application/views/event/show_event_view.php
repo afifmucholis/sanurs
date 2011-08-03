@@ -25,20 +25,36 @@
         </div> <br/>
 
         <div id="event-detail" class="general_text">
-            <?php
-            echo "Location : " . $data_event['where'] . "<br/>";
-            echo "Time : " . $data_event['when'] . "<br/>";
-            echo "Description : " . $data_event['description'] . "<br/>";
-            if ($data_event['cp']['name'] != '') {
-                echo "Contact Person : ";
-                echo $data_event['cp']['name'] . " - " . $data_event['cp']['telp'] . "<br/>";
-                echo "Please contact " . $data_event['cp']['name'] . " to purchase tickets<br/>";
-            }
-            echo "<br/>";
-            echo "Number of people attending so far: ";
-            echo "<label id=\"number_attending\">";
-            echo $data_event['attending'] . "</label>";
-            ?>
+            <table style="margin-left: -3px;">
+                <?php
+                echo "<tr> <td class='title-information'>";
+                echo "Location" . "</td> <td>";
+                echo $data_event['where'] . "</td></tr>";
+        
+                echo "<tr> <td class='title-information'>";
+                echo "Time" . "</td> <td>";
+                echo $data_event['when'] . "</td></tr>";
+                
+                echo "<tr> <td class='title-information'>";
+                echo "Description" . "</td> <td>";
+                echo $data_event['description'] . "</td></tr>";
+                
+                if ($data_event['cp']['name'] != '') {
+                    echo "<tr> <td class='title-information'>";
+                    echo "Contact Person" . "</td> <td>";
+                    echo $data_event['cp']['name'] . " - " . $data_event['cp']['telp']."</td></tr>";
+                }
+                ?>
+                </table>
+                <?php
+                if ($data_event['cp']['name'] != '') {
+                    echo "Please contact " . $data_event['cp']['name'] . " to purchase tickets<br/>";
+                }
+                echo "<br/>";
+                echo "Number of people attending so far: ";
+                echo "<label id=\"number_attending\">";
+                echo $data_event['attending'] . "</label>";
+                ?>
             <br/>
             <div id="people_attending"><?php
             foreach ($data_event['list_attending'] as $people) :
@@ -59,7 +75,8 @@
                 } else if ($data_event['rsvp'] == 3) {
                     echo "RSVP: Not Attending";
                 }
-            ?></div>
+            ?>
+            </div>
         </div>
     </div>
 </div>
