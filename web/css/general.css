@@ -840,7 +840,6 @@ label {
     height: 25px;
     float: right;
     background-color: #000000;
-    color: #ffffff;
     text-align: center;
 }
 
@@ -990,6 +989,17 @@ label {
 .edu_table {
     float: right;
     padding: 2px 0px 2px 0px;
+}
+
+.edit_profile_navigation {
+    padding: 0px 0px 0px 10px;
+    list-style:none;
+    position:relative;
+}
+
+.edit_profile_navigation li{
+    float:left;
+    position:relative;
 }
 /*** end of buat edit profile ***/
 .search_friend_table .left-table {

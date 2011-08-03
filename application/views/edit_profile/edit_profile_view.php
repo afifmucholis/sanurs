@@ -1,10 +1,12 @@
 <!--<div style="width: 387px; height: 25px; background-color: #E81592; float: left"></div>-->
 <div class="edit_profile_menu">
-    <div id="edit_basic"><a id="link-menu" href="basic_info" class="ajax-links">BASIC INFO</a></div>
-    <div id="edit_location"><a id="link-menu" href="location" class="ajax-links">LOCATION</a></div>
-    <div id="edit_education"><a id="link-menu" href="education" class="ajax-links">EDUCATION</a></div>
-    <div id="edit_working"><a id="link-menu" href="working" class="ajax-links">WORKING</a></div>
-    <div id="edit_visibility"><a id="link-menu" href="visibility" class="ajax-links">VISIBILITY</a></div>
+    <ul class="edit_profile_navigation">
+        <li id="edit_basic"><a id="link-menu" href="basic_info" class="ajax-links">BASIC INFO</a></li>
+        <li id="edit_location"><a id="link-menu" href="location" class="ajax-links">LOCATION</a></li>
+        <li id="edit_education"><a id="link-menu" href="education" class="ajax-links">EDUCATION</a></li>
+        <li id="edit_working"><a id="link-menu" href="working" class="ajax-links">WORKING</a></li>
+        <li id="edit_visibility"><a id="link-menu" href="visibility" class="ajax-links">VISIBILITY</a></li>
+    </ul>
 </div>
 <div class="clearboth"></div>
 <div id="content_edit"></div>
