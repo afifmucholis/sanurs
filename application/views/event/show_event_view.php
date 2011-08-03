@@ -48,7 +48,8 @@
                 </table>
                 <?php
                 if ($data_event['cp']['name'] != '') {
-                    echo "Please contact " . $data_event['cp']['name'] . " to purchase tickets<br/>";
+                    
+                    echo "</br>"."Please contact " . $data_event['cp']['name'] . " to purchase tickets<br/>";
                 }
                 echo "<br/>";
                 echo "Number of people attending so far: ";
