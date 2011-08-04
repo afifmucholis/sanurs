@@ -53,6 +53,7 @@
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/popup.css" />
         <link rel="stylesheet" type="text/css" href="<?php echo base_url(); ?>css/event.css" />
         <link rel="icon" href="<?php echo base_url() ?>favicon.png" type="image/png" />
+        <script type="text/javascript" src="<?php echo base_url(); ?>js/form-hint.js"></script>
     </head>
 <?php
 if (isset($body_id)) {
@@ -96,8 +97,8 @@ if (isset($body_id)) {
 
                     <div class="search_site_box">
                         <?php
-                        echo form_open('site_searching/search');
-                        echo form_input('term', '', 'id="search_input"');
+                        echo form_open('site_searching/search',array('id'=>'search_site_form'));
+                        echo form_input('term', '', 'id="search_input" title="Search Site" class="defaultTextActive"');
                         echo form_submit('search', '', 'id="search_button"');
                         echo form_close();
                         ?>

@@ -586,6 +586,10 @@ label {
     color: #a1a1a1;
 }
 
+#search_site_form .defaultTextActive {
+    color: #a1a1a1;
+}
+
 #content_about_left hr {
     color:#000000;
     background-color: #000000;
