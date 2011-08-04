@@ -1,6 +1,6 @@
 <?php
 if (count($search_result) == 0) {
-    echo "<div id='general_text'>No Result for your search.</div>";
+    echo "<div class='general_text'>No Result for your search.</div>";
 } else {
     ?>
     <?php
