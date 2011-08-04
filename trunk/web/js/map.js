@@ -227,9 +227,27 @@ function addMarker(title, location, draggable) {
     
     if (draggable) {
         //kalo draggable=true, berarti marker bisa digeser (update posisi)
+        var lastPosition = marker.getPosition();
         google.maps.event.addListener(marker, 'dragend', function(event){
-            marker.setPosition(event.latLng);
-            setLocation();
+            var newPosition = event.latLng;
+            geocoder.geocode({
+                'latLng' : newPosition},
+                function(results, status) {
+                    status = google.maps.GeocoderStatus.OK;
+                    if (status) {
+                        var i = 0;
+                        if (results[0]) {
+                            marker.setPosition(event.latLng);
+                            setLocation();
+                        } else {
+                            marker.setPosition(lastPosition);
+                            setLocation();
+                        }
+                    } else {
+                        alert("apa ini");
+                    }
+                }
+            );
         });
     }
     
