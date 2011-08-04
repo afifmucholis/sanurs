@@ -516,17 +516,73 @@ class profile extends CI_Controller {
         if ($this->session->userdata('name') == null) {
             redirect('/home', 'refresh');
         }
-        $user_id = $this->session->userdata('user_id');
-        if ($user_id > 0) {
-            /*             * * update user country ** */
-            $this->load->model('area_user', 'areaUserModel');
-            $this->load->model('area', 'areaModel');
 
-            $area_name = $this->input->post('area_name');
-            $area_lat = $this->input->post('area_lat');
-            $area_lng = $this->input->post('area_lng');
+        $user_id = $this->session->userdata('user_id');
+
+        //load database
+        $this->load->model('user', 'userModel');
+        $this->load->model('area_user', 'areaUserModel');
+        $this->load->model('area', 'areaModel');
+
+        $area_name = $this->input->post('area_name');
+        $area_lat = $this->input->post('area_lat');
+        $area_lng = $this->input->post('area_lng');
+
+        if ($area_lat == 0 && $area_lng == 0) {
+            $option = array('id' => $user_id);
+            $getInfoUser = $this->userModel->getUsers($option);
+
+            if ($getInfoUser[0]->location_latitude == 0 && $getInfoUser[0]->location_longitude == 0) {
+                //Udah kosong dari awal, gak perlu ngapa2in lagi
+                $message['status'] = 'Update Success';
+                $message['message'] = 'Your location has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+            } else {
+                //update tabel user
+                $option = array(
+                    'id' => $user_id,
+                    'location_latitude' => $area_lat,
+                    'location_longitude' => $area_lng
+                );
+                $retUpdateUser = $this->userModel->updateUser($option);
+                
+                //update tabel area
+                $option = array(
+                    'user_id' => $user_id,
+                    'columnSelect' => 'area_id'
+                );
+                $getAreaId = $this->areaUserModel->getAreaUser($option);
+                $option = array(
+                    'id' => $getAreaId[0]->area_id,
+                    'columnSelect' => 'count'
+                );
+                $getAreaCount = $this->areaModel->getAreas($option);
+                $count = $getAreaCount[0]->count - 1;
+                $option = array(
+                    'id' => $getAreaId[0]->area_id,
+                    'count' => $count
+                );
+                $retUpdateArea = $this->areaModel->updateArea($option);
+                
+                //delete record di tabel area user
+                $option = array(
+                    'user_id' => $user_id,
+                    'columnSelect' => 'id'
+                );
+                $getIdAreaUser = $this->areaUserModel->getAreaUser($option);
+                $option = array('id' => $getIdAreaUser[0]->id);
+                $retDeleteAreaUser = $this->areaUserModel->deleteAreaUser($option);
             
+                if (!$retUpdateUser) {
+                    $message['status'] = 'An Error Occurred';
+                    $message['message'] = 'Error updating your location.' . br(1) . 'Click ' . anchor('profile/editProfile/location', 'here') . ' to try again.';
+                } else {
+                    $message['status'] = 'Update Success';
+                    $message['message'] = 'Your location has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
+                }
+            }
+        } else {
             //ambil data user country yang lama
+            /* update user country */
             $option = array('user_id' => $user_id);
             $getAreaUser = $this->areaUserModel->getAreaUser($option);
             if ($getAreaUser) {
@@ -607,9 +663,9 @@ class profile extends CI_Controller {
                 );
                 $addNewAreaUser = $this->areaUserModel->addAreaUser($option);
             }
-            /*             * * end of update user country ** */
+            /* end of update user country */
 
-            /*             * * update user exact location ** */
+            /* update user exact location */
             $lat = $this->input->post('save_lat');
             $lng = $this->input->post('save_lng');
             $options = array(
@@ -617,24 +673,22 @@ class profile extends CI_Controller {
                 'location_latitude' => $lat,
                 'location_longitude' => $lng
             );
-            $this->load->model('user', 'userModel');
             $update_location = $this->userModel->updateUser($options); //update location data ke tabel user
-            /*             * * end of update user exact location ** */
+            /* end of update user exact location */
+            
             if (is_bool($update_location)) {
                 $message['status'] = 'An Error Occurred';
                 $message['message'] = 'Error updating your location.' . br(1) . 'Click ' . anchor('profile/editProfile/location', 'here') . ' to try again.';
             } else {
                 $message['status'] = 'Update Success';
                 $message['message'] = 'Your location has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';
-                $message['page_before'] = 'Edit Your Profile';
-                $message['page_link'] = 'profile/editProfile/location';
-                // redirect ke info view
-                $this->session->set_flashdata('message', $message);
-                redirect('info/show', 'refresh');
             }
-        } else {
-            redirect('/home', 'refresh');
-        }        
+        }
+        $message['page_before'] = 'Edit Your Profile';
+        $message['page_link'] = 'profile/editProfile/location';
+        // redirect ke info view
+        $this->session->set_flashdata('message', $message);
+        redirect('info/show', 'refresh');
     }
 
     /**
