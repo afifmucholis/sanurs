@@ -1153,17 +1153,17 @@ a.people_links_white {
 
 /********* RECENT NEWS HOME *****************/
 #news-slideshow-area, #news-slideshow-scroller {
-  height: 245px;
-  position: relative;
-  overflow: hidden;
+    height: 245px;
+    position: relative;
+    overflow: hidden;
 }
 
 #news-slideshow-area {
-  
+
 }
 
 #news-slideshow-holder {
-  height: 345px;
+    height: 345px;
 }
 
 .news-slideshow-content {
@@ -1179,3 +1179,32 @@ a.people_links_white {
 }
 
 /********************************************/
+
+/* Loadign Div Style */
+#loading{
+    position: fixed;
+    top: 0;
+    z-index: 50;
+    color: white;
+    padding: 2px;
+    width: 300px;
+    margin-left: -150px;
+    margin: auto;
+    text-align: center;
+    /* Kalo gak support transparan */
+    background: rgb(150,150,150);
+    background : rgba(150,150,150,0.8);
+    -moz-border-bottom-left-radius: 8px;
+    -moz-border-bottom-right-radius: 8px;
+    -webkit-border-bottom-left-radius: 8px;
+    -webkit-border-bottom-right-radius: 8px;
+    border-radius : 0px 0px 8px 8px;
+    font-family: impact;
+    font-size: 15px;
+}
+
+#ajax-loading-wrapper {
+    width: 250px; 
+    margin: auto;
+    
+}
