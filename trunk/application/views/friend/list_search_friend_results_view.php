@@ -5,7 +5,7 @@ if ($search_total == 0) {
 } else {
     foreach ($search_results as $result) {
         ?>
-        <a class="search_result_divlink" href="../profile/user/<?php echo $result['id']; ?>">
+        <a class="search_result_divlink" href="<?php echo site_url('profile/user/' . $result['id']); ?>">
             <div id="single_search_wrapper" class="general_text">
                 <div id="search_result_num" style="color:black; text-decoration: none;">
                     <?php echo $result['num']; ?>
