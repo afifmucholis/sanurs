@@ -1,6 +1,6 @@
 <?php
-if ($request_friend == 0) {
-    echo "<label class='general_text'>No Friend Request.<br/></label>";
+if (count($request_friend) == 0) {
+    echo "<label class='general_text'>You don't have any friend request.<br/></label>";
 } else {
     foreach ($request_friend as $request) :
         ?>
