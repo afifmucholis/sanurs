@@ -903,6 +903,7 @@ label {
 .right-table input {
     width: 218px;
     height: 26px;
+    margin: 0px 0px 0px 0px;
 }
 
 .left_checkbox {
@@ -1015,6 +1016,11 @@ label {
     padding: 2px 0px 2px 0px;
 }
 
+.edu_table .right-table input {
+    height: auto;
+    width: 175px;
+}
+
 #editwork_bg {
     margin-left: -25px;
     margin-right: -20px;
@@ -1031,10 +1037,6 @@ label {
     font-size: 14px;
 }
 
-.work_cur {
-    width: 382px;
-}
-
 .work_cur label {
     color: #000000;
 }
@@ -1044,7 +1046,7 @@ label {
     width: 387px;
     margin-top: -50px;
     margin-left: -40px;
-    padding-bottom: 420px;
+    padding-bottom: 330px;
     padding-left: 30px;
     padding-top: 50px;
 }
