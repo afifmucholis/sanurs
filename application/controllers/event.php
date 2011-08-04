@@ -37,6 +37,7 @@ class Event extends CI_Controller {
         $data['sortby'] = 'categories';
         $data['show_calendar_and_event'] = true;
         $data['body_id'] = 'event_body';
+        $data['sortby'] = 'upcoming';
         $this->load->view('includes/template', $data);
     }
 
