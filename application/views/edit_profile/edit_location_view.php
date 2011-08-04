@@ -28,7 +28,7 @@
         <div style="padding: 3px 0px 5px 18px">
             <div style="width: 430px; float: left">
                 <?php
-                $js = 'onClick="deleteOverlays()"';
+                $js = 'onClick="deleteUserLocation()"';
                 echo form_button('delete', 'Delete Location', $js);
                 ?>
             </div>

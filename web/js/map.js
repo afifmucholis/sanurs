@@ -368,8 +368,8 @@ function setLocation() {
         lat = parseFloat(latlngStr[0]);
         lng = parseFloat(latlngStr[1]);
     } else {
-        lat = 'null';
-        lng = 'null';
+        lat = 0;
+        lng = 0;
     }
     addLocation(lat);
     addLocation(lng);
@@ -415,4 +415,9 @@ function deleteArea() {
         }
         areaLocation.length = 0;
     }
+}
+
+function deleteUserLocation() {
+    deleteOverlays();
+    setLocation();
 }
