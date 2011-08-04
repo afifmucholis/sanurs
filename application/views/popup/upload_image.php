@@ -60,17 +60,16 @@
 		}
     }
     
-    function uploadDone() { //Function will be called when iframe is loaded
-            var ret = frames['upload_target'].document.getElementsByTagName("json")[0].innerHTML;
-			//alert(frames['upload_target'].document.getElementsByTagName("body")[0].innerHTML);
-            var data = eval('('+ret+')');
-			alert('uploadDone');
-            if (data.status!=0) {
-                $('#upload_image').attr('src', data.src);
-                $('input[name=url_img]').attr('value', data.src);
-                $('input[name=url_img]').change();
-            } else {
-                alert('Upload error : '+data.error);
-            }
+    function uploadDone() {
+		var ret = frames['upload_target'].document.getElementsByTagName("body")[0].innerHTML;
+		var data = eval('('+ret+')');
+		
+		if (data.status!=0) {
+			$('#upload_image').attr('src', data.src);
+			$('input[name=url_img]').attr('value', data.src);
+			$('input[name=url_img]').change();
+		} else {
+			alert('Upload error : '+data.error);
+		}
     }
 </script>
