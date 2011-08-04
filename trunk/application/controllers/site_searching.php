@@ -7,7 +7,6 @@
  * @property CI_DB_forge $dbforge
  */
 class site_searching extends CI_Controller {
-
     function index() {
         $data['title'] = 'Site Searching';
         $data['main_content'] = 'site_searching/site_searching_view';
@@ -28,15 +27,18 @@ class site_searching extends CI_Controller {
         $per_page = 10;
         $offset = $this->input->post('offsetval');
 
-        $search_result = $this->search_all($term);
-        $total_search = count($search_result);
+        //$search_result = $this->search_all($term);
+        //$total_search = count($search_result);
         
-        $search_paginate = $this->searchAllNewsPaginate($per_page, $offset, $search_result);
-        $data['search_result'] = $search_paginate;
+        //$search_paginate = $this->searchAllNewsPaginate($per_page, $offset, $search_result);
+        $search_paginate = $this->searchAllNewsPaginate2($per_page, $offset, $term);
+        //$data['search_result'] = $search_paginate;
+        $data['search_result'] = $search_paginate['search_result'];
         $base_url = site_url('site_searching/search');
         $config['base_url'] = $base_url;
-        $config['total_rows'] = $total_search;
-        $config['uri_segment'] = '2';
+        //$config['total_rows'] = $total_search;
+        $config['total_rows'] = $search_paginate['total_search'];
+        $config['uri_segment'] = '1';
         $config['per_page'] = $per_page;
         $config['cur_page'] = $offset;
 
@@ -54,7 +56,8 @@ class site_searching extends CI_Controller {
         $config['num_tag_close'] = '</li>';
         
         $data['term'] = $term;
-        $data['total_search'] = $total_search;
+        //$data['total_search'] = $total_search;
+        $data['total_search'] = $search_paginate['total_search'];
          // load helper
         $this->load->helper('simple_html_dom');
         
@@ -181,6 +184,34 @@ class site_searching extends CI_Controller {
                     $news['link'] = $news_list[$i-1]['link'];
 
                     $news_paginate[$iterator] = $news;
+                    ++$iterator;
+                }
+            }
+        }
+        return $news_paginate;
+    }
+    
+    function searchAllNewsPaginate2($limit, $offset, $term) {
+        $news_list = $this->search_all($term);
+        $total_news = count($news_list);
+        $news_paginate = array();
+        $news_paginate['total_search'] = $total_news;
+        if ($total_news <= $offset) {
+            //Do nothing  
+        } else {
+            $start_index = $offset+1;
+            $end_index = $start_index + $limit;
+            $iterator = 0;
+            for ($i = $start_index; $i < $end_index; ++$i) {
+                if (isset($news_list[$i-1]->category)) {
+                    $news = array();
+                    $news['category'] = $news_list[$i-1]['category'];
+                    $news['title'] = $news_list[$i-1]['title'];
+                    $news['content'] = $news_list[$i-1]['content'];
+                    $news['image']  = $news_list[$i-1]['image'];
+                    $news['link'] = $news_list[$i-1]['link'];
+
+                    $news_paginate['search_result'][$iterator] = $news;
                     ++$iterator;
                 }
             }
