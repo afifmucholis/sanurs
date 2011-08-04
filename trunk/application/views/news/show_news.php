@@ -17,7 +17,18 @@
     <div id="content_news" class="general_text">
         <?php echo $content;?>
     </div>
+    <div class="fb_comment" style="margin:auto;display:block;width:750px;">
+        <div class="top_panel_fb_comment impact20">
+            <div style="padding-left: 10px;padding-top: 5px;padding-bottom: 5px;">Comments</div>
+        </div>
+        <div class="content_fb_comment">
+        <?php 
+            echo $fb_comment;
+        ?>
+        </div>
+    </div>
 </div>
+
 
 <script type="text/javascript">
     $(document).ready(function(){

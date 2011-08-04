@@ -16,6 +16,7 @@ define('NICUPLOAD_URI', '/res/news');   // Set the URL (relative or absolute) to
  *
  * @author user
  */
+
 /** * @property CI_Loader $load
  * @property CI_Form_validation $form_validation
  * @property CI_Input $input
@@ -24,31 +25,32 @@ define('NICUPLOAD_URI', '/res/news');   // Set the URL (relative or absolute) to
  * @property CI_DB_forge $dbforge
  */
 class news extends CI_Controller {
+
     function show() {
         $data['title'] = 'News';
         $data['main_content'] = 'news/show_all_news';
         $data['struktur'] = $this->_getStruktur('News');
         $data['body_id'] = 'news_body';
-        // cek admin
+// cek admin
         $data['isadmin'] = $this->session->userdata('isadmin');
-        
-        // load model news
-        $this->load->model('news_model','newsModel');
+
+// load model news
+        $this->load->model('news_model', 'newsModel');
         $getNewsAll = $this->newsModel->getNews();
         if (is_bool($getNewsAll))
             $total_news = 0;
         else
             $total_news = count($getNewsAll);
-        
+
         $per_page = 12;
         $offset = $this->input->post('offsetval');
-        $options = array('sortBy'=>'publishing_date','sortDirection'=>'desc','limit'=>$per_page,'offset'=>$offset);
+        $options = array('sortBy' => 'publishing_date', 'sortDirection' => 'desc', 'limit' => $per_page, 'offset' => $offset);
         $news_result = $this->newsModel->getNews($options);
         if (is_bool($news_result))
             $new_result = array();
-        
+
         $data['all_news'] = $news_result;
-        
+
         $this->load->library('pagination');
         $base_url = site_url('news/show');
         $config['base_url'] = $base_url;
@@ -73,34 +75,35 @@ class news extends CI_Controller {
 
         $this->pagination->initialize($config);
         $data['pagination'] = $this->pagination->create_links();
-        
+
         // load helper
         $this->load->helper('simple_html_dom');
-        
+
+
         if ($this->input->post('ajax')) {
-            $text = $this->load->view('news/list_news',$data, true);
+            $text = $this->load->view('news/list_news', $data, true);
             $this->output
                     ->set_content_type('application/json')
-                    ->set_output(json_encode(array('text' => $text, 'pagination'=>$data['pagination'], 'struktur' => $data['struktur'])));
+                    ->set_output(json_encode(array('text' => $text, 'pagination' => $data['pagination'], 'struktur' => $data['struktur'])));
         } else {
             $this->load->view('includes/template', $data);
         }
     }
-    
+
     function show_news() {
-        // cek admin
+// cek admin
         $data['isadmin'] = 0;
-        if ($this->session->userdata('isadmin')==1)
-                $data['isadmin'] = 1;
+        if ($this->session->userdata('isadmin') == 1)
+            $data['isadmin'] = 1;
         $array = $this->uri->uri_to_assoc(2);
         $data['id_news'] = $array['show_news'];
         $data['body_id'] = 'news_body';
-        // get content
-        $this->load->model('news_model','newsModel');
-        $options = array('id'=>$data['id_news']);
+// get content
+        $this->load->model('news_model', 'newsModel');
+        $options = array('id' => $data['id_news']);
         $getNews = $this->newsModel->getNews($options);
         if (is_bool($getNews)) {
-            show_error('No news with id '.$data['id_news']);
+            show_error('No news with id ' . $data['id_news']);
 //            $message['status'] = 'An Error Occurred';
 //            $message['message'] = 'No news with id '.$data['id_news'];
 //            $message['page_before'] = 'News';
@@ -113,17 +116,21 @@ class news extends CI_Controller {
         $data['content'] = $getNews[0]->content;
         $data['date'] = $getNews[0]->publishing_date;
         $data['title_news'] = $getNews[0]->title;
-        $data['title'] = 'News - '.$data['title_news'];
+        $data['title'] = 'News - ' . $data['title_news'];
         $data['main_content'] = 'news/show_news';
+        
+        //Facebook comment
+        $data['fb_comment']=$this->_create($data['id_news'], '10', '750');
+        
         $data['struktur'] = $this->_getStruktur2($data['title_news']);
-        $this->load->view('includes/template',$data);
+        $this->load->view('includes/template', $data);
     }
-    
+
     function add_news() {
-        if ($this->session->userdata('name')=='' || $this->session->userdata('isadmin')!=1) {
-            redirect('home','refresh');
+        if ($this->session->userdata('name') == '' || $this->session->userdata('isadmin') != 1) {
+            redirect('home', 'refresh');
         }
-            
+
         $data['title'] = 'News';
         $data['main_content'] = 'news/add_news_view';
         $data['struktur'] = $this->_getStruktur2('Add News');
@@ -131,21 +138,21 @@ class news extends CI_Controller {
         $data['show_editor'] = 1;
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 500;
-        $this->load->view('includes/template',$data);
+        $this->load->view('includes/template', $data);
     }
-    
+
     function edit_news() {
-        if ($this->session->userdata('isadmin')=='' || $this->session->userdata('isadmin')!=1) {
-            redirect('home','refresh');
+        if ($this->session->userdata('isadmin') == '' || $this->session->userdata('isadmin') != 1) {
+            redirect('home', 'refresh');
         }
         $array = $this->uri->uri_to_assoc(2);
         $data['id_news'] = $array['edit_news'];
-        // get content old news
-        $this->load->model('news_model','newsModel');
-        $options = array('id'=>$data['id_news']);
+// get content old news
+        $this->load->model('news_model', 'newsModel');
+        $options = array('id' => $data['id_news']);
         $getNews = $this->newsModel->getNews($options);
         if (is_bool($getNews)) {
-            show_error('No news with id '.$data['id_news']);
+            show_error('No news with id ' . $data['id_news']);
 //            $message['status'] = 'An Error Occurred';
 //            $message['message'] = 'No news with id '.$data['id_news'];
 //            $message['page_before'] = 'News';
@@ -164,38 +171,38 @@ class news extends CI_Controller {
         $data['textarea'] = 'area1';
         $data['textarea_size'] = 500;
         $data['body_id'] = 'news_body';
-        
-        $this->load->view('includes/template',$data);
+
+        $this->load->view('includes/template', $data);
     }
-    
+
     function delete_news() {
-        if ($this->session->userdata('isadmin')=='' || $this->session->userdata('isadmin')!=1) {
-            redirect('home','refresh');
+        if ($this->session->userdata('isadmin') == '' || $this->session->userdata('isadmin') != 1) {
+            redirect('home', 'refresh');
         }
         $array = $this->uri->uri_to_assoc(2);
         $id_news = $array['delete_news'];
         try {
-            $this->load->model('news_model','newsModel');
-            $options = array('id'=>$id_news);
+            $this->load->model('news_model', 'newsModel');
+            $options = array('id' => $id_news);
             $getNews = $this->newsModel->deleteNews($options);
             if (is_bool($getNews))
                 throw new Exception('Error deleting news.');
             $message['status'] = 'Success';
-            $message['message'] = 'News is successfully deleted.'.br(1).'Click '.anchor('news/show','here').' to back to news.';
+            $message['message'] = 'News is successfully deleted.' . br(1) . 'Click ' . anchor('news/show', 'here') . ' to back to news.';
         } catch (Exception $e) {
             show_error($e->getMessage());
-            //$message['status'] = 'An Error Occurred';
-            //$message['message'] = $e->getMessage().br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to try again.';
+//$message['status'] = 'An Error Occurred';
+//$message['message'] = $e->getMessage().br(1).'Click '.anchor('news/show_news/'.$id_news,'here').' to try again.';
         }
         $message['page_before'] = 'News';
         $message['page_link'] = 'news/show/';
-        // redirect ke info view
+// redirect ke info view
         $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
+        redirect('info/show', 'refresh');
     }
-    
-    /*** For NIC Upload Images ***/
-    
+
+    /*     * * For NIC Upload Images ** */
+
     /* NicEdit - Micro Inline WYSIWYG
      * Copyright 2007-2009 Brian Kirchoff
      *
@@ -215,7 +222,7 @@ class news extends CI_Controller {
 
         $nicupload_allowed_extensions = array('jpg', 'jpeg', 'png', 'gif', 'bmp');
 
-        // You should not need to modify below this line
+// You should not need to modify below this line
 
         $rfc1867 = function_exists('apc_fetch') && ini_get('apc.rfc1867');
 
@@ -273,7 +280,7 @@ class news extends CI_Controller {
 
             $this->nicupload_output($status, $rfc1867);
             exit;
-        } else if ($this->input->get('check')!='') { // Upload progress check
+        } else if ($this->input->get('check') != '') { // Upload progress check
             $check = $this->input->get('check');
             if (!is_numeric($check)) {
                 $this->nicupload_error('Invalid upload progress id');
@@ -307,7 +314,8 @@ class news extends CI_Controller {
             }
         }
     }
-    // UTILITY FUNCTIONS
+
+// UTILITY FUNCTIONS
 
     function nicupload_error($msg) {
         echo $this->nicupload_output(array('error' => $msg));
@@ -316,17 +324,17 @@ class news extends CI_Controller {
     function nicupload_output($status, $showLoadingMsg = false) {
         $script = '
                 try {
-                    '.(($_SERVER['REQUEST_METHOD']=='POST') ? 'top.' : '').'nicUploadButton.statusCb('.json_encode($status).');
+                    ' . (($_SERVER['REQUEST_METHOD'] == 'POST') ? 'top.' : '') . 'nicUploadButton.statusCb(' . json_encode($status) . ');
                 } catch(e) { alert(e.message); }
             ';
 
-        if($_SERVER['REQUEST_METHOD']=='POST') {
-            echo '<script>'.$script.'</script>';
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            echo '<script>' . $script . '</script>';
         } else {
             echo $script;
         }
 
-        if($_SERVER['REQUEST_METHOD']=='POST' && $showLoadingMsg) {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && $showLoadingMsg) {
             $text = '<html><body>
                 <div id="uploadingMessage" style="text-align: center; font-size: 14px;">
                     <img src="http://js.nicedit.com/ajax-loader.gif" style="float: right; margin-right: 40px;" />
@@ -335,133 +343,142 @@ class news extends CI_Controller {
                 </div>
             </body></html>';
             echo $text;
-
         }
 
         exit;
     }
 
     function nicupload_file_uri($filename) {
-        return NICUPLOAD_URI.'/'.$filename;
+        return NICUPLOAD_URI . '/' . $filename;
     }
 
     function ini_max_upload_size() {
         $post_size = ini_get('post_max_size');
         $upload_size = ini_get('upload_max_filesize');
-        if(!$post_size) $post_size = '8M';
-        if(!$upload_size) $upload_size = '2M';
+        if (!$post_size)
+            $post_size = '8M';
+        if (!$upload_size)
+            $upload_size = '2M';
 
-        return min($this->ini_bytes_from_string($post_size), $this->ini_bytes_from_string($upload_size) );
+        return min($this->ini_bytes_from_string($post_size), $this->ini_bytes_from_string($upload_size));
     }
 
     function ini_bytes_from_string($val) {
         $val = trim($val);
-        $last = strtolower($val[strlen($val)-1]);
-        switch($last) {
-            // The 'G' modifier is available since PHP 5.1.0
+        $last = strtolower($val[strlen($val) - 1]);
+        switch ($last) {
+// The 'G' modifier is available since PHP 5.1.0
             case 'g':
-            $val *= 1024;
+                $val *= 1024;
             case 'm':
-            $val *= 1024;
+                $val *= 1024;
             case 'k':
-            $val *= 1024;
+                $val *= 1024;
         }
         return $val;
     }
 
-    function bytes_to_readable( $bytes ) {
-        if ($bytes<=0)
+    function bytes_to_readable($bytes) {
+        if ($bytes <= 0)
             return '0 Byte';
 
-        $convention=1000; //[1000->10^x|1024->2^x]
-        $s=array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB');
-        $e=floor(log($bytes, $convention));
-        return round($bytes/pow($convention, $e), 2).' '.$s[$e];
+        $convention = 1000; //[1000->10^x|1024->2^x]
+        $s = array('B', 'kB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB');
+        $e = floor(log($bytes, $convention));
+        return round($bytes / pow($convention, $e), 2) . ' ' . $s[$e];
     }
-    
-    /*****************************/
-    
+
+    /*     * ************************** */
+
     function submit_news() {
-        // load model news
-        $this->load->model('news_model','newsModel');
-        
+// load model news
+        $this->load->model('news_model', 'newsModel');
+
         $text = $this->input->post('area1_text');
-        $id_news='';
-        if ($this->input->post('id_news')!='')
+        $id_news = '';
+        if ($this->input->post('id_news') != '')
             $id_news = $this->input->post('id_news');
         $title = $this->input->post('title');
-        
+
         try {
-            if ($id_news!='') {
-                // update old news
+            if ($id_news != '') {
+// update old news
                 $message['page_before'] = 'Edit News';
-                $message['page_link'] = 'news/edit_news/'.$id_news;
-                if ($title=='')
-                    throw new Exception('Error field title must not be blank.'.br(1).'Click '.anchor('news/edit_news/'.$id_news,'here').' to try again.');
-                $options = array('id'=>$id_news,'content'=>$text, 'title'=>$title);
+                $message['page_link'] = 'news/edit_news/' . $id_news;
+                if ($title == '')
+                    throw new Exception('Error field title must not be blank.' . br(1) . 'Click ' . anchor('news/edit_news/' . $id_news, 'here') . ' to try again.');
+                $options = array('id' => $id_news, 'content' => $text, 'title' => $title);
                 $updateNews = $this->newsModel->updateNews($options);
                 if (is_bool($updateNews))
                     show_error('Error updating news on database.');
                 $message['status'] = 'Success';
-                $message['message'] = 'News is successful updated.'.br(1).'Click '.anchor('news/show','here').' to view news.';
+                $message['message'] = 'News is successful updated.' . br(1) . 'Click ' . anchor('news/show', 'here') . ' to view news.';
             } else {
-                // insert baru
+// insert baru
                 $message['page_before'] = 'Add News';
                 $message['page_link'] = 'news/add_news';
-                if ($title=='')
-                    throw new Exception('Error field title must not be blank.'.br(1).'Click '.anchor('news/add_news','here').' to try again.');
-                $options = array('content'=>$text, 'title'=>$title);
+                if ($title == '')
+                    throw new Exception('Error field title must not be blank.' . br(1) . 'Click ' . anchor('news/add_news', 'here') . ' to try again.');
+                $options = array('content' => $text, 'title' => $title);
                 $insertNews = $this->newsModel->addNews($options);
                 if (is_bool($insertNews))
                     show_error('Error uploading news onto database.');
                 $message['status'] = 'Success';
-                $message['message'] = 'News is successfully uploaded.'.br(1).'Click '.anchor('news/show','here').' to view news.';
+                $message['message'] = 'News is successfully uploaded.' . br(1) . 'Click ' . anchor('news/show', 'here') . ' to view news.';
             }
         } catch (Exception $e) {
             $message['status'] = 'An Error Occurred';
             $message['message'] = $e->getMessage();
         }
 
-        // redirect ke info view
+// redirect ke info view
         $this->session->set_flashdata('message', $message);
-        redirect('info/show','refresh');
+        redirect('info/show', 'refresh');
     }
-    
-    
+
     function _getStruktur($view) {
-        $struktur = array (
-            array (
-                'islink'=>1,
-                'link'=>'home',
-                'label'=>'Home'
+        $struktur = array(
+            array(
+                'islink' => 1,
+                'link' => 'home',
+                'label' => 'Home'
             ),
-            array (
-                'islink'=>0,
-                'label'=>$view
+            array(
+                'islink' => 0,
+                'label' => $view
             )
         );
         return $struktur;
     }
-    
+
     function _getStruktur2($view) {
-        $struktur = array (
-            array (
-                'islink'=>1,
-                'link'=>'home',
-                'label'=>'Home'
+        $struktur = array(
+            array(
+                'islink' => 1,
+                'link' => 'home',
+                'label' => 'Home'
             ),
-            array (
-                'islink'=>1,
-                'link'=>'news/show',
-                'label'=>'News'
+            array(
+                'islink' => 1,
+                'link' => 'news/show',
+                'label' => 'News'
             ),
-            array (
-                'islink'=>0,
-                'label'=>$view
+            array(
+                'islink' => 0,
+                'label' => $view
             )
         );
         return $struktur;
     }
+
+    function _create($id_news, $num_post, $width) {
+        $admin = ''; // Put your Facebook account
+        return "	<div id='fb-root'></div>
+        <meta property='fb:admins' content='" . $admin . "'/>
+				<script src='http://connect.facebook.net/en_US/all.js#xfbml=1'></script>
+				<fb:comments href='" . site_url('news/show_news') . "/" . $id_news . "' num_posts='" . $num_post . "' width='" . $width . "'></fb:comments>";
+    }
+
 }
 
 ?>
