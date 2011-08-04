@@ -43,12 +43,14 @@
                 endforeach;
                 ?>
             </div>
-            <a href="#" class="add_links" style="font-family: Arial Black; font-size: 12px; color: rgb(255,255,255); padding: 10px 0px 5px 30px">ADD FIELD</a>
         </div>
     </div>
     <div class="clearboth"></div>
     <div style="text-align: right; padding: 0px 20px 15px 0px">
-        <?php echo form_submit('save', 'Save Changes'); ?>
+        <?php
+        echo form_button('add_field', 'Add Field', 'id="add_field"', 'style="float:left"');
+        echo form_submit('save', 'Save Changes');
+        ?>
     </div>
     <div class="clearboth"></div>
     <?php echo form_close(); ?>
