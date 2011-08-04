@@ -62,7 +62,7 @@ html .fc,
 .fc-header-title h2 {
 	margin-top: 0;
 	white-space: nowrap;
-        color : rgb(142,214,234);
+        color : green;
 	}
 	
 .fc .fc-header-space {
@@ -280,7 +280,7 @@ a.fc-event {
 	}
 	
 .fc-event-skin {
-	border-color: #36c;     /* default BORDER color */
+        border-color: rgb(150,150,150);
 	background-color: #36c; /* default BACKGROUND color */
 	color: #fff;            /* default TEXT color */
 	}

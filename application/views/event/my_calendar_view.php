@@ -95,17 +95,14 @@
                     },
                     style: {
                         width: 200,
-                        //background: '#A2D959',
-                        background: '#CAECF4',
+                        background: 'rgb(240,240,240)',
                         color: 'black',
                         textAlign: 'center',
                         fontcolor : 'black',
                         border: {
                             width: 7,
                             radius: 5,
-                            //color: 'dark'
-                            color: '#6699CC'
-                            //color : '#CAECF4'
+                            color: 'rgb(170,170,170)'
                         },
                         tip: 'leftBottom'
                         
