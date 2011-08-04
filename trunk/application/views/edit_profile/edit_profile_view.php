@@ -128,7 +128,7 @@
     function workAjaxReady() {
         _WorkFieldBinding();
         $('#content_edit')
-        .find('a.add_links')
+        .find('#add_field')
         .unbind('click.add_work')
         .bind('click.add_work', function(){
             addWorkField(); 
