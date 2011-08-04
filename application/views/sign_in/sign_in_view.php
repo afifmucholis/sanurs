@@ -48,7 +48,7 @@
     
     var id_click="";
     function bind_forget_click() {
-        $( "#birthdate" ).datepicker({changeMonth: true,changeYear: true,dateFormat: 'yy-mm-dd'});
+        $( "#birthdate" ).datepicker({changeMonth: true,changeYear: true,yearRange: 'c-81:c',dateFormat: 'yy-mm-dd'});
         $('#signin_form')
             .find('.forget_links')
             .unbind('click.popup')

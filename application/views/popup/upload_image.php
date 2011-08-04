@@ -1,6 +1,6 @@
 <div id ="upload_popup" class ="popup">
     <div class="popup_title">
-        Upload an image from your computer
+        Upload an image from your computer (Max size 1 MB)
     </div>
     <?php echo form_open_multipart('event/upload_picture','id="upload_form"'); ?>
     <div class="popup_main_content">
@@ -59,12 +59,14 @@
     }
     
     function uploadDone() { //Function will be called when iframe is loaded
-            var ret = frames['upload_target'].document.getElementsByTagName("body")[0].innerHTML;
-            var data = ret; //Parse JSON 
-            if (data!=0) {
-                $('#upload_image').attr('src', data);
-                $('input[name=url_img]').attr('value', data);
+            var ret = frames['upload_target'].document.getElementsByTagName("pre")[0].innerHTML;
+            var data = eval('('+ret+')');
+            if (data.status!=0) {
+                $('#upload_image').attr('src', data.src);
+                $('input[name=url_img]').attr('value', data.src);
                 $('input[name=url_img]').change();
-            } else {alert('Upload error');}
+            } else {
+                alert('Upload error : '+data.error);
+            }
     }
 </script>

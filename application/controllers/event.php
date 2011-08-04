@@ -308,18 +308,27 @@ class Event extends CI_Controller {
     function upload_picture() {
         $upload_path = 'res/temp/';
         $config['upload_path'] = './' . $upload_path;
-        $config['allowed_types'] = 'gif|jpg|png';
+        $config['allowed_types'] = 'gif|jpg|png|jpeg';
+        $config['encrypt_name'] = TRUE;
         $config['max_size'] = '1024';
 
         $this->load->library('upload', $config);
 
         if (!$this->upload->do_upload()) {
-            $error = array('error' => $this->upload->display_errors());
-            echo 0;
+            $error = array('status'=>0,'error' => $this->upload->display_errors('',''));
+            $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($error));
         } else {
-            $data = array('upload_data' => $this->upload->data());
+            $data_img = $this->upload->data();
             $teks = base_url() . $upload_path . $this->upload->file_name;
-            echo $teks;
+            
+            ImageJPEG(ImageCreateFromString(file_get_contents('./'. $upload_path . $this->upload->file_name)), './'. $upload_path . $this->upload->file_name, 90);
+            
+            $success = array('status'=>1,'src' => $teks);
+            $this->output
+            ->set_content_type('application/json')
+            ->set_output(json_encode($success));
         }
     }
 

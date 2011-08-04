@@ -52,10 +52,6 @@
 
     // function sub-navigation edit_profile
     function subNavEditProfileClick(link_click) {
-        if (view_edit!='')
-            $('a[href='+view_edit+']').attr('id','link-menu');
-        view_edit = link_click;
-        $('a[href='+link_click+']').attr('id','link-menu_select');
         var ganti=true;
         if (_isDirty) {
             if (confirm("Are you sure you want to leave this page? You have unsaved changes to your profile.")) {
@@ -65,6 +61,11 @@
             }
         }
         if (ganti) {
+            if (view_edit!='')
+                $('a[href='+view_edit+']').attr('id','link-menu');
+            view_edit = link_click;
+            $('a[href='+link_click+']').attr('id','link-menu_select');
+            
             var link = '<?php echo site_url('profile/edit_'); ?>'+link_click;
             var form_data = {
                 ajax: '1'		

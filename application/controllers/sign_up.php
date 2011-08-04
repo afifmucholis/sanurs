@@ -196,14 +196,18 @@ class sign_up extends CI_Controller {
             $hash_password = md5($password);
             $batas = $email.'</email>'.$hash_password;
             $url_encrypt = urlencode(base64_encode($batas));
-            $message = 'Dear '.$name.', \n';
-            $message .= 'Thanks for becoming our member. To finish your registration process please click the link below.\n';
-            $message .= site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt);
+            $message = 'Dear '.$name.', <br/>';
+            $message .= 'Thanks for becoming our member. To finish your registration process please click the link below.<br/>';
+            $message .= anchor(site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt),'Click here to complete registration');
             
             // send verification email to her/his mail
             $this->load->library('email');
+			$config['wordwrap'] = TRUE;
+			$config['priority'] = 1;
+			$config['mailtype'] = 'html';
 
-            $this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
+			$this->email->initialize($config);
+			$this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
             $this->email->to($email);
             $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
             $this->email->message($message);
