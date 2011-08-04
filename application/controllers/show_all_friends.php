@@ -220,7 +220,7 @@ class show_all_friends extends CI_Controller {
             $end_index = $start_index + $limit;
             $iterator = 0;
             for ($i = $start_index; $i < $end_index; ++$i) {
-                if (isset($friends_list[$i-1]->id)) {
+                if (isset($friends_list[$i-1]['id'])) {
                     $friend = array();
                     $friend['id'] = $friends_list[$i-1]['id'];
                     $friend['name'] = $friends_list[$i-1]['name'];
