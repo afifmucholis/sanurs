@@ -21,8 +21,7 @@ class info extends CI_Controller {
     function show() {
         $fl = $this->session->flashdata('message');
         if ($fl=='')
-            show_error ('Error on accessing file');
-            //redirect('home','refresh');
+            redirect('home','refresh');
         $data['title'] = $fl['status'];
         $data['main_content'] = 'info/info_view';
         $data['struktur'] = $this->_getStruktur($fl['page_before'],$fl['page_link'],$fl['status']);

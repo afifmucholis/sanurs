@@ -109,11 +109,15 @@ class Sign_in extends CI_Controller {
             } else {
                 // send email to user
                 $this->load->library('email');
+				$config['wordwrap'] = TRUE;
+				$config['priority'] = 1;
+				$config['mailtype'] = 'html';
 
+				$this->email->initialize($config);
                 $this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
                 $this->email->to($email);
                 $this->email->subject('Santa Ursula Alumni WebSite - Generated Password');
-                $message = 'Dear '.$getUsers[0]->name.', \n'.'You have requested password reset. Now you can login using the password below.\n'.'Password : '.$new_password.'\n'.'Note : please change this random password to protect your security.';
+                $message = 'Dear '.$getUsers[0]->name.',<br/> You have requested password reset.<br/> Now you can login using the password below.<br/>Password : '.$new_password.'<br/>Note : please change this random password to protect your security.';
                 
                 $this->email->message($message);
 
@@ -122,7 +126,7 @@ class Sign_in extends CI_Controller {
                    $message2['message'] = 'Email can\'t be sent to your email.'.br(1).'Click '.anchor('sign_in','here').' to try reset password again.';
                 } else {
                     $message2['status'] = 'Reset Password - Success';
-                    $message2['message'] = 'We have send a random generated password to '.$email.', please check your email and sign in again using that password.'.$new_password;
+                    $message2['message'] = 'We have send a random generated password to '.$email.', please check your email and sign in again using that password.';
                 }
             }
         }

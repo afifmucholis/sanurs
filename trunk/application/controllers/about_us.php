@@ -66,13 +66,14 @@ class About_us extends CI_Controller {
      * user anonymous, data dari form dengan method post
      */
     function contact() {
+        $name = $this->input->post('name');
         $email = $this->input->post('email');
         $subject = $this->input->post('subject');
         $message = $this->input->post('message');
         try {        
             $this->load->library('email');
 
-            $this->email->from($email, 'anonymous web sanur');
+            $this->email->from($email, 'Web Sanur from '.$name);
             $this->email->to('the.end.4ever@gmail.com');
             $this->email->subject($subject);
             $this->email->message($message);
