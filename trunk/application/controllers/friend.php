@@ -621,7 +621,7 @@ class friend extends CI_Controller {
             $end_index = $start_index + $limit;
             $iterator = 0;
             for ($i = $start_index; $i < $end_index; ++$i) {
-                if (isset($allResults[$i-1]->id)) {
+                if (isset($allResults[$i-1]['id'])) {
                     $results = array();
                     $results['num'] = $i;
                     $results['id'] = $allResults[$i-1]['id'];

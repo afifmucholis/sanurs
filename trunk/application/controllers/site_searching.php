@@ -172,7 +172,7 @@ class site_searching extends CI_Controller {
             $end_index = $start_index + $limit;
             $iterator = 0;
             for ($i = $start_index; $i < $end_index; ++$i) {
-                if (isset($news_list[$i-1]->category)) {
+                if (isset($news_list[$i-1]['category'])) {
                     $news = array();
                     $news['category'] = $news_list[$i-1]['category'];
                     $news['title'] = $news_list[$i-1]['title'];
