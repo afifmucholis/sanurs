@@ -8,17 +8,17 @@
 <div class="clearboth">
 </div>
 <div id="content_message">
+    
 </div>
-
 <script type="text/javascript">
-    <?php
-        $view = explode('/',$view);
-    ?>
+<?php
+$view = explode('/', $view);
+?>
     $(document).ready(function(){
         $('a.ajax-links').click(function(){
             return click_message($(this).attr("href"));
         });
-        click_message('<?php echo $view[count($view)-1];?>');
+        click_message('<?php echo $view[count($view) - 1]; ?>');
     });
 
     function click_message(val) {
