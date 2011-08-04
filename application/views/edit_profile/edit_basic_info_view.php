@@ -92,7 +92,7 @@
                     <td class="right-table"> <?php echo form_password('new_password', '', 'id="new_password"'); ?> </td>
                 </tr>
                 <tr>
-                    <td class="left-table"> <?php echo form_label('New Password (again)'); ?> </td>
+                    <td class="left-table"> <?php echo form_label('Retype New Password '); ?> </td>
                     <td class="right-table"> <?php echo form_password('confirm_password', '', 'id="confirm_password"'); ?> </td>
                 </tr>
             </table>
