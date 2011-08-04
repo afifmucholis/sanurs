@@ -77,6 +77,11 @@
     var contentSlides = "";
 
 $(document).ready(function(){
+    if (navigator.appName == 'Microsoft Internet Explorer') {
+        alert('Your browser doesn\'t support this site. Please use other browser.');
+        window.open('','_self','');
+        window.close();
+    }
     var totalWidth = 0;
     contentSlides = $(".news-slideshow-content");
     contentSlides.each(function(i){
