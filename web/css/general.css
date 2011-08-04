@@ -1215,3 +1215,19 @@ a.people_links_white {
     margin: auto;
     
 }
+
+.content_fb_comment{
+    border: 1px solid;
+    border-color: rgb(150,150,150);
+}
+
+.top_panel_fb_comment {
+    margin-top: 40px;
+    color: white;
+    background-color: rgb(150,150,150);
+    -moz-border-top-left-radius: 8px;
+    -moz-border-top-right-radius: 8px;
+    -webkit-border-top-left-radius: 8px;
+    -webkit-border-top-right-radius: 8px;
+    border-radius : 8px 8px 0px 0px;
+}
