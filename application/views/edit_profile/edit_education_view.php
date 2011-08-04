@@ -53,7 +53,7 @@
             ?>
             <table class="edu_table">
                 <tr>
-                    <td class="left-table" style="width: auto"><?php echo form_label('Highest degree of education: (Choose one)'); ?></td>
+                    <td class="left-table" style="width: auto"><?php echo form_label('Highest degree of education (Choose one) :'); ?></td>
                     <td class="right-table"><?php echo form_dropdown('highest_edu', $options, $max_level, $js); ?></td>
                 </tr>
             </table>
