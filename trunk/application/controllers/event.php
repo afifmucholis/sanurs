@@ -314,12 +314,12 @@ class Event extends CI_Controller {
         $config['max_size'] = '1024';
 
         $this->load->library('upload', $config);
-
+		
         if (!$this->upload->do_upload()) {
             $error = array('status'=>0,'error' => $this->upload->display_errors('',''));
-            $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode($error));
+            $data['json'] = json_encode($error);
+			$txt = $this->load->view('event/script_upload_img_view.php',$data,true);
+			echo $txt;
         } else {
             $data_img = $this->upload->data();
             $teks = base_url() . $upload_path . $this->upload->file_name;
@@ -327,9 +327,9 @@ class Event extends CI_Controller {
             ImageJPEG(ImageCreateFromString(file_get_contents('./'. $upload_path . $this->upload->file_name)), './'. $upload_path . $this->upload->file_name, 90);
             
             $success = array('status'=>1,'src' => $teks);
-            $this->output
-            ->set_content_type('application/json')
-            ->set_output(json_encode($success));
+            $data['json'] = json_encode($success);
+			$txt = $this->load->view('event/script_upload_img_view.php',$data,true);
+			echo $txt;
         }
     }
 

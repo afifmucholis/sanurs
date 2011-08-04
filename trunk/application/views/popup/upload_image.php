@@ -50,17 +50,21 @@
             disablePopup();
             sendData();
     });
+	
+	
     function sendData() {
-       document.getElementById('upload_form').onsubmit=function() {
-		document.getElementById('upload_form').target = 'upload_target'; //'upload_target' is the name of the iframe
-                document.getElementById("upload_target").onload = uploadDone; //This function should be called when the iframe has compleated loading
+			document.getElementById('upload_form').onsubmit=function() {
+			document.getElementById('upload_form').target = 'upload_target'; //'upload_target' is the name of the iframe
+			//document.getElementById("upload_target").onload = uploadDone; //This function should be called when the iframe has compleated loading
 			// That will happen when the file is completely uploaded and the server has returned the data we need.
-	}
+		}
     }
     
     function uploadDone() { //Function will be called when iframe is loaded
-            var ret = frames['upload_target'].document.getElementsByTagName("pre")[0].innerHTML;
+            var ret = frames['upload_target'].document.getElementsByTagName("json")[0].innerHTML;
+			//alert(frames['upload_target'].document.getElementsByTagName("body")[0].innerHTML);
             var data = eval('('+ret+')');
+			alert('uploadDone');
             if (data.status!=0) {
                 $('#upload_image').attr('src', data.src);
                 $('input[name=url_img]').attr('value', data.src);
