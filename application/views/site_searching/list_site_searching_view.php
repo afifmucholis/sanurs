@@ -6,7 +6,7 @@ if (count($search_result) == 0) {
     <?php
     foreach ($search_result as $result) :
         ?>
-        <a class="search_result_divlink" href="<?php echo base_url().'/index.php/'. $result['link']; ?>">
+        <a class="search_result_divlink" href="<?php echo base_url().'index.php/'. $result['link']; ?>">
             <div id="single_search_wrapper">
                 <div id="category_search">
                     Category : <?php echo $result['category']; ?>
