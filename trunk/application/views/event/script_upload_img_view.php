@@ -1,14 +1,16 @@
+<html>
+<head>
 <script type="text/javascript">
 	function init() {
-		//alert('a');
-		if (top.uploadDone)
-			top.uploadDone(); //top means parent frame.
+		if (top.uploadDone) {
+			top.uploadDone();
+		}
 	}
 
 	window.onload=init;
-
 </script>
-
-<json>
+</head>
+<body>
 <?php echo $json; ?>
-</json>
+</body>
+</html>
