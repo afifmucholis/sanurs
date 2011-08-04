@@ -389,8 +389,10 @@ function sendLocation() {
  * untuk membuat InfoWindow pada marker
  */
 function setInfoWindow(marker, content) {
+    var stringContent = '<div style="max-height:100px">'+content+'</div>';
+    
     var infowindow = new google.maps.InfoWindow({
-        content: content
+        content: stringContent
     });
 
     google.maps.event.addListener(marker, 'click', function() {
