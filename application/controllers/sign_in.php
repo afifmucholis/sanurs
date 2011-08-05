@@ -50,7 +50,7 @@ class Sign_in extends CI_Controller {
         $getReturn = $this->userModel->getUsers($options);
         if (is_bool($getReturn) && !$getReturn) {
             //Login gagal, gak ada user yang memenuhi
-            $message = 'Email and password doesn\'t match.';
+            $message = 'Email and password do not match.';
             $this->session->set_flashdata('message', $message);
             redirect('/sign_in', 'refresh');
         } else {
@@ -96,7 +96,7 @@ class Sign_in extends CI_Controller {
         if (is_bool($getUsers)) {
             // error
             $message2['status'] = 'Reset Password - Error';
-            $message2['message'] = 'No user with email '.$email.' and birthdate '.$birthdate.br(1).'Click '.anchor('sign_in','here').' to try sign in again.';
+            $message2['message'] = 'The email '.$email.' does not match with the birthdate '.$birthdate.br(1).'Click '.anchor('sign_in','here').' to try again.';
         } else {
             $new_password = $this->_createRandomPassword(7);
             $new_password_hash = md5($new_password);
@@ -105,7 +105,7 @@ class Sign_in extends CI_Controller {
             if (is_bool($updateUsers)) {
                 // error
                 $message2['status'] = 'Reset Password - Error';
-                $message2['message'] = 'Something error with our database.'.br(1).'Click '.anchor('sign_in','here').' to try sign in again.';
+                $message2['message'] = 'We’re sorry, there are currently some errors in our database.'.br(1).'Click '.anchor('sign_in','here').' to try again.';
             } else {
                 // send email to user
                 $this->load->library('email');
@@ -114,19 +114,19 @@ class Sign_in extends CI_Controller {
 				$config['mailtype'] = 'html';
 
 				$this->email->initialize($config);
-                $this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
+                $this->email->from('no-reply', 'Admin Santa Ursula Alumni Website');
                 $this->email->to($email);
-                $this->email->subject('Santa Ursula Alumni WebSite - Generated Password');
-                $message = 'Dear '.$getUsers[0]->name.',<br/> You have requested password reset.<br/> Now you can login using the password below.<br/>Password : '.$new_password.'<br/>Note : please change this random password to protect your security.';
+                $this->email->subject('Random Password');
+                $message = 'Dear '.$getUsers[0]->name.',<br/> You have requested password reset. Please login using the password below:<br/><h3><b>'.$new_password.'</b></h3><br/>Note : this is a randomly generated/assigned password. After you have successfully logged in, please change this password to protect your security.';
                 
                 $this->email->message($message);
 
                 if (!$this->email->send()) {
                    $message2['status'] = 'Reset Password - Error';
-                   $message2['message'] = 'Email can\'t be sent to your email.'.br(1).'Click '.anchor('sign_in','here').' to try reset password again.';
+                   $message2['message'] = 'The password failed to be sent to your email.'.br(1).'Click '.anchor('sign_in','here').' to try to reset password again.';
                 } else {
                     $message2['status'] = 'Reset Password - Success';
-                    $message2['message'] = 'We have send a random generated password to '.$email.', please check your email and sign in again using that password.';
+                    $message2['message'] = 'We have sent a randomly generated/assigned password to '.$email.', please check your email and sign in again using the password.';
                 }
             }
         }

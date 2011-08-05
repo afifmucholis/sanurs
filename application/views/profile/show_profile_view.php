@@ -29,7 +29,7 @@
             <?php } else if ($add_as_friend == 4) { ?>
                 <div id="add_as_friend">
                     <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', true)";>Confirm</a> &nbsp;&nbsp;
-                    <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', false)";>Reject</a>
+                    <a href="#" onclick="javascript:confirm_friend('<?php echo $id_request; ?>', false)";>Ignore</a>
                 </div>
             <?php } ?>
         </div>

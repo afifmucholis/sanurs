@@ -4,7 +4,11 @@
         $data['all_news'] = $all_news;
         $this->load->view('news/list_news', $data);
         ?>
+        <ul id="link_pagination"> 
+            <?php echo $pagination; ?>
+        </ul>
     </div>
+    
     
     <div id="news_holder_right">
         <?php echo br(10);?>
@@ -14,9 +18,6 @@
     </div>
     
     <div class="clearboth"></div>
-    <ul id="link_pagination"> 
-        <?php echo $pagination; ?>
-    </ul>
 </div>
 
 <script type="text/javascript">
@@ -42,6 +43,7 @@
             data : {offsetval:offset[offset.length-1], ajax : 1},
             success: function(msg){
                 $("#news_holder_left").html(msg["text"]);
+                $("#news_holder_left").append('<ul id="link_pagination"></ul>');
                 $("#link_pagination").html(msg["pagination"]);
                 bindPagination();
                 bindDeleteConfirm();

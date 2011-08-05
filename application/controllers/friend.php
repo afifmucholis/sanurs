@@ -300,7 +300,7 @@ class friend extends CI_Controller {
                 }
             } else {
                 $success = 1;
-                $message = "You have rejected ".$getUser[0]->name."'s friend request.";
+                $message = "You have ignored ".$getUser[0]->name."'s friend request.";
             }
             // remove record dari tabel friend request
             $options = array('id'=>$id_request);

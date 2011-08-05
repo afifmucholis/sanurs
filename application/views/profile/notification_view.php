@@ -8,7 +8,7 @@
             echo br(1);
             echo "<label class='general_text>".$notif->message."</label>";
             if ($notif->link!='') {
-                echo " ".anchor($notif->link,'Click Here','class="link"');
+                echo " ".anchor($notif->link,'Click Here','class="link" target="_blank"');
             }
             echo br(2);
         endforeach;
