@@ -1217,8 +1217,9 @@ a.people_links_white {
 }
 
 .content_fb_comment{
-    border: 1px solid;
-    border-color: rgb(150,150,150);
+    border: 1px dashed;
+    border-color: rgb(190,190,190);
+
 }
 
 .top_panel_fb_comment {
