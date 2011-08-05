@@ -130,7 +130,7 @@ class sign_up extends CI_Controller {
                 $text = $this->load->view('sign_up/verification',$data,true);
                 $success = 1;
             } else {
-                $text = 'Please try to remember your birthdate';
+                $text = 'The date you entered does not match the one we have in our database.';
                 $success=0;
             }
         }
@@ -197,7 +197,7 @@ class sign_up extends CI_Controller {
             $batas = $email.'</email>'.$hash_password;
             $url_encrypt = urlencode(base64_encode($batas));
             $message = 'Dear '.$name.', <br/>';
-            $message .= 'Thanks for becoming our member. To finish your registration process please click the link below.<br/>';
+            $message .= 'Thank you for registering, you\'re now only one step away! To complete your registration process, please click the link below:<br/>';
             $message .= anchor(site_url('sign_up/verify_mail/'.$id.'/'.$url_encrypt),'Click here to complete registration');
             
             // send verification email to her/his mail
@@ -207,16 +207,16 @@ class sign_up extends CI_Controller {
 			$config['mailtype'] = 'html';
 
 			$this->email->initialize($config);
-			$this->email->from('no-reply', 'Admin Web Alumni Santa Ursula');
+			$this->email->from('no-reply', 'Admin Santa Ursula Alumni Website');
             $this->email->to($email);
-            $this->email->subject('Santa Ursula Alumni WebSite - Email Verification');
+            $this->email->subject('Verification email');
             $this->email->message($message);
             if (!$this->email->send()) {
                 show_error('Error sending email');
             } else {
                 // success
                 $message2['status'] = 'Success';
-                $message2['message'] = 'Success'.br(1).'Please check your email for email verification.'.br(1).'Click link on the email to complete registration process.';
+                $message2['message'] = 'Success'.br(1).'Please check your inbox for our verification email.'.br(1).'Click the link in the email to complete your registration process.';
             }
             $message2['page_before'] = 'Sign Up';
             $message2['page_link'] = 'sign_up';
@@ -234,7 +234,7 @@ class sign_up extends CI_Controller {
         if (is_bool($getUser)) {
             return true;
         } else {
-            $this->form_validation->set_message('email_check', 'Email \''.$str.'\' already used.');
+            $this->form_validation->set_message('email_check', '\''.$str.'\' is already registered in our database.');
             return false;
         }  
     }
@@ -282,7 +282,7 @@ class sign_up extends CI_Controller {
         
         // send message success
         $message['status'] = 'Success';
-        $message['message'] = 'Registration is completed.'.br(1).'Click '.anchor('sign_in','here').' to sign in.';
+        $message['message'] = 'Congratulations! You are now a registered member of Santa Ursula Alumni Website.'.br(1).'Click '.anchor('sign_in','here').' to sign in.';
         $message['page_before'] = 'Sign up';
         $message['page_link'] = 'sign_up';
 

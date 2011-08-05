@@ -39,8 +39,9 @@ class notification extends CI_Controller {
             $data['notification'] = $getNotification;
             // update status read
             foreach ($getNotification as $notif) :
-                $options = array('id'=>$notif->id,'status_read'=>1);
-                $update = $this->notificationModel->updateNotification($options);
+                $options = array('id'=>$notif->id);
+                //$update = $this->notificationModel->updateNotification($options);
+                $delete = $this->notificationModel->deleteNotification($options);
             endforeach;
         }
             

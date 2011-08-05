@@ -33,7 +33,7 @@ if (count($request_friend) == 0) {
                 <div id="button_approve_<?php echo $request['id_request']; ?>" class="general_text">
                     <?php
                     echo form_button('confirm', 'Confirm', 'onclick="javascript:confirmRequest(\'' . $request['id_request'] . '\', \'true\');"');
-                    echo form_button('reject', 'Reject', 'onclick="javascript:confirmRequest(\'' . $request['id_request'] . '\', \'false\');"');
+                    echo form_button('reject', 'Ignore', 'onclick="javascript:confirmRequest(\'' . $request['id_request'] . '\', \'false\');"');
                     ?>
                 </div>
             </div>

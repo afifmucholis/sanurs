@@ -394,7 +394,7 @@ class profile extends CI_Controller {
         } else {
             // ada kesalahan input
             $message['status'] = 'An error occurred';
-            $message['message'] = 'An Error occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
+            $message['message'] = 'An Error has occurred with your data input. Please ' . anchor('profile/editProfile', 'try again') . '.';
         }
 
         $message['page_before'] = 'Edit Your Profile';
@@ -858,7 +858,7 @@ class profile extends CI_Controller {
                 if ($edu_id != '') {
                     // data lama update dengan edu_id yang ada
                     if ($college == '' || ($major == '-' || $major == '') || $year == '') {
-                        throw new Exception('Error input data : you still have blank field required.');
+                        throw new Exception('Error input data : A required field has been left blank.');
                     } else {
                         // update
                         $options = array('id' => $edu_id, 'user_id' => $user_id, 'level_id' => $level, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
@@ -869,7 +869,7 @@ class profile extends CI_Controller {
                 } else {
                     // data baru masukkan current education
                     if ($college == '' || ($major == '-' || $major == '') || $year == '') {
-                        throw new Exception('Error input data : you still have blank field required.');
+                        throw new Exception('Error input data : A required field has been left blank.');
                     } else {
                         // insert
                         $options = array('user_id' => $user_id, 'level_id' => $level, 'school' => $college, 'major_id' => $major, 'minor_id' => $minor, 'graduate_year' => $year);
@@ -930,10 +930,10 @@ class profile extends CI_Controller {
 
                     if ($college == '' || ($major == '-' || $major == '') || $year == '') {
                         if ($i != 2) {
-                            throw new Exception('Error input data : you still have blank field required.');
+                            throw new Exception('Error input data : A required field has been left blank.');
                         } else if (($college == '' || $major == '-' || $year == '') && ($college != '' || $major != '-' || $year != '')) {
                             // ada d3 input yg tidak lengkap
-                            throw new Exception('Error input data : you still have blank field required.');
+                            throw new Exception('Error input data : A required field has been left blank.');
                         }
                     } else {
                         if ($edu_id != '') {
@@ -977,10 +977,10 @@ class profile extends CI_Controller {
                     if ($i <= $highest_edu) {
                         if ($college == '' || $major == '-' || $major == '' || $year == '') {
                             if ($i != 2) {
-                                throw new Exception('Error input data : you still have blank field required.');
+                                throw new Exception('Error input data : A required field has been left blank.');
                             } else if (($college == '' || $major == '-' || $year == '') && ($college != '' || $major != '-' || $year != '')) {
                                 // ada d3 input yg tidak lengkap
-                                throw new Exception('Error input data : you still have blank field required.');
+                                throw new Exception('Error input data : A required field has been left blank.');
                             }
                         } else {
                             // update
@@ -1153,9 +1153,9 @@ class profile extends CI_Controller {
                     } else {
                         // cek dulu yang harus ada apa *required
                         if ($company == '' && $i != 0)
-                            throw new Exception('Error on input data : Field company must be not blank.');
+                            throw new Exception('Error input data : Field company must be not blank.');
                         else if ($i == 0 && $company == '' && ($year != '' || $position != '' || $address != '' || $telephone != '' || $fax != '' || $work_hp != '' || $work_email != '')) {
-                            throw new Exception('Error on input data : Field company on current working must be not blank.');
+                            throw new Exception('Error input data : Field company on current working must be not blank.');
                         }
                         $options['id'] = $work_id;
                         $add_update_Work = $this->workModel->updateWorkExperience($options);
@@ -1163,9 +1163,9 @@ class profile extends CI_Controller {
                 } else if ($status == $new) {
                     // cek dulu yang harus ada apa *required
                     if ($company == '' && $i != 0)
-                        throw new Exception('Error on input data : Field company must be not blank' . $year);
+                        throw new Exception('Error input data : Field company must be not blank.');
                     else if ($i == 0 && $company == '' && ($year != '' || $position != '' || $address != '' || $telephone != '' || $fax != '' || $work_hp != '' || $work_email != '')) {
-                        throw new Exception('Error on input data : Field company on current working must be not blank' . $year);
+                        throw new Exception('Error input data : Field company on current working must be not blank.');
                     }
                     // insert baru
                     if ($i == 0)
@@ -1349,7 +1349,7 @@ class profile extends CI_Controller {
 
         if (is_bool($getReturnUpdate)) {
             $message['status'] = 'An Error Occurred';
-            $message['message'] = 'Error updating your visibility status.' . br(1) . 'Click ' . anchor('profile/editProfile/visibility', 'here') . ' to try again.';
+            $message['message'] = 'Error updating your visibility settings.' . br(1) . 'Click ' . anchor('profile/editProfile/visibility', 'here') . ' to try again.';
         } else {
             $message['status'] = 'Update Success';
             $message['message'] = 'Your visibility status has been successfully updated.' . br(1) . 'Click ' . anchor('profile', 'here') . ' to view your profile.';

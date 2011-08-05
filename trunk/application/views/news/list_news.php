@@ -1,7 +1,8 @@
 <?php
+    $count=0;
     if ($isadmin) {
     ?>
-    <div id="news_div">
+    <div id="news_div" class="empty_news">
         <div id="content_news" class="description_img">
             <?php echo br(2);?>
             <div id="title_news">
@@ -13,6 +14,7 @@
         <div class="clearboth"></div>
     </div>
     <?php
+        $count++;
     }
     if (is_bool($all_news) || count($all_news) == 0) {
         ?>
@@ -28,6 +30,7 @@
             <div class="clearboth"></div>
         </div>
     <?php
+        $count++;
     } else {
         foreach ($all_news as $news) :
 ?>
@@ -79,8 +82,28 @@
             </div>
         </div>
 <?php
+            $count++;
         endforeach;
     }
+    
+    if ($count<6) {
+        for ($i=0;$i<6-$count;$i++) {
+            ?>
+            <div id="news_div" class="empty_news">
+                <div id="content_news" class="description_img">
+                <?php echo br(2);?>
+                    <div id="title_news">
+                        <?php 
+                            echo 'No News Available';
+                        ?>
+                    </div>
+                </div>
+            </div>
+            <?php
+        }
+    }
+    
+    
 ?>
 
 <div class="clearboth">

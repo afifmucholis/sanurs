@@ -669,7 +669,7 @@ label {
     bottom: 0px;
     right:0px;
     padding:10px;
-    -moz-border-radius: 10px 0px 0px 0px;
+    -moz-border-top-left-radius: 10px;
     -webkit-border-top-left-radius : 10px;
     border-radius : 10px 0px 0px 0px;
 }
@@ -694,7 +694,7 @@ label {
 
 /***** News *****/
 #news_body #history {
-    display:none;
+    margin-bottom: 15px;
 }
 
 #news_holder {
@@ -711,7 +711,7 @@ label {
 #news_holder_right {
     margin-left: 67.55%;
     width: 30%;
-    min-height: 450px; /* 3 kali news_div*/
+    height: 453px; /* 3 kali news_div*/
     padding-right: 45px;
     background-color: black;
     color: white;
@@ -739,6 +739,15 @@ label {
     color: white;
     margin-right: 1px;
     margin-bottom: 1px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius : 10px;
+    border-radius : 10px 10px 10px 10px;
+}
+
+#news_holder_left #news_div img {
+    -moz-border-radius: 10px;
+    -webkit-border-radius : 10px;
+    border-radius : 10px 10px 10px 10px;
 }
 
 #news_holder_left #news_div #content_news.description_img {
@@ -749,6 +758,9 @@ label {
     /* Kalo gak dukung transparan */
     background : rgb(255,255,255);
     background : rgba(255,255,255,0.8);
+    -moz-border-radius: 10px;
+    -webkit-border-radius : 10px;
+    border-radius : 10px 10px 10px 10px;
 }
 
 #news_div #content_news.description_img #title_news {
@@ -779,6 +791,10 @@ label {
 #news_div #content_news.description_img #link_show a {
     text-decoration: none;
     color:#666666;
+}
+
+#news_holder_left #news_div.empty_news {
+    background-color: gray;
 }
 
 #content_news * {

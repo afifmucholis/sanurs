@@ -3,3 +3,5 @@
 3. Transparansi di IE gak dukung (udah diatasi dengan cara ngasih background)
 4. Semua input type=text di Safari panjangnya beda. Jadi mending dikasih width.
 5. Opera belum dicoba
+
+1. forget password belum dikasih tahun yg bener datepicker
