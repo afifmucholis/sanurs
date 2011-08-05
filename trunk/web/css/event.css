@@ -89,3 +89,7 @@ a.notactive-event-link{
     -webkit-border-radius: 8px;
     border-radius : 8px 8px 8px 8px;
 }
+
+#signin_form .error {
+    color : black;
+}
