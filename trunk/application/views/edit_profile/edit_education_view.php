@@ -9,7 +9,7 @@
             ?>
             <table class="edu_table">
                 <tr>
-                    <td class="left-table"><?php echo form_label('Are you still in education?'); ?></td>
+                    <td class="left-table"><?php echo form_label('Are you still pursuing a degree?'); ?></td>
                     <td class="right-table"><?php echo form_dropdown('in_education', $options_1, $is_current_edu, $js); ?></td>
                 </tr>
             </table>
