@@ -56,12 +56,15 @@
                 </div>
                 <div id="text_news">
                     <?php
+						$subcontent = 70;
                         if ($isadmin) {
-                            $text = substr($content->plaintext,0,30);
-                        } else {
-                            $text = substr($content->plaintext,0,70);
+							$subcontent = 30;
                         }
-                        echo $text.'...';
+						$text = substr($content->plaintext,0,$subcontent);
+                        echo $text;
+						if (strlen($content->plaintext)>$subcontent)
+							echo "...";
+						
                     ?>
                 </div>
                 <div id="link_show">
