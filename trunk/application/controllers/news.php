@@ -41,8 +41,10 @@ class news extends CI_Controller {
             $total_news = 0;
         else
             $total_news = count($getNewsAll);
-
+		
         $per_page = 6;
+		if ($data['isadmin'])
+			$per_page = 5;
         $offset = $this->input->post('offsetval');
         $options = array('sortBy' => 'publishing_date', 'sortDirection' => 'desc', 'limit' => $per_page, 'offset' => $offset);
         $news_result = $this->newsModel->getNews($options);
