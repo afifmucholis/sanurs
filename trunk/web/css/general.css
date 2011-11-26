@@ -802,6 +802,11 @@ label {
     white-space: normal;
 }
 
+#content_news {
+    word-wrap:break-word;
+    white-space: normal;
+}
+
 #form_add_news {
     margin-left:auto;
     margin-right:auto;
